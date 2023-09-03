@@ -1,4 +1,4 @@
-package org.acme;
+package edu.kmaooad.capstone23.orgs;
 
 import io.quarkus.test.junit.QuarkusIntegrationTest;
 

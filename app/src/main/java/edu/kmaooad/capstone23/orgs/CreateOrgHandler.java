@@ -1,20 +1,25 @@
 package edu.kmaooad.capstone23.orgs;
 
-import java.util.function.Function;
-
-import edu.kmaooad.capstone23.Result;
+import edu.kmaooad.capstone23.common.CommandHandler;
+import edu.kmaooad.capstone23.common.Result;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
-import jakarta.validation.Validator;
 
 @RequestScoped
-public class CreateOrgHandler implements Function<CreateOrg, Result<OrgCreated>> {
+public class CreateOrgHandler implements CommandHandler<CreateOrg, OrgCreated> {
 
     @Inject
-    private Validator validator;
+    private OrgsRepository repository;
 
-    public Result<OrgCreated> apply(CreateOrg upd) {
-        OrgCreated result = new OrgCreated();
+    public Result<OrgCreated> handle(CreateOrg command) {
+
+        Org org = new Org();
+        org.name = command.getOrgName();
+
+        repository.insert(org);
+
+        OrgCreated result = new OrgCreated(org.id.toString());
+
         return new Result<OrgCreated>(result);
     }
 }

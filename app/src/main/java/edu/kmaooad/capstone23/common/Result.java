@@ -1,4 +1,4 @@
-package edu.kmaooad.capstone23;
+package edu.kmaooad.capstone23.common;
 
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -15,6 +15,7 @@ public class Result<T> {
 
     public Result(T resultValue) {
         this.value = resultValue;
+        this.success = true;
     }
 
     public Result(String error) {
