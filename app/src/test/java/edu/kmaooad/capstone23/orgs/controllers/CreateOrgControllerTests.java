@@ -22,7 +22,7 @@ public class CreateOrgControllerTests {
                 .contentType("application/json")
                 .body(jsonAsMap)
                 .when()
-                .post("/orgs")
+                .post("/orgs/create")
                 .then()
                 .statusCode(200);
     }
@@ -37,7 +37,7 @@ public class CreateOrgControllerTests {
                 .contentType("application/json")
                 .body(jsonAsMap)
                 .when()
-                .post("/orgs")
+                .post("/orgs/create")
                 .then()
                 .statusCode(400);
     }
