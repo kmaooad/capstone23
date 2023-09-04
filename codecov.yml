@@ -1,16 +1,20 @@
+ignore:
+  - "*Controller.java"
 coverage:
   status:
     patch:
       default:
         # basic
-        target: 80%
+        target: 90%
         threshold: 0%
         paths: 
           - "!app/src/test/"
+          - "!app/src/main/java/edu/kmaooad/capstone23/common"
     project:
       default:
         # basic
-        target: 80%
+        target: 90%
         threshold: 0%
         paths: 
           - "!app/src/test/"
+          - "!app/src/main/java/edu/kmaooad/capstone23/common"

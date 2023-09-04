@@ -18,13 +18,15 @@ public class Result<T> {
         this.success = true;
     }
 
-    public Result(String error) {
+    public Result(ErrorCode code, String error) {
         this.success = false;
         this.message = error;
+        this.errorCode = code;
     }
 
     public Result(Set<? extends ConstraintViolation<?>> violations) {
         this.success = false;
+        this.errorCode = ErrorCode.VALIDATION_FAILED;
         this.message = violations.stream()
                 .map(cv -> cv.getMessage())
                 .collect(Collectors.joining(", "));
@@ -32,6 +34,11 @@ public class Result<T> {
 
     private String message;
     private boolean success;
+    private ErrorCode errorCode;
+
+    public ErrorCode getErrorCode() {
+        return errorCode;
+    }
 
     public String getMessage() {
         return message;
@@ -39,6 +46,10 @@ public class Result<T> {
 
     public boolean isSuccess() {
         return success;
+    }
+
+    public HandlingError toError() {
+        return new HandlingError(errorCode, message);
     }
 
 }

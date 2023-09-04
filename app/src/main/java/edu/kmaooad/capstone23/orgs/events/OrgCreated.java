@@ -1,4 +1,4 @@
-package edu.kmaooad.capstone23.orgs;
+package edu.kmaooad.capstone23.orgs.events;
 
 public class OrgCreated {
     private String orgId;

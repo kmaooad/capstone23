@@ -1,6 +1,4 @@
-package edu.kmaooad.capstone23.orgs;
-
-import java.util.Objects;
+package edu.kmaooad.capstone23.orgs.dal;
 
 import org.bson.types.ObjectId;
 
