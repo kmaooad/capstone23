@@ -20,12 +20,10 @@ public class CreateTopicHandler implements CommandHandler<CreateTopic, TopicCrea
     @Override
     public Result<TopicCreated> handle(CreateTopic command) {
         var topic = new Topic();
+        topic.name = command.name;
 
         var parentTopic = command.parentId;
-        if (parentTopic == null) {
-            topic.name = command.name;
-        }
-        else {
+        if (parentTopic != null) {
             var findParentTopicOptional = repository.findById(parentTopic);
             if (findParentTopicOptional.isEmpty()) {
                 return new Result<>(ErrorCode.EXCEPTION, "Parent topic not found");
@@ -37,7 +35,7 @@ public class CreateTopicHandler implements CommandHandler<CreateTopic, TopicCrea
 
         repository.insert(topic);
 
-        TopicCreated result = new TopicCreated(topic.id.toString());
+        TopicCreated result = new TopicCreated(topic.id.toHexString());
         return new Result<>(result);
     }
 }
