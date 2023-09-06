@@ -1,8 +1,6 @@
 package edu.kmaooad.capstone23.competences.controllers;
 
-import edu.kmaooad.capstone23.competences.events.TopicCreated;
 import io.quarkus.test.junit.QuarkusTest;
-import org.bson.types.ObjectId;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -12,31 +10,31 @@ import java.util.Map;
 import static io.restassured.RestAssured.given;
 
 @QuarkusTest
-public class CreateTopicsControllerTests {
+public class UpdateTopicControllerTests {
 
     @Test
-    @DisplayName("Create Topic: Basic")
+    @DisplayName("Update Topic: Basic")
     public void testBasicOrgCreation() {
+        var topicId = createTopic();
+
         Map<String, Object> jsonAsMap = new HashMap<>();
-        jsonAsMap.put("topicName", "food");
-        //jsonAsMap.put("");
+        jsonAsMap.put("id", topicId);
+        jsonAsMap.put("topicName", "drinks");
 
         given()
                 .contentType("application/json")
                 .body(jsonAsMap)
                 .when()
-                .post("/topics/create")
+                .post("/topics/update")
                 .then()
                 .statusCode(200);
     }
 
-    @Test
-    @DisplayName("Create Topic Relation: Basic")
-    public void testTopicRelationCreation() {
+    private String createTopic() {
         Map<String, Object> jsonAsMap = new HashMap<>();
         jsonAsMap.put("topicName", "food");
 
-        String result = given()
+        return given()
                 .contentType("application/json")
                 .body(jsonAsMap)
                 .when()
@@ -44,21 +42,6 @@ public class CreateTopicsControllerTests {
                 .then()
                 .statusCode(200)
                 .extract()
-                .path("topic")
-                ;
-
-        Map<String, Object> jsonAsMap2 = new HashMap<>();
-        jsonAsMap2.put("topicName", "fruits");
-        jsonAsMap2.put("parentTopic", result);
-
-        given()
-                .contentType("application/json")
-                .body(jsonAsMap2)
-                .when()
-                .post("/topics/create")
-                .then()
-                .statusCode(200)
-                ;
-
+                .path("topic");
     }
 }

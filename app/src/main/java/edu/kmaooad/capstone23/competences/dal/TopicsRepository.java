@@ -11,4 +11,9 @@ public class TopicsRepository implements PanacheMongoRepository<Topic> {
         persist(topic);
         return topic;
     }
+
+    public Topic modify(Topic topic) {
+        update(topic);
+        return topic;
+    }
 }
