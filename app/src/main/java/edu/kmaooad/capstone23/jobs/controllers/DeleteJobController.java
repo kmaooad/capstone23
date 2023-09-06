@@ -8,6 +8,7 @@ import edu.kmaooad.capstone23.jobs.commands.DeleteJob;
 import edu.kmaooad.capstone23.jobs.events.JobDeleted;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.DELETE;
+import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -16,10 +17,12 @@ import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
 
+@Path("/jobs/delete")
 public class DeleteJobController  extends TypicalController<DeleteJob, JobDeleted> {
     @Inject
     CommandHandler<DeleteJob, JobDeleted> deleteJobHandler;
     @DELETE
+    @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     @APIResponses(value = {
             @APIResponse(responseCode = "200", content = {
