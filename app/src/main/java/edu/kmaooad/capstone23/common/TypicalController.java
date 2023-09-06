@@ -15,7 +15,7 @@ import jakarta.ws.rs.core.Response;
 public class TypicalController<T1, T2> {
 
     @Inject
-    private CommandHandler<T1, T2> createOrgHandler;
+    CommandHandler<T1, T2> createOrgHandler;
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
