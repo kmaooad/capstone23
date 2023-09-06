@@ -1,4 +1,4 @@
 package edu.kmaooad.capstone23.jobs.events;
 
-public class JobDelete {
+public class JobDeleted {
 }
