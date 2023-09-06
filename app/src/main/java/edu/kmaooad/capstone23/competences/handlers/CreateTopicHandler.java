@@ -26,11 +26,13 @@ public class CreateTopicHandler implements CommandHandler<CreateTopic, TopicCrea
             topic.name = command.name;
         }
         else {
-            var findParentTopic = repository.findById(parentTopic);
-            if (findParentTopic == null) {
+            var findParentTopicOptional = repository.findById(parentTopic);
+            if (findParentTopicOptional.isEmpty()) {
                 return new Result<>(ErrorCode.EXCEPTION, "Parent topic not found");
             }
-            topic.parent = findParentTopic;
+            else {
+                topic.parentId = findParentTopicOptional.get().id.toHexString();
+            }
         }
 
         repository.insert(topic);
