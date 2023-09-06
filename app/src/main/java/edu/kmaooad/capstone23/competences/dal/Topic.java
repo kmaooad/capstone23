@@ -8,5 +8,5 @@ import io.quarkus.mongodb.panache.common.MongoEntity;
 public class Topic {
     public ObjectId id;
     public String name;
-    public Topic parent;
+    public String parentId;
 }
