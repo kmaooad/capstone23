@@ -9,7 +9,8 @@ import java.util.Optional;
 @ApplicationScoped
 public class TopicRepository implements PanacheMongoRepository<Topic> {
     public Optional<Topic> findById(String id) {
-        return findByIdOptional(new ObjectId(id));
+        var objectId = new ObjectId(id);
+        return findByIdOptional(objectId);
     }
 
     public void insert(Topic topic) {
