@@ -15,4 +15,11 @@ public class DeleteMember {
     public void setMemberId(String memberId) {
         this.memberId = memberId;
     }
+
+    public DeleteMember(String memberId) {
+        this.memberId = memberId;
+    }
+
+    public DeleteMember() {
+    }
 }
