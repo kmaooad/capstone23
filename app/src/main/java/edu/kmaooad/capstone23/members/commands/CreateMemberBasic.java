@@ -12,6 +12,9 @@ public class CreateMemberBasic {
     @Size(min = 1)
     private String lastName;
     @NotBlank
+    @Size(min = 24, max = 24)
+    private String orgId;
+    @NotBlank
     @Email
     private String email;
 
@@ -37,5 +40,13 @@ public class CreateMemberBasic {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getOrgId() {
+        return orgId;
+    }
+
+    public void setOrgId(String orgId) {
+        this.orgId = orgId;
     }
 }
