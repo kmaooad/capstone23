@@ -1,13 +1,13 @@
 package edu.kmaooad.capstone23.members.events;
 
-public class MemberCreatedBasic {
+public class CreatedMemberBasic {
     private String memberId;
 
     public String getMemberId() {
         return memberId;
     }
 
-    public MemberCreatedBasic(String memberId) {
+    public CreatedMemberBasic(String memberId) {
         this.memberId = memberId;
     }
 }
