@@ -18,30 +18,5 @@ import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
 
 @Path("/jobs/delete")
-public class DeleteJobController  extends TypicalController<DeleteJob, JobDeleted> {
-    @Inject
-    CommandHandler<DeleteJob, JobDeleted> deleteJobHandler;
-    @DELETE
-    @Path("/{id}")
-    @Produces(MediaType.APPLICATION_JSON)
-    @APIResponses(value = {
-            @APIResponse(responseCode = "200", content = {
-                    @Content(mediaType = "application/json", schema = @Schema(implementation = JobDeleted.class)) }),
-            @APIResponse(responseCode = "400", content = {
-                    @Content(mediaType = "application/json", schema = @Schema(implementation = HandlingError.class)) }),
-            @APIResponse(responseCode = "500")
-    })
-    public Response deleteJob(DeleteJob command) {
-        try {
-            Result<JobDeleted> result = deleteJobHandler.handle(command);
-
-            if (!result.isSuccess()) {
-                return Response.status(400).entity(result.toError()).build();
-            }
-
-            return Response.ok(result.getValue(), MediaType.APPLICATION_JSON).build();
-        } catch (Exception e) {
-            return Response.status(500).build();
-        }
-    }
+public class DeleteJobController  extends TypicalDeleteController<DeleteJob, JobDeleted> {
 }
