@@ -1,4 +1,4 @@
-package edu.kmaooad.capstone23.orgs.dal;
+package edu.kmaooad.capstone23.members.dal;
 
 import io.quarkus.mongodb.panache.common.MongoEntity;
 import org.bson.types.ObjectId;
