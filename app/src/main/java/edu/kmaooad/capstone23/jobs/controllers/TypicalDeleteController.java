@@ -3,6 +3,7 @@ package edu.kmaooad.capstone23.jobs.controllers;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.HandlingError;
 import edu.kmaooad.capstone23.common.Result;
+import edu.kmaooad.capstone23.jobs.events.JobDeleted;
 import edu.kmaooad.capstone23.orgs.events.OrgCreated;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.DELETE;
@@ -23,7 +24,7 @@ public class TypicalDeleteController<T1, T2> {
     @Produces(MediaType.APPLICATION_JSON)
     @APIResponses(value = {
             @APIResponse(responseCode = "200", content = {
-                    @Content(mediaType = "application/json", schema = @Schema(implementation = OrgCreated.class)) }),
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = JobDeleted.class)) }),
             @APIResponse(responseCode = "400", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = HandlingError.class)) }),
             @APIResponse(responseCode = "500")
