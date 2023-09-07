@@ -14,7 +14,7 @@ public class UpdateSkillControllerTests {
 
     @Test
     @DisplayName("Update Skill: Basic")
-    public void testBasicOrgCreation() {
+    public void testBasicSkillCreation() {
         var skillId = createSkill();
 
         Map<String, Object> jsonAsMap = new HashMap<>();

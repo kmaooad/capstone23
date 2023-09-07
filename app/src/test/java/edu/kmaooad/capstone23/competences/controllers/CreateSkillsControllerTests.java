@@ -19,7 +19,6 @@ public class CreateSkillsControllerTests {
     public void testBasicOrgCreation() {
         Map<String, Object> jsonAsMap = new HashMap<>();
         jsonAsMap.put("skillName", "food");
-        //jsonAsMap.put("");
 
         given()
                 .contentType("application/json")
@@ -60,5 +59,23 @@ public class CreateSkillsControllerTests {
                 .statusCode(200)
                 ;
 
+    }
+
+    @Test
+    @DisplayName("Create Skill Relation: Basic")
+    public void testSkillBadRelationCreation() {
+
+        Map<String, Object> jsonAsMap2 = new HashMap<>();
+        jsonAsMap2.put("skillName", "fruits");
+        jsonAsMap2.put("parentSkill", new ObjectId().toHexString());
+
+        given()
+                .contentType("application/json")
+                .body(jsonAsMap2)
+                .when()
+                .post("/skills/create")
+                .then()
+                .statusCode(400)
+        ;
     }
 }

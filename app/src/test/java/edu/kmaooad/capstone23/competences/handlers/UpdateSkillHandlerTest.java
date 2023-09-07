@@ -12,6 +12,8 @@ import org.bson.types.ObjectId;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.Optional;
+
 @QuarkusTest
 public class UpdateSkillHandlerTest {
 
@@ -28,25 +30,46 @@ public class UpdateSkillHandlerTest {
 
         Result<SkillCreated> result = createHandler.handle(command);
 
-        Result<SkillUpdated> result2 = changeSkill(result.getValue().getSkill());
+        Result<SkillUpdated> result2 = changeSkill(result.getValue().getSkill(), Optional.empty());
 
         Assertions.assertTrue(result2.isSuccess());
         Assertions.assertNotNull(result2.getValue());
         Assertions.assertNotNull(result2.getValue().getSkill());
     }
 
+    @Test
+    void testBadParentIdHandling() {
+        var command = new CreateSkill();
+        command.setSkillName("food");
 
-    Result<SkillUpdated> changeSkill(ObjectId id) {
+        Result<SkillCreated> result = createHandler.handle(command);
+
+        Result<SkillUpdated> result2 = changeSkill(result.getValue().getSkill(), Optional.of(new ObjectId()));
+
+        Assertions.assertFalse(result2.isSuccess());
+    }
+
+    @Test
+    void testEqualChildParentIdHandling() {
+        var command = new CreateSkill();
+        command.setSkillName("food");
+
+        Result<SkillCreated> result = createHandler.handle(command);
+
+        Result<SkillUpdated> result2 = changeSkill(result.getValue().getSkill(), Optional.of(result.getValue().getSkill()));
+
+        Assertions.assertFalse(result2.isSuccess());
+    }
+
+
+    Result<SkillUpdated> changeSkill(ObjectId id, Optional<ObjectId> parent) {
         var command = new UpdateSkill();
         command.setSkillName("drink");
         command.setId(id);
+        if (parent.isPresent())
+            command.setParentSkill(parent.get());
 
 
-        Result<SkillUpdated> result = updateHandler.handle(command);
-
-        Assertions.assertTrue(result.isSuccess());
-        Assertions.assertNotNull(result.getValue());
-        Assertions.assertNotNull(result.getValue().getSkill());
-        return result;
+        return updateHandler.handle(command);
     }
 }

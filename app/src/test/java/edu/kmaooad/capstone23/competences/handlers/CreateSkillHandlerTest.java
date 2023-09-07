@@ -4,9 +4,9 @@ import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.competences.commands.CreateSkill;
 import edu.kmaooad.capstone23.competences.events.SkillCreated;
-import edu.kmaooad.capstone23.orgs.commands.CreateOrg;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
+import org.bson.types.ObjectId;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -46,5 +46,17 @@ public class CreateSkillHandlerTest {
         Assertions.assertTrue(result2.isSuccess());
         Assertions.assertNotNull(result2.getValue());
         Assertions.assertNotNull(result2.getValue().getSkill());
+    }
+
+
+    @Test
+    void testUnsuccessfulRelationHandling() {
+        var command2 = new CreateSkill();
+        command2.setSkillName("fruit");
+        command2.setParentSkill(new ObjectId());
+
+        Result<SkillCreated> result2 = handler.handle(command2);
+
+        Assertions.assertFalse(result2.isSuccess());
     }
 }
