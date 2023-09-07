@@ -18,7 +18,7 @@ import org.eclipse.microprofile.openapi.annotations.media.Content;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
-@Path("/jobs/update")
-public class UpdateJobController  extends TypicalPutController<UpdateJob, JobUpdated> {
-
-}
+//@Path("/jobs/update")
+//public class UpdateJobController  extends TypicalPutController<UpdateJob, JobUpdated> {
+//
+//}
