@@ -11,7 +11,7 @@ import static io.restassured.RestAssured.given;
 public class CreateJobControllerTest {
     @Test
     @DisplayName("Create job: valid input")
-    public void testBasicOrgCreation() {
+    public void testBasicJobCreation() {
         Map<String, Object> jsonAsMap = new HashMap<>();
         jsonAsMap.put("name", "Professor");
 
@@ -26,7 +26,7 @@ public class CreateJobControllerTest {
 
     @Test
     @DisplayName("Create job: invalid input")
-    public void testOrgCreationWithNameValidation() {
+    public void testJobCreationWithNameValidation() {
         Map<String, Object> jsonAsMap = new HashMap<>();
         jsonAsMap.put("name", "professor_of_linear_algebra");
 
