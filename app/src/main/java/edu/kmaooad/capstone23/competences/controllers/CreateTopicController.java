@@ -1,13 +1,10 @@
 package edu.kmaooad.capstone23.competences.controllers;
 
-import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.HandlingError;
 import edu.kmaooad.capstone23.common.Result;
-import edu.kmaooad.capstone23.common.TypicalController;
 import edu.kmaooad.capstone23.competences.commands.CreateTopic;
 import edu.kmaooad.capstone23.competences.events.TopicCreated;
-import edu.kmaooad.capstone23.orgs.commands.CreateOrg;
-import edu.kmaooad.capstone23.orgs.events.OrgCreated;
+import edu.kmaooad.capstone23.competences.handlers.CreateTopicHandler;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
@@ -22,15 +19,15 @@ import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
 @Path("/competences/topic/create")
 public class CreateTopicController {
     @Inject
-    CommandHandler<CreateTopic, TopicCreated> handler;
+    CreateTopicHandler handler;
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @APIResponses(value = {
             @APIResponse(responseCode = "200", content = {
-                    @Content(mediaType = "application/json", schema = @Schema(implementation = TopicCreated.class)) }),
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = TopicCreated.class))}),
             @APIResponse(responseCode = "400", content = {
-                    @Content(mediaType = "application/json", schema = @Schema(implementation = HandlingError.class)) }),
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = HandlingError.class))}),
             @APIResponse(responseCode = "500")
     })
     public Response create(CreateTopic command) {

@@ -1,7 +1,7 @@
 package edu.kmaooad.capstone23.competences.events;
 
 public class TopicCreated {
-    private String id;
+    private final String id;
 
     public String getId() {
         return id;
