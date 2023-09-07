@@ -6,9 +6,11 @@ import edu.kmaooad.capstone23.members.commands.CreateMemberBasic;
 import edu.kmaooad.capstone23.members.dal.Member;
 import edu.kmaooad.capstone23.members.dal.MembersRepository;
 import edu.kmaooad.capstone23.members.events.CreatedMemberBasic;
+import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
 
+@RequestScoped
 public class CreateMembersHandlerBasic implements CommandHandler<CreateMemberBasic, CreatedMemberBasic> {
     @Inject
     MembersRepository membersRepository;
