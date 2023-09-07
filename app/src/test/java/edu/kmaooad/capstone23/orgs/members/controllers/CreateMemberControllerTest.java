@@ -34,7 +34,7 @@ public class CreateMemberControllerTest {
 
     @Test
     @DisplayName("Create Member: Basic")
-    public void testBasicOrgCreation() {
+    public void testBasicMemberCreation() {
         Map<String, Object> jsonAsMap = new HashMap<>();
         jsonAsMap.put("firstName", "firstName");
         jsonAsMap.put("lastName", "lastName");
@@ -52,12 +52,30 @@ public class CreateMemberControllerTest {
 
     @Test
     @DisplayName("Create Member: Email validation")
-    public void testOrgCreationWithNameValidation() {
+    public void testMemberCreationWithEmailValidation() {
         Map<String, Object> jsonAsMap = new HashMap<>();
         jsonAsMap.put("firstName", "firstName");
         jsonAsMap.put("lastName", "lastName");
-        jsonAsMap.put("orgId", createdOrgId);
+        jsonAsMap.put("orgId", createdOrgId.toString());
         jsonAsMap.put("email", "email.com");
+
+        given()
+                .contentType("application/json")
+                .body(jsonAsMap)
+                .when()
+                .post("/members/create")
+                .then()
+                .statusCode(400);
+    }
+
+    @Test
+    @DisplayName("Create Member: Org does not exist")
+    public void testMemberCreationWithOrgExistenceValidation() {
+        Map<String, Object> jsonAsMap = new HashMap<>();
+        jsonAsMap.put("firstName", "firstName");
+        jsonAsMap.put("lastName", "lastName");
+        jsonAsMap.put("orgId", createdOrgId.toString().replace("a", "1"));
+        jsonAsMap.put("email", "email@a.com");
 
         given()
                 .contentType("application/json")
