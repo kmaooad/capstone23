@@ -10,6 +10,7 @@ import edu.kmaooad.capstone23.competences.handlers.CreateTopicHandler;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
@@ -24,6 +25,7 @@ public class CreateTopicHandlerTest {
     TopicRepository topicRepository;
 
     @Test
+    @DisplayName("Create Topic: Basic")
     void testSuccessfulHandling() {
         CreateTopic command = new CreateTopic();
         command.name = "New Topic";
@@ -41,6 +43,7 @@ public class CreateTopicHandlerTest {
     }
 
     @Test
+    @DisplayName("Create Topic: Basic with parent")
     void testCreateWithParentTopic() {
         Topic parentTopic = new Topic();
         parentTopic.name = "Parent Topic";
@@ -64,6 +67,7 @@ public class CreateTopicHandlerTest {
     }
 
     @Test
+    @DisplayName("Create Topic: Basic with not exist parent")
     void testCreateWithNonExistentParentTopic() {
         CreateTopic command = new CreateTopic();
         command.name = "Invalid Child Topic";

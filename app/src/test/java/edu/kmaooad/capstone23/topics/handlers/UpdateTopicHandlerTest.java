@@ -12,6 +12,7 @@ import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
@@ -51,6 +52,7 @@ public class UpdateTopicHandlerTest {
     }
 
     @Test
+    @DisplayName("Update Topic: Basic")
     void testSuccessfulBasicHandling() {
         UpdateTopic command = new UpdateTopic();
         command.setId(idToUpdate.toString());
@@ -71,6 +73,7 @@ public class UpdateTopicHandlerTest {
     }
 
     @Test
+    @DisplayName("Update Topic: Basic with parent")
     void testSuccessfulHandlingAddParent() {
         UpdateTopic command = new UpdateTopic();
         command.setId(idToUpdate.toString());
@@ -94,6 +97,7 @@ public class UpdateTopicHandlerTest {
     }
 
     @Test
+    @DisplayName("Update Topic: Basic remove parent")
     void testSuccessfulHandlingRemoveParent() {
         UpdateTopic command = new UpdateTopic();
         command.setId(idWithParent.toString());
@@ -117,6 +121,7 @@ public class UpdateTopicHandlerTest {
     }
 
     @Test
+    @DisplayName("Update Topic: Basic not exist topic")
     void testNonExistentTopic() {
         UpdateTopic command = new UpdateTopic();
         command.setId("nonExistentId");
@@ -130,6 +135,7 @@ public class UpdateTopicHandlerTest {
     }
 
     @Test
+    @DisplayName("Update Topic: Basic not exist parent topic")
     void testNonExistentParentTopic() {
         UpdateTopic command = new UpdateTopic();
         command.setId(idToUpdate.toString());
@@ -144,6 +150,7 @@ public class UpdateTopicHandlerTest {
     }
 
     @Test
+    @DisplayName("Update Topic: Basic validate topic name")
     void testInvalidTopicName() {
         UpdateTopic command = new UpdateTopic();
         command.setId(idToUpdate.toString());
