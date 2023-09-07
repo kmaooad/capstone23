@@ -1,6 +1,7 @@
 package edu.kmaooad.capstone23.competences.commands;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import org.bson.types.ObjectId;
@@ -13,6 +14,7 @@ public class UpdateSkill {
 
     private ObjectId parentSkill;
 
+    @NotNull
     private ObjectId id;
 
     public String getSkillName() {
