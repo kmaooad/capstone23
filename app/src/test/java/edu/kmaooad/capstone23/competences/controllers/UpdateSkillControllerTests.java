@@ -10,38 +10,38 @@ import java.util.Map;
 import static io.restassured.RestAssured.given;
 
 @QuarkusTest
-public class UpdateTopicControllerTests {
+public class UpdateSkillControllerTests {
 
     @Test
-    @DisplayName("Update Topic: Basic")
+    @DisplayName("Update Skill: Basic")
     public void testBasicOrgCreation() {
-        var topicId = createTopic();
+        var skillId = createSkill();
 
         Map<String, Object> jsonAsMap = new HashMap<>();
-        jsonAsMap.put("id", topicId);
-        jsonAsMap.put("topicName", "drinks");
+        jsonAsMap.put("id", skillId);
+        jsonAsMap.put("skillName", "drinks");
 
         given()
                 .contentType("application/json")
                 .body(jsonAsMap)
                 .when()
-                .post("/topics/update")
+                .post("/skills/update")
                 .then()
                 .statusCode(200);
     }
 
-    private String createTopic() {
+    private String createSkill() {
         Map<String, Object> jsonAsMap = new HashMap<>();
-        jsonAsMap.put("topicName", "food");
+        jsonAsMap.put("skillName", "food");
 
         return given()
                 .contentType("application/json")
                 .body(jsonAsMap)
                 .when()
-                .post("/topics/create")
+                .post("/skills/create")
                 .then()
                 .statusCode(200)
                 .extract()
-                .path("topic");
+                .path("skill");
     }
 }

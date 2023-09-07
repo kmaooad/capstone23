@@ -2,7 +2,7 @@ package edu.kmaooad.capstone23.competences.commands;
 
 import org.bson.types.ObjectId;
 
-public class DeleteTopic {
+public class DeleteSkill {
 
     private ObjectId id;
 

@@ -1,6 +1,6 @@
 package edu.kmaooad.capstone23.competences.controllers;
 
-import edu.kmaooad.capstone23.competences.events.TopicCreated;
+import edu.kmaooad.capstone23.competences.events.SkillCreated;
 import io.quarkus.test.junit.QuarkusTest;
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.DisplayName;
@@ -12,50 +12,50 @@ import java.util.Map;
 import static io.restassured.RestAssured.given;
 
 @QuarkusTest
-public class CreateTopicsControllerTests {
+public class CreateSkillsControllerTests {
 
     @Test
-    @DisplayName("Create Topic: Basic")
+    @DisplayName("Create Skill: Basic")
     public void testBasicOrgCreation() {
         Map<String, Object> jsonAsMap = new HashMap<>();
-        jsonAsMap.put("topicName", "food");
+        jsonAsMap.put("skillName", "food");
         //jsonAsMap.put("");
 
         given()
                 .contentType("application/json")
                 .body(jsonAsMap)
                 .when()
-                .post("/topics/create")
+                .post("/skills/create")
                 .then()
                 .statusCode(200);
     }
 
     @Test
-    @DisplayName("Create Topic Relation: Basic")
-    public void testTopicRelationCreation() {
+    @DisplayName("Create Skill Relation: Basic")
+    public void testSkillRelationCreation() {
         Map<String, Object> jsonAsMap = new HashMap<>();
-        jsonAsMap.put("topicName", "food");
+        jsonAsMap.put("skillName", "food");
 
         String result = given()
                 .contentType("application/json")
                 .body(jsonAsMap)
                 .when()
-                .post("/topics/create")
+                .post("/skills/create")
                 .then()
                 .statusCode(200)
                 .extract()
-                .path("topic")
+                .path("skill")
                 ;
 
         Map<String, Object> jsonAsMap2 = new HashMap<>();
-        jsonAsMap2.put("topicName", "fruits");
-        jsonAsMap2.put("parentTopic", result);
+        jsonAsMap2.put("skillName", "fruits");
+        jsonAsMap2.put("parentSkill", result);
 
         given()
                 .contentType("application/json")
                 .body(jsonAsMap2)
                 .when()
-                .post("/topics/create")
+                .post("/skills/create")
                 .then()
                 .statusCode(200)
                 ;

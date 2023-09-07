@@ -5,30 +5,30 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import org.bson.types.ObjectId;
 
-public class UpdateTopic {
+public class UpdateSkill {
     @NotBlank
     @Size(min = 3, max = 50)
     @Pattern(regexp = "^[a-zA-Z0-9\s]*$")
-    private String topicName;
+    private String skillName;
 
-    private ObjectId parentTopic;
+    private ObjectId parentSkill;
 
     private ObjectId id;
 
-    public String getTopicName() {
-        return topicName;
+    public String getSkillName() {
+        return skillName;
     }
 
-    public void setTopicName(String topicName) {
-        this.topicName = topicName;
+    public void setSkillName(String skillName) {
+        this.skillName = skillName;
     }
 
-    public ObjectId getParentTopic() {
-        return parentTopic;
+    public ObjectId getParentSkill() {
+        return parentSkill;
     }
 
-    public void setParentTopic(ObjectId parentTopic) {
-        this.parentTopic = parentTopic;
+    public void setParentSkill(ObjectId parentSkill) {
+        this.parentSkill = parentSkill;
     }
 
     public ObjectId getId() {

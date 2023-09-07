@@ -1,6 +1,6 @@
 package edu.kmaooad.capstone23.competences.controllers;
 
-import edu.kmaooad.capstone23.competences.events.TopicDeleted;
+import edu.kmaooad.capstone23.competences.events.SkillDeleted;
 import io.quarkus.test.junit.QuarkusTest;
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.DisplayName;
@@ -12,10 +12,10 @@ import java.util.Map;
 import static io.restassured.RestAssured.given;
 
 @QuarkusTest
-public class DeleteTopicsControllerTests {
+public class DeleteSkillsControllerTests {
 
     @Test
-    @DisplayName("Delete Topic: Basic")
+    @DisplayName("Delete Skill: Basic")
     public void testBasicOrgCreation() {
         Map<String, Object> jsonAsMap = new HashMap<>();
         jsonAsMap.put("id", "64f83a309682b0261c7bd24e");
@@ -27,39 +27,39 @@ public class DeleteTopicsControllerTests {
                 .contentType("application/json")
                 .body(jsonAsMap)
                 .when()
-                .post("/topics/delete")
+                .post("/skills/delete")
                 .then()
                 .statusCode(200);
     }
 
     // @Test
-    // @DisplayName("Delete Topic Relation: Basic")
-    // public void testTopicRelationCreation() {
+    // @DisplayName("Delete Skill Relation: Basic")
+    // public void testSkillRelationCreation() {
     //     Map<String, Object> jsonAsMap = new HashMap<>();
-    //     jsonAsMap.put("topicName", "food");
+    //     jsonAsMap.put("skillName", "food");
     //     //jsonAsMap.put("");
 
     //     String result = given()
     //             .contentType("application/json")
     //             .body(jsonAsMap)
     //             .when()
-    //             .post("/topics/Delete")
+    //             .post("/skills/Delete")
     //             .then()
     //             .statusCode(200)
     //             .extract()
-    //             .path("topic")
+    //             .path("skill")
     //             ;
 
     //     Map<String, Object> jsonAsMap2 = new HashMap<>();
-    //     jsonAsMap2.put("topicName", "fruits");
-    //     jsonAsMap2.put("parentTopic", result);
+    //     jsonAsMap2.put("skillName", "fruits");
+    //     jsonAsMap2.put("parentSkill", result);
     //     //jsonAsMap.put("");
 
     //     given()
     //             .contentType("application/json")
     //             .body(jsonAsMap2)
     //             .when()
-    //             .post("/topics/Delete")
+    //             .post("/skills/Delete")
     //             .then()
     //             .statusCode(200)
     //             ;
