@@ -4,7 +4,7 @@ import org.bson.types.ObjectId;
 
 public class TopicCreated {
 
-   private ObjectId topic;
+    private ObjectId topic;
 
     public TopicCreated(ObjectId topic) {
         this.topic = topic;
