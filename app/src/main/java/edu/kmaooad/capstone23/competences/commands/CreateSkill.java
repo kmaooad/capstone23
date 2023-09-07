@@ -12,6 +12,7 @@ public class CreateSkill {
     @Pattern(regexp = "^[a-zA-Z0-9\s]*$")
     private String skillName;
 
+
     private ObjectId parentSkill;
 
     public String getSkillName() {
