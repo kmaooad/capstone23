@@ -27,7 +27,7 @@ public class UpdateJobController {
     @Produces(MediaType.APPLICATION_JSON)
     @APIResponses(value = {
             @APIResponse(responseCode = "200", content = {
-                    @Content(mediaType = "application/json", schema = @Schema(implementation = JobDeleted.class)) }),
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = JobUpdated.class)) }),
             @APIResponse(responseCode = "400", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = HandlingError.class)) }),
             @APIResponse(responseCode = "500")

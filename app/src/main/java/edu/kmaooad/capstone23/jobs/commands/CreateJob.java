@@ -9,6 +9,14 @@ public class CreateJob {
     private ObjectId[] competencesId;
     private ObjectId[] activitiesId;
 
+
+    public CreateJob(ObjectId id, String name, boolean active) {
+        this.id = id;
+        this.name = name;
+        this.active = active;
+
+    }
+
     public ObjectId getId() {
         return id;
     }
