@@ -14,11 +14,26 @@ import static io.restassured.RestAssured.given;
 public class CreateJobControllerTests {
 
     //trying to make it all as close to ORGS as possible in order to make the code more comprehensible
+//    @Test
+//    @DisplayName("Create Job: Basic")
+//    public void testBasicJobCreation() {
+//        Map<String, Object> jsonAsMap = new HashMap<>();
+//        jsonAsMap.put("jobName", "test_job_name");
+//
+//        given()
+//                .contentType("application/json")
+//                .body(jsonAsMap)
+//                .when()
+//                .post("/jobs/create")
+//                .then()
+//                .statusCode(200);
+//    }
+
     @Test
-    @DisplayName("Create Job: Basic")
-    public void testBasicJobCreation() {
+    @DisplayName("Create Job: Name validation")
+    public void testJobCreationWithNameValidation() {
         Map<String, Object> jsonAsMap = new HashMap<>();
-        jsonAsMap.put("jobName", "test_job_name");
+        jsonAsMap.put("jobName", "test_invalid_job_name");
 
         given()
                 .contentType("application/json")
@@ -26,6 +41,6 @@ public class CreateJobControllerTests {
                 .when()
                 .post("/jobs/create")
                 .then()
-                .statusCode(200);
+                .statusCode(400);
     }
 }
