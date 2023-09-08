@@ -15,3 +15,5 @@ import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
         @Content(mediaType = "application/json", schema = @Schema(implementation = JobCreated.class)) })
 public class CreateJobController extends TypicalController<CreateJob, JobCreated> {
 }
+
+//@Path("/jobs/update")
