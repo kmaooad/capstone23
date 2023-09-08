@@ -7,9 +7,10 @@ import edu.kmaooad.capstone23.jobs.dal.Job;
 import edu.kmaooad.capstone23.jobs.dal.JobsRepository;
 import edu.kmaooad.capstone23.jobs.events.JobCreated;
 
+import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 
-
+@RequestScoped
 public class CreateJobHandler implements CommandHandler<CreateJob, JobCreated> {
 
     @Inject
@@ -19,6 +20,7 @@ public class CreateJobHandler implements CommandHandler<CreateJob, JobCreated> {
 
         Job job = new Job();
         job.name = command.getJobName();
+        job.description = command.getJobDescription();
 
         repository.insert(job);
 
