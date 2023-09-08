@@ -42,23 +42,4 @@ public class CreateJob {
         return activitiesId;
     }
 
-    public void setId(ObjectId id) {
-        this.id = id;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
-    }
-
-    public void setCompetencesId(ObjectId[] competencesId) {
-        this.competencesId = competencesId;
-    }
-
-    public void setActivitiesId(ObjectId[] activitiesId) {
-        this.activitiesId = activitiesId;
-    }
 }

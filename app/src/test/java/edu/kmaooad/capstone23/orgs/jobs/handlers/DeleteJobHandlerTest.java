@@ -31,7 +31,8 @@ public class DeleteJobHandlerTest {
 
         Result<JobCreated> result = handler.handle(command);
 
-        DeleteJob commandForDel = new DeleteJob(result.getValue().getJobId());
+        DeleteJob commandForDel = new DeleteJob();
+        commandForDel.setJobId(result.getValue().getJobId());
 
         Result<JobDeleted> resultForDel = handlerForDel.handle(commandForDel);
 

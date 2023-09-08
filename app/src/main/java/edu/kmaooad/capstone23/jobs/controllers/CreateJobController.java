@@ -20,34 +20,6 @@ import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
 
 @Path("/jobs/create")
-//public class CreateJobController extends TypicalController<CreateJob, JobCreated> {
-//
-//}
-public class CreateJobController {
-    @Inject
-    CommandHandler<CreateJob, JobCreated> commandHandler;
+public class CreateJobController extends TypicalController<CreateJob, JobCreated> {
 
-    @POST
-    @Produces(MediaType.APPLICATION_JSON)
-    @APIResponses(value = {
-            @APIResponse(responseCode = "200", content = {
-                    @Content(mediaType = "application/json", schema = @Schema(implementation = JobCreated.class)) }),
-            @APIResponse(responseCode = "400", content = {
-                    @Content(mediaType = "application/json", schema = @Schema(implementation = HandlingError.class)) }),
-            @APIResponse(responseCode = "500")
-    })
-    public Response delete(CreateJob command) {
-        try {
-            Result<JobCreated> result = commandHandler.handle(command);
-
-            if (!result.isSuccess()) {
-                return Response.status(400).entity(result.toError()).build();
-            }
-
-            return Response.ok(result.getValue(), MediaType.APPLICATION_JSON).build();
-        } catch (Exception e) {
-            System.out.println(e);
-            return Response.status(500).build();
-        }
-    }
 }
