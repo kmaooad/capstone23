@@ -16,23 +16,26 @@ public class CreateJobHandlerTest {
     @Inject
     CommandHandler<CreateJob, JobCreated> handler;
 
-    //TODO: find out why this test isn't working (gives 400 instead of 200)
-//    @Test
-//    void testSuccessfulHandling() {
-//        CreateJob command = new CreateJob();
-//        command.setJobName("handler_test_job_name");
-//
-//        Result<JobCreated> result = handler.handle(command);
-//
-//        Assertions.assertTrue(result.isSuccess());
-//        Assertions.assertNotNull(result.getValue());
-//        Assertions.assertFalse(result.getValue().getJobId().isEmpty());
-//    }
+    @Test
+    void testSuccessfulHandling() {
+        CreateJob command = new CreateJob();
+        command.setJobName("handlerTestJobName");
+
+        System.out.println("Before calling handler.handle(command)");
+
+        Result<JobCreated> result = handler.handle(command);
+
+        System.out.println("After calling handler.handle(command)");
+
+        Assertions.assertTrue(result.isSuccess());
+        Assertions.assertNotNull(result.getValue());
+        Assertions.assertFalse(result.getValue().getJobId().isEmpty());
+    }
 
     @Test
     void testNameValidation() {
         CreateJob command = new CreateJob();
-        command.setJobName("handler_test2_job_name");
+        command.setJobName("handler_Invalid_Test_Job_Name");
 
         Result<JobCreated> result = handler.handle(command);
 
