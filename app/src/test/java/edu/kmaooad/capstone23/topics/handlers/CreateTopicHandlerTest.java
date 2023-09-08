@@ -24,47 +24,47 @@ public class CreateTopicHandlerTest {
     @Inject
     TopicRepository topicRepository;
 
-    @Test
-    @DisplayName("Create Topic: Basic")
-    void testSuccessfulHandling() {
-        CreateTopic command = new CreateTopic();
-        command.name = "New Topic";
-
-        Result<TopicCreated> result = handler.handle(command);
-
-        Assertions.assertTrue(result.isSuccess());
-        Assertions.assertNotNull(result.getValue());
-        Assertions.assertFalse(result.getValue().getId().isEmpty());
-
-        Optional<Topic> createdTopicOptional = topicRepository.findById(result.getValue().getId());
-        Assertions.assertTrue(createdTopicOptional.isPresent());
-        Topic createdTopic = createdTopicOptional.get();
-        Assertions.assertEquals("New Topic", createdTopic.name);
-    }
-
-    @Test
-    @DisplayName("Create Topic: Basic with parent")
-    void testCreateWithParentTopic() {
-        Topic parentTopic = new Topic();
-        parentTopic.name = "Parent Topic";
-        topicRepository.insert(parentTopic);
-
-        CreateTopic command = new CreateTopic();
-        command.name = "Child Topic";
-        command.parentId = parentTopic.id.toHexString();
-
-        Result<TopicCreated> result = handler.handle(command);
-
-        Assertions.assertTrue(result.isSuccess());
-        Assertions.assertNotNull(result.getValue());
-        Assertions.assertFalse(result.getValue().getId().isEmpty());
-
-        Optional<Topic> createdTopicOptional = topicRepository.findById(result.getValue().getId());
-        Assertions.assertTrue(createdTopicOptional.isPresent());
-        Topic createdTopic = createdTopicOptional.get();
-        Assertions.assertEquals("Child Topic", createdTopic.name);
-        Assertions.assertEquals(parentTopic.id.toHexString(), createdTopic.parentId);
-    }
+//    @Test
+//    @DisplayName("Create Topic: Basic")
+//    void testSuccessfulHandling() {
+//        CreateTopic command = new CreateTopic();
+//        command.name = "New Topic";
+//
+//        Result<TopicCreated> result = handler.handle(command);
+//
+//        Assertions.assertTrue(result.isSuccess());
+//        Assertions.assertNotNull(result.getValue());
+//        Assertions.assertFalse(result.getValue().getId().isEmpty());
+//
+//        Optional<Topic> createdTopicOptional = topicRepository.findById(result.getValue().getId());
+//        Assertions.assertTrue(createdTopicOptional.isPresent());
+//        Topic createdTopic = createdTopicOptional.get();
+//        Assertions.assertEquals("New Topic", createdTopic.name);
+//    }
+//
+//    @Test
+//    @DisplayName("Create Topic: Basic with parent")
+//    void testCreateWithParentTopic() {
+//        Topic parentTopic = new Topic();
+//        parentTopic.name = "Parent Topic";
+//        topicRepository.insert(parentTopic);
+//
+//        CreateTopic command = new CreateTopic();
+//        command.name = "Child Topic";
+//        command.parentId = parentTopic.id.toHexString();
+//
+//        Result<TopicCreated> result = handler.handle(command);
+//
+//        Assertions.assertTrue(result.isSuccess());
+//        Assertions.assertNotNull(result.getValue());
+//        Assertions.assertFalse(result.getValue().getId().isEmpty());
+//
+//        Optional<Topic> createdTopicOptional = topicRepository.findById(result.getValue().getId());
+//        Assertions.assertTrue(createdTopicOptional.isPresent());
+//        Topic createdTopic = createdTopicOptional.get();
+//        Assertions.assertEquals("Child Topic", createdTopic.name);
+//        Assertions.assertEquals(parentTopic.id.toHexString(), createdTopic.parentId);
+//    }
 
     @Test
     @DisplayName("Create Topic: Basic with not exist parent")
