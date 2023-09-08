@@ -34,6 +34,7 @@ public class TypicalDeleteController<T1, T2> {
             Result<T2> result = commandHandler.handle(command);
 
             if (!result.isSuccess()) {
+                System.out.println(Response.status(400).entity(result.toError()).build());
                 return Response.status(400).entity(result.toError()).build();
             }
 
