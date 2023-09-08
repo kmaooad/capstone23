@@ -39,6 +39,7 @@ public class TypicalDeleteController<T1, T2> {
 
             return Response.ok(result.getValue(), MediaType.APPLICATION_JSON).build();
         } catch (Exception e) {
+            System.out.println(e);
             return Response.status(500).build();
         }
     }
