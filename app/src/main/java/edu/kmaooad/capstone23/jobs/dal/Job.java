@@ -8,5 +8,6 @@ import io.quarkus.mongodb.panache.common.MongoEntity;
 public class Job {
     public ObjectId id;
     public String name;
+    public  String description;
 }
 
