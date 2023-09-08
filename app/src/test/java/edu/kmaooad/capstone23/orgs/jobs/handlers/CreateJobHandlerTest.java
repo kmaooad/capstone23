@@ -25,7 +25,6 @@ public class CreateJobHandlerTest {
 
         Assertions.assertTrue(result.isSuccess());
         Assertions.assertNotNull(result.getValue());
-        Assertions.assertFalse(result.getValue().getJobId().isEmpty());
     }
 
     @Test

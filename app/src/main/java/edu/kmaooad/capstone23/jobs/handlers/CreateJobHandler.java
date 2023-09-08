@@ -30,7 +30,7 @@ public class CreateJobHandler implements CommandHandler<CreateJob, JobCreated> {
 
         repository.insert(job);
 
-        JobCreated result = new JobCreated(job.id.toString());
+        JobCreated result = new JobCreated(job.id);
 
         return new Result<JobCreated>(result);
     }

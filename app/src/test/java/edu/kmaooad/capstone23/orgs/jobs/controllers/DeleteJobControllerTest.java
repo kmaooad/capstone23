@@ -33,7 +33,7 @@ public class DeleteJobControllerTest {
         given()
                 .contentType("application/json")
                 .when()
-                .delete("/jobs/delete/".concat(result.getValue().getJobId()))
+                .delete("/jobs/delete/".concat(result.getValue().getJobId().toString()))
                 .then()
                 .statusCode(200);
     }
