@@ -22,7 +22,7 @@ public class TypicalDeleteController<T1, T2> {
     CommandHandler<T1, T2> commandHandler;
 
     @DELETE
-    @Path("/id")
+    @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     @APIResponses(value = {
             @APIResponse(responseCode = "200", content = {
