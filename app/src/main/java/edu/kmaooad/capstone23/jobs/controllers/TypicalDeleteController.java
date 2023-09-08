@@ -3,12 +3,14 @@ package edu.kmaooad.capstone23.jobs.controllers;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.HandlingError;
 import edu.kmaooad.capstone23.common.Result;
+import edu.kmaooad.capstone23.jobs.commands.DeleteJob;
 import edu.kmaooad.capstone23.jobs.events.JobDeleted;
 import edu.kmaooad.capstone23.orgs.events.OrgCreated;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import org.bson.types.ObjectId;
 import org.eclipse.microprofile.openapi.annotations.media.Content;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
@@ -28,9 +30,9 @@ public class TypicalDeleteController<T1, T2> {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = HandlingError.class)) }),
             @APIResponse(responseCode = "500")
     })
-    public Response delete(@PathParam("id") String id) {
+    public Response delete(@PathParam("id") ObjectId id) {
         try {
-            Result<T2> result = commandHandler.handle((T1) id);
+            Result<T2> result = commandHandler.handle((T1) new DeleteJob(id));
 
             if (!result.isSuccess()) {
                 System.out.println(Response.status(400).entity(result.toError()).build());
