@@ -12,8 +12,7 @@ public class CreateJob {
     @Pattern(regexp = "^[a-zA-Z0-9\s]*$")
     private String jobName;
 
-    @NotBlank
-    @Size(min = 3, max = 50)
+    @Size(max = 100)
     @Pattern(regexp = "^[a-zA-Z0-9\s]*$")
     private String jobDescription;
 
