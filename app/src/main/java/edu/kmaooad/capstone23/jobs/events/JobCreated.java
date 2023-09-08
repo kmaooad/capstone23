@@ -6,14 +6,11 @@ public class JobCreated {
 
     private String jobDescription;
 
-
-
     public String getJobId() {
         return jobId;
     }
 
     public String getJobDescription() {return jobDescription;}
-
 
     public JobCreated(String jobId) {
         this.jobId = jobId;
