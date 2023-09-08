@@ -58,7 +58,7 @@ public class UpdateTopicControllerTests {
                 .contentType("application/json")
                 .body(jsonAsMap)
                 .when()
-                .put("/competences/topic/update")
+                .post("/competences/topic/update")
                 .then()
                 .statusCode(200)
                 .body("id", notNullValue())
@@ -78,7 +78,7 @@ public class UpdateTopicControllerTests {
                 .contentType("application/json")
                 .body(jsonAsMap)
                 .when()
-                .put("/competences/topic/update")
+                .post("/competences/topic/update")
                 .then()
                 .statusCode(200)
                 .body("id", notNullValue())
@@ -98,7 +98,7 @@ public class UpdateTopicControllerTests {
                 .contentType("application/json")
                 .body(jsonAsMap)
                 .when()
-                .put("/competences/topic/update")
+                .post("/competences/topic/update")
                 .then()
                 .statusCode(200)
                 .body("id", notNullValue())
@@ -117,7 +117,7 @@ public class UpdateTopicControllerTests {
                 .contentType("application/json")
                 .body(jsonAsMap)
                 .when()
-                .put("/competences/topic/update")
+                .post("/competences/topic/update")
                 .then()
                 .statusCode(400);
     }
@@ -134,7 +134,7 @@ public class UpdateTopicControllerTests {
                 .contentType("application/json")
                 .body(jsonAsMap)
                 .when()
-                .put("/competences/topic/update")
+                .post("/competences/topic/update")
                 .then()
                 .statusCode(400);
     }
@@ -150,7 +150,7 @@ public class UpdateTopicControllerTests {
                 .contentType("application/json")
                 .body(jsonAsMap)
                 .when()
-                .put("/competences/topic/update")
+                .post("/competences/topic/update")
                 .then()
                 .statusCode(400);
     }
