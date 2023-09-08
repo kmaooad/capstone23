@@ -16,7 +16,7 @@ public class DeleteJobControllerTest {
     @DisplayName("Delete job: valid input")
     public void testBasicJobDeleting() {
         Map<String, Object> jsonAsMap = new HashMap<>();
-        jsonAsMap.put("_id", "64faf6ad341e202c91f76c84");
+        jsonAsMap.put("name", "ProfessorForDel");
 
         given()
                 .contentType("application/json")
