@@ -6,18 +6,20 @@ import edu.kmaooad.capstone23.jobs.commands.CreateJob;
 import edu.kmaooad.capstone23.jobs.events.JobCreated;
 import edu.kmaooad.capstone23.orgs.commands.CreateOrg;
 import edu.kmaooad.capstone23.orgs.events.OrgCreated;
+import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+@QuarkusTest
 public class CreateJobHandlerTest {
     @Inject
     CommandHandler<CreateJob, JobCreated> handler;
 
     @Test
     void testSuccessfulHandling() {
-        CreateJob command = new CreateJob(new ObjectId("1"), "IT teacher", true);
+        CreateJob command = new CreateJob("IT teacher", true);
 
         Result<JobCreated> result = handler.handle(command);
 
@@ -28,7 +30,7 @@ public class CreateJobHandlerTest {
 
     @Test
     void testNameValidation() {
-        CreateJob command = new CreateJob(new ObjectId("2"), "Math_teacher", true);
+        CreateJob command = new CreateJob("Math_teacher", true);
 
         Result<JobCreated> result = handler.handle(command);
 

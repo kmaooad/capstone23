@@ -16,8 +16,7 @@ public class CreateJob {
     private ObjectId[] activitiesId;
 
 
-    public CreateJob(ObjectId id, String name, boolean active) {
-        this.id = id;
+    public CreateJob(String name, boolean active) {
         this.name = name;
         this.active = active;
 
