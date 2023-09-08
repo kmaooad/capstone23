@@ -11,6 +11,8 @@ public class DeleteJob {
         this.jobId = jobId;
     }
 
+    public DeleteJob(){};
+
     public ObjectId getJobId() {
         return jobId;
     }

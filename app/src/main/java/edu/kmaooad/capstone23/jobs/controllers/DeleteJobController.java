@@ -20,32 +20,34 @@ import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
 
 @Path("/jobs/delete")
-public class DeleteJobController  extends TypicalDeleteController<DeleteJob, JobDeleted> {
-    @Inject
-    CommandHandler<DeleteJob, JobDeleted> commandHandler;
-
-    @DELETE
-    @Path("/{id}")
-    @Produces(MediaType.APPLICATION_JSON)
-    @APIResponses(value = {
-            @APIResponse(responseCode = "200", content = {
-                    @Content(mediaType = "application/json", schema = @Schema(implementation = JobDeleted.class)) }),
-            @APIResponse(responseCode = "400", content = {
-                    @Content(mediaType = "application/json", schema = @Schema(implementation = HandlingError.class)) }),
-            @APIResponse(responseCode = "500")
-    })
-    public Response delete(@PathParam("id") ObjectId id) {
-        try {
-            Result<JobDeleted> result = commandHandler.handle(new DeleteJob(id));
-
-            if (!result.isSuccess()) {
-                System.out.println(Response.status(400).entity(result.toError()).build());
-                return Response.status(400).entity(result.toError()).build();
-            }
-            return Response.ok(result.getValue(), MediaType.APPLICATION_JSON).build();
-        } catch (Exception e) {
-            System.out.println(e);
-            return Response.status(500).build();
-        }
-    }
+@APIResponse(responseCode = "200", content = {
+        @Content(mediaType = "application/json", schema = @Schema(implementation = JobDeleted.class)) })
+public class DeleteJobController  extends TypicalController<DeleteJob, JobDeleted> {
+//    @Inject
+//    CommandHandler<DeleteJob, JobDeleted> commandHandler;
+//
+//    @DELETE
+//    @Path("/{id}")
+//    @Produces(MediaType.APPLICATION_JSON)
+//    @APIResponses(value = {
+//            @APIResponse(responseCode = "200", content = {
+//                    @Content(mediaType = "application/json", schema = @Schema(implementation = JobDeleted.class)) }),
+//            @APIResponse(responseCode = "400", content = {
+//                    @Content(mediaType = "application/json", schema = @Schema(implementation = HandlingError.class)) }),
+//            @APIResponse(responseCode = "500")
+//    })
+//    public Response delete(@PathParam("id") ObjectId id) {
+//        try {
+//            Result<JobDeleted> result = commandHandler.handle(new DeleteJob(id));
+//
+//            if (!result.isSuccess()) {
+//                System.out.println(Response.status(400).entity(result.toError()).build());
+//                return Response.status(400).entity(result.toError()).build();
+//            }
+//            return Response.ok(result.getValue(), MediaType.APPLICATION_JSON).build();
+//        } catch (Exception e) {
+//            System.out.println(e);
+//            return Response.status(500).build();
+//        }
+//    }
 }

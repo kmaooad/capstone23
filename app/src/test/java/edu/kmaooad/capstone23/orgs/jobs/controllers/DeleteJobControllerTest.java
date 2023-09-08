@@ -26,14 +26,14 @@ public class DeleteJobControllerTest {
         CreateJob command = new CreateJob("Teacher", true);
         Result<JobCreated> result = handler.handle(command);
 
-//        Map<String, Object> jsonAsMap = new HashMap<>();
-//        ObjectId id = new ObjectId("64faf6ad341e202c91f76c84");
-//        jsonAsMap.put("_id", id);
+        Map<String, Object> jsonAsMap = new HashMap<>();
+        jsonAsMap.put("jobId", result.getValue().getJobId().toHexString());
 
         given()
                 .contentType("application/json")
+                .body(jsonAsMap)
                 .when()
-                .delete("/jobs/delete/".concat(result.getValue().getJobId().toString()))
+                .post("/jobs/delete")
                 .then()
                 .statusCode(200);
     }
@@ -42,14 +42,14 @@ public class DeleteJobControllerTest {
     @DisplayName("Delete job: invalid input")
     public void testJobDeletingWithInvalidInput() {
         Map<String, Object> jsonAsMap = new HashMap<>();
-        ObjectId id = new ObjectId("64faf6ad322e202c91f76c84");
-        jsonAsMap.put("_id", id);
+        ObjectId id = new ObjectId("aaaaaaaaaaaaaaaaaaaaaaaa");
+        jsonAsMap.put("jobId", id);
 
         given()
                 .contentType("application/json")
                 .body(jsonAsMap)
                 .when()
-                .delete("/jobs/delete/"+id)
+                .post("/jobs/delete")
                 .then()
                 .statusCode(400);
     }
