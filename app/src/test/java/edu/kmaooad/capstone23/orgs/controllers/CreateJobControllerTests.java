@@ -13,12 +13,12 @@ import static io.restassured.RestAssured.given;
 @QuarkusTest
 public class CreateJobControllerTests {
 
-    //trying to make it all as close to ORGS as possible in order to make the code more comprehensible
+    //TODO: find out why this test isn't working (gives 400 instead of 200)
 //    @Test
 //    @DisplayName("Create Job: Basic")
 //    public void testBasicJobCreation() {
 //        Map<String, Object> jsonAsMap = new HashMap<>();
-//        jsonAsMap.put("jobName", "test_job_name");
+//        jsonAsMap.put("jobName", "test_job_name!!");
 //
 //        given()
 //                .contentType("application/json")
