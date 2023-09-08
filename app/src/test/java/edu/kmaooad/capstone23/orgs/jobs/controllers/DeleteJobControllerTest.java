@@ -1,6 +1,7 @@
 package edu.kmaooad.capstone23.orgs.jobs.controllers;
 
 import io.quarkus.test.junit.QuarkusTest;
+import org.bson.types.ObjectId;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -16,7 +17,7 @@ public class DeleteJobControllerTest {
     @DisplayName("Delete job: valid input")
     public void testBasicJobDeleting() {
         Map<String, Object> jsonAsMap = new HashMap<>();
-        String id = "64faf6ad341e202c91f76c84";
+        ObjectId id = new ObjectId("64faf6ad341e202c91f76c84");
         jsonAsMap.put("_id", id);
 
         given()
