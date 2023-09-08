@@ -1,19 +1,20 @@
 package edu.kmaooad.capstone23.members.commands;
 
+import io.smallrye.common.constraint.NotNull;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import org.bson.types.ObjectId;
 
-public class CreateMemberBasic {
+public class CreateBasicMember {
     @NotBlank
     @Size(min = 1)
     private String firstName;
     @NotBlank
     @Size(min = 1)
     private String lastName;
-    @NotBlank
-    @Size(min = 24, max = 24)
-    private String orgId;
+    @NotNull
+    private ObjectId orgId;
     @NotBlank
     @Email
     private String email;
@@ -42,11 +43,11 @@ public class CreateMemberBasic {
         this.email = email;
     }
 
-    public String getOrgId() {
+    public ObjectId getOrgId() {
         return orgId;
     }
 
-    public void setOrgId(String orgId) {
+    public void setOrgId(ObjectId orgId) {
         this.orgId = orgId;
     }
 }

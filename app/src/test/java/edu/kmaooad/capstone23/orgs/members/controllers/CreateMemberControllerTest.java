@@ -1,9 +1,7 @@
 package edu.kmaooad.capstone23.orgs.members.controllers;
 
-import edu.kmaooad.capstone23.common.CommandHandler;
-import edu.kmaooad.capstone23.common.Result;
-import edu.kmaooad.capstone23.orgs.commands.CreateOrg;
-import edu.kmaooad.capstone23.orgs.events.OrgCreated;
+import edu.kmaooad.capstone23.orgs.dal.Org;
+import edu.kmaooad.capstone23.orgs.dal.OrgsRepository;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
@@ -19,17 +17,15 @@ import static io.restassured.RestAssured.given;
 @QuarkusTest
 public class CreateMemberControllerTest {
     @Inject
-    CommandHandler<CreateOrg, OrgCreated> orgCommandHandler;
-
+    OrgsRepository orgsRepository;
     private ObjectId createdOrgId;
 
     @BeforeEach
     void setUp() {
-        CreateOrg command = new CreateOrg();
-        command.setOrgName("NaUKMA");
-
-        Result<OrgCreated> result = orgCommandHandler.handle(command);
-        createdOrgId = new ObjectId(result.getValue().getOrgId());
+        var org = new Org();
+        org.name = "NaUKMA";
+        orgsRepository.insert(org);
+        createdOrgId = org.id;
     }
 
     @Test
@@ -74,7 +70,10 @@ public class CreateMemberControllerTest {
         Map<String, Object> jsonAsMap = new HashMap<>();
         jsonAsMap.put("firstName", "firstName");
         jsonAsMap.put("lastName", "lastName");
-        jsonAsMap.put("orgId", createdOrgId.toString().replace("a", "1"));
+        var newObjectId = new ObjectId();
+        while (orgsRepository.findByIdOptional(newObjectId).isPresent())
+            newObjectId = new ObjectId();
+        jsonAsMap.put("orgId", newObjectId.toString());
         jsonAsMap.put("email", "email@a.com");
 
         given()

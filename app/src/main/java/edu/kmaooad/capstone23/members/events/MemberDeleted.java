@@ -1,6 +1,6 @@
 package edu.kmaooad.capstone23.members.events;
 
-public class DeletedMember {
+public class MemberDeleted {
     private boolean success;
 
     public boolean isSuccess() {
