@@ -1,6 +1,5 @@
 package edu.kmaooad.capstone23.competences.controllers;
 
-import edu.kmaooad.capstone23.competences.events.SkillCreated;
 import io.quarkus.test.junit.QuarkusTest;
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.DisplayName;

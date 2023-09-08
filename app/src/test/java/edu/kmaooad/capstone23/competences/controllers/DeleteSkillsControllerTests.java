@@ -1,7 +1,9 @@
 package edu.kmaooad.capstone23.competences.controllers;
 
-import edu.kmaooad.capstone23.competences.events.SkillDeleted;
+import edu.kmaooad.capstone23.competences.dal.SkillsRepository;
 import io.quarkus.test.junit.QuarkusTest;
+import jakarta.inject.Inject;
+
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,16 +15,38 @@ import static io.restassured.RestAssured.given;
 
 @QuarkusTest
 public class DeleteSkillsControllerTests {
+    @Inject
+    private SkillsRepository repository;
+
+    ObjectId createTestSkill(String name, ObjectId parent) {
+        Map<String, Object> jsonAsMap = new HashMap<>();
+        jsonAsMap.put("skillName", name);
+        if (parent != null) {
+            jsonAsMap.put("parentSkill", parent.toHexString());
+        }
+
+        String objectId = given()
+            .contentType("application/json")
+            .body(jsonAsMap)
+            .when()
+            .post("/skills/create")
+            .then()
+            .statusCode(200)
+            .extract()
+            .path("skill");
+
+        return new ObjectId(objectId);
+    }
 
     @Test
     @DisplayName("Delete Skill: Basic")
-    public void testBasicOrgCreation() {
+    public void testBasicSkillDeletion() {
+        ObjectId skillToDelete = createTestSkill("food", null);
+
         Map<String, Object> jsonAsMap = new HashMap<>();
-        jsonAsMap.put("id", "64f83a309682b0261c7bd24e");
-        //jsonAsMap.put("");
+        jsonAsMap.put("id", skillToDelete.toHexString());
 
-        // System.out.println!("");
-
+        // works normally
         given()
                 .contentType("application/json")
                 .body(jsonAsMap)
@@ -30,39 +54,33 @@ public class DeleteSkillsControllerTests {
                 .post("/skills/delete")
                 .then()
                 .statusCode(200);
+
+        // the skill is deleted, so an error is raised
+        given()
+                .contentType("application/json")
+                .body(jsonAsMap)
+                .when()
+                .post("/skills/delete")
+                .then()
+                .statusCode(400);
     }
 
-    // @Test
-    // @DisplayName("Delete Skill Relation: Basic")
-    // public void testSkillRelationCreation() {
-    //     Map<String, Object> jsonAsMap = new HashMap<>();
-    //     jsonAsMap.put("skillName", "food");
-    //     //jsonAsMap.put("");
+    @Test
+    @DisplayName("Delete Skill: With children")
+    public void testSkillDeletionWithChildren() {        
+        ObjectId parentSkill = createTestSkill("creep walk", null);
+        // create a child skill
+        createTestSkill("hustlin", parentSkill);
 
-    //     String result = given()
-    //             .contentType("application/json")
-    //             .body(jsonAsMap)
-    //             .when()
-    //             .post("/skills/Delete")
-    //             .then()
-    //             .statusCode(200)
-    //             .extract()
-    //             .path("skill")
-    //             ;
+        Map<String, Object> jsonAsMap = new HashMap<>();
+        jsonAsMap.put("id", parentSkill.toHexString());
 
-    //     Map<String, Object> jsonAsMap2 = new HashMap<>();
-    //     jsonAsMap2.put("skillName", "fruits");
-    //     jsonAsMap2.put("parentSkill", result);
-    //     //jsonAsMap.put("");
-
-    //     given()
-    //             .contentType("application/json")
-    //             .body(jsonAsMap2)
-    //             .when()
-    //             .post("/skills/Delete")
-    //             .then()
-    //             .statusCode(200)
-    //             ;
-
-    // }
+        given()
+                .contentType("application/json")
+                .body(jsonAsMap)
+                .when()
+                .post("/skills/delete")
+                .then()
+                .statusCode(400);
+    }
 }
