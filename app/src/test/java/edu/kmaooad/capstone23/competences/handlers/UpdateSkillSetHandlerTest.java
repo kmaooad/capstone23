@@ -19,13 +19,11 @@ import java.util.Optional;
 @QuarkusTest
 public class UpdateSkillSetHandlerTest {
 
-    private ObjectId idToUpdate;
-
     @Inject
     CommandHandler<UpdateSkillSet, SkillSetUpdated> handler;
-
     @Inject
     SkillSetRepository repository;
+    private ObjectId idToUpdate;
 
     @BeforeEach
     void setUp() {
@@ -48,7 +46,7 @@ public class UpdateSkillSetHandlerTest {
         Assertions.assertTrue(result.isSuccess());
         Assertions.assertNotNull(result.getValue());
         Assertions.assertFalse(result.getValue().getSkillSetId().isEmpty());
-        Assertions.assertEquals("HardSkills", result.getValue().getName());
+        Assertions.assertEquals("HardSkills", result.getValue().getSkillSetName());
 
         Optional<SkillSet> updatedSkilleSetOptional = repository.findById(idToUpdate.toString());
         Assertions.assertTrue(updatedSkilleSetOptional.isPresent());
