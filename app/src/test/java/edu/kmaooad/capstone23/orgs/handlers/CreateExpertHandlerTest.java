@@ -4,8 +4,6 @@ import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.experts.commands.CreateExpert;
 import edu.kmaooad.capstone23.experts.events.ExpertCreated;
-import edu.kmaooad.capstone23.orgs.commands.CreateOrg;
-import edu.kmaooad.capstone23.orgs.events.OrgCreated;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 import org.junit.jupiter.api.Assertions;
@@ -17,17 +15,17 @@ public class CreateExpertHandlerTest {
     @Inject
     CommandHandler<CreateExpert, ExpertCreated> handler;
 
-//    @Test
-//    void testSuccessfulHandling() {
-//        CreateExpert command = new CreateExpert();
-//        command.setExpertName("Arkhypchuk_Stepanenko");
-//
-//        Result<ExpertCreated> result = handler.handle(command);
-//
-//        Assertions.assertTrue(result.isSuccess());
-//        Assertions.assertNotNull(result.getValue());
-//        Assertions.assertFalse(result.getValue().getExpertId().isEmpty());
-//    }
+    @Test
+    void testSuccessfulHandling() {
+        CreateExpert command = new CreateExpert();
+        command.setExpertName("Arkhypchuk_Stepanenko");
+
+        Result<ExpertCreated> result = handler.handle(command);
+
+        Assertions.assertTrue(result.isSuccess());
+        Assertions.assertNotNull(result.getValue());
+        Assertions.assertFalse(result.getValue().getExpertId().isEmpty());
+    }
 
     @Test
     void testNameValidation() {

@@ -8,5 +8,5 @@ import org.bson.types.*;
 public class Expert {
     public ObjectId id;
     public String name;
-    public Org org;
+    public ObjectId org;
 }

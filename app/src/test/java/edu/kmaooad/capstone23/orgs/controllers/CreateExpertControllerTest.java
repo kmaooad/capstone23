@@ -12,20 +12,20 @@ import static io.restassured.RestAssured.given;
 @QuarkusTest
 public class CreateExpertControllerTest {
 
-//    @Test
-//    @DisplayName("Create Expert: Basic")
-//    public void testBasicExpertCreation() {
-//        Map<String, Object> jsonAsMap = new HashMap<>();
-//        jsonAsMap.put("expertName", "Arkhypchuk_Stepanenko");
-//
-//        given()
-//                .contentType("application/json")
-//                .body(jsonAsMap)
-//                .when()
-//                .post("/expert/create")
-//                .then()
-//                .statusCode(200);
-//    }
+    @Test
+    @DisplayName("Create Expert: Basic")
+    public void testBasicExpertCreation() {
+        Map<String, Object> jsonAsMap = new HashMap<>();
+        jsonAsMap.put("expertName", "Arkhypchuk_Stepanenko");
+
+        given()
+                .contentType("application/json")
+                .body(jsonAsMap)
+                .when()
+                .post("/expert/create")
+                .then()
+                .statusCode(200);
+    }
 
     @Test
     @DisplayName("Create Expert: Name validation")

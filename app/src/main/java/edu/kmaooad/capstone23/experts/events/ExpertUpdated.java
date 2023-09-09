@@ -1,13 +1,15 @@
 package edu.kmaooad.capstone23.experts.events;
 
-public class ExpertUpdated {
-    private String expertId;
+import edu.kmaooad.capstone23.experts.dal.Expert;
 
-    public String getExpertId() {
-        return expertId;
+public class ExpertUpdated {
+    private Expert expert;
+
+    public Expert getExpertId() {
+        return expert;
     }
 
-    public ExpertUpdated(String expertId) {
-        this.expertId = expertId;
+    public ExpertUpdated(Expert expert) {
+        this.expert = expert;
     }
 }
