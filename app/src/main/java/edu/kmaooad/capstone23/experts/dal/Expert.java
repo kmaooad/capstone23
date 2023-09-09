@@ -7,6 +7,6 @@ import org.bson.types.*;
 @MongoEntity(collection = "experts")
 public class Expert {
     public ObjectId id;
-    private String name;
-    private Org org;
+    public String name;
+    public Org org;
 }
