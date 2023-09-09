@@ -20,4 +20,8 @@ public class DepartmentsRepository implements PanacheMongoRepository<Department>
         persist(departments);
         return departments;
     }
+    public void delete(Department department) {
+        deleteById(department.id);
+    }
+
 }
