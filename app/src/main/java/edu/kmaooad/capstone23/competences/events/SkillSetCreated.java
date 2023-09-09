@@ -1,4 +1,4 @@
-package edu.kmaooad.capstone23.orgs.events;
+package edu.kmaooad.capstone23.competences.events;
 
 public class SkillSetCreated {
     private String skillSetId;
@@ -8,6 +8,6 @@ public class SkillSetCreated {
     }
 
     public SkillSetCreated(String skillSetId) {
-        this.skillSetId = orgId;
+        this.skillSetId = skillSetId;
     }
 }

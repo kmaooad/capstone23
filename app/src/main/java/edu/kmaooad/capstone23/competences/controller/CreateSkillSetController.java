@@ -1,8 +1,8 @@
-package src.main.java.edu.kmaooad.capstone23.competences.controller;
+package edu.kmaooad.capstone23.competences.controller;
 
 import edu.kmaooad.capstone23.common.TypicalController;
-import edu.kmaooad.capstone23.orgs.commands.CreateOrg;
-import edu.kmaooad.capstone23.orgs.events.OrgCreated;
+import edu.kmaooad.capstone23.competences.commands.CreateSkillSet;
+import edu.kmaooad.capstone23.competences.events.SkillSetCreated;
 import jakarta.ws.rs.Path;
 import org.eclipse.microprofile.openapi.annotations.media.Content;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;

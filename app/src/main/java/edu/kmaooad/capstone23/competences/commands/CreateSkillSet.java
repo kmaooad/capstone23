@@ -1,4 +1,4 @@
-package edu.kmaooad.capstone23.orgs.commands;
+package edu.kmaooad.capstone23.competences.commands;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;

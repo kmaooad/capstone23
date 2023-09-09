@@ -1,13 +1,13 @@
-package edu.kmaooad.capstone23.orgs.handlers;
+package edu.kmaooad.capstone23.competences.handlers;
 
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.Result;
-import edu.kmaooad.capstone23.orgs.commands.CreateOrg;
-import edu.kmaooad.capstone23.orgs.dal.Org;
-import edu.kmaooad.capstone23.orgs.dal.OrgsRepository;
-import edu.kmaooad.capstone23.orgs.events.OrgCreated;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
+import edu.kmaooad.capstone23.competences.commands.CreateSkillSet;
+import edu.kmaooad.capstone23.competences.dal.SkillSet;
+import edu.kmaooad.capstone23.competences.dal.SkillSetRepository;
+import edu.kmaooad.capstone23.competences.events.SkillSetCreated;
 
 @RequestScoped
 public class CreateSkillSetHandler implements CommandHandler<CreateSkillSet, SkillSetCreated> {
@@ -22,7 +22,7 @@ public class CreateSkillSetHandler implements CommandHandler<CreateSkillSet, Ski
 
         repository.insert(skillSet);
 
-        SkillSetCreated result = new OrgCreated(skillSet.id.toString());
+        SkillSetCreated result = new SkillSetCreated(skillSet.id.toString());
 
         return new Result<SkillSetCreated>(result);
     }
