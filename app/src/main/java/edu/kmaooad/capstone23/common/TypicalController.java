@@ -1,5 +1,6 @@
 package edu.kmaooad.capstone23.common;
 
+import jakarta.ws.rs.PATCH;
 import org.eclipse.microprofile.openapi.annotations.media.Content;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
@@ -32,4 +33,25 @@ public class TypicalController<T1, T2> {
             return Response.status(500).build();
         }
     }
+
+    //TODO: check if works like this
+    @PATCH
+    @Produces(MediaType.APPLICATION_JSON)
+    @APIResponse(responseCode = "400", content = {
+            @Content(mediaType = "application/json", schema = @Schema(implementation = HandlingError.class)) })
+    @APIResponse(responseCode = "500")
+    public  Response patchCommand(T1 command) {
+        try {
+            Result<T2> result = commandHandler.handle(command);
+
+            if (!result.isSuccess()) {
+                return Response.status(400).entity(result.toError()).build();
+            }
+
+            return Response.ok(result.getValue(), MediaType.APPLICATION_JSON).build();
+        } catch (Exception e) {
+            return Response.status(500).build();
+        }
+}
+
 }
