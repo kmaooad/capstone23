@@ -14,7 +14,7 @@ public class CreateDepartmentsControllerTests {
 
     @Test
     @DisplayName("Create Departments: Basic")
-    public void testBasicOrgCreation() {
+    public void testBasicDeptsCreation() {
         Map<String, Object> jsonAsMap = new HashMap<>();
         jsonAsMap.put("name", "FI");
         jsonAsMap.put("description", "Faculty of Informatics");
@@ -31,7 +31,7 @@ public class CreateDepartmentsControllerTests {
 
     @Test
     @DisplayName("Create Departments: Name validation")
-    public void testOrgCreationWithNameValidation() {
+    public void testDeptsCreationWithNameValidation() {
         Map<String, Object> jsonAsMap = new HashMap<>();
         jsonAsMap.put("name", "Kma0oad_2023");
         jsonAsMap.put("description", "Faculty of Informatics");

@@ -7,10 +7,6 @@ public class DepartmentUpdated {
     private String description;
     private String parent;
 
-    public String getDepartmentId() {
-        return id;
-    }
-
     public String getName() {
         return name;
     }

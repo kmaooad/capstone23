@@ -2,6 +2,7 @@ package edu.kmaooad.capstone23.departments.dal;
 
 import io.quarkus.mongodb.panache.PanacheMongoRepository;
 import jakarta.enterprise.context.ApplicationScoped;
+import org.bson.types.ObjectId;
 
 @ApplicationScoped
 public class DepartmentsRepository implements PanacheMongoRepository<Department> {
@@ -12,7 +13,7 @@ public class DepartmentsRepository implements PanacheMongoRepository<Department>
 
 
     public Department findById(String id) {
-        return find("id", id).firstResult();
+        return findById(new ObjectId(id));
     }
 
     public Department insert(Department departments){
