@@ -20,8 +20,6 @@ public class CreateDepartment {
     }
 
 
-    @NotBlank
-    @Size(min = 3, max = 50)
     private String description;
 
     public String getDescription() {

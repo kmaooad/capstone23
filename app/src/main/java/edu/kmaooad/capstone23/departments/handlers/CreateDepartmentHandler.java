@@ -1,6 +1,7 @@
 package edu.kmaooad.capstone23.departments.handlers;
 
 import edu.kmaooad.capstone23.common.CommandHandler;
+import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.departments.commands.CreateDepartment;
 import edu.kmaooad.capstone23.departments.dal.Departments;
@@ -27,6 +28,9 @@ public class CreateDepartmentHandler implements CommandHandler<CreateDepartment,
 
         if (command.getParent() != null) {
             Org parent = orgsRepository.findByName(command.getParent());
+            if (parent == null) {
+                return new Result<DepartmentsCreated>(ErrorCode.EXCEPTION, "Parent not found");
+            }
             department.parent = parent.id.toString();
         }
 
