@@ -4,13 +4,18 @@ import io.quarkus.mongodb.panache.PanacheMongoRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
-public class DepartmentsRepository implements PanacheMongoRepository<Departments> {
+public class DepartmentsRepository implements PanacheMongoRepository<Department> {
 
-    public Departments findByName(String name) {
+    public Department findByName(String name) {
         return find("name", name).firstResult();
     }
 
-    public Departments insert(Departments departments){
+
+    public Department findById(String id) {
+        return find("id", id).firstResult();
+    }
+
+    public Department insert(Department departments){
         persist(departments);
         return departments;
     }

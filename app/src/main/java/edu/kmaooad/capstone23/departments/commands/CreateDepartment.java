@@ -5,7 +5,6 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 public class CreateDepartment {
-
     @NotBlank
     @Size(min = 2, max = 50)
     @Pattern(regexp = "^[a-zA-Z0-9\s]*$")
@@ -14,20 +13,17 @@ public class CreateDepartment {
     public String getName() {
         return name;
     }
-
-    public void setName(String orgName) {
-        this.name = orgName;
+    public void setName(String name) {
+        this.name = name;
     }
 
 
     private String description;
-
     public String getDescription() {
         return description;
     }
-
-    public void setDescription(String orgDescription) {
-        this.description = orgDescription;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @NotBlank
@@ -36,9 +32,8 @@ public class CreateDepartment {
     public String getParent() {
         return parent;
     }
-
-    public void setParent(String orgParent) {
-        this.parent = orgParent;
+    public void setParent(String parent) {
+        this.parent = parent;
     }
 
 }

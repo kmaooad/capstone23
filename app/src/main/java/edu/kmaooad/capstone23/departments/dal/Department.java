@@ -4,7 +4,7 @@ import io.quarkus.mongodb.panache.common.MongoEntity;
 import org.bson.types.ObjectId;
 
 @MongoEntity(collection = "departments")
-public class Departments {
+public class Department {
     public ObjectId id;
     public String name;
     public String description;
