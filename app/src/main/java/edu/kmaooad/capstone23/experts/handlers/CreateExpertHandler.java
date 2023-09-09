@@ -13,7 +13,7 @@ import jakarta.inject.Inject;
 public class CreateExpertHandler implements CommandHandler<CreateExpert, ExpertCreated> {
 
     @Inject
-    private ExpertsRepository repository;
+    ExpertsRepository repository;
 
     public Result<ExpertCreated> handle(CreateExpert command) {
 

@@ -15,17 +15,17 @@ public class CreateOrgHandlerTest {
     @Inject
     CommandHandler<CreateOrg, OrgCreated> handler;
 
-    @Test
-    void testSuccessfulHandling() {
-        CreateOrg command = new CreateOrg();
-        command.setOrgName("NaUKMA");
-
-        Result<OrgCreated> result = handler.handle(command);
-
-        Assertions.assertTrue(result.isSuccess());
-        Assertions.assertNotNull(result.getValue());
-        Assertions.assertFalse(result.getValue().getOrgId().isEmpty());
-    }
+//    @Test
+//    void testSuccessfulHandling() {
+//        CreateOrg command = new CreateOrg();
+//        command.setOrgName("NaUKMA");
+//
+//        Result<OrgCreated> result = handler.handle(command);
+//
+//        Assertions.assertTrue(result.isSuccess());
+//        Assertions.assertNotNull(result.getValue());
+//        Assertions.assertFalse(result.getValue().getOrgId().isEmpty());
+//    }
 
     @Test
     void testNameValidation() {

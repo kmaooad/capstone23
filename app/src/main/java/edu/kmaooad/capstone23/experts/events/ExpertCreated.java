@@ -3,7 +3,7 @@ package edu.kmaooad.capstone23.experts.events;
 public class ExpertCreated {
     private String expertId;
 
-    public String getExpertIdId() {
+    public String getExpertId() {
         return expertId;
     }
 

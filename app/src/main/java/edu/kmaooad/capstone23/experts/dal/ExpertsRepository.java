@@ -1,6 +1,5 @@
 package edu.kmaooad.capstone23.experts.dal;
 
-import edu.kmaooad.capstone23.orgs.dal.Org;
 import io.quarkus.mongodb.panache.PanacheMongoRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 
@@ -19,5 +18,13 @@ public class ExpertsRepository implements PanacheMongoRepository<Expert> {
     public Expert insert(Expert expert){
         persist(expert);
         return expert;
+    }
+
+    public void delete(Expert expert){
+        delete(expert);
+    }
+
+    public void update(Expert expert){
+        update(expert);
     }
 }
