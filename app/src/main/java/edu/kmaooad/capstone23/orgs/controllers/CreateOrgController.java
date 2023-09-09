@@ -7,6 +7,4 @@ import jakarta.ws.rs.Path;
 
 @Path("/orgs/create")
 public class CreateOrgController extends TypicalController<CreateOrg, OrgCreated> {
-
-
 }
