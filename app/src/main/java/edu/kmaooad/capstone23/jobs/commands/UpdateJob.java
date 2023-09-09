@@ -1,9 +1,19 @@
 package edu.kmaooad.capstone23.jobs.commands;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
+
 public class UpdateJob {
 
+    @NotBlank
     private String jobId;
+    @NotBlank
+    @Size(min = 3, max = 50)
+    @Pattern(regexp = "^[a-zA-Z0-9\s]*$")
     private String jobName;
+    @Size(max = 100)
+    @Pattern(regexp = "^[a-zA-Z0-9\s]*$")
     private String jobDescription;
 
     public String getJobId() {return jobId;}
