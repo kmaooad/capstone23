@@ -5,6 +5,6 @@ import edu.kmaooad.capstone23.departments.commands.CreateDepartment;
 import edu.kmaooad.capstone23.departments.events.DepartmentsCreated;
 import jakarta.ws.rs.Path;
 
-@Path("/departemnts/create")
+@Path("/departments/create")
 public class CreateDepartmentsController extends TypicalController<CreateDepartment, DepartmentsCreated> {
 }

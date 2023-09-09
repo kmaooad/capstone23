@@ -33,7 +33,6 @@ public class CreateDepartment {
     }
 
     @NotBlank
-    @Size(min = 3, max = 50)
     private String parent;
 
     public String getParent() {
@@ -42,19 +41,6 @@ public class CreateDepartment {
 
     public void setParent(String orgParent) {
         this.parent = orgParent;
-    }
-
-
-    @NotBlank
-    @Size(min = 3, max = 50)
-    private String id;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String orgId) {
-        this.id = orgId;
     }
 
 }

@@ -6,6 +6,8 @@ import edu.kmaooad.capstone23.departments.commands.CreateDepartment;
 import edu.kmaooad.capstone23.departments.dal.Departments;
 import edu.kmaooad.capstone23.departments.dal.DepartmentsRepository;
 import edu.kmaooad.capstone23.departments.events.DepartmentsCreated;
+import edu.kmaooad.capstone23.orgs.dal.Org;
+import edu.kmaooad.capstone23.orgs.dal.OrgsRepository;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 
@@ -14,15 +16,23 @@ public class CreateDepartmentHandler implements CommandHandler<CreateDepartment,
 
     @Inject
     private DepartmentsRepository repository;
+    @Inject
+    private OrgsRepository orgsRepository;
 
     public Result<DepartmentsCreated> handle(CreateDepartment command) {
 
-        Departments departments = new Departments();
-        departments.name = command.getName();
+        Departments department = new Departments();
+        department.name = command.getName();
+        department.description = command.getDescription();
 
-        repository.insert(departments);
+        if (command.getParent() != null) {
+            Org parent = orgsRepository.findByName(command.getParent());
+            department.parent = parent.id.toString();
+        }
 
-        DepartmentsCreated result = new DepartmentsCreated(departments.id.toString());
+        repository.insert(department);
+
+        DepartmentsCreated result = new DepartmentsCreated(department.id.toString());
 
         return new Result<DepartmentsCreated>(result);
     }

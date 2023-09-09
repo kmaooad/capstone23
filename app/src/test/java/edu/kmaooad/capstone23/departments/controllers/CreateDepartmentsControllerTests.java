@@ -18,7 +18,7 @@ public class CreateDepartmentsControllerTests {
         Map<String, Object> jsonAsMap = new HashMap<>();
         jsonAsMap.put("name", "FI");
         jsonAsMap.put("description", "Faculty of Informatics");
-        jsonAsMap.put("parent", "KMA");
+        jsonAsMap.put("parent", "NaUKMA");
 
         given()
                 .contentType("application/json")
@@ -35,7 +35,7 @@ public class CreateDepartmentsControllerTests {
         Map<String, Object> jsonAsMap = new HashMap<>();
         jsonAsMap.put("name", "Kma0oad_2023");
         jsonAsMap.put("description", "Faculty of Informatics");
-        jsonAsMap.put("parent", "KMA");
+        jsonAsMap.put("parent", "NaUKMA");
 
         given()
                 .contentType("application/json")
