@@ -1,0 +1,15 @@
+package src.main.java.edu.kmaooad.capstone23.competences.controller;
+
+import edu.kmaooad.capstone23.common.TypicalController;
+import edu.kmaooad.capstone23.orgs.commands.CreateOrg;
+import edu.kmaooad.capstone23.orgs.events.OrgCreated;
+import jakarta.ws.rs.Path;
+import org.eclipse.microprofile.openapi.annotations.media.Content;
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
+import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
+
+@Path("/skillset/create")
+@APIResponse(responseCode = "200", content = {
+        @Content(mediaType = "application/json", schema = @Schema(implementation = SkillSetCreated.class)) })
+public class CreateSkillSetController extends TypicalController<CreateSkillSet, SkillSetCreated> {
+}
