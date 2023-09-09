@@ -12,21 +12,21 @@ public class UpdateSkillSet {
     private String skillSetName;
 
     @NotNull
-    private String id;
+    private String skillSetId;
 
     public void setSkillSetName(String skillSetName) {
         this.skillSetName = skillSetName;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setSkillSetId(String skillSetId) {
+        this.skillSetId = skillSetId;
     }
 
     public String getSkillSetName() {
         return skillSetName;
     }
 
-    public String getId() {
-        return id;
+    public String getSkillSetId() {
+        return skillSetId;
     }
 }

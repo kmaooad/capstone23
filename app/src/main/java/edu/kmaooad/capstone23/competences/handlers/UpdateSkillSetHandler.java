@@ -19,7 +19,7 @@ public class UpdateSkillSetHandler implements CommandHandler<UpdateSkillSet, Ski
     SkillSetRepository repository;
 
     public Result<SkillSetUpdated> handle(UpdateSkillSet command) {
-        var id = command.getId();
+        var id = command.getSkillSetId();
         Optional<SkillSet> skillSet = repository.findById(id);
 
         if (skillSet.isEmpty())
