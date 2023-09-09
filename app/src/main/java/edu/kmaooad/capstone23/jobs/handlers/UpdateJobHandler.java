@@ -21,7 +21,7 @@ public class UpdateJobHandler  implements CommandHandler<UpdateJob, JobUpdated> 
 
         if (jobToUpdate == null) {
             //TODO: Handle the case where the job doesn't exist
-            // You can return an error Result or throw an exception
+            // Return an error Result or throw an exception
         }
 
         // Update job properties
@@ -30,7 +30,7 @@ public class UpdateJobHandler  implements CommandHandler<UpdateJob, JobUpdated> 
 
         // Save the changes
         repository.update(jobToUpdate);
-        JobUpdated result = new JobUpdated(jobToUpdate.getId().toString());
+        JobUpdated result = new JobUpdated(jobToUpdate.id.toString());
 
         return new Result<JobUpdated>(result);
     }
