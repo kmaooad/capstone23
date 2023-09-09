@@ -7,7 +7,7 @@ import jakarta.validation.constraints.Size;
 public class CreateDepartment {
 
     @NotBlank
-    @Size(min = 3, max = 50)
+    @Size(min = 2, max = 50)
     @Pattern(regexp = "^[a-zA-Z0-9\s]*$")
     private String name;
 
