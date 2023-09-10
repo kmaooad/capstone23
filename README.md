@@ -7,13 +7,13 @@
 - Java 17+
 - Maven 3.8.6+
 - MongoDB (either installed locally or with a free cluster in MongoDB Atlas)
-  - Set connection string to QUARKUS_MONGODB_CONNECTION_STRING either as OS environment variable or in the .env file in the app folder (make sure to add .env file to .gitignore!)
+  - Set connection string to `QUARKUS_MONGODB_CONNECTION_STRING` either as OS environment variable or in the .env file in the app folder (make sure to add `.env` file to .gitignore!)
 - IDE of choice
 
 ## Running app
 
 Run app with this command
-**./mvnw compile quarkus:dev**
+`./mvnw compile quarkus:dev`
 
 By default app opens at http://localhost:8080
 API page (aka Swagger UI) is at http://localhost:8080/q/swagger-ui
@@ -24,7 +24,7 @@ API page (aka Swagger UI) is at http://localhost:8080/q/swagger-ui
 - Week iteration is performed by a pair of developers (2 students)
 - Pairs are not fixed and can change between iterations
 - Week iteration is graded for the pair as a whole
-- Week iteration submission is Pull Request (PR) in GitHub. Status checks (CI) are required to pass to PR to be considered for review and grading. CI status check requires successful build with test passing and code coverage of 90%
+- Week iteration submission is Pull Request (PR) in GitHub. **Status checks (CI) are required to pass to PR to be considered for review and grading. CI status check requires successful build with test passing and code coverage of 90%.**
 
 ## Week iteration PR may have 3 outcomes:
 
