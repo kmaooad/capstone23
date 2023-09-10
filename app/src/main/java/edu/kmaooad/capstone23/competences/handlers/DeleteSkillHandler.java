@@ -25,13 +25,13 @@ public class DeleteSkillHandler implements CommandHandler<DeleteSkill, SkillDele
         Skill skill = repository.findById(id);
 
         if (skill == null) {
-            return new Result<>(ErrorCode.NOT_FOUND, "Skill not found");
+            return new Result<>(ErrorCode.EXCEPTION, "Skill not found");
         }
 
         // let's see if it has any children. We won't delete a skill that has children
         var allChildren = repository.findChildRepositories(id);
         if (allChildren.size() > 0) {
-            return new Result<>(ErrorCode.CHILDREN_PRESENT, "Skill has children");
+            return new Result<>(ErrorCode.EXCEPTION, "Skill has children");
         }
 
         repository.delete(skill);
