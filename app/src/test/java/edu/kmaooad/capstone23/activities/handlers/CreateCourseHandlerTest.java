@@ -7,6 +7,7 @@ import edu.kmaooad.capstone23.common.Result;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 @QuarkusTest
@@ -15,6 +16,7 @@ public class CreateCourseHandlerTest {
     CommandHandler<CreateCourse, CourseCreated> handler;
 
     @Test
+    @DisplayName("Handle Create Course command")
     void testSuccessfulCreate() {
         var courseName = "Linear algebra";
         CreateCourse command = new CreateCourse();
@@ -28,6 +30,7 @@ public class CreateCourseHandlerTest {
     }
 
     @Test
+    @DisplayName("Handle Create Course with validation")
     void testNameValidation() {
         var courseName = "";
         CreateCourse command = new CreateCourse();
