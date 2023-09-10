@@ -17,6 +17,8 @@ public class CreateOrgControllerTests {
     public void testBasicOrgCreation() {
         Map<String, Object> jsonAsMap = new HashMap<>();
         jsonAsMap.put("orgName", "NaUKMA");
+        jsonAsMap.put("industry", "Education");
+        jsonAsMap.put("website", "https://www.ukma.edu.ua/eng/");
 
         given()
                 .contentType("application/json")
