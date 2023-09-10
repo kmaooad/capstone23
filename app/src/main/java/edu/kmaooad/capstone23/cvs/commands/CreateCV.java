@@ -1,6 +1,7 @@
 package edu.kmaooad.capstone23.cvs.commands;
 
 import edu.kmaooad.capstone23.cvs.dal.CV;
+import edu.kmaooad.capstone23.cvs.dal.JobPreference;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Size;
@@ -23,6 +24,8 @@ public class CreateCV {
     private CV.Visibility visibility;
 
     private boolean autoAddCompetences;
+
+    private JobPreference preference;
 
     public LocalDateTime getDateTimeCreated() {
         return dateTimeCreated;
@@ -64,4 +67,11 @@ public class CreateCV {
         this.autoAddCompetences = autoAddCompetences;
     }
 
+    public JobPreference getPreference() {
+        return preference;
+    }
+
+    public void setPreference(JobPreference preference) {
+        this.preference = preference;
+    }
 }

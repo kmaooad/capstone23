@@ -20,6 +20,8 @@ public class CV {
     public boolean autoAddCompetences;
 //    public List<Competence> competencesId;
 
+    public JobPreference preference;
+
     public enum Status {
         OPEN,
         CLOSED,
