@@ -18,7 +18,7 @@ public class CreateExpertHandlerTest {
     @Test
     void testSuccessfulHandling() {
         CreateExpert command = new CreateExpert();
-        command.setExpertName("Arkhypchuk_Stepanenko");
+        command.setExpertName("Arkhypchuk Stepanenko");
 
         Result<ExpertCreated> result = handler.handle(command);
 
@@ -30,7 +30,7 @@ public class CreateExpertHandlerTest {
     @Test
     void testNameValidation() {
         CreateExpert command = new CreateExpert();
-        command.setExpertName("Arkhypchuk_Stepanenko_2");
+        command.setExpertName("Arkhypchuk Stepanenko œ∑´");
 
         Result<ExpertCreated> result = handler.handle(command);
 

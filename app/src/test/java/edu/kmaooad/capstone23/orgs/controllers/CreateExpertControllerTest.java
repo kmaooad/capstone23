@@ -16,7 +16,7 @@ public class CreateExpertControllerTest {
     @DisplayName("Create Expert: Basic")
     public void testBasicExpertCreation() {
         Map<String, Object> jsonAsMap = new HashMap<>();
-        jsonAsMap.put("expertName", "Arkhypchuk_Stepanenko");
+        jsonAsMap.put("expertName", "ArkhypchukStepanenko");
 
         given()
                 .contentType("application/json")
@@ -31,7 +31,7 @@ public class CreateExpertControllerTest {
     @DisplayName("Create Expert: Name validation")
     public void testExpertCreationWithNameValidation() {
         Map<String, Object> jsonAsMap = new HashMap<>();
-        jsonAsMap.put("expertName", "Arkhypchuk_Stepanenko_Fake");
+        jsonAsMap.put("expertName", "ArkhypchukStepanenko ∂ƒ©");
 
         given()
                 .contentType("application/json")
