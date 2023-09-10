@@ -1,41 +1,43 @@
-## Development
+[![codecov](https://codecov.io/gh/kmaooad/capstone23/graph/badge.svg?token=0uAZQSSsdj)](https://codecov.io/gh/kmaooad/capstone23) [![CI](https://github.com/kmaooad/capstone23/actions/workflows/ci.yaml/badge.svg)](https://github.com/kmaooad/capstone23/actions/workflows/ci.yaml)
 
-### Setup
+# Development
+
+## Setup
 
 - Java 17+
 - Maven 3.8.6+
 - MongoDB (either installed locally or with a free cluster in MongoDB Atlas)
-  - Set connection string to QUARKUS_MONGODB_CONNECTION_STRING either as OS environment variable or in the .env file in the app folder (make sure to add .env file to .gitignore!)
+  - Set connection string to `QUARKUS_MONGODB_CONNECTION_STRING` either as OS environment variable or in the .env file in the app folder (make sure to add `.env` file to .gitignore!)
 - IDE of choice
 
-### Running app
+## Running app
 
 Run app with this command
-**./mvnw compile quarkus:dev**
+`./mvnw compile quarkus:dev`
 
 By default app opens at http://localhost:8080
 API page (aka Swagger UI) is at http://localhost:8080/q/swagger-ui
 
-## Week iterations (assignments)
+# Week iterations (assignments)
 
 - Week iteration starts on Tue at 08:30 Kyiv time
 - Week iteration is performed by a pair of developers (2 students)
 - Pairs are not fixed and can change between iterations
 - Week iteration is graded for the pair as a whole
-- Week iteration submission is Pull Request (PR) in GitHub. Status checks (CI) are required to pass to PR to be considered for review and grading. CI status check requires successful build with test passing and code coverage of 90%
+- Week iteration submission is Pull Request (PR) in GitHub. **Status checks (CI) are required to pass to PR to be considered for review and grading. CI status check requires successful build with test passing and code coverage of 90%.**
 
-### Week iteration PR may have 3 outcomes:
+## Week iteration PR may have 3 outcomes:
 
 - **PR is approved.** You receive as many points as complete work units included into PR (<=5)
 - **PR has changes requested.** Means submitted code is generally good but has some issues and needs improvements. Once changes are made and PR is re-submitted, it can be _still graded with full points_. Changes can be submitted _during next week without loss of points_.
 - **PR is closed.** Means PR does not have any meaningful code and needs to be completely re-made. Late submission of new PR leads to loss of points per late submission rules (see below).
 
-### Submission grading
+## Submission grading
 
 - **In-time submission.** PR that is submitted up until start of week (< Tue 8:30 Kyiv time) is considered in-time. _Any games with last-second submission may lead to late submission._ Also, remember that PRs are not monitored and reviewed 24/7, so if you expect reasonable feedback with plenty of time left for addressing possible issues, submit at least the day before. If you submit the last moment (or at night) and PR is rejected (closed), you will not have time to re-make it and this may lead to late submission.
 - **Late submission.** PR submitted through next week is considered late. With positive outcome of PR review this gives 60% of points. Only one week of delay is allowed. Once PR is not approved within 2 weeks, further submission does not make any points.
 
-### Week interation unit of work (UoW)
+## Week interation unit of work (UoW)
 
 Required weekly code increment is 5 "units of work" _per dev pair_.
 
@@ -45,7 +47,7 @@ Each UoW consists of:
 - Implementation of the class responsible for handling the test case
 - Unit tests for submitted portion of code
 
-## App features
+# App features
 
 - ACL
   - Check access
