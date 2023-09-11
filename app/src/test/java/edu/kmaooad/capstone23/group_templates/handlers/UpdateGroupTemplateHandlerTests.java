@@ -5,12 +5,14 @@ import edu.kmaooad.capstone23.group_templates.commands.UpdateGroupTemplate;
 import edu.kmaooad.capstone23.group_templates.dal.GroupTemplate;
 import edu.kmaooad.capstone23.group_templates.dal.GroupTemplatesRepository;
 import edu.kmaooad.capstone23.group_templates.events.GroupTemplateUpdated;
+import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+@QuarkusTest
 public class UpdateGroupTemplateHandlerTests {
     @Inject
     UpdateGroupTemplateHandler updateGroupTemplateHandler;
