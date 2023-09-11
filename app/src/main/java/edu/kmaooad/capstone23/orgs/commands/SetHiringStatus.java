@@ -6,9 +6,9 @@ import org.bson.types.ObjectId;
 public class SetHiringStatus {
 
     private HiringStatus hiringStatus;
-    private String orgID;
-    public String getOrgID(){
-        return orgID;
+    private String orgId;
+    public String getOrgId(){
+        return orgId;
     }
     public HiringStatus getHiringStatus() {
         return hiringStatus;
@@ -16,8 +16,8 @@ public class SetHiringStatus {
     public void setHiringStatus(HiringStatus hiringStatus) {
         this.hiringStatus = hiringStatus;
     }
-    public void setOrgID(String orgID) {
-        this.orgID = orgID;
+    public void setOrgID(String orgId) {
+        this.orgId = orgId;
     }
 
 }

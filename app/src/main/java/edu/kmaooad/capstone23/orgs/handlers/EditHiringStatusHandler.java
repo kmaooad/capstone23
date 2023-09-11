@@ -3,6 +3,8 @@ package edu.kmaooad.capstone23.orgs.handlers;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.orgs.commands.SetHiringStatus;
+import edu.kmaooad.capstone23.orgs.dal.Job;
+import edu.kmaooad.capstone23.orgs.dal.JobsRepository;
 import edu.kmaooad.capstone23.orgs.dal.Org;
 import edu.kmaooad.capstone23.orgs.dal.OrgsRepository;
 import edu.kmaooad.capstone23.orgs.events.HiringStatusChanged;
@@ -10,22 +12,33 @@ import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
 
+import java.util.List;
+
 @RequestScoped
 public class EditHiringStatusHandler implements CommandHandler<SetHiringStatus, HiringStatusChanged> {
     @Inject
-    private OrgsRepository repository;
+    private OrgsRepository orgsRepository;
+    @Inject
+    private JobsRepository jobsRepository;
 
     public Result<HiringStatusChanged> handle(SetHiringStatus command) {
-        ObjectId objId = new ObjectId(command.getOrgID());
+        ObjectId objId = new ObjectId(command.getOrgId());
 
-        Org org = repository.findById(objId);
-        System.out.println(org);
+        Org org = orgsRepository.findById(objId);
         org.hiringStatus = command.getHiringStatus();
-        repository.update(org);
-        System.out.println(repository.findById(objId));
+        orgsRepository.update(org);
 
-        HiringStatusChanged result = new HiringStatusChanged
-                (org.hiringStatus, org.id.toString());
+        List<Job> jobs = jobsRepository.findByOrgId(command.getOrgId());
+
+        for (Job job: jobs) {
+            job.isActive = false;
+            jobsRepository.update(job);
+        }
+
+        HiringStatusChanged result = new HiringStatusChanged(
+                org.hiringStatus,
+                org.id.toString()
+        );
 
         return new Result<>(result);
     }
