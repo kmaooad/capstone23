@@ -10,7 +10,6 @@ import edu.kmaooad.capstone23.experts.service.ExpertInvitationMailService;
 import edu.kmaooad.capstone23.experts.service.ExpertService;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
-import org.bson.types.ObjectId;
 
 @RequestScoped
 public class CreateInvitationLinkHandler implements CommandHandler<CreateInvitationLink, InvitationLinkCreated> {

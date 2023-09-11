@@ -2,7 +2,6 @@ package edu.kmaooad.capstone23.experts.controllers;
 
 import edu.kmaooad.capstone23.experts.ExpertType;
 import io.quarkus.test.junit.QuarkusTest;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

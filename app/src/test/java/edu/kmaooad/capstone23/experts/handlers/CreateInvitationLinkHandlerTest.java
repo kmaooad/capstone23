@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 @QuarkusTest
 public class CreateInvitationLinkHandlerTest {
     private static final String TO = "foo@quarkus.io";
-    private static final String HOST = "http://localhost:8080";
+    private static final String HOST = "localhost:8081";
     @Inject
     MockMailbox mailbox;
 

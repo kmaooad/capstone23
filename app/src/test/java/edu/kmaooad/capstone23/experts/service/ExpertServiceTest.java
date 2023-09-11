@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 @QuarkusTest
 public class ExpertServiceTest {
 
-    private static final String HOST = "http://localhost:8080";
+    private static final String HOST = "localhost:8081";
     @Inject
     ExpertService expertService;
 
