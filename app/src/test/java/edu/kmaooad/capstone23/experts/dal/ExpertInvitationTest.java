@@ -21,7 +21,6 @@ public class ExpertInvitationTest {
         entity.createdAt = LocalDateTime.now();
         entity.email = "expert@example.org";
         expertInvitationRepository.persist(entity);
-
         assertNotNull(entity.id);
     }
 }

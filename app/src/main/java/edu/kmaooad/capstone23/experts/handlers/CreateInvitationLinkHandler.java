@@ -10,6 +10,7 @@ import edu.kmaooad.capstone23.experts.service.ExpertInvitationMailService;
 import edu.kmaooad.capstone23.experts.service.ExpertService;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
+import org.bson.types.ObjectId;
 
 @RequestScoped
 public class CreateInvitationLinkHandler implements CommandHandler<CreateInvitationLink, InvitationLinkCreated> {
@@ -26,8 +27,8 @@ public class CreateInvitationLinkHandler implements CommandHandler<CreateInvitat
         var expertInvitation = new ExpertInvitation();
         expertInvitation.email = command.getEmail();
         expertInvitation.expertType = command.getExpertType();
-        repository.persist(expertInvitation);
-        var invitationLink = expertService.createInvitationLink(expertInvitation.id);
+        // repository.persist(expertInvitation);
+        var invitationLink = expertService.createInvitationLink(ObjectId.get());
         mailService.sendInvitationLink(expertInvitation.email, invitationLink);
         return new Result<>(new InvitationLinkCreated(invitationLink));
     }
