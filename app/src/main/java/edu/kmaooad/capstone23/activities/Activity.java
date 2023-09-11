@@ -6,5 +6,29 @@ import org.bson.types.ObjectId;
 @MongoEntity(collection = "activities")
 public class Activity {
     public ObjectId objectId;
-    public String name;
+    private String name;
+    private boolean completed;
+
+    public Activity(String name) {
+        this.name = name;
+        this.completed = false;
+    }
+
+    public void markAsCompleted() {
+        this.completed = true;
+    }
+
+    public void markAsPending() {
+        this.completed = false;
+    }
+
+    public boolean isCompleted() {
+        return completed;
+    }
+
+    public String getName() {
+        return name;
+    }
+
 }
+

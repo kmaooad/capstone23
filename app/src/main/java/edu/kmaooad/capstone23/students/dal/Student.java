@@ -1,4 +1,4 @@
-package edu.kmaooad.capstone23.students;
+package edu.kmaooad.capstone23.students.dal;
 
 import io.quarkus.mongodb.panache.common.MongoEntity;
 import edu.kmaooad.capstone23.activities.Activity;
