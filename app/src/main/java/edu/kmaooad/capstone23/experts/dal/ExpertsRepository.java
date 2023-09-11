@@ -28,10 +28,8 @@ public class ExpertsRepository implements PanacheMongoRepository<Expert> {
     }
 
     public Expert modify(Expert expert) throws IllegalArgumentException {
-        if(expert.org != null && findByIdOptional(expert.org.id).isEmpty())
-            throw new IllegalArgumentException("Organisation has unknown id");
-        if(expert.id.equals(expert.org))
-            throw new IllegalArgumentException("This id is occupied by organisation");
+        if (expert != null && findByIdOptional(expert.id).isEmpty())
+            throw new IllegalArgumentException("Expert has unknown id");
         update(expert);
         return expert;
     }

@@ -1,4 +1,4 @@
-package edu.kmaooad.capstone23.orgs.controllers;
+package edu.kmaooad.capstone23.experts.controllers;
 
 import edu.kmaooad.capstone23.experts.dal.ExpertsRepository;
 import edu.kmaooad.capstone23.orgs.dal.OrgsRepository;

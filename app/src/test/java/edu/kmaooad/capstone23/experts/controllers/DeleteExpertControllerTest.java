@@ -1,4 +1,4 @@
-package edu.kmaooad.capstone23.orgs.controllers;
+package edu.kmaooad.capstone23.experts.controllers;
 
 import edu.kmaooad.capstone23.orgs.dal.OrgsRepository;
 import io.quarkus.test.junit.QuarkusTest;

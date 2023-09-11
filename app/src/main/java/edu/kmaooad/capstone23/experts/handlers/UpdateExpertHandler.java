@@ -24,7 +24,7 @@ public class UpdateExpertHandler implements CommandHandler<UpdateExpert, ExpertU
         var expert = new Expert();
         expert.id = command.getId();
         expert.name = command.getExpertName();
-        expert.org = orgsRepository.findById(command.getOrg());
+        expert.org = orgsRepository.findById(command.getOrg().id);
         try {
             var updatedExpert = expertsRepository.modify(expert);
             return new Result<>(new ExpertUpdated(updatedExpert));

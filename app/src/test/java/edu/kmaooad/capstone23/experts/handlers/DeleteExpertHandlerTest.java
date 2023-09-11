@@ -1,4 +1,4 @@
-package edu.kmaooad.capstone23.orgs.handlers;
+package edu.kmaooad.capstone23.experts.handlers;
 
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
@@ -8,6 +8,8 @@ import edu.kmaooad.capstone23.experts.commands.DeleteExpert;
 import edu.kmaooad.capstone23.experts.dal.ExpertsRepository;
 import edu.kmaooad.capstone23.experts.events.ExpertCreated;
 import edu.kmaooad.capstone23.experts.events.ExpertDeleted;
+import edu.kmaooad.capstone23.orgs.commands.CreateOrg;
+import edu.kmaooad.capstone23.orgs.events.OrgCreated;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
@@ -22,6 +24,8 @@ public class DeleteExpertHandlerTest {
     @Inject
     CommandHandler<CreateExpert, ExpertCreated> createHandler;
     @Inject
+    CommandHandler<CreateOrg, OrgCreated> orgHandler;
+    @Inject
     ExpertsRepository expertsRepository;
 
     @Test
@@ -29,7 +33,7 @@ public class DeleteExpertHandlerTest {
         String expertId = createTestExpert();
 
         DeleteExpert command = new DeleteExpert();
-        command.setId(expertsRepository.findByName("Arkhypchuk Stepanenko").id);
+        command.setId(expertsRepository.findByName("Arkh Step").id);
 
         Result<ExpertDeleted> result = deleteHandler.handle(command);
 
@@ -49,8 +53,15 @@ public class DeleteExpertHandlerTest {
     }
 
     private String createTestExpert() {
+        String orgName = "Super Duper Delete Team";
+
+        CreateOrg orgCommand = new CreateOrg();
+        orgCommand.setOrgName(orgName);
+        orgHandler.handle(orgCommand);
+
         CreateExpert command = new CreateExpert();
-        command.setExpertName("Arkhypchuk Stepanenko");
+        command.setExpertName("Arkh Step");
+        command.setOrgName(orgName);
 
         Result<ExpertCreated> result = createHandler.handle(command);
 
