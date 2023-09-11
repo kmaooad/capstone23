@@ -8,7 +8,7 @@ import org.eclipse.microprofile.openapi.annotations.media.Content;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 
-@Path("/experts/create/invitation/link")
+@Path("/experts/create/invitation")
 @APIResponse(responseCode = "200", content = {
         @Content(mediaType = "application/json", schema = @Schema(implementation = CreateInvitationLink.class))
 })

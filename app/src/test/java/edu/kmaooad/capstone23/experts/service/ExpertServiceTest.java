@@ -18,7 +18,7 @@ public class ExpertServiceTest {
         System.setProperty("quarkus.http.host", HOST);
         var objectId = new ObjectId();
         String invitationLink = expertService.createInvitationLink(objectId);
-        var expectedLink = HOST + ExpertService.ACCEPT_INVITATION_ENDPOINT + "?id=" + objectId.toString();
+        var expectedLink = HOST + ExpertService.ACCEPT_INVITATION_ENDPOINT + "?id=" + objectId;
         Assertions.assertEquals(expectedLink, invitationLink);
     }
 }

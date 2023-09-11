@@ -2,13 +2,14 @@ package edu.kmaooad.capstone23.experts.commands;
 
 import edu.kmaooad.capstone23.experts.ExpertType;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
 public class CreateInvitationLink {
     @NotBlank
     @Pattern(regexp = "^[\\w-.]+@([\\w-]+\\.)+[\\w-]{2,4}$")
     private String email;
-    @NotBlank
+    @NotNull
     private ExpertType expertType;
 
     public String getEmail() {
