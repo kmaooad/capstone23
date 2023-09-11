@@ -10,7 +10,7 @@ public class SetHiringStatus {
     public ObjectId getOrgID(){
         return orgID;
     }
-    public HiringStatus getHiringStatusName() {
+    public HiringStatus getHiringStatus() {
         return hiringStatus;
     }
     public void setHiringStatus(HiringStatus hiringStatus) {

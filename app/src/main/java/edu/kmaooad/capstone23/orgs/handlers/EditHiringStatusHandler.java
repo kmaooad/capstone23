@@ -18,7 +18,7 @@ public class EditHiringStatusHandler implements CommandHandler<SetHiringStatus, 
 
     public Result<HiringStatusChanged> handle(SetHiringStatus command) {
         Org org = repository.findById(command.getOrgID());
-        org.hiringStatus = command.getHiringStatusName();
+        org.hiringStatus = command.getHiringStatus();
 
         HiringStatusChanged result = new HiringStatusChanged
                 (org.hiringStatus, org.id.toString());
