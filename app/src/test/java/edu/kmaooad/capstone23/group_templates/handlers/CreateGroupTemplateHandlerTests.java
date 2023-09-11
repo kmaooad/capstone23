@@ -6,7 +6,7 @@ import edu.kmaooad.capstone23.group_templates.commands.CreateGroupTemplate;
 import edu.kmaooad.capstone23.group_templates.events.GroupTemplateCreated;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 

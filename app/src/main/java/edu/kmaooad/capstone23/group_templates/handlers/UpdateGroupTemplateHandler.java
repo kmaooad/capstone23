@@ -19,6 +19,9 @@ public class UpdateGroupTemplateHandler implements CommandHandler<UpdateGroupTem
 
     public Result<GroupTemplateUpdated> handle(UpdateGroupTemplate command) {
 
+        if(!ObjectId.isValid(command.getId()))
+            return new Result<>(ErrorCode.VALIDATION_FAILED, "Object Id is invalid");
+
         GroupTemplate groupTemplate = repository.findById(new ObjectId(command.getId()));
 
         if (groupTemplate == null) {
