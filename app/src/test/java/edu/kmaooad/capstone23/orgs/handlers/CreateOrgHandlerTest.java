@@ -19,6 +19,8 @@ public class CreateOrgHandlerTest {
     void testSuccessfulHandling() {
         CreateOrg command = new CreateOrg();
         command.setOrgName("NaUKMA");
+        command.industry = "Education";
+        command.website = "https://www.ukma.edu.ua/eng/";
 
         Result<OrgCreated> result = handler.handle(command);
 
