@@ -8,7 +8,6 @@ public class Activity {
     public ObjectId objectId;
     private String name;
     private boolean completed;
-
     public Activity(String name) {
         this.name = name;
         this.completed = false;

@@ -2,7 +2,7 @@ package edu.kmaooad.capstone23.activities.commands;
 
 import io.smallrye.common.constraint.NotNull;
 
-public class ActivityToGroup {
+public class AssignActivityToGroup {
     @NotNull
     private String groupId;
     @NotNull
