@@ -1,9 +1,9 @@
 package edu.kmaooad.capstone23.experts.dal;
 
 import io.quarkus.test.junit.QuarkusTest;
+import jakarta.inject.Inject;
 import org.junit.jupiter.api.Test;
 
-import javax.inject.Inject;
 
 import java.time.LocalDateTime;
 
