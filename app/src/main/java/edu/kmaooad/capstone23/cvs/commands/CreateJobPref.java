@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import org.bson.types.ObjectId;
 
-public class SetJobPref {
+public class CreateJobPref {
 
     @NotNull
     private ObjectId cvId;

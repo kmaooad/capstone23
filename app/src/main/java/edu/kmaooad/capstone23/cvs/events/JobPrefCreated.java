@@ -1,6 +1,6 @@
 package edu.kmaooad.capstone23.cvs.events;
 
-public class JobPrefSet {
+public class JobPrefCreated {
 
     private String cvId;
 
@@ -8,7 +8,7 @@ public class JobPrefSet {
         return cvId;
     }
 
-    public JobPrefSet(String cvId) {
+    public JobPrefCreated(String cvId) {
         this.cvId = cvId;
     }
 

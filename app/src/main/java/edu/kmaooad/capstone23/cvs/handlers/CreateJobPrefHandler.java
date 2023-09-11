@@ -2,22 +2,22 @@ package edu.kmaooad.capstone23.cvs.handlers;
 
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.Result;
-import edu.kmaooad.capstone23.cvs.commands.SetJobPref;
+import edu.kmaooad.capstone23.cvs.commands.CreateJobPref;
 import edu.kmaooad.capstone23.cvs.dal.CV;
 import edu.kmaooad.capstone23.cvs.dal.CVRepository;
 import edu.kmaooad.capstone23.cvs.dal.JobPreference;
-import edu.kmaooad.capstone23.cvs.events.JobPrefSet;
+import edu.kmaooad.capstone23.cvs.events.JobPrefCreated;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 
 @RequestScoped
-public class SetJobPrefHandler implements CommandHandler<SetJobPref, JobPrefSet> {
+public class CreateJobPrefHandler implements CommandHandler<CreateJobPref, JobPrefCreated> {
 
     @Inject
     CVRepository cvRepository;
 
     @Override
-    public Result<JobPrefSet> handle(SetJobPref command) {
+    public Result<JobPrefCreated> handle(CreateJobPref command) {
         JobPreference pref = new JobPreference();
         pref.industry = command.getIndustry();
         pref.location = command.getLocation();
@@ -27,7 +27,7 @@ public class SetJobPrefHandler implements CommandHandler<SetJobPref, JobPrefSet>
         cv.preference = pref;
         cvRepository.update(cv);
 
-        JobPrefSet result = new JobPrefSet(cv.id.toString());
+        JobPrefCreated result = new JobPrefCreated(cv.id.toString());
         return new Result<>(result);
     }
 
