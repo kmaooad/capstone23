@@ -16,7 +16,7 @@ public class CreateGroupTemplateControllerTests {
     @DisplayName("Create Group Template: Basic")
     public void testBasicGroupTemplateCreation() {
         Map<String, Object> jsonAsMap = new HashMap<>();
-        jsonAsMap.put("name", "default_group");
+        jsonAsMap.put("groupTemplateName", "default_group");
 
         given()
                 .contentType("application/json")
@@ -31,7 +31,7 @@ public class CreateGroupTemplateControllerTests {
     @DisplayName("Create Group Template: Name Validation")
     public void testGroupTemplateCreationNameValidation() {
         Map<String, Object> jsonAsMap = new HashMap<>();
-        jsonAsMap.put("name", "d");
+        jsonAsMap.put("groupTemplateName", "d");
 
         given()
                 .contentType("application/json")
