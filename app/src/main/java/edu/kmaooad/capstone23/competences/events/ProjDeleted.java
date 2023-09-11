@@ -1,5 +1,7 @@
 package edu.kmaooad.capstone23.competences.events;
 
-public record ProjDeleted(String projId) {
+import org.bson.types.ObjectId;
+
+public record ProjDeleted(ObjectId projId) {
 
 }
