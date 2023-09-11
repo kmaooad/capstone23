@@ -8,7 +8,7 @@ public class Proj {
     public ObjectId id;
     public String name;
     public String description;
-    public List<String> skills;
-    public List<String> skillSets;
+    public List<ObjectId> skills;
+    public List<ObjectId> skillSets;
 
 }
