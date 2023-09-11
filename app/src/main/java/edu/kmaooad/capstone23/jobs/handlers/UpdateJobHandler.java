@@ -1,6 +1,7 @@
 package edu.kmaooad.capstone23.jobs.handlers;
 
 import edu.kmaooad.capstone23.common.CommandHandler;
+import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.jobs.commands.UpdateJob;
 import edu.kmaooad.capstone23.jobs.dal.Job;
@@ -20,8 +21,7 @@ public class UpdateJobHandler  implements CommandHandler<UpdateJob, JobUpdated> 
         Job jobToUpdate = repository.findById(new ObjectId(command.getJobId()));
 
         if (jobToUpdate == null) {
-            //TODO: Handle the case where the job doesn't exist
-            // Return an error Result or throw an exception
+            return new Result<JobUpdated>(ErrorCode.EXCEPTION, "No job found");
         }
 
         // Update job properties

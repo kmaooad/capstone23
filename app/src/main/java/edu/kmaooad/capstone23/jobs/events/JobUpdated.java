@@ -7,4 +7,8 @@ public class JobUpdated {
     public JobUpdated(String jobId) {
         this.jobId = jobId;
     }
+
+    public String getJobId() {
+        return jobId;
+    }
 }
