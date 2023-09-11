@@ -17,5 +17,4 @@ public class SetHiringStatus {
         this.hiringStatus = hiringStatus;
     }
 
-
 }

@@ -1,7 +1,6 @@
 package edu.kmaooad.capstone23.orgs.events;
 
 import edu.kmaooad.capstone23.orgs.dal.HiringStatus;
-import org.bson.types.ObjectId;
 
 public class HiringStatusChanged {
 

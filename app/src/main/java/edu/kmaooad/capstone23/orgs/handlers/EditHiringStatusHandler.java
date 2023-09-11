@@ -16,12 +16,13 @@ public class EditHiringStatusHandler implements CommandHandler<SetHiringStatus, 
     @Inject
     private OrgsRepository repository;
 
-    @Override
     public Result<HiringStatusChanged> handle(SetHiringStatus command) {
         Org org = repository.findById(command.getOrgID());
         org.hiringStatus = command.getHiringStatusName();
+
         HiringStatusChanged result = new HiringStatusChanged
                 (org.hiringStatus, org.id.toString());
+
         return new Result<HiringStatusChanged>(result);
     }
 }
