@@ -1,26 +1,28 @@
 package edu.kmaooad.capstone23.activities.commands;
 
+import org.bson.types.ObjectId;
+
 import io.smallrye.common.constraint.NotNull;
 
 public class AssignActivityToStudent {
     @NotNull
-    private String studentId;
+    private ObjectId studentId;
     @NotNull
-    private String activityId;
+    private ObjectId activityId;
 
-    public String getActivityId() {
+    public ObjectId getActivityId() {
         return activityId;
     }
 
-    public String getStudentId() {
+    public ObjectId getStudentId() {
         return studentId;
     }
 
-    public void setActivityId(String activityId) {
+    public void setActivityId(ObjectId activityId) {
         this.activityId = activityId;
     }
 
-    public void setStudentId(String groupId) {
+    public void setStudentId(ObjectId groupId) {
         this.studentId = groupId;
     }
 }
