@@ -10,9 +10,6 @@ public class ExpertsRepository implements PanacheMongoRepository<Expert> {
     public Expert findByName(String name) {
         return find("name", name).firstResult();
     }
-    public List<Expert> findByOrg(String org) {
-        return find("org", org).list();
-    }
 
     public Expert insert(Expert expert){
         persist(expert);
@@ -21,10 +18,6 @@ public class ExpertsRepository implements PanacheMongoRepository<Expert> {
 
     public void deleteExpert(Expert expert){
         delete(expert);
-    }
-
-    public void updateExpert(Expert expert){
-        update(expert);
     }
 
     public Expert modify(Expert expert) throws IllegalArgumentException {
