@@ -11,15 +11,20 @@ import jakarta.inject.Inject;
 
 @RequestScoped
 public class DeleteProjHandler implements CommandHandler<DeleteProj, ProjDeleted> {
-    @SuppressWarnings("unused")
     @Inject
     ProjsRepository repository; //intentionally left non-private: https://stackoverflow.com/questions/55101095/why-does-quarkus-warn-me-about-injection-in-private-fields
 
     @Override
     public Result<ProjDeleted> handle(DeleteProj command) {
-        @SuppressWarnings("unused")
         var projId = command.getId();
-        return new Result<>(ErrorCode.EXCEPTION,
-                "Deleted");
+        var foundProj = repository.findById(projId);
+        if(foundProj != null) {
+            repository.delete(foundProj);
+            var result = new ProjDeleted(projId);
+            return new Result<>(result);
+        } else {
+            return new Result<>(ErrorCode.EXCEPTION,
+                    "Unable to delete a non-existent project.");
+        }
     }
 }
