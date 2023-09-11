@@ -33,7 +33,6 @@ public class DeleteCVControllerTests {
                 .when()
                 .post("/cvs/create")
                 .then()
-                .log().all()
                 .statusCode(200)
                 .extract()
                 .path("cvid");
