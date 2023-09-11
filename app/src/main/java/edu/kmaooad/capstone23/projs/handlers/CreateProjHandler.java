@@ -7,8 +7,10 @@ import edu.kmaooad.capstone23.projs.commands.CreateProj;
 import edu.kmaooad.capstone23.projs.dal.Proj;
 import edu.kmaooad.capstone23.projs.dal.ProjsRepository;
 import edu.kmaooad.capstone23.projs.events.ProjCreated;
+import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 
+@RequestScoped
 public class CreateProjHandler implements CommandHandler<CreateProj, ProjCreated> {
     @Inject
     ProjsRepository repository; //intentionally left non-private: https://stackoverflow.com/questions/55101095/why-does-quarkus-warn-me-about-injection-in-private-fields
