@@ -7,6 +7,9 @@ public class SetHiringStatus {
 
     private HiringStatus hiringStatus;
     private ObjectId orgID;
+    public ObjectId getOrgID(){
+        return orgID;
+    }
     public HiringStatus getHiringStatusName() {
         return hiringStatus;
     }

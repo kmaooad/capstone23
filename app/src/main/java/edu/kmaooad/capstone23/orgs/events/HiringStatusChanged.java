@@ -1,18 +1,25 @@
 package edu.kmaooad.capstone23.orgs.events;
 
 import edu.kmaooad.capstone23.orgs.dal.HiringStatus;
+import org.bson.types.ObjectId;
 
 public class HiringStatusChanged {
 
-        private HiringStatus hiringStatus;
+    private HiringStatus hiringStatus;
+    private String orgId;
 
-        public String getHiringStatus() {
-            return hiringStatus;
-        }
+    public HiringStatus getHiringStatus() {
+        return hiringStatus;
+    }
 
-        public HiringStatusChanged(HiringStatus hiringStatus) {
-            this.hiringStatus = hiringStatus;
-        }
+    public String getOrgId() {
+        return orgId;
+    }
+
+    public HiringStatusChanged(HiringStatus hiringStatus, String orgId) {
+        this.hiringStatus = hiringStatus;
+        this.orgId = orgId;
+    }
 
 
 }
