@@ -6,8 +6,8 @@ import org.bson.types.ObjectId;
 public class SetHiringStatus {
 
     private HiringStatus hiringStatus;
-    private ObjectId orgID;
-    public ObjectId getOrgID(){
+    private String orgID;
+    public String getOrgID(){
         return orgID;
     }
     public HiringStatus getHiringStatus() {

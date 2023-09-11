@@ -10,9 +10,6 @@ public class OrgsRepository implements PanacheMongoRepository<Org> {
     public Org findByName(String name) {
         return find("name", name).firstResult();
     }
-    public Org findById(ObjectId id) {
-        return find("id", id).firstResult();
-    }
     public Org insert(Org org){
         persist(org);
         return org;
