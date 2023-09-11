@@ -22,7 +22,6 @@ public class EditHiringStatusHandler implements CommandHandler<SetHiringStatus, 
 
         HiringStatusChanged result = new HiringStatusChanged
                 (org.hiringStatus, org.id.toString());
-
         return new Result<HiringStatusChanged>(result);
     }
 }
