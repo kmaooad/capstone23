@@ -1,14 +1,16 @@
 package edu.kmaooad.capstone23.competences.commands;
-import jakarta.validation.constraints.NotBlank;
-public class DeleteProj {
-    @NotBlank
-    private String id;
+import jakarta.validation.constraints.NotNull;
+import org.bson.types.ObjectId;
 
-    public String getId() {
+public class DeleteProj {
+    @NotNull
+    private ObjectId id;
+
+    public ObjectId getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(ObjectId id) {
         this.id = id;
     }
 }
