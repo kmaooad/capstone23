@@ -31,7 +31,7 @@ public class UpdateOrgHandler implements CommandHandler<UpdateOrg, OrgUpdated> {
 
         this.repository.update(updatedOrg);
 
-        OrgUpdated result = new OrgUpdated();
+        OrgUpdated result = new OrgUpdated(true);
 
         return new Result<>(result);
     }
