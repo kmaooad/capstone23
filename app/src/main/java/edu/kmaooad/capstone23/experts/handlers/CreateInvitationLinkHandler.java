@@ -21,8 +21,10 @@ public class CreateInvitationLinkHandler implements CommandHandler<CreateInvitat
     @Override
     public Result<InvitationLinkCreated> handle(CreateInvitationLink command) {
         var expertInvitation = new ExpertInvitation();
+        expertInvitation.email = command.getEmail();
+        expertInvitation.expertType = command.getExpertType();
         repository.persist(expertInvitation);
-
-        return null;
+        var invitationLink = expertService.createInvitationLink(expertInvitation.id);
+        return new Result<>(new InvitationLinkCreated(invitationLink));
     }
 }
