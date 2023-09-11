@@ -14,7 +14,7 @@ import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 
 @RequestScoped
-public class AssignActivityToStudentHandler implements CommandHandler<AssignActivityToStudent, AssignActivityToStudent> {
+public class AssignActivityToStudentHandler implements CommandHandler<AssignActivityToStudent, AssignActivityToStudentEvent> {
     @Inject
     private ActivityRepository activityRepository;
     @Inject
@@ -26,8 +26,8 @@ public class AssignActivityToStudentHandler implements CommandHandler<AssignActi
         Activity activity = activityRepository.findById(command.getActivityId());
         Student student = studentRepository.findById(command.getStudentId());
         student.assignActivity(activity);
-
-        return new Result<>(AssignActivityToStudentEvent(student.objectId, activity.objectId));
+        var res = new AssignActivityToStudentEvent(student.objectId, activity.objectId);
+        return new Result<>(res);
     }
     
 }

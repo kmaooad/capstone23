@@ -4,7 +4,6 @@ import java.util.Optional;
 
 import org.bson.types.ObjectId;
 
-import edu.kmaooad.capstone23.activities.dal.Activity;
 import io.quarkus.mongodb.panache.PanacheMongoRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 
