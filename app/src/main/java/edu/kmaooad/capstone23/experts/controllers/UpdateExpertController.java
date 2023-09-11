@@ -10,7 +10,7 @@ import org.eclipse.microprofile.openapi.annotations.media.Content;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 
-@Path("/expert/update")
+@Path("/experts/update")
 @APIResponse(responseCode = "200", content = {
         @Content(mediaType = "application/json", schema = @Schema(implementation = ExpertUpdated.class)) })
 public class UpdateExpertController extends TypicalController<UpdateExpert, ExpertUpdated> {

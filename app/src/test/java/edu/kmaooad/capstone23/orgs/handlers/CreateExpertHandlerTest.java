@@ -16,7 +16,7 @@ public class CreateExpertHandlerTest {
     CommandHandler<CreateExpert, ExpertCreated> handler;
 
     @Test
-    void testSuccessfulHandling() {
+    public void testSuccessfulHandling() {
         CreateExpert command = new CreateExpert();
         command.setExpertName("Arkhypchuk Stepanenko");
 
@@ -28,7 +28,7 @@ public class CreateExpertHandlerTest {
     }
 
     @Test
-    void testNameValidation() {
+    public void testNameValidation() {
         CreateExpert command = new CreateExpert();
         command.setExpertName("Arkhypchuk Stepanenko œ∑´");
 

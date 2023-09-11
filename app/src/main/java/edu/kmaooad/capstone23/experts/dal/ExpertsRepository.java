@@ -1,9 +1,7 @@
 package edu.kmaooad.capstone23.experts.dal;
 
 import io.quarkus.mongodb.panache.PanacheMongoRepository;
-import io.quarkus.mongodb.panache.runtime.JavaMongoOperations;
 import jakarta.enterprise.context.ApplicationScoped;
-
 import java.util.List;
 
 @ApplicationScoped
@@ -30,7 +28,7 @@ public class ExpertsRepository implements PanacheMongoRepository<Expert> {
     }
 
     public Expert modify(Expert expert) throws IllegalArgumentException {
-        if(expert.org != null && findByIdOptional(expert.org).isEmpty())
+        if(expert.org != null && findByIdOptional(expert.org.id).isEmpty())
             throw new IllegalArgumentException("Organisation has unknown id");
         if(expert.id.equals(expert.org))
             throw new IllegalArgumentException("This id is occupied by organisation");

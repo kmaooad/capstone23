@@ -15,14 +15,14 @@ import org.bson.types.ObjectId;
 public class DeleteExpertHandler implements CommandHandler<DeleteExpert, ExpertDeleted> {
 
     @Inject
-    ExpertsRepository repository;
+    private ExpertsRepository repository;
 
     public Result<ExpertDeleted> handle(DeleteExpert command) {
         ObjectId id = command.getId();
         Expert expert = repository.findById(id);
 
         if (expert == null) {
-            return new Result<>(ErrorCode.NOT_FOUND, "Skill not found");
+            return new Result<>(ErrorCode.NOT_FOUND, "Expert not found");
         }
 
         repository.deleteExpert(expert);
