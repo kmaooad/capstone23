@@ -4,7 +4,7 @@ import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.competences.commands.CreateProj;
-import edu.kmaooad.capstone23.competences.dal.Proj;
+import edu.kmaooad.capstone23.competences.dal.Project;
 import edu.kmaooad.capstone23.competences.dal.ProjsRepository;
 import edu.kmaooad.capstone23.competences.events.ProjCreated;
 import jakarta.enterprise.context.RequestScoped;
@@ -17,7 +17,7 @@ public class CreateProjHandler implements CommandHandler<CreateProj, ProjCreated
 
     @Override
     public Result<ProjCreated> handle(CreateProj command) {
-        var proj = new Proj();
+        var proj = new Project();
         proj.name = command.getName();
         proj.description = command.getDescription();
         proj.skills = command.getSkills();

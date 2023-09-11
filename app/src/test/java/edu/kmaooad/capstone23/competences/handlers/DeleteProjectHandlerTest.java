@@ -2,7 +2,7 @@ package edu.kmaooad.capstone23.competences.handlers;
 
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.competences.commands.DeleteProj;
-import edu.kmaooad.capstone23.competences.dal.Proj;
+import edu.kmaooad.capstone23.competences.dal.Project;
 import edu.kmaooad.capstone23.competences.dal.ProjsRepository;
 import edu.kmaooad.capstone23.competences.events.ProjDeleted;
 import io.quarkus.test.junit.QuarkusTest;
@@ -16,7 +16,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @QuarkusTest
-class DeleteProjHandlerTest {
+class DeleteProjectHandlerTest {
     @Inject
     DeleteProjHandler handler;
     @Inject
@@ -25,18 +25,18 @@ class DeleteProjHandlerTest {
     @Test
     @DisplayName("Basic Handling")
     void testSuccessfulHandling() {
-        Proj proj = createDefaultProj();
-        repository.insert(proj);
+        Project project = createDefaultProj();
+        repository.insert(project);
 
         DeleteProj command = new DeleteProj();
-        command.setId(proj.id);
+        command.setId(project.id);
 
         ProjDeleted projDeleted = handler.handle(command).getValue();
         assertNotNull(projDeleted);
-        assertEquals(proj.id, projDeleted.projId());
+        assertEquals(project.id, projDeleted.projId());
 
-        Proj deletedProj = repository.findById(proj.id);
-        assertNull(deletedProj);
+        Project deletedProject = repository.findById(project.id);
+        assertNull(deletedProject);
     }
 
     @Test
@@ -49,12 +49,12 @@ class DeleteProjHandlerTest {
         assertFalse(projDeleted.isSuccess());
     }
 
-    private Proj createDefaultProj() {
-        Proj proj = new Proj();
-        proj.name = "Test Project";
-        proj.description = "Test Description";
-        proj.skills = List.of(new ObjectId("5f7e47fc8e1f7112d73c92a1"));
-        proj.skillSets = List.of(new ObjectId("1a4cd132b123a1aa3bc2d142"));
-        return proj;
+    private Project createDefaultProj() {
+        Project project = new Project();
+        project.name = "Test Project";
+        project.description = "Test Description";
+        project.skills = List.of(new ObjectId("5f7e47fc8e1f7112d73c92a1"));
+        project.skillSets = List.of(new ObjectId("1a4cd132b123a1aa3bc2d142"));
+        return project;
     }
 }

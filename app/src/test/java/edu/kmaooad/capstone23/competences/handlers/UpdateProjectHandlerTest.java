@@ -2,7 +2,7 @@ package edu.kmaooad.capstone23.competences.handlers;
 
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.competences.commands.UpdateProj;
-import edu.kmaooad.capstone23.competences.dal.Proj;
+import edu.kmaooad.capstone23.competences.dal.Project;
 import edu.kmaooad.capstone23.competences.dal.ProjsRepository;
 import edu.kmaooad.capstone23.competences.events.ProjUpdated;
 import io.quarkus.test.junit.QuarkusTest;
@@ -15,7 +15,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 @QuarkusTest
-class UpdateProjHandlerTest {
+class UpdateProjectHandlerTest {
     @Inject
     CommandHandler<UpdateProj, ProjUpdated> handler;
     @Inject
@@ -27,25 +27,25 @@ class UpdateProjHandlerTest {
         var projToInsert = createDefaultProj();
         var originalProj = repository.insert(projToInsert);
 
-        Proj updatedProj = new Proj();
-        updatedProj.name = "Updated Project";
-        updatedProj.description = "Updated Description";
-        updatedProj.skills = List.of(new ObjectId("1a4cd132b123a1aa3bc2d142"));
-        updatedProj.skillSets = List.of(new ObjectId("5f7e47fc8e1f7112d73c92a1"));
+        Project updatedProject = new Project();
+        updatedProject.name = "Updated Project";
+        updatedProject.description = "Updated Description";
+        updatedProject.skills = List.of(new ObjectId("1a4cd132b123a1aa3bc2d142"));
+        updatedProject.skillSets = List.of(new ObjectId("5f7e47fc8e1f7112d73c92a1"));
 
         var command = new UpdateProj();
         command.setId(originalProj.id);
-        command.setName(updatedProj.name);
-        command.setDescription(updatedProj.description);
-        command.setSkills(updatedProj.skills);
-        command.setSkillSets(updatedProj.skillSets);
+        command.setName(updatedProject.name);
+        command.setDescription(updatedProject.description);
+        command.setSkills(updatedProject.skills);
+        command.setSkillSets(updatedProject.skillSets);
 
         var result = handler.handle(command);
         assertTrue(result.isSuccess());
 
         var updateEvent = result.getValue();
-        assertEquals(updateEvent.name(), updatedProj.name);
-        assertEquals(updateEvent.description(), updatedProj.description);
+        assertEquals(updateEvent.name(), updatedProject.name);
+        assertEquals(updateEvent.description(), updatedProject.description);
     }
 
 
@@ -72,12 +72,12 @@ class UpdateProjHandlerTest {
         assertNotEquals(originalAfterUpdating.name, updatedName);
     }
 
-    private Proj createDefaultProj() {
-        Proj proj = new Proj();
-        proj.name = "Test Project";
-        proj.description = "Test Description";
-        proj.skills = List.of(new ObjectId("5f7e47fc8e1f7112d73c92a1"));
-        proj.skillSets = List.of(new ObjectId("1a4cd132b123a1aa3bc2d142"));
-        return proj;
+    private Project createDefaultProj() {
+        Project project = new Project();
+        project.name = "Test Project";
+        project.description = "Test Description";
+        project.skills = List.of(new ObjectId("5f7e47fc8e1f7112d73c92a1"));
+        project.skillSets = List.of(new ObjectId("1a4cd132b123a1aa3bc2d142"));
+        return project;
     }
 }

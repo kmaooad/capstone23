@@ -4,14 +4,14 @@ import io.quarkus.mongodb.panache.PanacheMongoRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
-public class ProjsRepository implements PanacheMongoRepository<Proj> {
+public class ProjsRepository implements PanacheMongoRepository<Project> {
 
-    public Proj findByName(String name) {
+    public Project findByName(String name) {
         return find("name", name).firstResult();
     }
 
-    public Proj insert(Proj proj) {
-        persist(proj);
-        return proj;
+    public Project insert(Project project) {
+        persist(project);
+        return project;
     }
 }

@@ -4,7 +4,7 @@ import java.util.List;
 import io.quarkus.mongodb.panache.common.MongoEntity;
 
 @MongoEntity(collection = "projs")
-public class Proj {
+public class Project {
     public ObjectId id;
     public String name;
     public String description;

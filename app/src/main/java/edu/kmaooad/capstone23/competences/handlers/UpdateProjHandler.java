@@ -4,7 +4,7 @@ import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.competences.commands.UpdateProj;
-import edu.kmaooad.capstone23.competences.dal.Proj;
+import edu.kmaooad.capstone23.competences.dal.Project;
 import edu.kmaooad.capstone23.competences.events.ProjUpdated;
 import edu.kmaooad.capstone23.competences.dal.ProjsRepository;
 import jakarta.enterprise.context.RequestScoped;
@@ -22,7 +22,7 @@ public class UpdateProjHandler implements CommandHandler<UpdateProj, ProjUpdated
         if(foundProj == null)
             return new Result<>(ErrorCode.EXCEPTION, "Updated");
 
-        var newValues = new Proj();
+        var newValues = new Project();
         newValues.id = command.getId();
         newValues.name = command.getName();
         newValues.description = command.getDescription();

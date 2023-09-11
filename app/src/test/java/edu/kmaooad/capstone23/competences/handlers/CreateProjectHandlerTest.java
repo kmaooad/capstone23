@@ -9,13 +9,12 @@ import org.bson.types.ObjectId;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @QuarkusTest
-class CreateProjHandlerTest {
+class CreateProjectHandlerTest {
     @Inject
     CommandHandler<CreateProj, ProjCreated> handler;
 

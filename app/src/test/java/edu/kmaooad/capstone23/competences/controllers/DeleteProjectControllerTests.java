@@ -11,10 +11,9 @@ import java.util.Map;
 
 import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @QuarkusTest
-public class DeleteProjControllerTests {
+public class DeleteProjectControllerTests {
 
     @Test
     @DisplayName("Delete Proj: Basic")
