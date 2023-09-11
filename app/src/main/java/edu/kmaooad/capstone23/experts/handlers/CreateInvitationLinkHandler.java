@@ -6,6 +6,7 @@ import edu.kmaooad.capstone23.experts.commands.CreateInvitationLink;
 import edu.kmaooad.capstone23.experts.dal.ExpertInvitation;
 import edu.kmaooad.capstone23.experts.dal.ExpertInvitationRepository;
 import edu.kmaooad.capstone23.experts.events.InvitationLinkCreated;
+import edu.kmaooad.capstone23.experts.service.ExpertInvitationMailService;
 import edu.kmaooad.capstone23.experts.service.ExpertService;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
@@ -17,6 +18,8 @@ public class CreateInvitationLinkHandler implements CommandHandler<CreateInvitat
     ExpertInvitationRepository repository;
     @Inject
     ExpertService expertService;
+    @Inject
+    ExpertInvitationMailService mailService;
 
     @Override
     public Result<InvitationLinkCreated> handle(CreateInvitationLink command) {
@@ -25,6 +28,7 @@ public class CreateInvitationLinkHandler implements CommandHandler<CreateInvitat
         expertInvitation.expertType = command.getExpertType();
         repository.persist(expertInvitation);
         var invitationLink = expertService.createInvitationLink(expertInvitation.id);
+        mailService.sendInvitationLink(expertInvitation.email, invitationLink);
         return new Result<>(new InvitationLinkCreated(invitationLink));
     }
 }
