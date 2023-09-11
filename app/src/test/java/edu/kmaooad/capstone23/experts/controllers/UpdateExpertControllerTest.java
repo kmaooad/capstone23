@@ -26,7 +26,8 @@ public class UpdateExpertControllerTest {
         Map<String, Object> jsonAsMap = new HashMap<>();
         jsonAsMap.put("id", expertId.toHexString());
         jsonAsMap.put("expertName", "Jane Doe");
-        jsonAsMap.put("org", org);
+        jsonAsMap.put("orgId", org.id.toString());
+        jsonAsMap.put("orgName", org.name);
 
         given()
                 .contentType("application/json")
@@ -42,7 +43,7 @@ public class UpdateExpertControllerTest {
 
         Map<String, Object> jsonAsMap = new HashMap<>();
         jsonAsMap.put("expertName", "Bob Smith");
-        jsonAsMap.put("org", org);
+        jsonAsMap.put("orgName", org.name);
 
         String objectId = given()
                 .contentType("application/json")

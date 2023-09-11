@@ -10,6 +10,7 @@ import edu.kmaooad.capstone23.experts.events.ExpertUpdated;
 import edu.kmaooad.capstone23.orgs.dal.OrgsRepository;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
+import org.bson.types.ObjectId;
 
 @RequestScoped
 public class UpdateExpertHandler implements CommandHandler<UpdateExpert, ExpertUpdated> {
@@ -22,9 +23,9 @@ public class UpdateExpertHandler implements CommandHandler<UpdateExpert, ExpertU
     @Override
     public Result<ExpertUpdated> handle(UpdateExpert command) {
         var expert = new Expert();
-        expert.id = command.getId();
+        expert.id = new ObjectId(command.getId());
         expert.name = command.getExpertName();
-        expert.org = orgsRepository.findById(command.getOrg().id);
+        expert.org = orgsRepository.findById(new ObjectId(command.getOrgId()));
         try {
             var updatedExpert = expertsRepository.modify(expert);
             return new Result<>(new ExpertUpdated(updatedExpert));

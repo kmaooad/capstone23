@@ -5,7 +5,7 @@ import edu.kmaooad.capstone23.experts.dal.Expert;
 public class ExpertUpdated {
     private Expert expert;
 
-    public Expert getExpertId() {
+    public Expert getExpert() {
         return expert;
     }
 

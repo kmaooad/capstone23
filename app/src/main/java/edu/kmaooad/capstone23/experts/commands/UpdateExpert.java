@@ -1,6 +1,5 @@
 package edu.kmaooad.capstone23.experts.commands;
 
-import edu.kmaooad.capstone23.orgs.dal.Org;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -15,31 +14,41 @@ public class UpdateExpert {
     @Pattern(regexp = "^[a-zA-Z0-9\s]*$")
     private String expertName;
     @NotNull
-    private Org org;
+    private String id;
     @NotNull
-    private ObjectId id;
+    private String orgId;
+    @NotNull
+    private String orgName;
 
     public String getExpertName() {
         return expertName;
     }
 
-    public Org getOrg() {
-        return org;
+    public void setExpertName(String expertName) {
+        this.expertName = expertName;
     }
 
-    public void setOrg(Org org) {
-        this.org = org;
-    }
-
-    public ObjectId getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(ObjectId id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public void setExpertName(String expertName) {
-        this.expertName = expertName;
+    public String getOrgId() {
+        return orgId;
+    }
+
+    public void setOrgId(String orgId) {
+        this.orgId = orgId;
+    }
+
+    public String getOrgName() {
+        return orgName;
+    }
+
+    public void setOrgName(String orgName) {
+        this.orgName = orgName;
     }
 }

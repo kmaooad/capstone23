@@ -34,16 +34,17 @@ public class UpdateExpertHandlerTest {
         String name = "Kvasolia Barabolia";
 
         UpdateExpert command = new UpdateExpert();
-        command.setId(expertsRepository.findByName("Redyska Sosyska").id);
+        command.setId(expertsRepository.findByName("Redyska Sosyska").id.toString());
         command.setExpertName(name);
-        command.setOrg(org);
+        command.setOrgId(org.id.toString());
+        command.setOrgName(org.name);
 
         Result<ExpertUpdated> result = updateHandler.handle(command);
 
         Assertions.assertTrue(result.isSuccess());
         Assertions.assertNotNull(result.getValue());
-        Assertions.assertEquals(result.getValue().getExpertId().id.toString(), expertId);
-        Assertions.assertEquals(result.getValue().getExpertId().name, name);
+        Assertions.assertEquals(result.getValue().getExpert().id.toString(), expertId);
+        Assertions.assertEquals(result.getValue().getExpert().name, name);
     }
 
     private String createTestExpert() {
