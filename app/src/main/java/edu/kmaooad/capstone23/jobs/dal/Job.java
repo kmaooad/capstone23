@@ -9,5 +9,6 @@ public class Job {
     public ObjectId id;
     public String name;
     public  String description;
+    public boolean isActive;
 }
 
