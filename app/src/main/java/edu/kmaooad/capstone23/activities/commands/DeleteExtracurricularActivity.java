@@ -2,7 +2,7 @@ package edu.kmaooad.capstone23.activities.commands;
 
 import org.bson.types.ObjectId;
 
-public class DeleteExtracurricularActivities {
+public class DeleteExtracurricularActivity {
     private ObjectId id;
 
     public ObjectId getId() {
