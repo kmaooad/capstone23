@@ -27,8 +27,8 @@ public class CreateInvitationLinkHandler implements CommandHandler<CreateInvitat
         var expertInvitation = new ExpertInvitation();
         expertInvitation.email = command.getEmail();
         expertInvitation.expertType = command.getExpertType();
-        // repository.persist(expertInvitation);
-        var invitationLink = expertService.createInvitationLink(ObjectId.get());
+        repository.persist(expertInvitation);
+        var invitationLink = expertService.createInvitationLink(expertInvitation.id);
         mailService.sendInvitationLink(expertInvitation.email, invitationLink);
         return new Result<>(new InvitationLinkCreated(invitationLink));
     }
