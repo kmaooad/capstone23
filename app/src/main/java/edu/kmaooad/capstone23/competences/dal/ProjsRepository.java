@@ -1,4 +1,4 @@
-package edu.kmaooad.capstone23.projs.dal;
+package edu.kmaooad.capstone23.competences.dal;
 
 import io.quarkus.mongodb.panache.PanacheMongoRepository;
 import jakarta.enterprise.context.ApplicationScoped;

@@ -1,4 +1,4 @@
-package edu.kmaooad.capstone23.projs.commands;
+package edu.kmaooad.capstone23.competences.commands;
 import jakarta.validation.constraints.NotBlank;
 public class DeleteProj {
     @NotBlank

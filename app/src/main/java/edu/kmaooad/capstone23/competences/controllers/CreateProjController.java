@@ -1,8 +1,8 @@
-package edu.kmaooad.capstone23.projs.controllers;
+package edu.kmaooad.capstone23.competences.controllers;
 
 import edu.kmaooad.capstone23.common.TypicalController;
-import edu.kmaooad.capstone23.projs.commands.CreateProj;
-import edu.kmaooad.capstone23.projs.events.ProjCreated;
+import edu.kmaooad.capstone23.competences.commands.CreateProj;
+import edu.kmaooad.capstone23.competences.events.ProjCreated;
 import jakarta.ws.rs.Path;
 import org.eclipse.microprofile.openapi.annotations.media.Content;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;

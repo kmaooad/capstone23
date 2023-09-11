@@ -1,4 +1,4 @@
-package edu.kmaooad.capstone23.projs.events;
+package edu.kmaooad.capstone23.competences.events;
 import java.util.List;
 public class ProjCreated {
     private String projId;

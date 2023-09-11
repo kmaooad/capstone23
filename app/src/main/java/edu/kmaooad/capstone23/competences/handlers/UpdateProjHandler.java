@@ -1,11 +1,11 @@
-package edu.kmaooad.capstone23.projs.handlers;
+package edu.kmaooad.capstone23.competences.handlers;
 
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
-import edu.kmaooad.capstone23.projs.commands.UpdateProj;
-import edu.kmaooad.capstone23.projs.dal.ProjsRepository;
-import edu.kmaooad.capstone23.projs.events.ProjUpdated;
+import edu.kmaooad.capstone23.competences.commands.UpdateProj;
+import edu.kmaooad.capstone23.competences.events.ProjUpdated;
+import edu.kmaooad.capstone23.competences.dal.ProjsRepository;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 

@@ -1,18 +1,30 @@
-package edu.kmaooad.capstone23.projs.events;
+package edu.kmaooad.capstone23.competences.commands;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import java.util.List;
-public class ProjUpdated {
-    private String projId;
+
+public class UpdateProj {
+
+    private String id;
+
+    @NotBlank
+    @Size(min = 3, max = 30)
+    @Pattern(regexp = "^[a-zA-Z0-9\\s]*$")
     private String name;
+
     private String description;
+
     private List<String> skills;
+
     private List<String> skillSets;
 
-    public String getProjId() {
-        return projId;
+    public String getId() {
+        return id;
     }
 
-    public void setProjId(String projId) {
-        this.projId = projId;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -44,14 +56,6 @@ public class ProjUpdated {
     }
 
     public void setSkillSets(List<String> skillSets) {
-        this.skillSets = skillSets;
-    }
-
-    public ProjUpdated(String projId, String name, String description, List<String> skills, List<String> skillSets) {
-        this.projId = projId;
-        this.name = name;
-        this.description = description;
-        this.skills = skills;
         this.skillSets = skillSets;
     }
 }

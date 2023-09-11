@@ -1,12 +1,11 @@
-package edu.kmaooad.capstone23.projs.commands;
+package edu.kmaooad.capstone23.competences.commands;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import java.util.List;
 
-public class UpdateProj {
-
-    private String id;
+public class CreateProj {
 
     @NotBlank
     @Size(min = 3, max = 30)
@@ -18,14 +17,6 @@ public class UpdateProj {
     private List<String> skills;
 
     private List<String> skillSets;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
