@@ -13,4 +13,12 @@ public class JobPreference {
         PART_TIME
     }
 
+    public JobPreference(String location, String industry, Category category) {
+        this.location = location;
+        this.industry = industry;
+        this.category = category;
+    }
+
+    public JobPreference() {
+    }
 }
