@@ -1,9 +1,12 @@
 package edu.kmaooad.capstone23.activities.events;
 
-public class AssignActivityToStudent {
-    private final String id;
+import org.bson.types.ObjectId;
 
-    public AssignActivityToStudent(String id) {
+public class AssignActivityToStudent {
+    private final ObjectId studentId;
+    private final ObjectId activityId;
+
+    public AssignActivityToStudent(ObjectId id) {
         this.id = id;
     }
 

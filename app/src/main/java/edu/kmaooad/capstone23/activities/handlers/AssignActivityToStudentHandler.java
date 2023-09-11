@@ -3,22 +3,31 @@ package edu.kmaooad.capstone23.activities.handlers;
 import edu.kmaooad.capstone23.activities.commands.AssignActivityToStudent;
 import edu.kmaooad.capstone23.activities.dal.Activity;
 import edu.kmaooad.capstone23.activities.dal.ActivityRepository;
-import edu.kmaooad.capstone23.activities.events.AssignActivityToGroup;
+import edu.kmaooad.capstone23.activities.events.AssignActivityToGroupEvent;
+import edu.kmaooad.capstone23.activities.events.AssignActivityToStudentEvent;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.Result;
+import edu.kmaooad.capstone23.group_templates.dal.GroupTemplatesRepository;
+import edu.kmaooad.capstone23.students.dal.Student;
+import edu.kmaooad.capstone23.students.dal.StudentRepository;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 
 @RequestScoped
-public class AssignActivityToStudentHandler implements CommandHandler<AssignActivityToStudent, AssignActivityToGroup> {
+public class AssignActivityToStudentHandler implements CommandHandler<AssignActivityToStudent, AssignActivityToStudent> {
     @Inject
     private ActivityRepository activityRepository;
+    @Inject
+    private StudentRepository studentRepository;
+
 
     @Override
-    public Result<AssignActivityToGroup> handle(AssignActivityToStudent command) {
+    public Result<AssignActivityToStudentEvent> handle(AssignActivityToStudent command) {
         Activity activity = activityRepository.findById(command.getActivityId());
-        
-        return
+        Student student = studentRepository.findById(command.getStudentId());
+        student.assignActivity(activity);
+
+        return new Result<>(AssignActivityToStudentEvent(student.objectId, activity.objectId));
     }
     
 }
