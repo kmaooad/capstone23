@@ -29,6 +29,5 @@ public class Activity {
     public String getName() {
         return name;
     }
-
 }
 
