@@ -21,7 +21,8 @@ public class EditHiringStatusHandlerTest {
         @Test
         void testSuccessfulHandling() {
             SetHiringStatus command = new SetHiringStatus();
-            command.setHiringStatus(HiringStatus.valueOf("NOT_HIRING"));
+            command.setOrgID("64ff7fabc64e527ecae3f896");
+            command.setHiringStatus(HiringStatus.HIRING);
 
             Result<HiringStatusChanged> result = handler.handle(command);
 

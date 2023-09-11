@@ -16,5 +16,8 @@ public class SetHiringStatus {
     public void setHiringStatus(HiringStatus hiringStatus) {
         this.hiringStatus = hiringStatus;
     }
+    public void setOrgID(String orgID) {
+        this.orgID = orgID;
+    }
 
 }
