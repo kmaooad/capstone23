@@ -29,7 +29,7 @@ public class CreateRequestToJoinHandler implements CommandHandler<RequestToJoinO
 
         Org department = orgsRepository.findById(new ObjectId(command.getOrgId()));
         if (department == null) {
-            return new Result(ErrorCode.EXCEPTION, "Department not found");
+            return new Result(ErrorCode.EXCEPTION, "Org not found");
         }
 
         Request request = new Request();
