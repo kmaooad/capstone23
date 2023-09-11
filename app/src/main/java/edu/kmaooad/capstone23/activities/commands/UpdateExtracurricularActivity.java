@@ -4,6 +4,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+import org.bson.types.ObjectId;
 
 import java.util.Date;
 
@@ -14,7 +15,7 @@ public class UpdateExtracurricularActivity {
     @Pattern(regexp = "^[a-zA-Z0-9\s]*$")
     private String extracurricularActivityName;
     @NotNull
-    private String id;
+    private ObjectId id;
 
     @NotNull
     private Date extracurricularActivityDate;
@@ -27,11 +28,11 @@ public class UpdateExtracurricularActivity {
         this.extracurricularActivityName = ExtracurricularActivityName;
     }
 
-    public String getId() {
+    public ObjectId getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(ObjectId id) {
         this.id = id;
     }
 
