@@ -57,4 +57,21 @@ public class RequestToJoinDepartmentHandlerTest {
         Assertions.assertNotNull(resultRequest);
     }
 
+
+    @Test
+    @DisplayName("Create Request to Join Department: Error handling when department is not found")
+    public void testRequestToJoinDepartmentWithNonExistentDepartment() {
+        String userName = "user1";
+        departmentId = "64fbb243275c1111167b87a3";
+
+        RequestToJoinDepartment command = new RequestToJoinDepartment();
+        command.setUserName(userName);
+        command.setDepartmentId(departmentId);
+
+        Result<RequestCreated> result = handler.handle(command);
+
+        Assertions.assertFalse(result.isSuccess());
+        Assertions.assertEquals("Department not found", result.getMessage());
+    }
+
 }
