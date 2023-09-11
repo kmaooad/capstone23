@@ -2,9 +2,9 @@ package edu.kmaooad.capstone23.activities.commands;
 
 import io.smallrye.common.constraint.NotNull;
 
-public class ActivityToGroup {
+public class AssignActivityToStudent {
     @NotNull
-    private String groupId;
+    private String studentId;
     @NotNull
     private String activityId;
 
@@ -12,15 +12,15 @@ public class ActivityToGroup {
         return activityId;
     }
 
-    public String getGroupId() {
-        return groupId;
+    public String getStudentId() {
+        return studentId;
     }
 
     public void setActivityId(String activityId) {
         this.activityId = activityId;
     }
 
-    public void setGroupId(String groupId) {
-        this.groupId = groupId;
+    public void setStudentId(String groupId) {
+        this.studentId = groupId;
     }
 }
