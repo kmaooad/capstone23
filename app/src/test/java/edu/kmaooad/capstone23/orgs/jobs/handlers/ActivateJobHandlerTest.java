@@ -25,8 +25,7 @@ public class ActivateJobHandlerTest {
 
         Result<JobCreated> result = handler.handle(command);
 
-        ActivateJob commandForAct = new ActivateJob();
-        commandForAct.setJobId(result.getValue().getJobId());
+        ActivateJob commandForAct = new ActivateJob(result.getValue().getJobId());
 
         Result<JobActivated> resultForAct = handlerForActivation.handle(commandForAct);
 
@@ -40,8 +39,7 @@ public class ActivateJobHandlerTest {
 
         ObjectId nonExistingJob = new ObjectId("aaaaaaaaaaaaaaaaaaaaaaaa");
 
-        ActivateJob commandForAct = new ActivateJob();
-        commandForAct.setJobId(nonExistingJob);
+        ActivateJob commandForAct = new ActivateJob(nonExistingJob);
 
         Result<JobActivated> resultForAct = handlerForActivation.handle(commandForAct);
 

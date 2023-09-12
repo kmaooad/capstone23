@@ -30,8 +30,7 @@ public class DeactivateJobHandlerTest {
 
         Result<JobCreated> result = handler.handle(command);
 
-        DeactivateJob commandForDeact = new DeactivateJob();
-        commandForDeact.setJobId(result.getValue().getJobId());
+        DeactivateJob commandForDeact = new DeactivateJob(result.getValue().getJobId());
 
         Result<JobDeactivated> resultForDeact = handlerForDeactivation.handle(commandForDeact);
 
@@ -45,8 +44,7 @@ public class DeactivateJobHandlerTest {
 
         ObjectId nonExistingJob = new ObjectId("aaaaaaaaaaaaaaaaaaaaaaaa");
 
-        DeactivateJob commandForDeact = new DeactivateJob();
-        commandForDeact.setJobId(nonExistingJob);
+        DeactivateJob commandForDeact = new DeactivateJob(nonExistingJob);
 
         Result<JobDeactivated> resultForDeact = handlerForDeactivation.handle(commandForDeact);
 
