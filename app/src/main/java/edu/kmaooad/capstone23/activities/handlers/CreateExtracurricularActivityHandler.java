@@ -24,6 +24,6 @@ public class CreateExtracurricularActivityHandler implements CommandHandler<Crea
 
         ExtracurricularActivityCreated result = new ExtracurricularActivityCreated(extracurricularActivity.id.toString());
 
-        return new Result<ExtracurricularActivityCreated>(result);
+        return new Result<>(result);
     }
 }

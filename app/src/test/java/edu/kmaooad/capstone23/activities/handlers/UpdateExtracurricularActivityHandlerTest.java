@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Date;
 import java.util.Objects;
+import java.util.Optional;
 
 @QuarkusTest
 public class UpdateExtracurricularActivityHandlerTest {
@@ -29,7 +30,7 @@ public class UpdateExtracurricularActivityHandlerTest {
     void setUp() {
         ExtracurricularActivity extracurricularActivity = new ExtracurricularActivity();
         extracurricularActivity.extracurricularActivityDate = new Date();
-        extracurricularActivity.extracurricularActivityName = "New extra activity";
+        extracurricularActivity.extracurricularActivityName = "Basketball";
         repository.insert(extracurricularActivity);
         idToUpdate = extracurricularActivity.id.toString();
     }
@@ -49,5 +50,19 @@ public class UpdateExtracurricularActivityHandlerTest {
         ExtracurricularActivity updatedActivity = repository.findById(idToUpdate);
         Assertions.assertTrue(Objects.nonNull(updatedActivity));
         Assertions.assertEquals("Updated Activity", updatedActivity.extracurricularActivityName);
+    }
+
+    @Test
+    @DisplayName("Update Activity: Basic not exist activity")
+    void testNonExistentActivity() {
+        UpdateExtracurricularActivity command = new UpdateExtracurricularActivity();
+        command.setId("nonExistentId");
+        command.setActivityName("Updated Activity");
+
+        Result<ExtracurricularActivityUpdated> result = UpdateExtracurricularActivityHandler.handle(command);
+
+        Assertions.assertFalse(result.isSuccess());
+        Assertions.assertEquals(ErrorCode.VALIDATION_FAILED, result.getErrorCode());
+        Assertions.assertEquals("must not be null", result.getMessage());
     }
 }

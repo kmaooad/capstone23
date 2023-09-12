@@ -27,6 +27,6 @@ public class DeleteExtracurricularActivityHandler implements CommandHandler<Dele
 
         repository.deleteExtracurricularActivity(extracurricularActivity);
 
-        return new Result<ExtracurricularActivityDeleted>(new ExtracurricularActivityDeleted(extracurricularActivity.id.toString()));
+        return new Result<>(new ExtracurricularActivityDeleted(extracurricularActivity.id.toString()));
     }
 }

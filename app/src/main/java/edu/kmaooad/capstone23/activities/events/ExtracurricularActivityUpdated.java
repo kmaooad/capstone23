@@ -12,6 +12,10 @@ public class ExtracurricularActivityUpdated {
         return name;
     }
 
+    public String getId() {
+        return id;
+    }
+
     public Date getExtracurricularActivityDate() {
         return extracurricularActivityDate;
     }

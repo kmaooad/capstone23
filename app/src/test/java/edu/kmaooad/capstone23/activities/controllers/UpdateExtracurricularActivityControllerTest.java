@@ -77,4 +77,20 @@ public class UpdateExtracurricularActivityControllerTest {
                 .statusCode(500);
     }
 
+    @Test
+    @DisplayName("Update Extracurricular activity: Invalid Name")
+    public void testUpdateWithInvalidCourseName() {
+        Map<String, Object> jsonAsMap = new HashMap<>();
+        jsonAsMap.put("id", idToUpdate.toString());
+        jsonAsMap.put("courseName", "Invalid_2431 @123__");
+
+        given()
+                .contentType("application/json")
+                .body(jsonAsMap)
+                .when()
+                .post("/extracurricularActivity/update")
+                .then()
+                .statusCode(400);
+    }
+
 }
