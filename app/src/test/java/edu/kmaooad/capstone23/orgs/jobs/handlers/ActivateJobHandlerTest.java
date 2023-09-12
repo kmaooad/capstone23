@@ -7,6 +7,7 @@ import edu.kmaooad.capstone23.jobs.commands.CreateJob;
 import edu.kmaooad.capstone23.jobs.events.JobActivated;
 import edu.kmaooad.capstone23.jobs.events.JobCreated;
 import io.quarkus.test.junit.QuarkusTest;
+import org.bson.types.ObjectId;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -19,9 +20,6 @@ public class ActivateJobHandlerTest {
     CommandHandler<ActivateJob, JobActivated> handlerForActivation;
     @Test
     void testSuccessfulHandling() {
-//        Map<String, Object> jsonAsMap = new HashMap<>();
-//        ObjectId id = new ObjectId("64faf6ad341e202c91f76c83");
-//        jsonAsMap.put("_id", id);
 
         CreateJob command = new CreateJob("IT teacher", true);
 
@@ -35,8 +33,22 @@ public class ActivateJobHandlerTest {
         Assertions.assertTrue(resultForAct.isSuccess());
         Assertions.assertNotNull(resultForAct.getValue());
         Assertions.assertTrue(resultForAct.getValue().getJobId().equals(result.getValue().getJobId()));
-
-
     }
+
+    @Test
+    void testUnsuccessfulHandling() {
+
+        ObjectId nonExistingJob = new ObjectId("aaaaaaaaaaaaaaaaaaaaaaaa");
+
+        ActivateJob commandForAct = new ActivateJob();
+        commandForAct.setJobId(nonExistingJob);
+
+        Result<JobActivated> resultForAct = handlerForActivation.handle(commandForAct);
+
+        Assertions.assertFalse(resultForAct.isSuccess());
+        Assertions.assertNull(resultForAct.getValue());
+    }
+
+
 
 }
