@@ -1,7 +1,9 @@
 package edu.kmaooad.capstone23.activities.dal;
 
+import edu.kmaooad.capstone23.departments.dal.Department;
 import io.quarkus.mongodb.panache.PanacheMongoRepository;
 import jakarta.enterprise.context.ApplicationScoped;
+import org.bson.types.ObjectId;
 
 @ApplicationScoped
 public class ExtracurricularActivityRepository implements PanacheMongoRepository<ExtracurricularActivity> {
@@ -10,9 +12,17 @@ public class ExtracurricularActivityRepository implements PanacheMongoRepository
         return find("name", name).firstResult();
     }
 
+    public ExtracurricularActivity findById(String id) {
+        return findById(new ObjectId(id));
+    }
+
     public ExtracurricularActivity insert(ExtracurricularActivity extracurricularActivity){
         persist(extracurricularActivity);
         return extracurricularActivity;
+    }
+
+    public void delete(ExtracurricularActivity extracurricularActivity) {
+        deleteById(extracurricularActivity.id);
     }
 
     public void deleteExtracurricularActivity(ExtracurricularActivity extracurricularActivity){

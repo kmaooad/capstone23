@@ -15,7 +15,7 @@ public class UpdateExtracurricularActivity {
     @Pattern(regexp = "^[a-zA-Z0-9\s]*$")
     private String extracurricularActivityName;
     @NotNull
-    private ObjectId id;
+    private String id;
 
     @NotNull
     private Date extracurricularActivityDate;
@@ -28,11 +28,11 @@ public class UpdateExtracurricularActivity {
         this.extracurricularActivityName = ExtracurricularActivityName;
     }
 
-    public ObjectId getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(ObjectId id) {
+    public void setId(String id) {
         this.id = id;
     }
 
