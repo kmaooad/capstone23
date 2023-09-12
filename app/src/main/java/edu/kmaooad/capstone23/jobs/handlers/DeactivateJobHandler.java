@@ -20,15 +20,15 @@ public class DeactivateJobHandler implements CommandHandler<DeactivateJob, JobDe
     @Override
     public Result<JobDeactivated> handle(DeactivateJob deactivateJobCommand) {
 
-        Optional<Job> job = repository.findByIdOptional(deactivateJobCommand.getId());
+        Optional<Job> job = repository.findByIdOptional(deactivateJobCommand.getJobId());
         if(job.isEmpty())
             return new Result<>(ErrorCode.VALIDATION_FAILED, "This job does not exist");
 
         Job j = job.get();
+        j.active = false;
+        repository.update(j);
 
-        repository.delete(j);
-
-        return new Result<>(new JobDeactivated(deactivateJobCommand.getId()));
+        return new Result<>(new JobDeactivated(deactivateJobCommand.getJobId()));
     }
 
 }
