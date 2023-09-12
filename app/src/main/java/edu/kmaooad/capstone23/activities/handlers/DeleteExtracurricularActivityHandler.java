@@ -18,11 +18,11 @@ public class DeleteExtracurricularActivityHandler implements CommandHandler<Dele
     private ExtracurricularActivityRepository repository;
 
     public Result<ExtracurricularActivityDeleted> handle(DeleteExtracurricularActivity command) {
-        ObjectId id = command.getId();
+        String id = command.getId();
         ExtracurricularActivity extracurricularActivity = repository.findById(id);
 
         if (extracurricularActivity == null) {
-            return new Result<>(ErrorCode.EXCEPTION, "Expert not found");
+            return new Result<>(ErrorCode.EXCEPTION, "Extracurricular Activity not found");
         }
 
         repository.deleteExtracurricularActivity(extracurricularActivity);

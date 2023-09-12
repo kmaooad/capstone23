@@ -42,9 +42,9 @@ public class DeleteExtracurricularActivityControllerTest {
     }
 
     @Test
-    @DisplayName("Delete Extracurricular Activity: No such department")
+    @DisplayName("Delete Extracurricular Activity: No such activity")
     public void testActivityDeletionWithNonExistentId() {
-        String nonexistentId = "6434534t234r23rsdfsdf4t35ta3";
+        String nonexistentId = "64fbb243275c1111167b87a3";
 
         given()
                 .contentType("application/json")
