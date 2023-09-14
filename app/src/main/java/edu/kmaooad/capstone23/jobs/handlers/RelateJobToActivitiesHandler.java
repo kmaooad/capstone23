@@ -21,8 +21,7 @@ public class RelateJobToActivitiesHandler  implements CommandHandler<RelateJobTo
 
     @Inject
     private JobRepository repository;
-//    @Inject
-//    private CourseRepository courseRepository;
+
     @Override
     public Result<ActivityRelated> handle(RelateJobToActivities command) {
 
@@ -31,6 +30,12 @@ public class RelateJobToActivitiesHandler  implements CommandHandler<RelateJobTo
             return new Result<>(ErrorCode.VALIDATION_FAILED, "This job was previously deleted or never existed");
 
         ActivityRelated result = new ActivityRelated(command.getActivitiesId());
+
+        Job j = job.get();
+        j.activitiesId.addAll(command.getActivitiesId());
+
+        // Save the updated job back to the repository
+        repository.update(j);
 
         return new Result<ActivityRelated>(result);
     }
