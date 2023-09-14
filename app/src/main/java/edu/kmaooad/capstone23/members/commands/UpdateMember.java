@@ -15,6 +15,8 @@ public class UpdateMember {
     private String lastName;
     @NotNull
     private ObjectId orgId;
+    @NotNull
+    private ObjectId id;
     @NotBlank
     @Email
     private String email;
@@ -49,5 +51,13 @@ public class UpdateMember {
 
     public void setOrgId(ObjectId orgId) {
         this.orgId = orgId;
+    }
+
+    public ObjectId getId() {
+        return id;
+    }
+
+    public void setId(ObjectId id) {
+        this.id = id;
     }
 }
