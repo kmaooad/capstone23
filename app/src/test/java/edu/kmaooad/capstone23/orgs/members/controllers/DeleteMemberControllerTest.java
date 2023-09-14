@@ -7,6 +7,7 @@ import edu.kmaooad.capstone23.members.dal.MembersRepository;
 import edu.kmaooad.capstone23.members.events.BasicMemberCreated;
 import edu.kmaooad.capstone23.orgs.dal.Org;
 import edu.kmaooad.capstone23.orgs.dal.OrgsRepository;
+import edu.kmaooad.capstone23.orgs.members.ClearDbMemberTest;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
@@ -21,7 +22,7 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 
 @QuarkusTest
-public class DeleteMemberControllerTest {
+public class DeleteMemberControllerTest extends ClearDbMemberTest {
     @Inject
     CommandHandler<CreateBasicMember, BasicMemberCreated> createHandler;
     @Inject
@@ -32,6 +33,7 @@ public class DeleteMemberControllerTest {
 
     @BeforeEach
     void setUp() {
+        orgsRepository.deleteAll();
         var org = new Org();
         org.name = "NaUKMA";
         orgsRepository.insert(org);
@@ -45,7 +47,7 @@ public class DeleteMemberControllerTest {
         command.setFirstName("firstName");
         command.setLastName("lastName");
         command.setOrgId(createdOrgId);
-        command.setEmail("email@email.com");
+        command.setEmail("email@email.com12");
         Result<BasicMemberCreated> result = createHandler.handle(command);
 
         Map<String, Object> jsonAsMap = new HashMap<>();

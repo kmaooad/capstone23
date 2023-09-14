@@ -8,6 +8,7 @@ import edu.kmaooad.capstone23.members.events.BasicMemberCreated;
 import edu.kmaooad.capstone23.members.events.MemberDeleted;
 import edu.kmaooad.capstone23.orgs.dal.Org;
 import edu.kmaooad.capstone23.orgs.dal.OrgsRepository;
+import edu.kmaooad.capstone23.orgs.members.ClearDbMemberTest;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
@@ -16,7 +17,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 @QuarkusTest
-public class DeleteMemberHandlerTest {
+public class DeleteMemberHandlerTest extends ClearDbMemberTest {
     @Inject
     CommandHandler<DeleteMember, MemberDeleted> deleteHandler;
     @Inject
@@ -27,6 +28,7 @@ public class DeleteMemberHandlerTest {
 
     @BeforeEach
     void setUp() {
+        orgsRepository.deleteAll();
         var org = new Org();
         org.name = "NaUKMA";
         orgsRepository.insert(org);
@@ -39,7 +41,7 @@ public class DeleteMemberHandlerTest {
         command.setFirstName("firstName");
         command.setLastName("lastName");
         command.setOrgId(createdOrgId);
-        command.setEmail("email@email.com");
+        command.setEmail("email@email.com4343");
 
         Result<BasicMemberCreated> result = createHandler.handle(command);
 

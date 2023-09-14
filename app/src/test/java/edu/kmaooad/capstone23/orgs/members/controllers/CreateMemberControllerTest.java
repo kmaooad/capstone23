@@ -2,6 +2,7 @@ package edu.kmaooad.capstone23.orgs.members.controllers;
 
 import edu.kmaooad.capstone23.orgs.dal.Org;
 import edu.kmaooad.capstone23.orgs.dal.OrgsRepository;
+import edu.kmaooad.capstone23.orgs.members.ClearDbMemberTest;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
@@ -15,7 +16,7 @@ import java.util.Map;
 import static io.restassured.RestAssured.given;
 
 @QuarkusTest
-public class CreateMemberControllerTest {
+public class CreateMemberControllerTest extends ClearDbMemberTest {
     @Inject
     OrgsRepository orgsRepository;
     private ObjectId createdOrgId;
@@ -35,7 +36,7 @@ public class CreateMemberControllerTest {
         jsonAsMap.put("firstName", "firstName");
         jsonAsMap.put("lastName", "lastName");
         jsonAsMap.put("orgId", createdOrgId.toString());
-        jsonAsMap.put("email", "email@email.com");
+        jsonAsMap.put("email", "email@email.com1");
 
         given()
                 .contentType("application/json")
