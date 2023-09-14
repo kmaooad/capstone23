@@ -4,19 +4,19 @@ import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
 
-public class RelateToCompetences {
+public class RelateJobToCompetences {
     private ObjectId jobId;
     private ArrayList<ObjectId> competencesId;
 
-    public RelateToCompetences() {}
+    public RelateJobToCompetences() {}
 
-    public RelateToCompetences(ObjectId jobId, ObjectId competenceId) {
+    public RelateJobToCompetences(ObjectId jobId, ObjectId competenceId) {
         this.jobId = jobId;
         this.competencesId = new ArrayList<>();
         this.competencesId.add(competenceId);
     }
 
-    public RelateToCompetences(ObjectId jobId, ArrayList<ObjectId> competencesId) {
+    public RelateJobToCompetences(ObjectId jobId, ArrayList<ObjectId> competencesId) {
         this.jobId = jobId;
         this.competencesId = new ArrayList<>();
         this.competencesId.addAll(competencesId);
