@@ -7,7 +7,9 @@ import java.util.ArrayList;
 public class RelateJobToActivities {
     private ObjectId jobId;
     private ArrayList<ObjectId> activitiesId;
-    public RelateJobToActivities(){}
+    public RelateJobToActivities(){
+        this.activitiesId = new ArrayList<>();
+    }
 
     public RelateJobToActivities(ObjectId jobId, ObjectId activityId){
         this.jobId = jobId;
