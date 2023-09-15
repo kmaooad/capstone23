@@ -3,9 +3,8 @@ package edu.kmaooad.capstone23.experts.handlers;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
-import edu.kmaooad.capstone23.experts.commands.DeleteExpert;
 import edu.kmaooad.capstone23.experts.commands.RemoveExpertFromMember;
-import edu.kmaooad.capstone23.experts.events.ExpertDeleted;
+import edu.kmaooad.capstone23.experts.dal.ExpertsRepository;
 import edu.kmaooad.capstone23.experts.events.ExpertRemovedFromMember;
 import edu.kmaooad.capstone23.members.dal.Member;
 import edu.kmaooad.capstone23.members.dal.MembersRepository;
@@ -17,7 +16,9 @@ import org.bson.types.ObjectId;
 public class RemoveExpertFromMemberHandler
         implements CommandHandler<RemoveExpertFromMember, ExpertRemovedFromMember> {
     @Inject
-    private MembersRepository membersRepository;
+    ExpertsRepository expertsRepository;
+    @Inject
+    MembersRepository membersRepository;
 
     @Override
     public Result<ExpertRemovedFromMember> handle(RemoveExpertFromMember command) {
@@ -25,13 +26,14 @@ public class RemoveExpertFromMemberHandler
         if (id != null) {
             Member member = membersRepository.findById(id);
             if (!member.isExpert) {
-                return new Result<>(ErrorCode.NOT_FOUND, "Expert not found");
+                return new Result<>(ErrorCode.NOT_FOUND, "Member is already not an expert");
             }
             member.isExpert = false;
             membersRepository.update(member);
-        } else {
-            return new Result<>(ErrorCode.NOT_FOUND, "Member not found");
+            expertsRepository.deleteExpert(expertsRepository.findByMemberId(member.id));
+
+            return new Result<>(new ExpertRemovedFromMember(member.id.toString()));
         }
-        return null;
+        return new Result<>(ErrorCode.NOT_FOUND, "Member not found");
     }
 }
