@@ -29,10 +29,10 @@ public class RelateJobToActivitiesHandler  implements CommandHandler<RelateJobTo
         if(job.isEmpty())
             return new Result<>(ErrorCode.VALIDATION_FAILED, "This job was previously deleted or never existed");
 
-        ActivityRelated result = new ActivityRelated(command.getJobId(), command.getActivitiesId());
+        ActivityRelated result = new ActivityRelated(command.getJobId(), command.getActivityId());
 
         Job j = job.get();
-        j.activitiesId.addAll(command.getActivitiesId());
+        j.activitiesId.add(command.getActivityId());
 
         // Save the updated job back to the repository
         repository.update(j);

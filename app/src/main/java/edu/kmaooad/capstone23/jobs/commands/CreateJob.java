@@ -21,7 +21,8 @@ public class CreateJob {
     public CreateJob(String name, boolean active) {
         this.name = name;
         this.active = active;
-
+        this.competencesId = new ArrayList<>();
+        this.activitiesId = new ArrayList<>();
     }
 
     public ObjectId getId() {

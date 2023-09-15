@@ -9,18 +9,18 @@ import java.util.ArrayList;
 public class ActivityRelated {
 
     private final ObjectId jobId;
-    private final ArrayList<ObjectId> activitiesId;
+    private final ObjectId activityId;
 
-    public ActivityRelated(ObjectId jobId, ArrayList<ObjectId> activitiesId) {
+    public ActivityRelated(ObjectId jobId, ObjectId activityId) {
         this.jobId = jobId;
-        this.activitiesId = activitiesId;
+        this.activityId = activityId;
     }
 
     public ObjectId getJobId() {
         return jobId;
     }
 
-    public ArrayList<ObjectId> getActivitiesId() {
-        return activitiesId;
+    public ObjectId getActivitiesId() {
+        return activityId;
     }
 }

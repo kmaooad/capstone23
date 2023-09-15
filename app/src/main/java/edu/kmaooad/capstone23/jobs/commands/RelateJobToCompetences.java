@@ -8,7 +8,9 @@ public class RelateJobToCompetences {
     private ObjectId jobId;
     private ObjectId competenceId;
 
-    public RelateJobToCompetences() {}
+    public RelateJobToCompetences() {
+        this.competencesId = new ArrayList<>();
+    }
 
     public RelateJobToCompetences(ObjectId jobId, ObjectId competenceId) {
         this.jobId = jobId;
