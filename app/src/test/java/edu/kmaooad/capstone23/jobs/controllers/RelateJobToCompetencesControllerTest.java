@@ -26,21 +26,6 @@ public class RelateJobToCompetencesControllerTest {
     CommandHandler<CreateJob, JobCreated> CreateJobHandler;
 
     @Test
-    @DisplayName("Create Skill: Basic")
-    public void testBasicOrgCreation() {
-        Map<String, Object> jsonAsMap = new HashMap<>();
-        jsonAsMap.put("skillName", "food");
-
-        given()
-                .contentType("application/json")
-                .body(jsonAsMap)
-                .when()
-                .post("/skills/create")
-                .then()
-                .statusCode(200);
-    }
-
-    @Test
     @DisplayName("Relate Job To Competences: existed job")
     public void testBasicJobCompetencesConnectionCreation() {
 
