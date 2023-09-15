@@ -21,7 +21,8 @@ public class RelateJobToActivitiesHandlerTest {
     CommandHandler<RelateJobToActivities, ActivityRelated> relateHandler;
     @Test
     void testSuccessfulHandling() {
-
+        CreateJob command = new CreateJob("IT teacher", true);
+        Result<JobCreated> result = handler.handle(command);
 
     }
 }
