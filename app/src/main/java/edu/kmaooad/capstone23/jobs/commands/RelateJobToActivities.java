@@ -28,7 +28,7 @@ public class RelateJobToActivities {
         return activityId;
     }
 
-    public void setActivitiesId(ArrayList<ObjectId> activitiesId) {
+    public void setActivityId(ObjectId activityId) {
         this.activityId = activityId;
     }
 
