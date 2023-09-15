@@ -7,7 +7,7 @@ import org.bson.types.ObjectId;
 public class GetAllMembersByOrg {
     @NotNull
     private ObjectId orgId;
-    @Min(1)
+    @Min(0)
     private int page;
     @Min(1)
     private int size;
