@@ -5,13 +5,20 @@ import org.bson.types.ObjectId;
 import java.util.ArrayList;
 
 public class CompetenceRelated {
-    private ArrayList<ObjectId> competencesId;
 
-    public ArrayList<ObjectId> getCompetencesId() {
-        return competencesId;
+    private final ObjectId jobId;
+    private final ArrayList<ObjectId> competenceId;
+
+    public CompetenceRelated(ObjectId jobId, ArrayList<ObjectId> competenceId) {
+        this.jobId = jobId;
+        this.competenceId = competenceId;
     }
 
-    public CompetenceRelated(ArrayList<ObjectId> competencesId) {
-        this.competencesId = competencesId;
+    public ObjectId getJobId() {
+        return jobId;
+    }
+
+    public ArrayList<ObjectId> getCompetencesId() {
+        return competenceId;
     }
 }

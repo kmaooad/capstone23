@@ -26,7 +26,7 @@ public class RelateJobToCompetencesHandler implements CommandHandler<RelateJobTo
         if(job.isEmpty())
             return new Result<>(ErrorCode.VALIDATION_FAILED, "This job was previously deleted or never existed");
 
-        CompetenceRelated result = new CompetenceRelated(command.getCompetencesId());
+        CompetenceRelated result = new CompetenceRelated(command.getJobId(), command.getCompetencesId());
 
         Job j = job.get();
         j.activitiesId.addAll(command.getCompetencesId());
