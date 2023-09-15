@@ -35,7 +35,6 @@ public class RelateJobToActivitiesControllerTest {
     @Inject
     CommandHandler<CreateCourse, CourseCreated> CreateActivityHandler;
     private ObjectId idToUpdate;
-    private ObjectId idWithParent;
 
     @Inject
     CourseRepository courseRepository;
