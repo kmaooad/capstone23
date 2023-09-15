@@ -28,7 +28,7 @@ public class RelateJobToCompetences {
         this.jobId = jobId;
     }
 
-    public void setCompetencesId(ObjectId competenceId) {
+    public void setCompetenceId(ObjectId competenceId) {
         this.competenceId = competenceId;
     }
 }
