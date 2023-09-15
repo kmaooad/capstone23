@@ -7,9 +7,9 @@ import java.util.ArrayList;
 public class CompetenceRelated {
 
     private final ObjectId jobId;
-    private final ArrayList<ObjectId> competenceId;
+    private final ObjectId competenceId;
 
-    public CompetenceRelated(ObjectId jobId, ArrayList<ObjectId> competenceId) {
+    public CompetenceRelated(ObjectId jobId, ObjectId competenceId) {
         this.jobId = jobId;
         this.competenceId = competenceId;
     }
@@ -18,7 +18,7 @@ public class CompetenceRelated {
         return jobId;
     }
 
-    public ArrayList<ObjectId> getCompetencesId() {
+    public ObjectId getCompetenceId() {
         return competenceId;
     }
 }

@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class RelateJobToCompetences {
     private ObjectId jobId;
-    private ArrayList<ObjectId> competencesId;
+    private ObjectId competenceId;
 
     public RelateJobToCompetences() {
         this.competencesId = new ArrayList<>();
@@ -14,29 +14,22 @@ public class RelateJobToCompetences {
 
     public RelateJobToCompetences(ObjectId jobId, ObjectId competenceId) {
         this.jobId = jobId;
-        this.competencesId = new ArrayList<>();
-        this.competencesId.add(competenceId);
-    }
-
-    public RelateJobToCompetences(ObjectId jobId, ArrayList<ObjectId> competencesId) {
-        this.jobId = jobId;
-        this.competencesId = new ArrayList<>();
-        this.competencesId.addAll(competencesId);
+        this.competenceId = competenceId;
     }
 
     public ObjectId getJobId() {
         return jobId;
     }
 
-    public ArrayList<ObjectId> getCompetencesId() {
-        return competencesId;
+    public ObjectId getCompetenceId() {
+        return competenceId;
     }
 
     public void setJobId(ObjectId jobId) {
         this.jobId = jobId;
     }
 
-    public void setCompetencesId(ArrayList<ObjectId> competencesId) {
-        this.competencesId = competencesId;
+    public void setCompetencesId(ObjectId competenceId) {
+        this.competenceId = competenceId;
     }
 }
