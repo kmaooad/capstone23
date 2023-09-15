@@ -29,7 +29,7 @@ public class TestWithMembersSetUp extends TestWithDbClearance {
         member1.orgId = firstOrg;
         member1.email = "fstMember@email.com";
         membersRepository.insert(member1);
-        firstOrgMembers.add(member1.orgId);
+        firstOrgMembers.add(member1.id);
 
         Member member2 = new Member();
         member2.firstName = "Second";
@@ -37,7 +37,7 @@ public class TestWithMembersSetUp extends TestWithDbClearance {
         member2.orgId = firstOrg;
         member2.email = "sndMember@email.com";
         membersRepository.insert(member2);
-        firstOrgMembers.add(member2.orgId);
+        firstOrgMembers.add(member2.id);
 
         Member member3 = new Member();
         member3.firstName = "Third";
@@ -45,20 +45,34 @@ public class TestWithMembersSetUp extends TestWithDbClearance {
         member3.orgId = firstOrg;
         member3.email = "thrdMember@email.com";
         membersRepository.insert(member3);
-        firstOrgMembers.add(member3.orgId);
+        firstOrgMembers.add(member3.id);
 
         var sndOrg = new Org();
         sndOrg.name = "KMA";
         orgsRepository.insert(sndOrg);
-        firstOrg = sndOrg.id;
+        secondOrg = sndOrg.id;
 
         secondOrgMembers = new ArrayList<>();
         Member member4 = new Member();
-        member4.firstName = "Third";
+        member4.firstName = "Fourth";
         member4.lastName = "Member";
         member4.orgId = secondOrg;
         member4.email = "frthMember@email.com";
         membersRepository.insert(member4);
-        secondOrgMembers.add(member4.orgId);
+        secondOrgMembers.add(member4.id);
+    }
+
+    protected void createOrgWithMember(String memberEmail) {
+        var org = new Org();
+        org.name = "Ubisoft";
+        orgsRepository.insert(org);
+
+        firstOrgMembers = new ArrayList<>();
+        Member member = new Member();
+        member.firstName = "Another";
+        member.lastName = "Member";
+        member.orgId = org.id;
+        member.email = memberEmail;
+        membersRepository.insert(member);
     }
 }

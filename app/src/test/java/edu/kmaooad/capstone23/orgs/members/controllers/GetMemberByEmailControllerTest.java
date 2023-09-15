@@ -1,14 +1,11 @@
 package edu.kmaooad.capstone23.orgs.members.controllers;
 
-import edu.kmaooad.capstone23.members.dal.Member;
-import edu.kmaooad.capstone23.orgs.dal.Org;
 import edu.kmaooad.capstone23.orgs.members.TestWithMembersSetUp;
 import io.quarkus.test.junit.QuarkusTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,17 +18,7 @@ public class GetMemberByEmailControllerTest extends TestWithMembersSetUp {
 
     @BeforeEach
     void setUp() {
-        var org = new Org();
-        org.name = "Ubisoft";
-        orgsRepository.insert(org);
-
-        firstOrgMembers = new ArrayList<>();
-        Member member = new Member();
-        member.firstName = "Another";
-        member.lastName = "Member";
-        member.orgId = org.id;
-        member.email = email;
-        membersRepository.insert(member);
+        createOrgWithMember(email);
     }
 
     @Test
