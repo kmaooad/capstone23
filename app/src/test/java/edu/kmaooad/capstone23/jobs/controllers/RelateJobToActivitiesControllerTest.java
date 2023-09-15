@@ -34,28 +34,6 @@ public class RelateJobToActivitiesControllerTest {
 
     @Inject
     CommandHandler<CreateCourse, CourseCreated> CreateActivityHandler;
-
-
-//    ObjectId createTestCourse(String name, ObjectId parent) {
-//        Map<String, Object> jsonAsMap = new HashMap<>();
-//        jsonAsMap.put("courseName", name);
-//        if (parent != null) {
-//            jsonAsMap.put("parentCourse", parent.toHexString());
-//        }
-//
-//        String objectId = given()
-//                .contentType("application/json")
-//                .body(jsonAsMap)
-//                .when()
-//                .post("/activities/courses/create")
-//                .then()
-//                .statusCode(200)
-//                .extract()
-//                .path("activity");
-//
-//        return new ObjectId(objectId);
-//    }
-
     private ObjectId idToUpdate;
     private ObjectId idWithParent;
 
@@ -104,7 +82,6 @@ public class RelateJobToActivitiesControllerTest {
         Map<String, Object> jsonAsMap = new HashMap<>();
         ObjectId id = new ObjectId("aaaaaaaaaaaaaaaaaaaaaaaa");
         jsonAsMap.put("jobId", id);
-       // jsonAsMap.put("jobId", result.getValue().getJobId().toHexString());
         jsonAsMap.put("activityId", idToUpdate.toString());
 
         given()
