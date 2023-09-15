@@ -10,6 +10,7 @@ import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 @QuarkusTest
@@ -18,6 +19,7 @@ public class UpdateMemberHandlerTest extends TestWithOrgSetUp {
     CommandHandler<UpdateMember, MemberUpdated> handler;
 
     @Test
+    @DisplayName("Update member: Basic handling")
     void testSuccessfulHandling() {
         UpdateMember command = new UpdateMember();
         command.setFirstName("firstName");
@@ -34,6 +36,7 @@ public class UpdateMemberHandlerTest extends TestWithOrgSetUp {
     }
 
     @Test
+    @DisplayName("Update Member: Email validation handling")
     void testEmailValidation() {
         UpdateMember command = new UpdateMember();
         command.setFirstName("firstName");
@@ -49,6 +52,7 @@ public class UpdateMemberHandlerTest extends TestWithOrgSetUp {
     }
 
     @Test
+    @DisplayName("Update Member: Email uniqueness validation handling")
     void testEmailUniquenessValidation() {
         UpdateMember command = new UpdateMember();
         command.setFirstName("firstName");
@@ -64,6 +68,7 @@ public class UpdateMemberHandlerTest extends TestWithOrgSetUp {
     }
 
     @Test
+    @DisplayName("Update Member: non-existent member")
     void testPriorRecordExistence() {
         UpdateMember command = new UpdateMember();
         command.setFirstName("firstName");

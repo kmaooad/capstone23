@@ -15,7 +15,7 @@ import static io.restassured.RestAssured.given;
 public class UpdateMemberControllerTest extends TestWithOrgSetUp {
     @Test
     @DisplayName("Update Member: Basic")
-    public void testBasicMemberCreation() {
+    public void testBasicMemberUpdate() {
         Map<String, Object> jsonAsMap = new HashMap<>();
         jsonAsMap.put("firstName", "firstName");
         jsonAsMap.put("lastName", "lastName");
@@ -37,7 +37,7 @@ public class UpdateMemberControllerTest extends TestWithOrgSetUp {
 
     @Test
     @DisplayName("Update Member: Email validation")
-    public void testMemberCreationWithEmailValidation() {
+    public void testMemberUpdateWithEmailValidation() {
         Map<String, Object> jsonAsMap = new HashMap<>();
         jsonAsMap.put("firstName", "firstName");
         jsonAsMap.put("lastName", "lastName");
@@ -59,7 +59,7 @@ public class UpdateMemberControllerTest extends TestWithOrgSetUp {
 
     @Test
     @DisplayName("Update Member: Org does not exist")
-    public void testMemberCreationWithOrgExistenceValidation() {
+    public void testMemberUpdateWithOrgExistenceValidation() {
         Map<String, Object> jsonAsMap = new HashMap<>();
         jsonAsMap.put("firstName", "firstName");
         jsonAsMap.put("lastName", "lastName");

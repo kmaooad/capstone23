@@ -15,7 +15,7 @@ public class GetAllMembersByOrgControllerTest extends TestWithMembersSetUp {
 
     @Test
     @DisplayName("Read all members by orgId: Basic")
-    void testAllMembersRead() {
+    void testAllMembersByOrgIdRead() {
         Map<String, Object> jsonAsMap = new HashMap<>();
         jsonAsMap.put("ordId", firstOrg);
         jsonAsMap.put("page", 1);
@@ -32,7 +32,7 @@ public class GetAllMembersByOrgControllerTest extends TestWithMembersSetUp {
 
     @Test
     @DisplayName("Read all members by orgId: Wrong page")
-    void testAllMembersWithWrongPageRead() {
+    void testAllMembersByOrgIdWithWrongPageRead() {
         Map<String, Object> jsonAsMap = new HashMap<>();
         jsonAsMap.put("ordId", firstOrg);
         jsonAsMap.put("page", -1);
@@ -49,7 +49,7 @@ public class GetAllMembersByOrgControllerTest extends TestWithMembersSetUp {
 
     @Test
     @DisplayName("Read all members by orgId: Wrong size")
-    void testAllMembersWithWrongSizeRead() {
+    void testAllMembersByOrgIdWithWrongSizeRead() {
         Map<String, Object> jsonAsMap = new HashMap<>();
         jsonAsMap.put("ordId", firstOrg);
         jsonAsMap.put("page", 1);
@@ -66,7 +66,7 @@ public class GetAllMembersByOrgControllerTest extends TestWithMembersSetUp {
 
     @Test
     @DisplayName("Read all members by orgId: non-existent orgId")
-    void testAllMembersWithWrongOrgIdRead() {
+    void testAllMembersByOrgIdWithWrongOrgIdRead() {
         Map<String, Object> jsonAsMap = new HashMap<>();
         jsonAsMap.put("ordId", firstOrg + "9191841891");
         jsonAsMap.put("page", 1);
