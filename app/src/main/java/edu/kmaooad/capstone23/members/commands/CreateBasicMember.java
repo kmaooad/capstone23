@@ -19,6 +19,8 @@ public class CreateBasicMember {
     @Email
     private String email;
 
+    private Boolean isExpert = false;
+
     public String getFirstName() {
         return firstName;
     }
@@ -49,5 +51,9 @@ public class CreateBasicMember {
 
     public void setOrgId(ObjectId orgId) {
         this.orgId = orgId;
+    }
+
+    public void setExpert(Boolean expert) {
+        isExpert = expert;
     }
 }
