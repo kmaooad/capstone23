@@ -11,11 +11,6 @@ public class RelateJobToActivities {
 
     }
 
-    public RelateJobToActivities(ObjectId jobId, ObjectId activityId){
-        this.jobId = jobId;
-        this.activityId =activityId;
-    }
-
     public ObjectId getJobId() {
         return jobId;
     }
