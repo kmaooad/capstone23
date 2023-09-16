@@ -2,6 +2,8 @@ package edu.kmaooad.capstone23.departments.controllers;
 
 import edu.kmaooad.capstone23.departments.dal.Department;
 import edu.kmaooad.capstone23.departments.dal.DepartmentsRepository;
+import edu.kmaooad.capstone23.orgs.dal.Org;
+import edu.kmaooad.capstone23.orgs.dal.OrgsRepository;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,6 +21,9 @@ public class UpdateDepartmentControllerTests {
 
     @Inject
     DepartmentsRepository departmentsRepository;
+
+    @Inject
+    OrgsRepository orgsRepository;
 
     @BeforeEach
     void setUp() {
@@ -47,13 +52,17 @@ public class UpdateDepartmentControllerTests {
         jsonAsMap.put("parent", newParent);
         jsonAsMap.put("id", idToUpdate);
 
+        Org org = new Org();
+        org.name = newParent;
+        orgsRepository.insert(org);
+
         given()
-            .contentType("application/json")
-            .body(jsonAsMap)
-            .when()
-            .post("/departments/update")
-            .then()
-            .statusCode(200);
+                .contentType("application/json")
+                .body(jsonAsMap)
+                .when()
+                .post("/departments/update")
+                .then()
+                .statusCode(200);
     }
 
 

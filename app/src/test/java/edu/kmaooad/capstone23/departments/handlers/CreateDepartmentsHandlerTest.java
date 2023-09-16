@@ -1,5 +1,7 @@
 package edu.kmaooad.capstone23.departments.handlers;
 
+import edu.kmaooad.capstone23.orgs.dal.Org;
+import edu.kmaooad.capstone23.orgs.dal.OrgsRepository;
 import jakarta.inject.Inject;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
@@ -11,6 +13,7 @@ import io.quarkus.test.junit.QuarkusTest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
 @QuarkusTest
 public class CreateDepartmentsHandlerTest {
     @Inject
@@ -19,12 +22,18 @@ public class CreateDepartmentsHandlerTest {
     @Inject
     DepartmentsRepository departmentsRepository;
 
+    @Inject
+    OrgsRepository orgsRepository;
+
     @Test
     @DisplayName("Create Departments: Basic successful handling when parent is set correctly")
     void testSuccessfulHandling() {
         String parentOrgName = "NaUKMA";
         String departmentName = "FSNST";
 
+        Org org = new Org();
+        org.name = parentOrgName;
+        orgsRepository.insert(org);
 
         CreateDepartment command = new CreateDepartment();
         command.setName(departmentName);
@@ -36,7 +45,7 @@ public class CreateDepartmentsHandlerTest {
         Assertions.assertNotNull(result.getValue());
 
         Department createdDepartment = departmentsRepository.findByName(departmentName);
-        Assertions.assertTrue(createdDepartment != null);
+        Assertions.assertNotNull(createdDepartment);
         Assertions.assertEquals(departmentName, createdDepartment.name);
     }
 

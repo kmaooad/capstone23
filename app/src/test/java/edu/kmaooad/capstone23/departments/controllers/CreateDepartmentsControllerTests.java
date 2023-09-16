@@ -1,6 +1,9 @@
 package edu.kmaooad.capstone23.departments.controllers;
 
+import edu.kmaooad.capstone23.orgs.dal.Org;
+import edu.kmaooad.capstone23.orgs.dal.OrgsRepository;
 import io.quarkus.test.junit.QuarkusTest;
+import jakarta.inject.Inject;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -11,6 +14,8 @@ import static io.restassured.RestAssured.given;
 
 @QuarkusTest
 public class CreateDepartmentsControllerTests {
+    @Inject
+    OrgsRepository orgsRepository;
 
     @Test
     @DisplayName("Create Departments: Basic")
@@ -19,6 +24,10 @@ public class CreateDepartmentsControllerTests {
         jsonAsMap.put("name", "FI");
         jsonAsMap.put("description", "Faculty of Informatics");
         jsonAsMap.put("parent", "NaUKMA");
+
+        Org org = new Org();
+        org.name = "NaUKMA";
+        orgsRepository.insert(org);
 
         given()
                 .contentType("application/json")
