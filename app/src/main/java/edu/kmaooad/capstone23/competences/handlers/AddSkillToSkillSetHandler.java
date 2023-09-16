@@ -10,6 +10,8 @@ import edu.kmaooad.capstone23.competences.events.SkillToSkillSetAdded;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 
+import java.util.ArrayList;
+
 
 @RequestScoped
 public class AddSkillToSkillSetHandler implements CommandHandler<AddSkillToSkillSet, SkillToSkillSetAdded> {
@@ -21,24 +23,28 @@ public class AddSkillToSkillSetHandler implements CommandHandler<AddSkillToSkill
     private SkillsRepository skillsRepository;
 
 
-
     @Override
     public Result<SkillToSkillSetAdded> handle(AddSkillToSkillSet command) {
 
         var skill = skillsRepository.findById(command.getSkillId().toString());
         var skillSet = skillSetRepository.findById(command.getSkillSetId().toString());
 
-        if(skill.isEmpty())
+        if (skill.isEmpty())
             return new Result<>(ErrorCode.EXCEPTION, "Has not existing skill");
 
-        if(skillSet.isEmpty())
+        if (skillSet.isEmpty())
             return new Result<>(ErrorCode.EXCEPTION, "Has not existing skillSet");
 
-        if(skillSet.get().skillIds.contains(command.getSkillId())) {
+        var skillIds = skillSet.get().skillIds;
+
+        if (skillIds != null && skillIds.contains(command.getSkillId())) {
             return new Result<>(ErrorCode.EXCEPTION, "Already contains skill");
         }
 
         var skillSetValue = skillSet.get();
+        if (skillIds == null) {
+            skillSetValue.skillIds = new ArrayList<>();
+        }
         skillSetValue.skillIds.add(command.getSkillId());
         skillSetRepository.update(skillSetValue);
 
