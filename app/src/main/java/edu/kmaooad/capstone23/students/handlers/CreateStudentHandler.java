@@ -1,6 +1,7 @@
 package edu.kmaooad.capstone23.students.handlers;
 
 import edu.kmaooad.capstone23.common.CommandHandler;
+import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.students.commands.CreateStudent;
 import edu.kmaooad.capstone23.students.dal.Student;
@@ -12,6 +13,9 @@ import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +29,17 @@ public class CreateStudentHandler implements CommandHandler<CreateStudent, Stude
 
     @Override
     public Result<StudentsCreated> handle(CreateStudent command) {
-        List<CSVStudent> csvStudents = parser.parse(command.content);
+        List<CSVStudent> csvStudents;
+        try {
+            csvStudents = parser.parse(command.csvFile);
+        } catch (ParseException e) {
+            return new Result<>(ErrorCode.EXCEPTION, "Incorrect date format");
+        } catch (FileNotFoundException e) {
+            return new Result<>(ErrorCode.NOT_FOUND, "Can't find file " + command.csvFile.getName());
+        } catch (IOException e) {
+            return new Result<>(ErrorCode.EXCEPTION, e.getLocalizedMessage());
+        }
+
         List<Student> students = repository.insert(csvStudents);
 
         List<ObjectId> studentIds = new ArrayList<>();
