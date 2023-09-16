@@ -5,6 +5,10 @@ import edu.kmaooad.capstone23.ban.dal.BannedEntityType;
 import edu.kmaooad.capstone23.ban.events.EntityBanned;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.Result;
+import edu.kmaooad.capstone23.departments.commands.CreateDepartment;
+import edu.kmaooad.capstone23.departments.events.DepartmentCreated;
+import edu.kmaooad.capstone23.members.commands.CreateBasicMember;
+import edu.kmaooad.capstone23.members.events.BasicMemberCreated;
 import edu.kmaooad.capstone23.orgs.commands.CreateOrg;
 import edu.kmaooad.capstone23.orgs.events.OrgCreated;
 import io.quarkus.test.junit.QuarkusTest;
@@ -23,12 +27,35 @@ public class BanEntityHandlerTests {
     @Inject
     CommandHandler<CreateOrg, OrgCreated> createOrgHandler;
 
+    @Inject
+    CommandHandler<CreateDepartment, DepartmentCreated> createDepartmentHandler;
+
+    @Inject
+    CommandHandler<CreateBasicMember, BasicMemberCreated> createMemberHandler;
+
     @Test
     @DisplayName("Ban Org Handler: Basic Test")
-    void testSuccessfulHandling() {
-        var orgId = createOrg();
+    void testSuccessfulHandlingForOrg() {
+        testSuccessfulHandlingForEntity(BannedEntityType.Organization);
+    }
+
+    @Test
+    @DisplayName("Ban Department Handler: Basic Test")
+    void testSuccessfulHandlingForDepartment() {
+        testSuccessfulHandlingForEntity(BannedEntityType.Department);
+    }
+
+    @Test
+    @DisplayName("Ban Member Handler: Basic Test")
+    void testSuccessfulHandlingForMember() {
+        testSuccessfulHandlingForEntity(BannedEntityType.User);
+    }
+
+    void testSuccessfulHandlingForEntity(BannedEntityType entityType) {
+        var orgId = createEntity(entityType);
+
         var command = new BanEntity();
-        command.setEntityType(BannedEntityType.Organization.toString());
+        command.setEntityType(entityType.toString());
         command.setEntityId(new ObjectId(orgId));
         command.setReason("Hello there");
 
@@ -40,9 +67,26 @@ public class BanEntityHandlerTests {
 
     @Test
     @DisplayName("Ban Org Handler: Org doesn't exist test")
-    void testUnsuccessfulHandling() {
+    void testUnsuccessfulHandlingForOrg() {
+        testUnsuccessfulHandlingForEntity(BannedEntityType.Organization);
+    }
+
+    @Test
+    @DisplayName("Ban Department Handler: Department doesn't exist test")
+    void testUnsuccessfulHandlingForDepartment() {
+        testUnsuccessfulHandlingForEntity(BannedEntityType.Department);
+    }
+
+
+    @Test
+    @DisplayName("Ban Department Handler: Member doesn't exist test")
+    void testUnsuccessfulHandlingForMember() {
+        testUnsuccessfulHandlingForEntity(BannedEntityType.User);
+    }
+
+    void testUnsuccessfulHandlingForEntity(BannedEntityType entityType) {
         var command = new BanEntity();
-        command.setEntityType(BannedEntityType.Organization.toString());
+        command.setEntityType(entityType.toString());
         command.setEntityId(new ObjectId());
         command.setReason("Hello there");
 
@@ -50,6 +94,49 @@ public class BanEntityHandlerTests {
 
         Assertions.assertFalse(result.isSuccess());
         Assertions.assertNotNull(result.toError());
+    }
+
+    String createEntity(BannedEntityType entityType) {
+        if (entityType == BannedEntityType.Organization) {
+            return createOrg();
+        } else if (entityType == BannedEntityType.Department) {
+            createOrg();
+            return createDepartment("NaUKMA");
+        } else {
+            var orgId = createOrg();
+            return createMember(new ObjectId(orgId));
+        }
+    }
+
+    String createMember(ObjectId orgId) {
+        var command = new CreateBasicMember();
+        command.setOrgId(orgId);
+        command.setFirstName("John");
+        command.setLastName("Doe");
+        command.setEmail("john.doe@example.com");
+
+        Result<BasicMemberCreated> result = createMemberHandler.handle(command);
+
+        Assertions.assertTrue(result.isSuccess());
+        Assertions.assertNotNull(result.getValue());
+        Assertions.assertFalse(result.getValue().getMemberId().isEmpty());
+
+        return result.getValue().getMemberId();
+    }
+
+    String createDepartment(String orgName) {
+        var command = new CreateDepartment();
+        command.setParent(orgName);
+        command.setName("IT");
+        command.setDescription("the IT is a crawling hand from the Addams Family.");
+
+        Result<DepartmentCreated> result = createDepartmentHandler.handle(command);
+
+        Assertions.assertTrue(result.isSuccess());
+        Assertions.assertNotNull(result.getValue());
+        Assertions.assertFalse(result.getValue().getId().isEmpty());
+
+        return result.getValue().getId();
     }
 
     String createOrg() {
