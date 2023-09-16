@@ -1,4 +1,4 @@
-package edu.kmaooad.capstone23.competences.controller;
+package edu.kmaooad.capstone23.competences.controllers;
 
 import edu.kmaooad.capstone23.common.TypicalController;
 import edu.kmaooad.capstone23.competences.commands.CreateSkillSet;
@@ -10,6 +10,6 @@ import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 
 @Path("/skillset/create")
 @APIResponse(responseCode = "200", content = {
-        @Content(mediaType = "application/json", schema = @Schema(implementation = SkillSetCreated.class)) })
+        @Content(mediaType = "application/json", schema = @Schema(implementation = SkillSetCreated.class))})
 public class CreateSkillSetController extends TypicalController<CreateSkillSet, SkillSetCreated> {
 }
