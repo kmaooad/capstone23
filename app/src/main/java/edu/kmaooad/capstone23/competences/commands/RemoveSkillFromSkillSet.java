@@ -4,7 +4,7 @@ import jakarta.validation.constraints.NotNull;
 import org.bson.types.ObjectId;
 
 
-public class DeleteSkillToSkillSet {
+public class RemoveSkillFromSkillSet {
     @NotNull
     private ObjectId skillId;
 
