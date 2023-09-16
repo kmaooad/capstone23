@@ -12,18 +12,14 @@ public class MemberUpdated {
     private boolean isExpert;
     private boolean isAdmin;
 
-    public MemberUpdated() {
-
-    }
-
     public MemberUpdated(Member member) {
-        id = member.id;
-        orgId = member.orgId;
-        firstName = member.firstName;
-        lastName = member.lastName;
-        email = member.email;
-        isExpert = member.isExpert;
-        isAdmin = member.isAdmin;
+        setId(member.id);
+        setOrgId(member.orgId);
+        setFirstName(member.firstName);
+        setLastName(member.lastName);
+        setEmail(member.email);
+        setExpert(member.isExpert);
+        setAdmin(member.isAdmin);
     }
 
     public ObjectId getId() {
