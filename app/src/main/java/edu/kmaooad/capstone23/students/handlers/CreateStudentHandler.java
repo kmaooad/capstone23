@@ -9,6 +9,7 @@ import edu.kmaooad.capstone23.students.dal.StudentRepository;
 import edu.kmaooad.capstone23.students.events.StudentsCreated;
 import edu.kmaooad.capstone23.students.parser.CSVStudent;
 import edu.kmaooad.capstone23.students.parser.CSVStudentParser;
+import edu.kmaooad.capstone23.students.parser.exceptions.IncorrectValuesAmount;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
@@ -39,7 +40,7 @@ public class CreateStudentHandler implements CommandHandler<CreateStudent, Stude
             return new Result<>(ErrorCode.EXCEPTION, "Incorrect date format");
         } catch (FileNotFoundException e) {
             return new Result<>(ErrorCode.NOT_FOUND, "Can't find file " + command.csvFile.uploadedFile().getFileName());
-        } catch (IOException e) {
+        } catch (IOException | IncorrectValuesAmount e) {
             return new Result<>(ErrorCode.EXCEPTION, e.getLocalizedMessage());
         }
 
