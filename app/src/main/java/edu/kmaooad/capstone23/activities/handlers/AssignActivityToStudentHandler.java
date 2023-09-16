@@ -1,5 +1,7 @@
 package edu.kmaooad.capstone23.activities.handlers;
 
+import java.util.Optional;
+
 import edu.kmaooad.capstone23.activities.commands.AssignActivityToStudent;
 import edu.kmaooad.capstone23.activities.dal.Activity;
 import edu.kmaooad.capstone23.activities.dal.ActivityRepository;
@@ -18,13 +20,13 @@ public class AssignActivityToStudentHandler implements CommandHandler<AssignActi
     @Inject
     private StudentRepository studentRepository;
 
-
     @Override
     public Result<AssignActivityToStudentEvent> handle(AssignActivityToStudent command) {
         Activity activity = activityRepository.findById(command.getActivityId());
         Student student = studentRepository.findById(command.getStudentId());
+
         student.assignActivity(activity);
-        var res = new AssignActivityToStudentEvent(student.objectId, activity.objectId);
+        var res = new AssignActivityToStudentEvent(student.id, activity.id);
         return new Result<>(res);
     }
     

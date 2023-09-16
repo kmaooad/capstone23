@@ -23,7 +23,7 @@ public class AssignActivityToGroupHandler implements CommandHandler<AssignActivi
         Activity activity = activityRepository.findById(command.getActivityId());
         GroupTemplate group = groupTemplatesRepository.findById(command.getGroupId());
         group.assignActivity(activity);
-        var res = new AssignActivityToGroupEvent(group.id, activity.objectId);
+        var res = new AssignActivityToGroupEvent(group.id, activity.id);
         return new Result<>(res);
     }
     

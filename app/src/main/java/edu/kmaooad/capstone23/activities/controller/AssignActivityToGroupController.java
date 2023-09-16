@@ -5,11 +5,13 @@ import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 
 import edu.kmaooad.capstone23.activities.commands.AssignActivityToGroup;
+import edu.kmaooad.capstone23.activities.events.AssignActivityToGroupEvent;
+import edu.kmaooad.capstone23.common.TypicalController;
 import jakarta.ws.rs.Path;
 
 @Path("/activities/assign/group")
 @APIResponse(responseCode = "200", content = {
     @Content(mediaType = "application/json", schema = @Schema(implementation = AssignActivityToGroup.class)) })
-public class AssignActivityToGroupController {
+public class AssignActivityToGroupController extends TypicalController<AssignActivityToGroup, AssignActivityToGroupEvent> {
     
 }

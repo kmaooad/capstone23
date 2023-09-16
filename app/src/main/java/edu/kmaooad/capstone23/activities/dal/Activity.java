@@ -5,9 +5,14 @@ import org.bson.types.ObjectId;
 
 @MongoEntity(collection = "activities")
 public class Activity {
-    public ObjectId objectId;
-    private String name;
-    private boolean completed;
+    public ObjectId id;
+    public String name;
+    public boolean completed;
+
+    public Activity() {
+        this.name = "activity";
+        this.completed = false;
+    }
 
     public Activity(String name) {
         this.name = name;
