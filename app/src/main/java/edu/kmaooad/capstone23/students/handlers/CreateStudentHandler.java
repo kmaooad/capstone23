@@ -29,13 +29,16 @@ public class CreateStudentHandler implements CommandHandler<CreateStudent, Stude
 
     @Override
     public Result<StudentsCreated> handle(CreateStudent command) {
+        if (!command.csvFile.contentType().equals("text/csv"))
+            return new Result<>(ErrorCode.EXCEPTION,"Incorrect file type");
+
         List<CSVStudent> csvStudents;
         try {
-            csvStudents = parser.parse(command.csvFile);
+            csvStudents = parser.parse(command.csvFile.uploadedFile().toFile());
         } catch (ParseException e) {
             return new Result<>(ErrorCode.EXCEPTION, "Incorrect date format");
         } catch (FileNotFoundException e) {
-            return new Result<>(ErrorCode.NOT_FOUND, "Can't find file " + command.csvFile.getName());
+            return new Result<>(ErrorCode.NOT_FOUND, "Can't find file " + command.csvFile.uploadedFile().getFileName());
         } catch (IOException e) {
             return new Result<>(ErrorCode.EXCEPTION, e.getLocalizedMessage());
         }
