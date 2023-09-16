@@ -1,22 +1,33 @@
 package edu.kmaooad.capstone23.orgs.members;
 
 import edu.kmaooad.capstone23.members.dal.Member;
+import edu.kmaooad.capstone23.members.dal.MembersRepository;
 import edu.kmaooad.capstone23.orgs.dal.Org;
+import edu.kmaooad.capstone23.orgs.dal.OrgsRepository;
+import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.BeforeEach;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TestWithMembersSetUp extends TestWithDbClearance {
+public class TestWithMembersSetUp {
 
     protected ObjectId firstOrg;
     protected List<ObjectId> firstOrgMembers;
     protected ObjectId secondOrg;
     protected List<ObjectId> secondOrgMembers;
 
+    @Inject
+    protected MembersRepository membersRepository;
+
+    @Inject
+    protected OrgsRepository orgsRepository;
+
     @BeforeEach
     void setUp() {
+        orgsRepository.deleteAll();
+        membersRepository.deleteAll();
         var fstOrg = new Org();
         fstOrg.name = "KMA";
         orgsRepository.insert(fstOrg);

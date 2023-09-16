@@ -1,6 +1,9 @@
 package edu.kmaooad.capstone23.orgs.members;
 
+import edu.kmaooad.capstone23.members.dal.MembersRepository;
 import edu.kmaooad.capstone23.orgs.dal.Org;
+import edu.kmaooad.capstone23.orgs.dal.OrgsRepository;
+import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.BeforeEach;
 
@@ -9,12 +12,20 @@ import java.util.Map;
 
 import static io.restassured.RestAssured.given;
 
-public class TestWithOrgSetUp extends TestWithDbClearance {
+public class TestWithOrgSetUp {
 
     protected ObjectId createdOrgId;
 
+    @Inject
+    protected MembersRepository membersRepository;
+
+    @Inject
+    protected OrgsRepository orgsRepository;
+
     @BeforeEach
     void setUp() {
+        orgsRepository.deleteAll();
+        membersRepository.deleteAll();
         var org = new Org();
         org.name = "NaUKMA";
         orgsRepository.insert(org);

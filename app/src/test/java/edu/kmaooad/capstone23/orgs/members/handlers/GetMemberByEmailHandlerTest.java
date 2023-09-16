@@ -9,7 +9,6 @@ import edu.kmaooad.capstone23.orgs.members.TestWithMembersSetUp;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -21,14 +20,10 @@ public class GetMemberByEmailHandlerTest extends TestWithMembersSetUp {
 
     private final String email = "anotherEmail@gmail.com";
 
-    @BeforeEach
-    void setUp() {
-        createOrgWithMember(email);
-    }
-
     @Test
     @DisplayName("Read member: Basic handling")
     void testSuccessfulHandling() {
+        createOrgWithMember(email);
         GetMemberByEmail command = new GetMemberByEmail();
         command.setEmail(email);
 
@@ -42,6 +37,7 @@ public class GetMemberByEmailHandlerTest extends TestWithMembersSetUp {
     @Test
     @DisplayName("Read member: Wrong email handling")
     void testWrongEmailHandling() {
+        createOrgWithMember(email);
         GetMemberByEmail command = new GetMemberByEmail();
         command.setEmail(email + "moreSymbols");
 

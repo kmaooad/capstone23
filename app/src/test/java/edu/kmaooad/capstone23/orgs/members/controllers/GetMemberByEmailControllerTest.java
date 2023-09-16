@@ -2,7 +2,6 @@ package edu.kmaooad.capstone23.orgs.members.controllers;
 
 import edu.kmaooad.capstone23.orgs.members.TestWithMembersSetUp;
 import io.quarkus.test.junit.QuarkusTest;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -16,14 +15,10 @@ public class GetMemberByEmailControllerTest extends TestWithMembersSetUp {
 
     private final String email = "newEmail@gmail.com";
 
-    @BeforeEach
-    void setUp() {
-        createOrgWithMember(email);
-    }
-
     @Test
     @DisplayName("Read member: Basic")
     public void testMemberByEmailRead() {
+        createOrgWithMember(email);
         Map<String, Object> jsonAsMap = new HashMap<>();
         jsonAsMap.put("email", email);
 
@@ -39,6 +34,7 @@ public class GetMemberByEmailControllerTest extends TestWithMembersSetUp {
     @Test
     @DisplayName("Read member: Wrong email")
     public void testMemberByWrongEmailRead() {
+        createOrgWithMember(email);
         Map<String, Object> jsonAsMap = new HashMap<>();
         jsonAsMap.put("email", email + "uniqueWrongEmailPostfix");
 
