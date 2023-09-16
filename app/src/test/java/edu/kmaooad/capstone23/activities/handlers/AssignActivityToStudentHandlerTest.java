@@ -6,11 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import edu.kmaooad.capstone23.activities.commands.AssignActivityToStudent;
 import edu.kmaooad.capstone23.activities.commands.CreateActivity;
-import edu.kmaooad.capstone23.activities.dal.Activity;
-import edu.kmaooad.capstone23.activities.dal.ActivityRepository;
 import edu.kmaooad.capstone23.students.commands.CreateStudent;
-import edu.kmaooad.capstone23.students.dal.Student;
-import edu.kmaooad.capstone23.students.dal.StudentRepository;
 import edu.kmaooad.capstone23.students.events.StudentCreated;
 import edu.kmaooad.capstone23.activities.events.ActivityCreated;
 import edu.kmaooad.capstone23.activities.events.AssignActivityToStudentEvent;
