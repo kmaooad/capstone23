@@ -18,11 +18,11 @@ public class AddSkillToSkillSet {
         this.skillSetId = skillSetId;
     }
 
-    public ObjectId getId() {
+    public ObjectId getSkillId() {
         return skillId;
     }
 
-    public void setId(ObjectId id) {
-        this.skillId = id;
+    public void setSkillId(ObjectId skillId) {
+        this.skillId = skillId;
     }
 }
