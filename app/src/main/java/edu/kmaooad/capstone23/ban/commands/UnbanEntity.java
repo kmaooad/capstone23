@@ -6,9 +6,7 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import org.bson.types.ObjectId;
 
-import edu.kmaooad.capstone23.ban.dal.BannedEntityType;
-
-public class BanEntity {
+public class UnbanEntity {
 
     @NotNull
     private ObjectId entityId;
@@ -16,24 +14,7 @@ public class BanEntity {
     @Pattern(regexp = "Organization|Department|User")
     private String entityType;
 
-    @NotBlank
-    @Size(min = 3, max = 30)
-    @Pattern(regexp = "^[a-zA-Z0-9\\s]*$")
-    private String reason;
-
-    public BannedEntityType getEntityType() {
-        return BannedEntityType.valueOf(entityType);
-    }
-
-    public String getReason() {
-        return reason;
-    }
-
-    public void setReason(String reason) {
-        this.reason = reason;
-    }
-
-    public String getEntityTypeName() {
+    public String getEntityType() {
         return entityType;
     }
 

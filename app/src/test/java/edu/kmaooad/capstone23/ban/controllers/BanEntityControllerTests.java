@@ -29,7 +29,7 @@ public class BanEntityControllerTests {
 
         Map<String, Object> jsonAsMap = new HashMap<>();
         jsonAsMap.put("reason", "Hello there");
-        jsonAsMap.put("entityType", BannedEntityType.Organization.text);
+        jsonAsMap.put("entityType", BannedEntityType.Organization.toString());
         jsonAsMap.put("entityId", org);
 
         given().contentType("application/json").body(jsonAsMap).when().post("/ban").then().statusCode(200);
@@ -41,7 +41,7 @@ public class BanEntityControllerTests {
 
         Map<String, Object> jsonAsMap = new HashMap<>();
         jsonAsMap.put("reason", "Hello there");
-        jsonAsMap.put("entityType", BannedEntityType.Organization.text);
+        jsonAsMap.put("entityType", BannedEntityType.Organization.toString());
         jsonAsMap.put("entityId", new ObjectId().toHexString());
 
         given().contentType("application/json").body(jsonAsMap).when().post("/ban").then().statusCode(400);

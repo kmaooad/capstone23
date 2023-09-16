@@ -28,7 +28,7 @@ public class BanEntityHandlerTests {
     void testSuccessfulHandling() {
         var orgId = createOrg();
         var command = new BanEntity();
-        command.setEntityType(BannedEntityType.Organization.text);
+        command.setEntityType(BannedEntityType.Organization.toString());
         command.setEntityId(new ObjectId(orgId));
         command.setReason("Hello there");
 
@@ -42,7 +42,7 @@ public class BanEntityHandlerTests {
     @DisplayName("Ban Org Handler: Org doesn't exist test")
     void testUnsuccessfulHandling() {
         var command = new BanEntity();
-        command.setEntityType(BannedEntityType.Organization.text);
+        command.setEntityType(BannedEntityType.Organization.toString());
         command.setEntityId(new ObjectId());
         command.setReason("Hello there");
 
