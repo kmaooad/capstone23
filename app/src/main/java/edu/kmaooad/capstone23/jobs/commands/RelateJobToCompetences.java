@@ -11,11 +11,6 @@ public class RelateJobToCompetences {
     public RelateJobToCompetences() {
     }
 
-    public RelateJobToCompetences(ObjectId jobId, ObjectId competenceId) {
-        this.jobId = jobId;
-        this.competenceId = competenceId;
-    }
-
     public ObjectId getJobId() {
         return jobId;
     }
