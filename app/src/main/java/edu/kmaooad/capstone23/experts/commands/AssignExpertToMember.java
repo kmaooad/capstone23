@@ -4,7 +4,6 @@ package edu.kmaooad.capstone23.experts.commands;
         import org.bson.types.ObjectId;
 
 public class AssignExpertToMember {
-    @NotBlank
     private ObjectId memberId;
 
     public ObjectId getMemberId() {
