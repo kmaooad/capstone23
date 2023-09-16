@@ -5,8 +5,6 @@ import org.jboss.resteasy.reactive.RestForm;
 import java.io.File;
 
 public class CreateStudent {
-
     @RestForm
-    public File content;
-
+    public File csvFile;
 }
