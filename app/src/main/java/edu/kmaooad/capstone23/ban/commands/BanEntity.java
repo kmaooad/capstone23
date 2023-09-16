@@ -13,7 +13,7 @@ public class BanEntity {
     @NotNull
     private ObjectId entityId;
     @NotNull
-    @Pattern(regexp = "Organization|Department|User")
+    @Pattern(regexp = "Organization|Department|Member")
     private String entityType;
 
     @NotBlank

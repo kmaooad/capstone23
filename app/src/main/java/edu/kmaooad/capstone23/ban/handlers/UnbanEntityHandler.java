@@ -24,7 +24,7 @@ public class UnbanEntityHandler implements CommandHandler<BanEntity, EntityUnban
     public Result<EntityUnbanned> handle(BanEntity command) {
         if (BannedEntityType.Organization.toString().equals(command.getEntityTypeName())) {
             return unbanOrg(command);
-        } else if (BannedEntityType.User.toString().equals(command.getEntityTypeName())) {
+        } else if (BannedEntityType.Member.toString().equals(command.getEntityTypeName())) {
             
         }
 

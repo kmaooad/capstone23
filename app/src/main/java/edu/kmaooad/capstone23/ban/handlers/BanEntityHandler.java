@@ -46,7 +46,7 @@ public class BanEntityHandler implements CommandHandler<BanEntity, EntityBanned>
         switch (type) {
             case Organization:
                 return orgsRepository.findByIdOptional(entityId).isPresent();
-            case User:
+            case Member:
                 return membersRepository.findByIdOptional(entityId).isPresent();
             case Department:
                 return departmentsRepository.findByIdOptional(entityId).isPresent();

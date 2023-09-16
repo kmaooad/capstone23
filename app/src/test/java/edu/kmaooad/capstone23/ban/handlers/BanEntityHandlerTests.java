@@ -48,7 +48,7 @@ public class BanEntityHandlerTests {
     @Test
     @DisplayName("Ban Member Handler: Basic Test")
     void testSuccessfulHandlingForMember() {
-        testSuccessfulHandlingForEntity(BannedEntityType.User);
+        testSuccessfulHandlingForEntity(BannedEntityType.Member);
     }
 
     void testSuccessfulHandlingForEntity(BannedEntityType entityType) {
@@ -81,7 +81,7 @@ public class BanEntityHandlerTests {
     @Test
     @DisplayName("Ban Department Handler: Member doesn't exist test")
     void testUnsuccessfulHandlingForMember() {
-        testUnsuccessfulHandlingForEntity(BannedEntityType.User);
+        testUnsuccessfulHandlingForEntity(BannedEntityType.Member);
     }
 
     void testUnsuccessfulHandlingForEntity(BannedEntityType entityType) {

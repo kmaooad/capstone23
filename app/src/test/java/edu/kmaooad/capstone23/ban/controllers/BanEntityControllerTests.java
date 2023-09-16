@@ -61,20 +61,18 @@ public class BanEntityControllerTests {
                 return createOrg();
             case Department:
                 return createDepartment(parentId);
-            case User:
+            case Member:
                 return createMember(parentId);
             default:
                 return null;
         }
     }
 
-    public void testSuccessfulEntityBan(BannedEntityType entityType, String parentId) {
-        var org = createEntity(entityType, parentId);
-
+    public void testSuccessfulEntityBan(BannedEntityType entityType, String entityId) {
         Map<String, Object> jsonAsMap = new HashMap<>();
         jsonAsMap.put("reason", "Hello there");
         jsonAsMap.put("entityType", entityType.toString());
-        jsonAsMap.put("entityId", org);
+        jsonAsMap.put("entityId", entityId);
 
         given().contentType("application/json").body(jsonAsMap).when().post("/ban").then().statusCode(200);
     }
@@ -82,21 +80,24 @@ public class BanEntityControllerTests {
     @Test
     @DisplayName("Ban Org: Basic Test")
     public void testSuccessfulOrgBan() {
-        testSuccessfulEntityBan(BannedEntityType.Organization, null);
+        var entityId = createOrg();
+        testSuccessfulEntityBan(BannedEntityType.Organization, entityId);
     }
 
     @Test
     @DisplayName("Ban Department: Basic Test")
     public void testSuccessfulDepartmentBan() {
         createOrg();
-        testSuccessfulEntityBan(BannedEntityType.Department, "NaUKMA");
+        var entityId = createDepartment("NaUKMA");
+        testSuccessfulEntityBan(BannedEntityType.Department, entityId);
     }
 
     @Test
     @DisplayName("Ban Member: Basic Test")
     public void testSuccessfulMemberBan() {
         var orgId = createOrg();
-        testSuccessfulEntityBan(BannedEntityType.User, orgId);
+        var entityId = createMember(orgId);
+        testSuccessfulEntityBan(BannedEntityType.Member, entityId);
     }
 
     @Test
@@ -114,7 +115,7 @@ public class BanEntityControllerTests {
     @Test
     @DisplayName("Ban Member: Member doesn't exist test")
     public void testUnsuccessfulMemberBan() {
-        testUnsuccessfulEntityBan(BannedEntityType.User);
+        testUnsuccessfulEntityBan(BannedEntityType.Member);
     }
 
     public void testUnsuccessfulEntityBan(BannedEntityType entityType) {
