@@ -15,6 +15,11 @@ import java.util.List;
 @ApplicationScoped
 public class CSVStudentParser {
     private static final SimpleDateFormat FORMATTER = new SimpleDateFormat("dd/MM/yyyy");
+
+    public CSVStudentParser() {
+        FORMATTER.setLenient(false);
+    }
+
     private static final int STUDENT_FIELDS = 5;
     public List<CSVStudent> parse(File content) throws ParseException, FileNotFoundException, IOException, IncorrectValuesAmount {
         FileInputStream stream = new FileInputStream(content);
