@@ -2,11 +2,12 @@ package edu.kmaooad.capstone23.cvs.commands;
 
 import edu.kmaooad.capstone23.cvs.dal.JobPreference;
 import jakarta.validation.constraints.NotNull;
+import org.bson.types.ObjectId;
 
 public class UpdateJobPref {
 
     @NotNull
-    private String cvId;
+    private ObjectId cvId;
 
     private String location;
 
@@ -14,11 +15,11 @@ public class UpdateJobPref {
 
     private JobPreference.Category category;
 
-    public String getCvId() {
+    public ObjectId getCvId() {
         return cvId;
     }
 
-    public void setCvId(String cvId) {
+    public void setCvId(ObjectId cvId) {
         this.cvId = cvId;
     }
 

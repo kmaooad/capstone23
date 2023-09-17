@@ -23,7 +23,7 @@ public class UpdateCVHandlerTest {
     @Inject
     CommandHandler<UpdateCV, CVUpdated> updateHandler;
 
-    String getCreateCvId(){
+    ObjectId getCreateCvId(){
         CreateCV command = new CreateCV();
         command.setDateTimeCreated(LocalDateTime.now());
         command.setTextInfo("some info about a student");

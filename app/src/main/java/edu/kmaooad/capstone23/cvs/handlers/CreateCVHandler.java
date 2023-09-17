@@ -25,7 +25,7 @@ public class CreateCVHandler implements CommandHandler<CreateCV, CVCreated> {
         cv.autoAddCompetences = command.isAutoAddCompetences();
         cvRepository.insert(cv);
 
-        CVCreated result = new CVCreated(cv.id.toString());
+        CVCreated result = new CVCreated(cv.id);
         return new Result<>(result);
     }
 

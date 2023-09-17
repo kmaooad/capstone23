@@ -1,34 +1,30 @@
 package edu.kmaooad.capstone23.cvs.handlers;
 
 import edu.kmaooad.capstone23.common.CommandHandler;
+import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
+import edu.kmaooad.capstone23.cvs.commands.AddSkillToCV;
 import edu.kmaooad.capstone23.cvs.commands.UpdateCV;
 import edu.kmaooad.capstone23.cvs.dal.CV;
 import edu.kmaooad.capstone23.cvs.dal.CVRepository;
 import edu.kmaooad.capstone23.cvs.events.CVUpdated;
-import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
 
-@RequestScoped
-public class UpdateCVHandler implements CommandHandler<UpdateCV, CVUpdated> {
+public class AddSkillToCVHandler implements CommandHandler<AddSkillToCV, CVUpdated> {
 
     @Inject
     CVRepository cvRepository;
 
     @Override
-    public Result<CVUpdated> handle(UpdateCV command) {
+    public Result<CVUpdated> handle(AddSkillToCV command) {
         CV cv = cvRepository.findById(command.getCvId());
 
-        if (command.getStatus() != null)
-            cv.status = command.getStatus();
+        if (cv == null) {
+            return new Result<>(ErrorCode.NOT_FOUND, "This cv does not exist");
+        }
 
-        if (command.getVisibility() != null)
-            cv.visibility = command.getVisibility();
-
-        if (command.getTextInfo() != null)
-            cv.textInfo = command.getTextInfo();
-
+        cv.skills.add(command.getSkillId());
         cvRepository.update(cv);
 
         CVUpdated result = new CVUpdated(cv.id);
