@@ -21,14 +21,13 @@ public class UpdateGroupHandlerTests {
 
     @Inject
     GroupTemplatesRepository groupTemplatesRepository;
-
     @Inject
     GroupsRepository groupsRepository;
     @Inject
     UpdateGroupHandler updateGroupHandler;
     @Test
     @DisplayName("Update Group : Basic")
-    public void testSuccessfulHandling() {
+    public void testGroupNameUpdate() {
         GroupTemplate groupTemplate = new GroupTemplate();
         groupTemplate.name = "GroupTemplate";
         groupTemplatesRepository.insert(groupTemplate);
