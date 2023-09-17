@@ -8,7 +8,7 @@ import org.eclipse.microprofile.openapi.annotations.media.Content;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 
-@Path("/experts/member/delete")
+@Path("/members/expert/delete")
 @APIResponse(responseCode = "200", content = {
         @Content(mediaType = "application/json", schema = @Schema(implementation = ExpertRemovedFromMember.class)) })
 public class RemoveExpertFromMemberController extends TypicalController<RemoveExpertFromMember, ExpertRemovedFromMember> {

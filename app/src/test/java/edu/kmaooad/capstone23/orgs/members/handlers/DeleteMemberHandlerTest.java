@@ -40,6 +40,7 @@ public class DeleteMemberHandlerTest {
         command.setLastName("lastName");
         command.setOrgId(createdOrgId);
         command.setEmail("email@email.com");
+        command.setIsExpert("false");
 
         Result<BasicMemberCreated> result = createHandler.handle(command);
 

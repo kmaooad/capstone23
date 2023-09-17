@@ -3,6 +3,7 @@ package edu.kmaooad.capstone23.members.commands;
 import io.smallrye.common.constraint.NotNull;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import org.bson.types.ObjectId;
 
@@ -18,8 +19,8 @@ public class CreateBasicMember {
     @NotBlank
     @Email
     private String email;
-
-    private Boolean isExpert = false;
+    @Pattern(regexp = "true|false")
+    private String isExpert;
 
     public String getFirstName() {
         return firstName;
@@ -53,7 +54,11 @@ public class CreateBasicMember {
         this.orgId = orgId;
     }
 
-    public void setExpert(Boolean expert) {
-        isExpert = expert;
+    public String getIsExpert() {
+        return isExpert;
+    }
+
+    public void setIsExpert(String isExpert) {
+        this.isExpert = isExpert;
     }
 }
