@@ -17,6 +17,7 @@ import org.eclipse.microprofile.openapi.annotations.media.Content;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 
+// Created new controller because extending typical controller does not apply @Consumes(MediaType.MULTIPART_FORM_DATA)
 @Path("/students/create_csv")
 public class CreateStudentController {
     @Inject
