@@ -21,7 +21,7 @@ public class HideCVHandler implements CommandHandler<HideCV, CVHided> {
         CV cv = cvRepository.findById(command.getCvId());
 
 
-            cv.visibility =false;
+        cv.visibility =Visibility.HIDDEN;
 
         cvRepository.update(cv);
 

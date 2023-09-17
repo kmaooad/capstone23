@@ -21,7 +21,7 @@ public class ShowCVHandler implements CommandHandler<ShowCV, CVShowed> {
         CV cv = cvRepository.findById(command.getCvId());
 
 
-        cv.visibility =true;
+        cv.visibility =Visibility.VISIBLE;
 
         cvRepository.update(cv);
 
