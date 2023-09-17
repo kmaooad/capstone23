@@ -72,4 +72,28 @@ public class RemoveSkillFromSkillSetHandlerTest {
 
         Assertions.assertFalse(result.isSuccess());
     }
+
+    @Test
+    void testNotValidSkillSetInSkillFromSkillSetRemovingHandling() {
+        var command = new RemoveSkillFromSkillSet();
+        command.setSkillId(skillId);
+        command.setSkillSetId(new ObjectId());
+
+        Result<SkillFromSkillSetRemoved> result = removeSkillFromSkillSetHandler.handle(command);
+
+        Assertions.assertFalse(result.isSuccess());
+    }
+    @Test
+    void testSkillSetDoesNotContainSkillInInSkillFromSkillSetRemovingHandling() {
+        var command = new RemoveSkillFromSkillSet();
+        command.setSkillId(skillId);
+        command.setSkillSetId(skillSetId);
+
+        Result<SkillFromSkillSetRemoved> result = removeSkillFromSkillSetHandler.handle(command);
+        Assertions.assertTrue(result.isSuccess());
+
+        Result<SkillFromSkillSetRemoved> resultSecond = removeSkillFromSkillSetHandler.handle(command);
+        Assertions.assertFalse(resultSecond.isSuccess());
+
+    }
 }
