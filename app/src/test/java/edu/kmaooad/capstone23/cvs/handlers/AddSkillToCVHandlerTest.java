@@ -1,6 +1,8 @@
 package edu.kmaooad.capstone23.cvs.handlers;
 
+import edu.kmaooad.capstone23.cvs.dal.CVRepository;
 import io.quarkus.test.junit.QuarkusTest;
+import jakarta.inject.Inject;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -13,17 +15,13 @@ import static org.junit.jupiter.api.Assertions.*;
 @QuarkusTest
 class AddSkillToCVHandlerTest {
 
-    private static Stream<Arguments> validAddSkillArgs() {
-        return Stream.of();
-    }
-
-    private static Stream<Arguments> invalidAddSkillArgs() {
-        return Stream.of();
-    }
+    @Inject
+    CVRepository cvRepository;
 
     @Test
-    @DisplayName("Add skill handler test: valid input")
+    @DisplayName("Add skill handler test: valid cv")
     void simpleValidHandleTest() {
+
     }
 
 
