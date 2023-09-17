@@ -66,4 +66,29 @@ public class AddSkillToSkillSetHandlerTest {
 
         Assertions.assertFalse(result.isSuccess());
     }
+
+    @Test
+    void testNotValidSkillSetInSkillToSkillSetAdditionHandling() {
+        var command = new AddSkillToSkillSet();
+        command.setSkillId(skillId);
+        command.setSkillSetId(new ObjectId());
+
+        Result<SkillToSkillSetAdded> result = addSkillToSkillSetHandler.handle(command);
+
+        Assertions.assertFalse(result.isSuccess());
+    }
+
+
+    @Test
+    void testSkillAlreadyAddedToSkillSetInSkillToSkillSetAdditionHandling() {
+        var command = new AddSkillToSkillSet();
+        command.setSkillId(skillId);
+        command.setSkillSetId(skillSetId);
+
+        Result<SkillToSkillSetAdded> result = addSkillToSkillSetHandler.handle(command);
+        Assertions.assertTrue(result.isSuccess());
+
+        Result<SkillToSkillSetAdded> resultSecond = addSkillToSkillSetHandler.handle(command);
+        Assertions.assertFalse(resultSecond.isSuccess());
+    }
 }
