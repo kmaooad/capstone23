@@ -19,14 +19,6 @@ public class Activity {
         this.completed = false;
     }
 
-    public void markAsCompleted() {
-        this.completed = true;
-    }
-
-    public void markAsPending() {
-        this.completed = false;
-    }
-
     public boolean isCompleted() {
         return completed;
     }

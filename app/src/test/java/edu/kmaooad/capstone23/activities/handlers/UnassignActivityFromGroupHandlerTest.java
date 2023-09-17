@@ -4,10 +4,10 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import edu.kmaooad.capstone23.activities.commands.AssignActivityToGroup;
 import edu.kmaooad.capstone23.activities.commands.CreateActivity;
+import edu.kmaooad.capstone23.activities.commands.UnassignActivityFromGroup;
 import edu.kmaooad.capstone23.activities.events.ActivityCreated;
-import edu.kmaooad.capstone23.activities.events.AssignActivityToGroupEvent;
+import edu.kmaooad.capstone23.activities.events.UnassignActivityFromGroupEvent;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.group_templates.commands.CreateGroupTemplate;
@@ -16,7 +16,7 @@ import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 
 @QuarkusTest
-public class AssignActivityToGroupHandlerTest {
+public class UnassignActivityFromGroupHandlerTest {
     @Inject
     CommandHandler<CreateGroupTemplate, GroupTemplateCreated> groupsHandler;
 
@@ -24,12 +24,12 @@ public class AssignActivityToGroupHandlerTest {
     CommandHandler<CreateActivity, ActivityCreated> activityHandler;
 
     @Inject
-    CommandHandler<AssignActivityToGroup, AssignActivityToGroupEvent> handler;
+    CommandHandler<UnassignActivityFromGroup, UnassignActivityFromGroupEvent> handler;
 
     @Test
-    @DisplayName("Assign Activity To a Group")
+    @DisplayName("Unassign Activity To a Group")
     public void testSuccessfulGroupHandling() {
-        AssignActivityToGroup command = new AssignActivityToGroup();
+        UnassignActivityFromGroup command = new UnassignActivityFromGroup();
         CreateGroupTemplate createGroupCommand = new CreateGroupTemplate();
         createGroupCommand.setGroupTemplateName("testGroup");
 
@@ -42,7 +42,7 @@ public class AssignActivityToGroupHandlerTest {
         command.setGroupId(groupResult.getValue().getGroupTemplateId());
         command.setActivityId(activityResult.getValue().getId());
 
-        Result<AssignActivityToGroupEvent> result = handler.handle(command);
+        Result<UnassignActivityFromGroupEvent> result = handler.handle(command);
 
         Assertions.assertTrue(result.isSuccess());
         Assertions.assertNotNull(result.getValue());
@@ -50,9 +50,9 @@ public class AssignActivityToGroupHandlerTest {
     }
 
     @Test
-    @DisplayName("Assign Activity To a Group")
+    @DisplayName("Unassign Activity To a Group")
     public void testUnsuccessfulGroupHandling() {
-        AssignActivityToGroup command = new AssignActivityToGroup();
+        UnassignActivityFromGroup command = new UnassignActivityFromGroup();
         CreateGroupTemplate createGroupCommand = new CreateGroupTemplate();
         createGroupCommand.setGroupTemplateName("GroupB");
 
@@ -65,7 +65,7 @@ public class AssignActivityToGroupHandlerTest {
         command.setGroupId(groupResult.getValue().getGroupTemplateId());
         command.setActivityId(activityResult.getValue().getId());
 
-        Result<AssignActivityToGroupEvent> result = handler.handle(command);
+        Result<UnassignActivityFromGroupEvent> result = handler.handle(command);
 
         Assertions.assertFalse(command.getActivityId().isEmpty());
         Assertions.assertFalse(command.getGroupId().isEmpty());

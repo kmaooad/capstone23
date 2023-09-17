@@ -4,70 +4,73 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import edu.kmaooad.capstone23.activities.commands.AssignActivityToGroup;
+
 import edu.kmaooad.capstone23.activities.commands.CreateActivity;
+import edu.kmaooad.capstone23.activities.commands.UnassignActivityFromStudent;
 import edu.kmaooad.capstone23.activities.events.ActivityCreated;
-import edu.kmaooad.capstone23.activities.events.AssignActivityToGroupEvent;
+import edu.kmaooad.capstone23.activities.events.UnassignActivityFromStudentEvent;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.group_templates.commands.CreateGroupTemplate;
 import edu.kmaooad.capstone23.group_templates.events.GroupTemplateCreated;
+import edu.kmaooad.capstone23.students.commands.CreateStudent;
+import edu.kmaooad.capstone23.students.events.StudentCreated;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 
 @QuarkusTest
-public class AssignActivityToGroupHandlerTest {
-    @Inject
-    CommandHandler<CreateGroupTemplate, GroupTemplateCreated> groupsHandler;
+public class UnassignActivityFromStudentHandlerTest {
+        @Inject
+    CommandHandler<CreateStudent, StudentCreated> studentHandler;
 
     @Inject
     CommandHandler<CreateActivity, ActivityCreated> activityHandler;
 
     @Inject
-    CommandHandler<AssignActivityToGroup, AssignActivityToGroupEvent> handler;
+    CommandHandler<UnassignActivityFromStudent, UnassignActivityFromStudentEvent> handler;
 
     @Test
-    @DisplayName("Assign Activity To a Group")
+    @DisplayName("Unassign Activity To a Group")
     public void testSuccessfulGroupHandling() {
-        AssignActivityToGroup command = new AssignActivityToGroup();
-        CreateGroupTemplate createGroupCommand = new CreateGroupTemplate();
-        createGroupCommand.setGroupTemplateName("testGroup");
+        UnassignActivityFromStudent command = new UnassignActivityFromStudent();
+        CreateStudent studentCommand = new CreateStudent();
+        studentCommand.setStudentName("testGroup");
 
-        Result<GroupTemplateCreated> groupResult = groupsHandler.handle(createGroupCommand);
+        Result<StudentCreated> studentResult = studentHandler.handle(studentCommand);
 
         CreateActivity createActivityCommand = new CreateActivity();
         createActivityCommand.setActivitytName("Matematika");
         Result<ActivityCreated> activityResult = activityHandler.handle(createActivityCommand);
 
-        command.setGroupId(groupResult.getValue().getGroupTemplateId());
+        command.setStudentId(studentResult.getValue().getStudentId());
         command.setActivityId(activityResult.getValue().getId());
 
-        Result<AssignActivityToGroupEvent> result = handler.handle(command);
+        Result<UnassignActivityFromStudentEvent> result = handler.handle(command);
 
         Assertions.assertTrue(result.isSuccess());
         Assertions.assertNotNull(result.getValue());
-        Assertions.assertFalse(groupResult.getValue().getGroupTemplateId().isEmpty());
+        Assertions.assertFalse(studentResult.getValue().getStudentId().isEmpty());
     }
 
     @Test
-    @DisplayName("Assign Activity To a Group")
+    @DisplayName("Unassign Activity To a Group")
     public void testUnsuccessfulGroupHandling() {
-        AssignActivityToGroup command = new AssignActivityToGroup();
-        CreateGroupTemplate createGroupCommand = new CreateGroupTemplate();
-        createGroupCommand.setGroupTemplateName("GroupB");
+        UnassignActivityFromStudent command = new UnassignActivityFromStudent();
+        CreateStudent studentCommand = new CreateStudent();
+        studentCommand.setStudentName("testGroupB");
 
-        Result<GroupTemplateCreated> groupResult = groupsHandler.handle(createGroupCommand);
+        Result<StudentCreated> studentResult = studentHandler.handle(studentCommand);
 
         CreateActivity createActivityCommand = new CreateActivity();
         createActivityCommand.setActivitytName("Germany");
         Result<ActivityCreated> activityResult = activityHandler.handle(createActivityCommand);
 
-        command.setGroupId(groupResult.getValue().getGroupTemplateId());
+        command.setStudentId(studentResult.getValue().getStudentId());
         command.setActivityId(activityResult.getValue().getId());
 
-        Result<AssignActivityToGroupEvent> result = handler.handle(command);
+        Result<UnassignActivityFromStudentEvent> result = handler.handle(command);
 
         Assertions.assertFalse(command.getActivityId().isEmpty());
-        Assertions.assertFalse(command.getGroupId().isEmpty());
+        Assertions.assertFalse(command.getStudentId().isEmpty());
     }
 }
