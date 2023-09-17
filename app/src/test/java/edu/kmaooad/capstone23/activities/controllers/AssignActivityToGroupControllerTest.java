@@ -30,10 +30,26 @@ public class AssignActivityToGroupControllerTest {
 
     @Test
     @DisplayName("Assign activity to a non-existing group")
+    public void testAssignActivityToNonExistingGroup() {
+        Map<String, Object> jsonAsMap = new HashMap<>();
+        jsonAsMap.put("groupId", "nonExistentId");
+        jsonAsMap.put("activityId", "iOS activity");
+
+        given()
+                .contentType("application/json")
+                .body(jsonAsMap)
+                .when()
+                .post("/activities/assign/student")
+                .then()
+                .statusCode(500);
+    }
+
+    @Test
+    @DisplayName("Assign activity to a existing group")
     public void testAssignActivityToGroup() {
         Map<String, Object> jsonAsMap = new HashMap<>();
-        jsonAsMap.put("id", "nonExistentId");
-        jsonAsMap.put("activityName", "iOS activity");
+        jsonAsMap.put("groupId", groupId.toString());
+        jsonAsMap.put("activityId", "OOD activity");
 
         given()
                 .contentType("application/json")

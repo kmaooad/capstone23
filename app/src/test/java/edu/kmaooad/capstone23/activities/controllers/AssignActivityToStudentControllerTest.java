@@ -35,8 +35,8 @@ public class AssignActivityToStudentControllerTest {
     @DisplayName("Assign activity to a non-existing student")
     public void testAssignActivityToStudent() {
         Map<String, Object> jsonAsMap = new HashMap<>();
-        jsonAsMap.put("id", "nonExistentId");
-        jsonAsMap.put("activityName", "WEB activity");
+        jsonAsMap.put("studentId", studentId.toString());
+        jsonAsMap.put("activityId", "WEB activity");
 
         given()
                 .contentType("application/json")
