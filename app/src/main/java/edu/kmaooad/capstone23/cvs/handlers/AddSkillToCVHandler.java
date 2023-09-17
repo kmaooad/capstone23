@@ -24,7 +24,7 @@ public class AddSkillToCVHandler implements CommandHandler<AddSkillToCV, CVUpdat
             return new Result<>(ErrorCode.NOT_FOUND, "This cv does not exist");
         }
 
-        cv.skills.add(command.getSkillId());
+        cv.addSkill(command.getSkillId());
         cvRepository.update(cv);
 
         CVUpdated result = new CVUpdated(cv.id);

@@ -4,6 +4,7 @@ import io.quarkus.mongodb.panache.common.MongoEntity;
 import org.bson.types.ObjectId;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 
 @MongoEntity(collection = "cvs")
@@ -32,6 +33,14 @@ public class CV {
     public enum Visibility {
         VISIBLE,
         HIDDEN,
+    }
+
+    public void addSkill(ObjectId skillId) {
+        if (this.skills == null) {
+            this.skills = new HashSet<>();
+        }
+
+        this.skills.add(skillId);
     }
 
 }
