@@ -42,4 +42,38 @@ public class CreateStudentControllerTest {
                 .then()
                 .statusCode(400);
     }
+
+    @Test
+    @DisplayName("Create students from csv: not enough fields")
+    public void testsStudentsCreationFromCSVNotEnoughFields() {
+        given()
+                .multiPart("csvFile", new File("src/test/resources/students/not_enough_fields.csv"), "text/csv")
+                .when()
+                .post("students/create_csv")
+                .then()
+                .statusCode(400);
+    }
+
+    @Test
+    @DisplayName("Create students from csv: too many fields")
+    public void testsStudentsCreationFromCSVTooManyFields() {
+        given()
+                .multiPart("csvFile", new File("src/test/resources/students/too_many_fields.csv"), "text/csv")
+                .when()
+                .post("students/create_csv")
+                .then()
+                .statusCode(400);
+    }
+
+    @Test
+    @DisplayName("Create students from csv: contains empty string")
+    public void testsStudentsCreationFromCSVContainsEmptyString() {
+        given()
+                .multiPart("csvFile", new File("src/test/resources/students/contains_empty_strings.csv"), "text/csv")
+                .when()
+                .post("students/create_csv")
+                .then()
+                .statusCode(200);
+    }
+
 }
