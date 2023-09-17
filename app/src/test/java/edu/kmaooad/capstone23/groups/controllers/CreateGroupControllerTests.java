@@ -28,7 +28,8 @@ public class CreateGroupControllerTests {
 
         Result<GroupTemplateCreated> result = handler.handle(command);
         Map<String, Object> jsonAsMap = new HashMap<>();
-        jsonAsMap.put("groupName", result.getValue().getGroupTemplateId().toString());
+        jsonAsMap.put("groupName", "test_name" );
+        jsonAsMap.put("templateId", result.getValue().getGroupTemplateId().toString());
 
         given()
                 .contentType("application/json")
