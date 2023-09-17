@@ -16,20 +16,20 @@ public class CSVStudentParserTest {
     @Inject
     CSVStudentParser parser;
 
+    private static final CSVStudent STUDENT = new CSVStudent(
+            "Ivan",
+            "",
+            "Dobrovolskyi",
+            1039132800000L,
+            "ivan.dobrovolskyi@ukma.edu.ua"
+    );
+
     @Test
     @DisplayName("Parse students from file: Successful")
     public void testStudentsParserSuccess() {
         Assertions.assertDoesNotThrow(() -> {
             File studentsFile = new File("src/test/resources/students/success.csv");
-            CSVStudent[] expected = new CSVStudent[]{
-                new CSVStudent(
-                        "Ivan",
-                        "",
-                        "Dobrovolskyi",
-                        1039132800000L,
-                        "ivan.dobrovolskyi@ukma.edu.ua"
-                )
-            };
+            CSVStudent[] expected = new CSVStudent[]{ STUDENT };
             List<CSVStudent> result = parser.parse(studentsFile);
             Assertions.assertArrayEquals(expected, result.toArray());
         });
@@ -40,14 +40,8 @@ public class CSVStudentParserTest {
     public void testsStudentsParserSuccessWithBlankStrings() {
         Assertions.assertDoesNotThrow(() -> {
             File studentsFile = new File("src/test/resources/students/contains_empty_strings.csv");
-            CSVStudent student = new CSVStudent(
-                    "Ivan",
-                    "",
-                    "Dobrovolskyi",
-                    1039132800000L,
-                    "ivan.dobrovolskyi@ukma.edu.ua"
-            );
-            CSVStudent[] expected = new CSVStudent[]{student, student};
+
+            CSVStudent[] expected = new CSVStudent[]{STUDENT, STUDENT};
             List<CSVStudent> result = parser.parse(studentsFile);
             Assertions.assertArrayEquals(expected, result.toArray());
         });
