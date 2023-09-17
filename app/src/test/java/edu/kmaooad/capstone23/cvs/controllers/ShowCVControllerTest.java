@@ -1,21 +1,21 @@
-package edu.kmaooad.capstone23.cvs.controllers;
-
-import edu.kmaooad.capstone23.cvs.dal.CV;
-import edu.kmaooad.capstone23.cvs.dal.CVRepository;
-import edu.kmaooad.capstone23.cvs.dal.JobPreference;
-import io.quarkus.test.junit.QuarkusTest;
-import jakarta.inject.Inject;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-
-import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Map;
-
-import static io.restassured.RestAssured.given;
-
-@QuarkusTest
-public class ShowCVControllerTest {
+//package edu.kmaooad.capstone23.cvs.controllers;
+//
+//import edu.kmaooad.capstone23.cvs.dal.CV;
+//import edu.kmaooad.capstone23.cvs.dal.CVRepository;
+//import edu.kmaooad.capstone23.cvs.dal.JobPreference;
+//import io.quarkus.test.junit.QuarkusTest;
+//import jakarta.inject.Inject;
+//import org.junit.jupiter.api.DisplayName;
+//import org.junit.jupiter.api.Test;
+//
+//import java.time.LocalDateTime;
+//import java.util.HashMap;
+//import java.util.Map;
+//
+//import static io.restassured.RestAssured.given;
+//
+//@QuarkusTest
+//public class ShowCVControllerTest {
 //
 //    @Inject
 //    CVRepository cvRepository;
@@ -58,4 +58,4 @@ public class ShowCVControllerTest {
 //        cvRepository.persist(cv);
 //        return cv;
 //    }
-}
+//}
