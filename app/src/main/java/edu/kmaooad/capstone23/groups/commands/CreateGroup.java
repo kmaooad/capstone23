@@ -7,5 +7,6 @@ public class CreateGroup {
     @NotBlank
     @Size(min = 1, max = 50)
     public String groupName;
+    @NotBlank
     public String templateId;
 }
