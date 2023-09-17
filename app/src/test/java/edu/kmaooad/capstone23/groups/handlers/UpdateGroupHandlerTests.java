@@ -37,8 +37,11 @@ public class UpdateGroupHandlerTests {
         group.name = "test_group";
         group.templateId = groupTemplate.id.toString();
 
+        groupsRepository.insert(group);
+
         UpdateGroup command = new UpdateGroup();
-        command.setId(groupTemplate.id.toString());
+        command.setId(group.id.toString());
+        command.setTemplateId(groupTemplate.id.toString());
         command.setGroupName("new_name");
 
         Result<GroupUpdated> result = updateGroupHandler.handle(command);
