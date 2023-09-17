@@ -7,8 +7,10 @@ import edu.kmaooad.capstone23.cvs.commands.AddSkillToCV;
 import edu.kmaooad.capstone23.cvs.dal.CV;
 import edu.kmaooad.capstone23.cvs.dal.CVRepository;
 import edu.kmaooad.capstone23.cvs.events.CVUpdated;
+import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 
+@RequestScoped
 public class AddSkillToCVHandler implements CommandHandler<AddSkillToCV, CVUpdated> {
 
     @Inject

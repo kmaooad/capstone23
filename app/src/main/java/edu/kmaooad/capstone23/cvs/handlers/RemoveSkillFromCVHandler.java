@@ -8,7 +8,9 @@ import edu.kmaooad.capstone23.cvs.commands.RemoveSkillFromCV;
 import edu.kmaooad.capstone23.cvs.dal.CV;
 import edu.kmaooad.capstone23.cvs.dal.CVRepository;
 import edu.kmaooad.capstone23.cvs.events.CVUpdated;
+import jakarta.enterprise.context.RequestScoped;
 
+@RequestScoped
 public class RemoveSkillFromCVHandler implements CommandHandler<RemoveSkillFromCV, CVUpdated>  {
     CVRepository cvRepository;
 
