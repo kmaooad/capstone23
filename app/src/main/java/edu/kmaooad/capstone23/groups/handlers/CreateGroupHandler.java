@@ -24,9 +24,9 @@ public class CreateGroupHandler implements CommandHandler<CreateGroup, GroupCrea
     @Override
     public Result<GroupCreated> handle(CreateGroup command) {
         Group group = new Group();
-        group.name = command.groupName;
+        group.name = command.getGroupName();
 
-        String templateId = command.templateId;
+        String templateId = command.getTemplateId();
         if(!ObjectId.isValid(templateId))
             return new Result<>(ErrorCode.VALIDATION_FAILED, "Template Id is invalid");
         GroupTemplate template = templatesRepository.findById(new ObjectId(templateId));

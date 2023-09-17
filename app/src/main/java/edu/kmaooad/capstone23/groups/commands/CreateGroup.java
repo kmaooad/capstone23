@@ -6,7 +6,20 @@ import jakarta.validation.constraints.Size;
 public class CreateGroup {
     @NotBlank
     @Size(min = 1, max = 50)
-    public String groupName;
+    private String groupName;
     @NotBlank
-    public String templateId;
+    private String templateId;
+
+    public CreateGroup(String groupName, String templateId) {
+        this.groupName = groupName;
+        this.templateId = templateId;
+    }
+
+    public String getGroupName() {
+        return groupName;
+    }
+
+    public String getTemplateId() {
+        return templateId;
+    }
 }

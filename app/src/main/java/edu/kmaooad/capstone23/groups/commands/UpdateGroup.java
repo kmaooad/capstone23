@@ -9,10 +9,10 @@ public class UpdateGroup {
 
     @NotBlank
     @Size(min = 1, max = 50)
-    public String groupName;
+    private String groupName;
 
     @NotBlank
-    public String templateId;
+    private String templateId;
 
     public String getId() {
         return id;
