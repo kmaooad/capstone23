@@ -49,4 +49,26 @@ public class AssignActivityToStudentHandlerTest {
         Assertions.assertNotNull(result.getValue());
         Assertions.assertFalse(studentResult.getValue().getStudentId().isEmpty());
     }
+
+    @Test
+    @DisplayName("Assign Activity To a Student")
+    public void testUnsuccessfulHandling() {
+        AssignActivityToStudent command = new AssignActivityToStudent();
+        CreateStudent createStudentCommand = new CreateStudent();
+        createStudentCommand.setStudentName("Steven");
+        Result<StudentCreated> studentResult = studentHandler.handle(createStudentCommand);
+
+        CreateActivity createActivityCommand = new CreateActivity();
+        createActivityCommand.setActivitytName("Anglicky");
+        Result<ActivityCreated> activityResult = activityHandler.handle(createActivityCommand);
+
+        command.setStudentId(studentResult.getValue().getStudentId());
+        command.setActivityId(activityResult.getValue().getId());
+
+        Result<AssignActivityToStudentEvent> result = handler.handle(command);
+
+        Assertions.assertTrue(result.isSuccess());
+        Assertions.assertNotNull(result.getValue());
+        Assertions.assertFalse(studentResult.getValue().getStudentId().isEmpty());
+    }
 }

@@ -48,4 +48,26 @@ public class AssignActivityToGroupHandlerTest {
         Assertions.assertNotNull(result.getValue());
         Assertions.assertFalse(groupResult.getValue().getGroupTemplateId().isEmpty());
     }
+
+    @Test
+    @DisplayName("Unassign Activity To a Group")
+    public void testUnsuccessfulGroupHandling() {
+        AssignActivityToGroup command = new AssignActivityToGroup();
+        CreateGroupTemplate createGroupCommand = new CreateGroupTemplate();
+        createGroupCommand.setGroupTemplateName("GroupB");
+
+        Result<GroupTemplateCreated> groupResult = groupsHandler.handle(createGroupCommand);
+
+        CreateActivity createActivityCommand = new CreateActivity();
+        createActivityCommand.setActivitytName("Germany");
+        Result<ActivityCreated> activityResult = activityHandler.handle(createActivityCommand);
+
+        command.setGroupId(groupResult.getValue().getGroupTemplateId());
+        command.setActivityId(activityResult.getValue().getId());
+
+        Result<AssignActivityToGroupEvent> result = handler.handle(command);
+
+        Assertions.assertNotNull(result.getValue());
+        Assertions.assertTrue(result.isSuccess());
+    }
 }

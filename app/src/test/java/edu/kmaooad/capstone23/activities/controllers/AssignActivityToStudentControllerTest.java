@@ -32,10 +32,26 @@ public class AssignActivityToStudentControllerTest {
     }
 
     @Test
-    @DisplayName("Assign activity to a non-existing student")
-    public void testAssignActivityToStudent() {
+    @DisplayName("Assign activity to an existing student")
+    public void testAssignActivityToExistingStudent() {
         Map<String, Object> jsonAsMap = new HashMap<>();
         jsonAsMap.put("studentId", studentId.toString());
+        jsonAsMap.put("activityId", "WEB activity");
+
+        given()
+                .contentType("application/json")
+                .body(jsonAsMap)
+                .when()
+                .post("/activities/assign/student")
+                .then()
+                .statusCode(500);
+    }
+
+    @Test
+    @DisplayName("Assign activity to a non-existing student")
+    public void testAssignActivityToNonExistingStudent() {
+        Map<String, Object> jsonAsMap = new HashMap<>();
+        jsonAsMap.put("studentId", "nonExistingSt");
         jsonAsMap.put("activityId", "WEB activity");
 
         given()
