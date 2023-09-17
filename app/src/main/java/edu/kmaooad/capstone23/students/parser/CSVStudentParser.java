@@ -30,13 +30,20 @@ public class CSVStudentParser {
 
         int line = 0;
 
-        while (text.ready()){
+        while (text.ready()) {
             ++line;
-            var values = text.readLine().split(",");
+            String input = text.readLine();
+            if (input.isBlank()) continue;
+            var values = input.split(",");
             if (values.length < STUDENT_FIELDS) throw new NotEnoughValues(line);
             if (values.length > STUDENT_FIELDS) throw new TooManyValues(line);
             result.add(parse(values));
         }
+
+        stream.close();
+        reader.close();
+        text.close();
+
         return result;
     }
 
