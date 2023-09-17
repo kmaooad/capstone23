@@ -14,7 +14,7 @@ public class CreateCV {
     @PastOrPresent
     private LocalDateTime dateTimeCreated;
 
-    @Size(min = 10, max = 500)
+    @Size(min = 5, max = 500)
     private String textInfo;
 
     @NotNull
