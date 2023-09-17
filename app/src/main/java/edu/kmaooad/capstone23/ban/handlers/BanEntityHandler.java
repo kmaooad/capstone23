@@ -43,39 +43,30 @@ public class BanEntityHandler implements CommandHandler<BanEntity, EntityBanned>
     }
 
     boolean entityExists(BannedEntityType type, ObjectId entityId) {
-        switch (type) {
-            case Organization:
-                return orgsRepository.findByIdOptional(entityId).isPresent();
-            case Member:
-                return membersRepository.findByIdOptional(entityId).isPresent();
-            case Department:
-                return departmentsRepository.findByIdOptional(entityId).isPresent();
-            default:
-                throw new IllegalArgumentException("Invalid entity type");
-        }
+        return switch (type) {
+            case Organization -> orgsRepository.findByIdOptional(entityId).isPresent();
+            case Member -> membersRepository.findByIdOptional(entityId).isPresent();
+            case Department -> departmentsRepository.findByIdOptional(entityId).isPresent();
+        };
     }
 
     Result<EntityBanned> banEntity(BanEntity command) {
-        try {
-            var entityType = command.getEntityType();
+        var entityType = command.getEntityType();
 
-            if (!entityExists(entityType, command.getEntityId())) {
-                return new Result<>(ErrorCode.VALIDATION_FAILED, "Entity doesn't exist");
-            }
-
-            var previousBan = entityBanRepository.findForEntity(entityType, command.getEntityId());
-            if (previousBan.isPresent()) {
-                return new Result<>(new EntityBanned(previousBan.get().id, entityType));
-            }
-
-            var newBan = new EntityBan();
-            newBan.reason = command.getReason();
-            newBan.entityId = command.getEntityId();
-            newBan.entityType = entityType;
-            entityBanRepository.insert(newBan);
-            return new Result<>(new EntityBanned(newBan.id, entityType));
-        } catch (Exception e) {
-            return new Result<>(ErrorCode.EXCEPTION, e.getMessage());
+        if (!entityExists(entityType, command.getEntityId())) {
+            return new Result<>(ErrorCode.VALIDATION_FAILED, "Entity doesn't exist");
         }
+
+        var previousBan = entityBanRepository.findForEntity(entityType, command.getEntityId());
+        if (previousBan.isPresent()) {
+            return new Result<>(new EntityBanned(previousBan.get().id, entityType));
+        }
+
+        var newBan = new EntityBan();
+        newBan.reason = command.getReason();
+        newBan.entityId = command.getEntityId();
+        newBan.entityType = entityType;
+        entityBanRepository.insert(newBan);
+        return new Result<>(new EntityBanned(newBan.id, entityType));
     }
 }

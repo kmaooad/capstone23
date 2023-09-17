@@ -28,14 +28,7 @@ public class BanEntityControllerTests {
         jsonAsMap.put("description", "Faculty of Informatics");
         jsonAsMap.put("parent", parentName);
 
-        return given()
-                .contentType("application/json")
-                .body(jsonAsMap)
-                .when()
-                .post("/departments/create")
-                .then()
-                .statusCode(200)
-                .extract().path("id");
+        return given().contentType("application/json").body(jsonAsMap).when().post("/departments/create").then().statusCode(200).extract().path("id");
     }
 
     public String createMember(String orgId) {
@@ -45,14 +38,7 @@ public class BanEntityControllerTests {
         jsonAsMap.put("orgId", orgId);
         jsonAsMap.put("email", "email@email.com");
 
-        return given()
-                .contentType("application/json")
-                .body(jsonAsMap)
-                .when()
-                .post("/members/create")
-                .then()
-                .statusCode(200)
-                .extract().path("memberId");
+        return given().contentType("application/json").body(jsonAsMap).when().post("/members/create").then().statusCode(200).extract().path("memberId");
     }
 
     public String createEntity(BannedEntityType entityType, String parentId) {
@@ -116,6 +102,19 @@ public class BanEntityControllerTests {
     @DisplayName("Ban Member: Member doesn't exist test")
     public void testUnsuccessfulMemberBan() {
         testUnsuccessfulEntityBan(BannedEntityType.Member);
+    }
+
+    @Test
+    @DisplayName("Ban Illegal Entity: Entity can't be banned")
+    public void testIllegalEntityBan() {
+        var entityType = "illegal";
+
+        Map<String, Object> jsonAsMap = new HashMap<>();
+        jsonAsMap.put("reason", "Hello there");
+        jsonAsMap.put("entityType", entityType);
+        jsonAsMap.put("entityId", new ObjectId().toHexString());
+
+        given().contentType("application/json").body(jsonAsMap).when().post("/ban").then().statusCode(400);
     }
 
     public void testUnsuccessfulEntityBan(BannedEntityType entityType) {
