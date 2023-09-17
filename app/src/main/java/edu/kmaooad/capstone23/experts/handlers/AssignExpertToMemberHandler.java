@@ -29,7 +29,7 @@ public class AssignExpertToMemberHandler implements CommandHandler<AssignExpertT
 
     public Result<ExpertAssigned> handle(AssignExpertToMember command) {
         ObjectId id = command.getMemberId();
-        Member member = membersRepository.getById(id);
+        Member member = membersRepository.findById(id);
 
         if (member == null) {
             return new Result<>(ErrorCode.NOT_FOUND, "Member not found");

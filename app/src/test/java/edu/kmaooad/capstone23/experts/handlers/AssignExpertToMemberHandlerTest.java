@@ -46,7 +46,7 @@ public class AssignExpertToMemberHandlerTest {
     @Test
     public void testInvalidInput() {
         AssignExpertToMember assignExpertToMemberCommand = new AssignExpertToMember();
-        assignExpertToMemberCommand.setMemberId(new ObjectId("sonme wrong id"));
+        assignExpertToMemberCommand.setMemberId(new ObjectId("64fe000000000a0000000000"));
 
         Result<ExpertAssigned> result = assignedCommandHandler.handle(assignExpertToMemberCommand);
 
