@@ -38,4 +38,5 @@ public class CreateGroupControllerTests {
                 .then()
                 .statusCode(200);
     }
+
 }
