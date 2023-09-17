@@ -15,7 +15,7 @@ import java.util.Map;
 import static io.restassured.RestAssured.given;
 
 @QuarkusTest
-public class SetPreferenceControllerTests {
+public class SetPreferenceControllerTest{
 
     @Inject
     CVRepository cvRepository;
