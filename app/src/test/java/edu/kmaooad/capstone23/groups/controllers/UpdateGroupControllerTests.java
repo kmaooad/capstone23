@@ -7,6 +7,7 @@ import edu.kmaooad.capstone23.groups.dal.Group;
 import edu.kmaooad.capstone23.groups.dal.GroupsRepository;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
+import org.bson.types.ObjectId;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -79,7 +80,7 @@ public class UpdateGroupControllerTests {
                 .statusCode(400);
     }
     @Test
-    @DisplayName("Update Group : Template ID Validation")
+    @DisplayName("Update Group : Invalid Template ID")
     public void testUpdateGroupForInvalidTemplateID() {
         GroupTemplate groupTemplate = new GroupTemplate();
         groupTemplate.name = "GroupTemplate";
@@ -105,14 +106,60 @@ public class UpdateGroupControllerTests {
                 .statusCode(400);
     }
     @Test
-    @DisplayName("Update Group : Group Does Not Exist")
-    public void testUpdateNonExistentGroup() {
+    @DisplayName("Update Group : Template ID Doew Not Exist")
+    public void testUpdateGroupForNonExistentTemplateID() {
+        GroupTemplate groupTemplate = new GroupTemplate();
+        groupTemplate.name = "GroupTemplate";
+        groupTemplatesRepository.insert(groupTemplate);
+
+        Group group = new Group();
+        group.name = "test_group";
+        group.templateId = groupTemplate.id.toString();
+
+        groupsRepository.insert(group);
+
+        Map<String, Object> jsonAsMap = new HashMap<>();
+        jsonAsMap.put("id",group.id.toString());
+        jsonAsMap.put("groupName", "new_name");
+        jsonAsMap.put("templateId",new ObjectId().toString());
+
+        given()
+                .contentType("application/json")
+                .body(jsonAsMap)
+                .when()
+                .post("/groups/update")
+                .then()
+                .statusCode(400);
+    }
+    @Test
+    @DisplayName("Update Group : Invalid ID")
+    public void testUpdateGroupForInvalidID() {
         GroupTemplate groupTemplate = new GroupTemplate();
         groupTemplate.name = "GroupTemplate";
         groupTemplatesRepository.insert(groupTemplate);
 
         Map<String, Object> jsonAsMap = new HashMap<>();
         jsonAsMap.put("id","123abcdef");
+        jsonAsMap.put("groupName", "new_name");
+        jsonAsMap.put("templateId",groupTemplate.id);
+
+        given()
+                .contentType("application/json")
+                .body(jsonAsMap)
+                .when()
+                .post("/groups/update")
+                .then()
+                .statusCode(400);
+    }
+    @Test
+    @DisplayName("Update Group : Non Existent Group")
+    public void testUpdateNonExistentGroup() {
+        GroupTemplate groupTemplate = new GroupTemplate();
+        groupTemplate.name = "GroupTemplate";
+        groupTemplatesRepository.insert(groupTemplate);
+
+        Map<String, Object> jsonAsMap = new HashMap<>();
+        jsonAsMap.put("id",new ObjectId().toString());
         jsonAsMap.put("groupName", "new_name");
         jsonAsMap.put("templateId",groupTemplate.id);
 

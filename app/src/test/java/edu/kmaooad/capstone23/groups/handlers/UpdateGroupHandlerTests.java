@@ -12,6 +12,7 @@ import edu.kmaooad.capstone23.groups.dal.GroupsRepository;
 import edu.kmaooad.capstone23.groups.events.GroupUpdated;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
+import org.bson.types.ObjectId;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -73,7 +74,7 @@ public class UpdateGroupHandlerTests {
         Assertions.assertFalse(result.isSuccess());
     }
     @Test
-    @DisplayName("Update Group : Template ID Validation")
+    @DisplayName("Update Group : Invalid Template ID")
     public void testUpdateGroupForInvalidTemplateID() {
         GroupTemplate groupTemplate = new GroupTemplate();
         groupTemplate.name = "GroupTemplate";
@@ -95,14 +96,52 @@ public class UpdateGroupHandlerTests {
         Assertions.assertFalse(result.isSuccess());
     }
     @Test
-    @DisplayName("Update Group : Group Does Not Exist")
-    public void testUpdateNonExistentGroup() {
+    @DisplayName("Update Group : Template ID Does Not Exist")
+    public void testUpdateGroupForNonExistentTemplateID() {
+        GroupTemplate groupTemplate = new GroupTemplate();
+        groupTemplate.name = "GroupTemplate";
+        groupTemplatesRepository.insert(groupTemplate);
+
+        Group group = new Group();
+        group.name = "test_group";
+        group.templateId = groupTemplate.id.toString();
+
+        groupsRepository.insert(group);
+
+        UpdateGroup command = new UpdateGroup();
+        command.setId(group.id.toString());
+        command.setTemplateId(new ObjectId().toString());
+        command.setGroupName("new_name");
+
+        Result<GroupUpdated> result = updateGroupHandler.handle(command);
+
+        Assertions.assertFalse(result.isSuccess());
+    }
+    @Test
+    @DisplayName("Update Group : Invalid ID")
+    public void testUpdateGroupForInvalidID() {
         GroupTemplate groupTemplate = new GroupTemplate();
         groupTemplate.name = "GroupTemplate";
         groupTemplatesRepository.insert(groupTemplate);
 
         UpdateGroup command = new UpdateGroup();
         command.setId("123abcdef");
+        command.setTemplateId(groupTemplate.id.toString());
+        command.setGroupName("new_name");
+
+        Result<GroupUpdated> result = updateGroupHandler.handle(command);
+
+        Assertions.assertFalse(result.isSuccess());
+    }
+    @Test
+    @DisplayName("Update Group : Non Existent Group")
+    public void testUpdateNonExistentGroup() {
+        GroupTemplate groupTemplate = new GroupTemplate();
+        groupTemplate.name = "GroupTemplate";
+        groupTemplatesRepository.insert(groupTemplate);
+
+        UpdateGroup command = new UpdateGroup();
+        command.setId(new ObjectId().toString());
         command.setTemplateId(groupTemplate.id.toString());
         command.setGroupName("new_name");
 
