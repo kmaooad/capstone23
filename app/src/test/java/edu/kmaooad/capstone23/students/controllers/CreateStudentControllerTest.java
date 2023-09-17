@@ -1,7 +1,6 @@
 package edu.kmaooad.capstone23.students.controllers;
 
-import io.restassured.http.ContentType;
-import io.restassured.http.Header;
+import io.quarkus.test.junit.QuarkusTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -9,6 +8,7 @@ import java.io.File;
 
 import static io.restassured.RestAssured.given;
 
+@QuarkusTest
 public class CreateStudentControllerTest {
     @Test
     @DisplayName("Create students from csv: Successful")
