@@ -10,11 +10,6 @@ public class CreateGroup {
     @NotBlank
     private String templateId;
 
-    public CreateGroup(String groupName, String templateId) {
-        this.groupName = groupName;
-        this.templateId = templateId;
-    }
-
     public String getGroupName() {
         return groupName;
     }

@@ -22,13 +22,16 @@ public class CreateGroupHandlerTests {
     CommandHandler<CreateGroup, GroupCreated> groupHandler;
 
     @Test
-    @DisplayName("Create Group Template: Basic")
+    @DisplayName("Create Group : Basic")
     public void testSuccessfulHandling() {
         CreateGroupTemplate templateCommand = new CreateGroupTemplate();
         templateCommand.setGroupTemplateName("template");
         Result<GroupTemplateCreated> resultForTemplate = templateHandler.handle(templateCommand);
+        CreateGroup groupCommand = new CreateGroup();
 
-        CreateGroup groupCommand = new CreateGroup("group", resultForTemplate.getValue().getGroupTemplateId().toString());
+        groupCommand.setGroupName("group");
+        groupCommand.setTemplateId(resultForTemplate.getValue().getGroupTemplateId().toString());
+
         Result<GroupCreated> resultForGroup = groupHandler.handle(groupCommand);
 
         Assertions.assertTrue(resultForGroup.isSuccess());
@@ -36,22 +39,28 @@ public class CreateGroupHandlerTests {
         Assertions.assertFalse(resultForGroup.getValue().getGroupId().isEmpty());
     }
     @Test
-    @DisplayName("Create Group Template: Name Validation")
+    @DisplayName("Create Group : Name Validation")
     public void testNameValidation() {
         CreateGroupTemplate templateCommand = new CreateGroupTemplate();
         templateCommand.setGroupTemplateName("template");
         Result<GroupTemplateCreated> resultForTemplate = templateHandler.handle(templateCommand);
 
-        CreateGroup groupCommand = new CreateGroup("", resultForTemplate.getValue().getGroupTemplateId().toString());
+        CreateGroup groupCommand = new CreateGroup();
+
+        groupCommand.setGroupName("");
+        groupCommand.setTemplateId(resultForTemplate.getValue().getGroupTemplateId().toString());
         Result<GroupCreated> resultForGroup = groupHandler.handle(groupCommand);
 
         Assertions.assertFalse(resultForGroup.isSuccess());
     }
     @Test
-    @DisplayName("Create Group Template: Template Validation")
+    @DisplayName("Create Group : Template Validation")
     public void testTemplateForGroupValidation() {
 
-        CreateGroup groupCommand = new CreateGroup("group", "123abcdef");
+        CreateGroup groupCommand = new CreateGroup();
+
+        groupCommand.setGroupName("group");
+        groupCommand.setTemplateId("123abcdef");
         Result<GroupCreated> resultForGroup = groupHandler.handle(groupCommand);
 
         Assertions.assertFalse(resultForGroup.isSuccess());
