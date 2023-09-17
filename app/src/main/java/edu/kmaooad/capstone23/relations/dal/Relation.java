@@ -1,7 +1,10 @@
 package edu.kmaooad.capstone23.relations.dal;
 
+import io.quarkus.mongodb.panache.common.MongoEntity;
 import org.bson.types.ObjectId;
 
+
+@MongoEntity(collection = "relations")
 public class Relation {
     private ObjectId id;
     private final ObjectId firstObjectId;
