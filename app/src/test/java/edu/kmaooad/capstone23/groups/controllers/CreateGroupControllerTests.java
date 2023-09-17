@@ -47,7 +47,7 @@ public class CreateGroupControllerTests {
 
         Result<GroupTemplateCreated> result = handler.handle(command);
         Map<String, Object> jsonAsMap = new HashMap<>();
-        jsonAsMap.put("groupName", "a" );
+        jsonAsMap.put("groupName", "" );
         jsonAsMap.put("templateId", result.getValue().getGroupTemplateId().toString());
 
         given()
@@ -66,7 +66,7 @@ public class CreateGroupControllerTests {
 
         Result<GroupTemplateCreated> result = handler.handle(command);
         Map<String, Object> jsonAsMap = new HashMap<>();
-        jsonAsMap.put("groupName", "a" );
+        jsonAsMap.put("groupName", "test_name" );
         jsonAsMap.put("templateId", "123abcdef");
 
         given()
