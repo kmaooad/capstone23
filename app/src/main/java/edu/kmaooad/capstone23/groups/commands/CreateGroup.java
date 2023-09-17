@@ -22,4 +22,12 @@ public class CreateGroup {
     public String getTemplateId() {
         return templateId;
     }
+
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
+    }
+
+    public void setTemplateId(String templateId) {
+        this.templateId = templateId;
+    }
 }
