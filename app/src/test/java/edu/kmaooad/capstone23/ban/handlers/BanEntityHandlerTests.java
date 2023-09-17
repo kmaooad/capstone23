@@ -84,6 +84,22 @@ public class BanEntityHandlerTests {
         testUnsuccessfulHandlingForEntity(BannedEntityType.Member);
     }
 
+    @Test
+    @DisplayName("Ban Illegal Entity Handler: Entity can't be banned")
+    void testIllegalEntity() {
+        var illegalEntity = "illegal";
+
+        var command = new BanEntity();
+        command.setEntityType(illegalEntity);
+        command.setEntityId(new ObjectId());
+        command.setReason("Hello there");
+
+        var result = banEntityHandler.handle(command);
+
+        Assertions.assertFalse(result.isSuccess());
+        Assertions.assertNotNull(result.toError());
+    }
+
     void testUnsuccessfulHandlingForEntity(BannedEntityType entityType) {
         var command = new BanEntity();
         command.setEntityType(entityType.toString());

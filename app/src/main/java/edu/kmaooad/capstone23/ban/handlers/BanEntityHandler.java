@@ -33,24 +33,6 @@ public class BanEntityHandler implements CommandHandler<BanEntity, EntityBanned>
 
     @Override
     public Result<EntityBanned> handle(BanEntity command) {
-        try {
-            BannedEntityType.valueOf(command.getEntityTypeName());
-        } catch (Exception e) {
-            return new Result<>(ErrorCode.VALIDATION_FAILED, String.format("Invalid entity type: %s", command.getEntityTypeName()));
-        }
-
-        return banEntity(command);
-    }
-
-    boolean entityExists(BannedEntityType type, ObjectId entityId) {
-        return switch (type) {
-            case Organization -> orgsRepository.findByIdOptional(entityId).isPresent();
-            case Member -> membersRepository.findByIdOptional(entityId).isPresent();
-            case Department -> departmentsRepository.findByIdOptional(entityId).isPresent();
-        };
-    }
-
-    Result<EntityBanned> banEntity(BanEntity command) {
         var entityType = command.getEntityType();
 
         if (!entityExists(entityType, command.getEntityId())) {
@@ -68,5 +50,13 @@ public class BanEntityHandler implements CommandHandler<BanEntity, EntityBanned>
         newBan.entityType = entityType;
         entityBanRepository.insert(newBan);
         return new Result<>(new EntityBanned(newBan.id, entityType));
+    }
+
+    boolean entityExists(BannedEntityType type, ObjectId entityId) {
+        return switch (type) {
+            case Organization -> orgsRepository.findByIdOptional(entityId).isPresent();
+            case Member -> membersRepository.findByIdOptional(entityId).isPresent();
+            case Department -> departmentsRepository.findByIdOptional(entityId).isPresent();
+        };
     }
 }

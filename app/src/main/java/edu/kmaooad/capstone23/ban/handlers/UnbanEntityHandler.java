@@ -35,28 +35,15 @@ public class UnbanEntityHandler implements CommandHandler<UnbanEntity, EntityUnb
 
     @Override
     public Result<EntityUnbanned> handle(UnbanEntity command) {
-        try {
-            BannedEntityType.valueOf(command.getEntityTypeName());
-        } catch (Exception e) {
-            return new Result<>(ErrorCode.VALIDATION_FAILED, String.format("Invalid entity type: %s", command.getEntityTypeName()));
+        var entityType = command.getEntityType();
+
+        var ban = entityBanRepository.findForEntity(entityType, command.getEntityId());
+        if (ban.isPresent()) {
+            entityBanRepository.deleteById(ban.get().id);
+            return new Result<>(new EntityUnbanned(ban.get().id, entityType));
+        } else {
+            return new Result<>(new EntityUnbanned(null, entityType));
         }
 
-        return unbanEntity(command);
-    }
-
-    Result<EntityUnbanned> unbanEntity(UnbanEntity command) {
-        try {
-            var entityType = command.getEntityType();
-
-            var ban = entityBanRepository.findForEntity(entityType, command.getEntityId());
-            if (ban.isPresent()) {
-                entityBanRepository.deleteById(ban.get().id);
-                return new Result<>(new EntityUnbanned(ban.get().id, entityType));
-            } else {
-                return new Result<>(new EntityUnbanned(null, entityType));
-            }
-        } catch (Exception e) {
-            return new Result<>(ErrorCode.EXCEPTION, e.getMessage());
-        }
     }
 }
