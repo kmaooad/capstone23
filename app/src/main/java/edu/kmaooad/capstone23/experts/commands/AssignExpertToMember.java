@@ -1,7 +1,6 @@
 package edu.kmaooad.capstone23.experts.commands;
 
-        import jakarta.validation.constraints.NotBlank;
-        import org.bson.types.ObjectId;
+import org.bson.types.ObjectId;
 
 public class AssignExpertToMember {
     private ObjectId memberId;

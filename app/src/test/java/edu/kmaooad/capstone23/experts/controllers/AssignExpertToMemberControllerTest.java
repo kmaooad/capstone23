@@ -1,38 +1,23 @@
 package edu.kmaooad.capstone23.experts.controllers;
 
-import edu.kmaooad.capstone23.experts.dal.ExpertsRepository;
-import edu.kmaooad.capstone23.members.dal.Member;
-import edu.kmaooad.capstone23.members.dal.MembersRepository;
-import edu.kmaooad.capstone23.orgs.dal.Org;
-import edu.kmaooad.capstone23.orgs.dal.OrgsRepository;
 import io.quarkus.test.junit.QuarkusTest;
-import jakarta.inject.Inject;
+import java.util.HashMap;
+import java.util.Map;
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import static io.restassured.RestAssured.given;
 
 @QuarkusTest
 public class AssignExpertToMemberControllerTest {
 
-    @Inject
-    MembersRepository membersRepository;
-    @Inject
-    OrgsRepository orgsRepository;
-    @Inject
-    ExpertsRepository expertsRepository;
-
     @Test
     @DisplayName("Assign Expert to member: Basic")
     public void testAssignExpertToMember() {
         Map<String, Object> jsonAsMap = new HashMap<>();
 
-        Member member = createTestMember();
-        jsonAsMap.put("memberId", member.id);
+        jsonAsMap.put("memberId", createTestMember().toString());
 
         given()
                 .contentType("application/json")
@@ -60,17 +45,24 @@ public class AssignExpertToMemberControllerTest {
         return new ObjectId(objectId);
     }
 
-    private Member createTestMember() {
-        Member member = new Member();
-        member.firstName = "First";
-        member.lastName = "Last";
-        member.isExpert = false;
-        member.isAdmin = false;
-        member.email = "mail@test.com";
-        member.orgId = createTestOrg();
+    private ObjectId createTestMember() {
+        Map<String, Object> jsonAsMap = new HashMap<>();
+        jsonAsMap.put("firstName", "Bob");
+        jsonAsMap.put("lastName", "Kvasolia");
+        jsonAsMap.put("orgId", createTestOrg().toString());
+        jsonAsMap.put("email", "bob@ukr.net");
+        jsonAsMap.put("isExpert", "false");
 
-        membersRepository.insert(member);
+        String objectId = given()
+                .contentType("application/json")
+                .body(jsonAsMap)
+                .when()
+                .post("/members/create")
+                .then()
+                .statusCode(200)
+                .extract()
+                .path("memberId");
 
-        return member;
+        return new ObjectId(objectId);
     }
 }
