@@ -1,9 +1,11 @@
 package edu.kmaooad.capstone23.students.parser;
 
+import io.quarkus.test.junit.QuarkusTest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+@QuarkusTest
 public class CSVStudentTest {
 
     @Test
@@ -23,7 +25,7 @@ public class CSVStudentTest {
                 1039132800000L,
                 "ivan.dobrovolskyi@ukma.edu.ua"
         );
-        Assertions.assertEquals(expected.hashCode(),result.hashCode());
+        Assertions.assertEquals(expected.hashCode(), result.hashCode());
         Assertions.assertEquals(expected,result);
     }
 
@@ -44,7 +46,7 @@ public class CSVStudentTest {
                 1039132800000L,
                 "ivan.dobrovolskyi@ukma.edu.ua"
         );
-        Assertions.assertNotEquals(expected.hashCode(),result.hashCode());
+        Assertions.assertNotEquals(expected.hashCode(), result.hashCode());
         Assertions.assertNotEquals(expected,result);
     }
 }
