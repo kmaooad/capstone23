@@ -17,7 +17,7 @@ public class SetPreferenceHandler implements CommandHandler<SetPreference, JobPr
     CVRepository cvRepository;
 
     @Override
-    public Result<JobPrefUpdated> handle(UpdateJobPref command) {
+    public Result<JobPreferenceSeted> handle(SetPreference command) {
         CV cv = cvRepository.findById(command.getCvId());
 
         if (command.getCategory() != null)
