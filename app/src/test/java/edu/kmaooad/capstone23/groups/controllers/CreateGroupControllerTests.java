@@ -24,7 +24,7 @@ public class CreateGroupControllerTests {
     @DisplayName("Create Group : Basic")
     public void testBasicGroupCreation() {
         CreateGroupTemplate command = new CreateGroupTemplate();
-        command.setGroupTemplateName("testGroup");
+        command.setGroupTemplateName("testGroupTemplate");
 
         Result<GroupTemplateCreated> result = handler.handle(command);
         Map<String, Object> jsonAsMap = new HashMap<>();
@@ -38,6 +38,44 @@ public class CreateGroupControllerTests {
                 .post("/groups/create")
                 .then()
                 .statusCode(200);
+    }
+    @Test
+    @DisplayName("Create Group : Name Validation")
+    public void testGroupCreationNameValidation() {
+        CreateGroupTemplate command = new CreateGroupTemplate();
+        command.setGroupTemplateName("testGroupTemplate");
+
+        Result<GroupTemplateCreated> result = handler.handle(command);
+        Map<String, Object> jsonAsMap = new HashMap<>();
+        jsonAsMap.put("groupName", "a" );
+        jsonAsMap.put("templateId", result.getValue().getGroupTemplateId().toString());
+
+        given()
+                .contentType("application/json")
+                .body(jsonAsMap)
+                .when()
+                .post("/groups/create")
+                .then()
+                .statusCode(400);
+    }
+    @Test
+    @DisplayName("Create Group : Template Validation")
+    public void testGroupCreationValidationOfTemplate() {
+        CreateGroupTemplate command = new CreateGroupTemplate();
+        command.setGroupTemplateName("testGroupTemplate");
+
+        Result<GroupTemplateCreated> result = handler.handle(command);
+        Map<String, Object> jsonAsMap = new HashMap<>();
+        jsonAsMap.put("groupName", "a" );
+        jsonAsMap.put("templateId", "123abcdef");
+
+        given()
+                .contentType("application/json")
+                .body(jsonAsMap)
+                .when()
+                .post("/groups/create")
+                .then()
+                .statusCode(400);
     }
 
 }
