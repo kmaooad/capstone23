@@ -27,6 +27,7 @@ public class CreateSkillSetHandler implements CommandHandler<CreateSkillSet, Ski
 
         SkillSet skillSet = new SkillSet();
         skillSet.name = command.getSkillSetName();
+        skillSet.skillIds = command.getSkillIds();
 
         if(skillSet.skillIds != null) {
             for ( ObjectId item : skillSet.skillIds) {
