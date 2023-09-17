@@ -2,10 +2,10 @@ package edu.kmaooad.capstone23.cvs.handlers;
 
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.Result;
-import edu.kmaooad.capstone23.cvs.commands.*;
+import edu.kmaooad.capstone23.cvs.commands.ShowCV;
 import edu.kmaooad.capstone23.cvs.dal.CV;
 import edu.kmaooad.capstone23.cvs.dal.CVRepository;
-import edu.kmaooad.capstone23.cvs.events.*;
+import edu.kmaooad.capstone23.cvs.events.CVShowed;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
