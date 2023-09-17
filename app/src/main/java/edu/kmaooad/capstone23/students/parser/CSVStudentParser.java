@@ -9,14 +9,15 @@ import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 @ApplicationScoped
 public class CSVStudentParser {
     private static final SimpleDateFormat FORMATTER = new SimpleDateFormat("dd/MM/yyyy");
 
     public CSVStudentParser() {
+        FORMATTER.setTimeZone(TimeZone.getTimeZone("GMT"));
         FORMATTER.setLenient(false);
     }
 
