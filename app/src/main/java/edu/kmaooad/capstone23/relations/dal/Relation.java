@@ -6,9 +6,9 @@ import org.bson.types.ObjectId;
 
 @MongoEntity(collection = "relations")
 public class Relation {
-    private final ObjectId id;
-    private final ObjectId firstObjectId;
-    private final ObjectId secondObjectId;
+    public ObjectId id;
+    public ObjectId firstObjectId;
+    public ObjectId secondObjectId;
 
     public Relation(ObjectId id, ObjectId firstObjectId, ObjectId secondObjectId) {
         this.id = id;
@@ -19,6 +19,8 @@ public class Relation {
     public Relation(ObjectId firstObjectId, ObjectId secondObjectId) {
         this(null, firstObjectId, secondObjectId);
     }
+
+    public Relation() {}
 
     public ObjectId getId() {
         return id;
