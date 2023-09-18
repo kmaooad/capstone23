@@ -8,7 +8,7 @@ import java.util.Optional;
 
 @ApplicationScoped
 public class MembersRepository implements PanacheMongoRepository<Member> {
-    public Member insert(Member member) {
+    public Member insert(Member member) throws UniquenessViolationException {
         var existingMember = findMemberByEmail(member.email);
         if (existingMember.isPresent())
             throw new UniquenessViolationException("Email is not unique");
@@ -16,7 +16,7 @@ public class MembersRepository implements PanacheMongoRepository<Member> {
         return member;
     }
 
-    public Member updateEntry(Member member) {
+    public Member updateEntry(Member member) throws UniquenessViolationException {
         var existingMember = findMemberByEmail(member.email);
         if (existingMember.isPresent())
             throw new UniquenessViolationException("Email is not unique");
