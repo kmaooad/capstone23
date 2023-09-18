@@ -3,7 +3,7 @@ package edu.kmaooad.capstone23.orgs.commands;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
-public class ApproveOrgSub {
+public class ApproveOrg {
     @NotBlank
     @Size(min = 2, max = 50)
     private String orgId;
