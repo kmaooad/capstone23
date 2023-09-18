@@ -8,7 +8,7 @@ import org.eclipse.microprofile.openapi.annotations.media.Content;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 
-@Path("/orgs/create")
+@Path("/orgs/reject")
 @APIResponse(responseCode = "200", content = {
         @Content(mediaType = "application/json", schema = @Schema(implementation = OrgRejected.class)) })
 public class RejectOrgController extends TypicalController<RejectOrg, OrgRejected> {

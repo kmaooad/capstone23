@@ -1,5 +1,6 @@
 package edu.kmaooad.capstone23.orgs.handlers;
 
+import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.common.ValidatingHandler;
@@ -13,7 +14,7 @@ import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
 
 @RequestScoped
-public class ApproveOrgHandler extends ValidatingHandler<ApproveOrg, OrgApproved> {
+public class ApproveOrgHandler implements CommandHandler<ApproveOrg, OrgApproved> {
 
     @Inject
     private OrgsRepository orgsRepository;
