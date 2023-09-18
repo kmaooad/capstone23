@@ -132,6 +132,17 @@ public class ReadCVHandlerTest {
         Assertions.assertEquals(1,result.getValue().getCvs().size());
     }
 
+    @Test
+    @DisplayName("Read Cvs: location & industry param")
+    void testWithLocationAndIndustryParamHandling() {
+        ReadCV readCommand = new ReadCV();
+        readCommand.setLocation("Kyiv");
+        readCommand.setIndustry("IT");
+        Result<CVRead> result = readHandler.handle(readCommand);
+        Assertions.assertTrue(result.isSuccess());
+        Assertions.assertNotNull(result.getValue());
+        Assertions.assertEquals(1,result.getValue().getCvs().size());
+    }
 
 
     @Test
