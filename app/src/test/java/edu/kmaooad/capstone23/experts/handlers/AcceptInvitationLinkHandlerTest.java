@@ -1,11 +1,9 @@
 package edu.kmaooad.capstone23.experts.handlers;
 
-import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.experts.commands.AcceptInvitationLink;
 import edu.kmaooad.capstone23.experts.dal.ExpertInvitation;
 import edu.kmaooad.capstone23.experts.dal.ExpertInvitationRepository;
-import edu.kmaooad.capstone23.experts.events.ExpertCreated;
 import edu.kmaooad.capstone23.orgs.dal.Org;
 import edu.kmaooad.capstone23.orgs.dal.OrgsRepository;
 import io.quarkus.test.junit.QuarkusTest;

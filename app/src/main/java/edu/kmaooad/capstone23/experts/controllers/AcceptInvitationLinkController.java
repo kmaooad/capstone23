@@ -1,6 +1,5 @@
 package edu.kmaooad.capstone23.experts.controllers;
 
-import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.experts.commands.AcceptInvitationLink;
 import edu.kmaooad.capstone23.experts.events.ExpertCreated;
