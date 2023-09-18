@@ -11,5 +11,7 @@ public class ExpertInvitation extends PanacheMongoEntity {
     public String email;
     public ExpertType expertType;
     public LocalDateTime createdAt;
+    public String expertName;
+    public String orgName;
     public boolean accepted;
 }
