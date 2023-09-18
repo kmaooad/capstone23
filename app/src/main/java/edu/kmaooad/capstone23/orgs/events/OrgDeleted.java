@@ -7,10 +7,6 @@ public class OrgDeleted {
         return success;
     }
 
-    public void setSuccess(boolean success) {
-        this.success = success;
-    }
-
     public OrgDeleted(boolean success) {
         this.success = success;
     }

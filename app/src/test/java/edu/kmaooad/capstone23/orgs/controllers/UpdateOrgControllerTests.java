@@ -3,7 +3,6 @@ package edu.kmaooad.capstone23.orgs.controllers;
 import edu.kmaooad.capstone23.orgs.dal.Org;
 import edu.kmaooad.capstone23.orgs.dal.OrgsRepository;
 import io.quarkus.test.junit.QuarkusTest;
-import io.restassured.RestAssured;
 import jakarta.inject.Inject;
 
 import org.bson.types.ObjectId;
@@ -14,7 +13,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.core.StringContains.containsString;
 
 @QuarkusTest
 public class UpdateOrgControllerTests {

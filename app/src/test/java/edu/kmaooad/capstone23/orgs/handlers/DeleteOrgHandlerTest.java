@@ -42,7 +42,21 @@ public class DeleteOrgHandlerTest {
         Assertions.assertTrue(result.isSuccess());
         Assertions.assertNotNull(result.getValue());
 
-        var recordStillExists = this.repo.findById(createdOrgId);
-        Assertions.assertEquals(null, recordStillExists);
+        var existingOrg = this.repo.findById(createdOrgId);
+        Assertions.assertNull(existingOrg);
+    }
+
+    @Test
+    void testOrgNotFound() {
+        var command = new DeleteOrg();
+        command.setOrgId(new ObjectId("65089e564656a99a99a0a552"));
+
+        var result = handler.handle(command);
+
+        Assertions.assertFalse(result.isSuccess());
+        Assertions.assertNull(result.getValue());
+
+        var existingOrg = this.repo.findById(createdOrgId);
+        Assertions.assertNotNull(existingOrg);
     }
 }

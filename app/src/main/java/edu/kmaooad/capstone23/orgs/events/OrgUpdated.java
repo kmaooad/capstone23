@@ -7,10 +7,6 @@ public class OrgUpdated {
         return success;
     }
 
-    public void setSuccess(boolean success) {
-        this.success = success;
-    }
-
     public OrgUpdated(boolean success) {
         this.success = success;
     }
