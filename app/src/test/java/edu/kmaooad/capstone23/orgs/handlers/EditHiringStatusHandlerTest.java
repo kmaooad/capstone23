@@ -15,19 +15,24 @@ import org.junit.jupiter.api.Test;
 @QuarkusTest
 public class EditHiringStatusHandlerTest {
 
-        @Inject
-        CommandHandler<SetHiringStatus, HiringStatusChanged> handler;
+    @Inject
+    CommandHandler<SetHiringStatus, HiringStatusChanged> handlerStatus;
+    @Inject
+    CommandHandler<CreateOrg, OrgCreated> handlerOrg;
 
-        @Test
-        void testSuccessfulHandling() {
-//            Works if there is org with id <64ff7fabc64e527ecae3f896> in database
-            SetHiringStatus command = new SetHiringStatus();
-            command.setOrgID("64ff7fabc64e527ecae3f896");
-            command.setHiringStatus(HiringStatus.HIRING);
+    @Test
+    void testSuccessfulHandling() {
+        CreateOrg commandOrg = new CreateOrg();
+        commandOrg.setOrgName("TestOrg");
+        Result<OrgCreated> resultOrg = handlerOrg.handle(commandOrg);
 
-            Result<HiringStatusChanged> result = handler.handle(command);
+        SetHiringStatus commandStatus = new SetHiringStatus();
+        commandStatus.setOrgID(resultOrg.getValue().getOrgId());
+        commandStatus.setHiringStatus(HiringStatus.HIRING);
 
-            Assertions.assertTrue(result.isSuccess());
-        }
+        Result<HiringStatusChanged> result = handlerStatus.handle(commandStatus);
 
+        Assertions.assertTrue(result.isSuccess());
     }
+
+}
