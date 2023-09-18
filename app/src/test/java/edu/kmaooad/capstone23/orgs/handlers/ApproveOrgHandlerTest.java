@@ -28,7 +28,6 @@ public class ApproveOrgHandlerTest {
     public String testData(Boolean isActive) {
         final Org org = new Org();
         org.name = testOrg_name;
-        org.email = testOrg_email;
         org.isActive = isActive;
         orgsRepo.insert(org);
         return org.id.toString();
@@ -41,6 +40,7 @@ public class ApproveOrgHandlerTest {
 
         ApproveOrg command = new ApproveOrg();
         command.setOrgId(id);
+        command.setOrgEmail(testOrg_email);
 
         Result<OrgApproved> result = handler.handle(command);
 
@@ -54,6 +54,7 @@ public class ApproveOrgHandlerTest {
     void testBadIdHandlingApproveOrg() {
         ApproveOrg command = new ApproveOrg();
         command.setOrgId("wrong");
+        command.setOrgEmail(testOrg_email);
 
         Result<OrgApproved> result = handler.handle(command);
 
@@ -67,6 +68,7 @@ public class ApproveOrgHandlerTest {
         final String id = testData(true);
         ApproveOrg command = new ApproveOrg();
         command.setOrgId(id);
+        command.setOrgEmail(testOrg_email);
 
         Result<OrgApproved> result = handler.handle(command);
 

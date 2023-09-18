@@ -26,7 +26,6 @@ public class RejectOrgControllerTests {
     public String prepareTestBasicRejectOrg(Boolean isActive) {
         final Org org = new Org();
         org.name = ORG_NAME;
-        org.email = ORG_EMAIL;
         org.isActive = isActive;
         orgsRepository.insert(org);
         return org.id.toString();
@@ -39,6 +38,7 @@ public class RejectOrgControllerTests {
 
         Map<String, Object> jsonAsMap = new HashMap<>();
         jsonAsMap.put("id", id);
+        jsonAsMap.put("email", ORG_EMAIL);
         jsonAsMap.put("reason", "We close 1234");
 
         given()
@@ -57,6 +57,7 @@ public class RejectOrgControllerTests {
 
         Map<String, Object> jsonAsMap = new HashMap<>();
         jsonAsMap.put("id", id);
+        jsonAsMap.put("email", ORG_EMAIL);
         jsonAsMap.put("reason", "We");
 
         given()
@@ -75,6 +76,7 @@ public class RejectOrgControllerTests {
 
         Map<String, Object> jsonAsMap = new HashMap<>();
         jsonAsMap.put("id", id);
+        jsonAsMap.put("email", ORG_EMAIL);
         jsonAsMap.put("reason", "We Test 123");
 
         given()

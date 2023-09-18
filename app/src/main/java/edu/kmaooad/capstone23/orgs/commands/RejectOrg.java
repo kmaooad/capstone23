@@ -7,6 +7,9 @@ public class RejectOrg {
     @NotNull
     public String id;
 
+    @NotNull
+    public String email;
+
     @Size(min = 10, max = 150)
     public String reason;
 }

@@ -28,7 +28,6 @@ public class RejectOrgHandlerTest {
     public String prepareRejectOrg(Boolean isActive) {
         final Org org = new Org();
         org.name = ORG_NAME;
-        org.email = ORG_EMAIL;
         org.isActive = isActive;
         orgsRepository.insert(org);
         return org.id.toString();
@@ -41,6 +40,7 @@ public class RejectOrgHandlerTest {
 
         RejectOrg command = new RejectOrg();
         command.id = id;
+        command.email = ORG_EMAIL;
         command.reason = "Not enough money";
 
         Result<OrgRejected> result = handler.handle(command);
@@ -55,6 +55,7 @@ public class RejectOrgHandlerTest {
     void testBadIdHandlingRejectOrg() {
         RejectOrg command = new RejectOrg();
         command.id = "test";
+        command.email = ORG_EMAIL;
         command.reason = "Not enough money";
 
         Result<OrgRejected> result = handler.handle(command);
@@ -69,6 +70,7 @@ public class RejectOrgHandlerTest {
         final String id = prepareRejectOrg(false);
         RejectOrg command = new RejectOrg();
         command.id = id;
+        command.email = ORG_EMAIL;
         command.reason = "Not enough money";
 
         Result<OrgRejected> result = handler.handle(command);

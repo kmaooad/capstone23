@@ -19,7 +19,6 @@ public class CreateOrgHandler implements CommandHandler<CreateOrg, OrgCreated> {
 
         Org org = new Org();
         org.name = command.getOrgName();
-        org.email = command.getOrgEmail();
         org.isActive = true;
 
         repository.insert(org);

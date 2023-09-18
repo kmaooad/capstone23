@@ -39,7 +39,7 @@ public class ApproveOrgHandler implements CommandHandler<ApproveOrg, OrgApproved
         }
         orgsRepository.update(org);
 
-        mailService.sendEmail(defaultEmailText, org.email);
+        mailService.sendEmail(defaultEmailText, command.getOrgEmail());
         OrgApproved result = new OrgApproved(org.id.toString());
 
         return new Result<>(result);

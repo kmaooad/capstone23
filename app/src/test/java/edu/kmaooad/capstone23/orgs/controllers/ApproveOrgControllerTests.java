@@ -26,7 +26,6 @@ public class ApproveOrgControllerTests {
     public String testData(Boolean isActive) {
         final Org org = new Org();
         org.name = testOrg_name;
-        org.email = testOrg_email;
         org.isActive = isActive;
         orgsRepository.insert(org);
         return org.id.toString();
@@ -39,6 +38,7 @@ public class ApproveOrgControllerTests {
 
         Map<String, Object> jsonAsMap = new HashMap<>();
         jsonAsMap.put("orgId", id);
+        jsonAsMap.put("orgEmail", testOrg_email);
 
         given()
                 .contentType("application/json")
@@ -56,6 +56,7 @@ public class ApproveOrgControllerTests {
 
         Map<String, Object> jsonAsMap = new HashMap<>();
         jsonAsMap.put("id", id);
+        jsonAsMap.put("orgEmail", testOrg_email);
 
         given()
                 .contentType("application/json")

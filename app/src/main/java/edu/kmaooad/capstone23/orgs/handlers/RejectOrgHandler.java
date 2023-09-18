@@ -36,7 +36,7 @@ public class RejectOrgHandler implements CommandHandler<RejectOrg, OrgRejected> 
 
         org.isActive = false;
         orgsRepository.update(org);
-        mailService.sendEmail(command.reason, org.email);
+        mailService.sendEmail(command.reason, command.email);
 
         return new Result<>(new OrgRejected(org.id.toString()));
     }

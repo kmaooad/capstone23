@@ -9,5 +9,4 @@ public class Org {
     public ObjectId id;
     public String name;
     public Boolean isActive;
-    public String email;
 }
