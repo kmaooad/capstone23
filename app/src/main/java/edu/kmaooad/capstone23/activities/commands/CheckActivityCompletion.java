@@ -2,8 +2,6 @@ package edu.kmaooad.capstone23.activities.commands;
 
 import java.util.Date;
 
-import java.util.Date;
-
 public class CheckActivityCompletion {
     private String name;
     private Date startDate;
@@ -51,4 +49,3 @@ public class CheckActivityCompletion {
         this.completed = completed;
     }
 }
-
