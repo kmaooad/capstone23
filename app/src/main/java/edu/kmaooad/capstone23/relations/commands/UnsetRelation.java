@@ -10,27 +10,31 @@ public class UnsetRelation {
 
     @NotNull
     @NotBlank
-    private final String firstCollectionName;
+    private String collectionName1;
 
     @NotNull
     @NotBlank
-    private final String secondCollectionName;
+    private String collectionName2;
 
     public UnsetRelation(ObjectId id, String firstCollectionName, String secondCollectionName) {
         this.id = id;
-        this.firstCollectionName = firstCollectionName;
-        this.secondCollectionName = secondCollectionName;
+        this.collectionName1 = firstCollectionName;
+        this.collectionName2 = secondCollectionName;
     }
 
     public ObjectId getId() {
         return id;
     }
 
-    public String getFirstCollectionName() {
-        return firstCollectionName;
+    public void setId(ObjectId id) {
+        this.id = id;
     }
 
-    public String getSecondCollectionName() {
-        return secondCollectionName;
+    public String getCollectionName1() {
+        return collectionName1;
+    }
+
+    public String getCollectionName2() {
+        return collectionName2;
     }
 }

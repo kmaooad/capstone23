@@ -18,8 +18,8 @@ public class UnsetRelationHandler implements CommandHandler<UnsetRelation, Relat
     @Override
     public Result<RelationUnset> handle(UnsetRelation command) {
         var relationToUnsetId = command.getId();
-        var firstCollectionName = command.getFirstCollectionName();
-        var secondCollectionName = command.getSecondCollectionName();
+        var firstCollectionName = command.getCollectionName1();
+        var secondCollectionName = command.getCollectionName2();
 
         return repository.deleteRelation(firstCollectionName, secondCollectionName, relationToUnsetId)
                 .map(Relation::getId)
