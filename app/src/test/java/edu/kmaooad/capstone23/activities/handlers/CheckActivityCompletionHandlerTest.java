@@ -42,12 +42,11 @@ public class CheckActivityCompletionHandlerTest {
         Assertions.assertTrue(result.getValue().getCompleted());
     }
 
-
     @Test
     @DisplayName("Check Activity Completion BeforeStartDate rHandler Test")
     void testSuccessfulCreateBeforeStartDate() {
         Activity activity = new Activity();
-        activity.name = "fooBarw";
+        activity.name = "fooBarBeforeStart";
         activity.inProgress = false;
         activity.completed = false;
         final Date startDate = new Date();
@@ -63,6 +62,29 @@ public class CheckActivityCompletionHandlerTest {
 
         Assertions.assertTrue(result.isSuccess());
         Assertions.assertFalse(result.getValue().getInProgress());
+        Assertions.assertFalse(result.getValue().getCompleted());
+    }
+
+    @Test
+    @DisplayName("Check Activity Completion In progress rHandler Test")
+    void testSuccessfulCreateInProgress() {
+        Activity activity = new Activity();
+        activity.name = "fooBarInProgress";
+        activity.inProgress = false;
+        activity.completed = false;
+        final Date startDate = new Date();
+        final Date finishDate = new Date(startDate.getTime() + 5000);
+        final Date actualDate = new Date(startDate.getTime() + 1000);
+        activity.startDate = startDate;
+        activity.finishDate = finishDate;
+        CheckActivityCompletion command = new CheckActivityCompletion();
+        command.setActivity(activity);
+        command.setActualDate(actualDate);
+
+        Result<ActivityCompletionChecked> result = handler.handle(command);
+
+        Assertions.assertTrue(result.isSuccess());
+        Assertions.assertTrue(result.getValue().getInProgress());
         Assertions.assertFalse(result.getValue().getCompleted());
     }
 }
