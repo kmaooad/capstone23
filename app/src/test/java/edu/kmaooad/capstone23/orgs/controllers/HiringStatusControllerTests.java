@@ -16,7 +16,7 @@ public class HiringStatusControllerTests {
     @DisplayName("Change hiring status: Basic")
     public void testHiringStatusChange() {
         Map<String, Object> jsonAsMap = new HashMap<>();
-        jsonAsMap.put("orgID", "64ff7fabc64e527ecae3f896");
+        jsonAsMap.put("orgId", "64ff7fabc64e527ecae3f896");
         jsonAsMap.put("hiringStatus", "HIRING");
 
         given()
