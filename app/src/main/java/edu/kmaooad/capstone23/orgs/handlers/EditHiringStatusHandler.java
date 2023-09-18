@@ -1,6 +1,7 @@
 package edu.kmaooad.capstone23.orgs.handlers;
 
 import edu.kmaooad.capstone23.common.CommandHandler;
+import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.orgs.commands.SetHiringStatus;
 import edu.kmaooad.capstone23.orgs.dal.Job;
@@ -25,6 +26,12 @@ public class EditHiringStatusHandler implements CommandHandler<SetHiringStatus, 
         ObjectId objId = new ObjectId(command.getOrgId());
 
         Org org = orgsRepository.findById(objId);
+
+        // Check if org is null
+        if (org == null) {
+            return new Result<>(ErrorCode.ENTITY_NOT_FOUND, "Organization not found");
+        }
+
         org.hiringStatus = command.getHiringStatus();
         orgsRepository.update(org);
 
@@ -42,4 +49,5 @@ public class EditHiringStatusHandler implements CommandHandler<SetHiringStatus, 
 
         return new Result<>(result);
     }
+
 }
