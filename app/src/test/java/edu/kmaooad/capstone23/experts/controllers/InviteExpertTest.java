@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import static edu.kmaooad.capstone23.experts.service.ExpertService.ACCEPT_INVITATION_ENDPOINT;
 import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -26,8 +27,6 @@ public class InviteExpertTest {
 
     @Inject
     ExpertInvitationRepository expertInvitationRepository;
-    @Inject
-    ExpertService expertService;
     @Inject
     ExpertsRepository expertsRepository;
 
@@ -41,13 +40,12 @@ public class InviteExpertTest {
         invitation.org = org;
         invitation.email = "a@mail.com";
         expertInvitationRepository.persist(invitation);
-        URI uri = new URI(expertService.createInvitationLink(invitation.id));
-        String pathAndQuery = uri.getPath() + (uri.getQuery() != null ? "?" + uri.getQuery() : "");
+        String link = ACCEPT_INVITATION_ENDPOINT + "?id=" + invitation.id;
 
         given()
                 .contentType("application/json")
                 .when()
-                .get(pathAndQuery)
+                .get(link)
                 .then()
                 .statusCode(200);
 
