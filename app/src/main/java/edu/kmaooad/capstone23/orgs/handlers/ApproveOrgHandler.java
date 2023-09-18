@@ -3,7 +3,6 @@ package edu.kmaooad.capstone23.orgs.handlers;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
-import edu.kmaooad.capstone23.common.ValidatingHandler;
 import edu.kmaooad.capstone23.orgs.commands.ApproveOrg;
 import edu.kmaooad.capstone23.orgs.dal.Org;
 import edu.kmaooad.capstone23.orgs.dal.OrgsRepository;
@@ -27,11 +26,11 @@ public class ApproveOrgHandler implements CommandHandler<ApproveOrg, OrgApproved
     public Result<OrgApproved> handle(ApproveOrg command) {
         Org org = orgsRepository.findById(new ObjectId(command.getOrgId()));
         if (org == null) {
-            return new Result<>(ErrorCode.EXCEPTION, "Org not found!");
+            return new Result<>(ErrorCode.VALIDATION_FAILED, "Org not found!");
         }
 
         if (org.isActive){
-            return new Result<>(ErrorCode.EXCEPTION, "Org already approved!");
+            return new Result<>(ErrorCode.VALIDATION_FAILED, "Org already approved!");
         } else {
             org.isActive = true;
         }
