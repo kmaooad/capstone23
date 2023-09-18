@@ -6,6 +6,7 @@ public class CheckActivityCompletion {
     private String name;
     private Date startDate;
     private Date finishDate;
+    private Date actualDate;
     private boolean inProgress;
     private boolean completed;
 
@@ -33,6 +34,14 @@ public class CheckActivityCompletion {
         this.finishDate = finishDate;
     }
 
+    public Date getActualDate() {
+        return actualDate;
+    }
+
+    public void setActualDate(Date actualDate) {
+        this.actualDate = actualDate;
+    }
+ 
     public boolean isInProgress() {
         return inProgress;
     }
