@@ -9,7 +9,8 @@ import edu.kmaooad.capstone23.cvs.events.CVRead;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 
-import java.util.List;
+
+import java.util.stream.Stream;
 
 
 @RequestScoped
@@ -20,26 +21,24 @@ public class ReadCVHandler implements CommandHandler<ReadCV, CVRead> {
 
     @Override
     public Result<CVRead> handle(ReadCV command) {
-        List<CV> cvs = cvRepository.find("visibility", "VISIBLE").stream().toList();
+        Stream<CV> cvs = cvRepository.find("visibility", "VISIBLE").stream();
         if (command.getStatus() != null)
-            cvs = cvs.stream().filter(x -> x.status.equals(command.getStatus())).toList();
+            cvs = cvs.filter(
+                    x -> x.status.equals(command.getStatus()));
 
         if (command.getIndustry() != null)
-            cvs = cvs.stream()
-                    .filter(x -> x.preference != null && x.preference.industry.equals(command.getIndustry()))
-                    .toList();
+            cvs = cvs.filter(
+                    x -> x.preference != null && x.preference.industry.equals(command.getIndustry()));
 
         if (command.getLocation() != null)
-            cvs = cvs.stream()
-                    .filter(x -> x.preference != null && x.preference.location.equals(command.getLocation()))
-                    .toList();
+            cvs = cvs.filter(
+                    x -> x.preference != null && x.preference.location.equals(command.getLocation()));
 
         if (command.getCategory() != null)
-            cvs = cvs.stream()
-                    .filter(x -> x.preference != null && x.preference.category.equals(command.getCategory()))
-                    .toList();
+            cvs = cvs.filter(
+                    x -> x.preference != null && x.preference.category.equals(command.getCategory()));
 
-        CVRead res = new CVRead(cvs);
+        CVRead res = new CVRead(cvs.toList());
         return new Result<>(res);
     }
 
