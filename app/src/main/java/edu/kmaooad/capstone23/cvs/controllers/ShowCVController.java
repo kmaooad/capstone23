@@ -11,6 +11,6 @@ import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 @Path("/cvs/show")
 @APIResponse(responseCode = "200", content = {
         @Content(mediaType = "application/json",
-                schema = @Schema(implementation = CVShowed.class)) })
-public class ShowCVController extends TypicalController<ShowCV, CVShowed> {
+                schema = @Schema(implementation = CVUpdated.class)) })
+public class ShowCVController extends TypicalController<ShowCV, CVUpdated> {
 }

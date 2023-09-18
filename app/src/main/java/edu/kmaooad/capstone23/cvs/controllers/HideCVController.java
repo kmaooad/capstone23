@@ -11,6 +11,6 @@ import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 @Path("/cvs/hide")
 @APIResponse(responseCode = "200", content = {
         @Content(mediaType = "application/json",
-                schema = @Schema(implementation = CVHided.class)) })
-public class HideCVController extends TypicalController<HideCV, CVHided> {
+                schema = @Schema(implementation = CVUpdated.class)) })
+public class HideCVController extends TypicalController<HideCV, CVUpdated> {
 }

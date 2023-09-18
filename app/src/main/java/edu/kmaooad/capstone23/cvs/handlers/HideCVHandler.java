@@ -7,20 +7,18 @@ import edu.kmaooad.capstone23.cvs.dal.CV;
 
 import edu.kmaooad.capstone23.cvs.dal.CV.Visibility;
 import edu.kmaooad.capstone23.cvs.dal.CVRepository;
-import edu.kmaooad.capstone23.cvs.events.CVHided;
+import edu.kmaooad.capstone23.cvs.events.CVUpdated;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 
-import org.bson.types.ObjectId;
-
 @RequestScoped
-public class HideCVHandler implements CommandHandler<HideCV, CVHided> {
+public class HideCVHandler implements CommandHandler<HideCV, CVUpdated> {
 
     @Inject
     CVRepository cvRepository;
 
     @Override
-    public Result<CVHided> handle(HideCV command) {
+    public Result<CVUpdated> handle(HideCV command) {
         CV cv = cvRepository.findById(command.getCvId());
 
 
@@ -28,7 +26,7 @@ public class HideCVHandler implements CommandHandler<HideCV, CVHided> {
 
         cvRepository.update(cv);
 
-        CVHided result = new CVHided(cv.id);
+        CVUpdated result = new CVUpdated(cv.id);
         return new Result<>(result);
     }
 }

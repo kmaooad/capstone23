@@ -9,23 +9,32 @@ import edu.kmaooad.capstone23.cvs.dal.CV;
 import edu.kmaooad.capstone23.cvs.dal.CVRepository;
 import edu.kmaooad.capstone23.cvs.events.CVUpdated;
 import jakarta.enterprise.context.RequestScoped;
+import jakarta.inject.Inject;
+import org.bson.types.ObjectId;
+
+import java.util.Optional;
 
 @RequestScoped
 public class RemoveSkillFromCVHandler implements CommandHandler<RemoveSkillFromCV, CVUpdated>  {
+
+    @Inject
     CVRepository cvRepository;
 
     @Override
     public Result<CVUpdated> handle(RemoveSkillFromCV command) {
-        CV cv = cvRepository.findById(command.getCvId());
+        if (command == null || command.getSkillId() == null || command.getCvId() == null) {
+            return new Result<>(ErrorCode.VALIDATION_FAILED, "Illegal command sent");
+        }
+        Optional<CV> cv = cvRepository.findByIdOptional(command.getCvId());
 
-        if (cv == null) {
-            return new Result<>(ErrorCode.NOT_FOUND, "This cv does not exist");
+        if (cv.isEmpty()) {
+            return new Result<>(ErrorCode.VALIDATION_FAILED, "This cv does not exist");
         }
 
-        cv.skills.remove(command.getSkillId());
-        cvRepository.update(cv);
+        cv.get().skills.remove(command.getSkillId());
+        cvRepository.update(cv.get());
 
-        CVUpdated result = new CVUpdated(cv.id);
+        CVUpdated result = new CVUpdated(cv.get().id);
         return new Result<>(result);
     }
 }

@@ -5,19 +5,18 @@ import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.cvs.commands.SetStatus;
 import edu.kmaooad.capstone23.cvs.dal.CV;
 import edu.kmaooad.capstone23.cvs.dal.CVRepository;
-import edu.kmaooad.capstone23.cvs.events.StatusSeted;
+import edu.kmaooad.capstone23.cvs.events.CVUpdated;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
-import org.bson.types.ObjectId;
 
 @RequestScoped
-public class SetStatusHandler implements CommandHandler<SetStatus, StatusSeted> {
+public class SetStatusHandler implements CommandHandler<SetStatus, CVUpdated> {
 
     @Inject
     CVRepository cvRepository;
 
     @Override
-    public Result<StatusSeted> handle(SetStatus command) {
+    public Result<CVUpdated> handle(SetStatus command) {
         CV cv = cvRepository.findById(command.getCvId());
 
 
@@ -26,7 +25,7 @@ public class SetStatusHandler implements CommandHandler<SetStatus, StatusSeted> 
 
         cvRepository.update(cv);
 
-        StatusSeted result = new StatusSeted(cv.id);
+        CVUpdated result = new CVUpdated(cv.id);
         return new Result<>(result);
     }
 }

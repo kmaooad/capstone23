@@ -6,19 +6,18 @@ import edu.kmaooad.capstone23.cvs.commands.ShowCV;
 import edu.kmaooad.capstone23.cvs.dal.CV;
 import edu.kmaooad.capstone23.cvs.dal.CV.Visibility;
 import edu.kmaooad.capstone23.cvs.dal.CVRepository;
-import edu.kmaooad.capstone23.cvs.events.CVShowed;
+import edu.kmaooad.capstone23.cvs.events.CVUpdated;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
-import org.bson.types.ObjectId;
 
 @RequestScoped
-public class ShowCVHandler implements CommandHandler<ShowCV, CVShowed> {
+public class ShowCVHandler implements CommandHandler<ShowCV, CVUpdated> {
 
     @Inject
     CVRepository cvRepository;
 
     @Override
-    public Result<CVShowed> handle(ShowCV command) {
+    public Result<CVUpdated> handle(ShowCV command) {
         CV cv = cvRepository.findById(command.getCvId());
 
 
@@ -26,7 +25,7 @@ public class ShowCVHandler implements CommandHandler<ShowCV, CVShowed> {
 
         cvRepository.update(cv);
 
-        CVShowed result = new CVShowed(cv.id);
+        CVUpdated result = new CVUpdated(cv.id);
         return new Result<>(result);
     }
 }

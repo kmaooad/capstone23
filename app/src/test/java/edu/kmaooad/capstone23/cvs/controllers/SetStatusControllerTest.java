@@ -31,7 +31,7 @@ public class SetStatusControllerTest {
         given().contentType("application/json")
                 .body(pref)
                 .when()
-                .post("/cvs/setStatus")
+                .post("/cvs/set-status")
                 .then()
                 .statusCode(200);
     }
@@ -44,7 +44,7 @@ public class SetStatusControllerTest {
         given().contentType("application/json")
                 .body(prefNoId)
                 .when()
-                .post("/cvs/setStatus")
+                .post("/cvs/set-status")
                 .then()
                 .statusCode(400);
     }
