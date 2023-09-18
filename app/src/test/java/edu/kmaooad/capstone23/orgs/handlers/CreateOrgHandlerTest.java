@@ -19,6 +19,7 @@ public class CreateOrgHandlerTest {
     void testSuccessfulHandling() {
         CreateOrg command = new CreateOrg();
         command.setOrgName("NaUKMA");
+        command.setOrgEmail("NaUKMA@gmail.com");
 
         Result<OrgCreated> result = handler.handle(command);
 
