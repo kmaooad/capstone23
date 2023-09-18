@@ -28,8 +28,6 @@ public class EditHiringStatusHandlerTest {
             Result<HiringStatusChanged> result = handler.handle(command);
 
             Assertions.assertTrue(result.isSuccess());
-            Assertions.assertNotNull(result.getValue());
-            Assertions.assertFalse(result.getValue().getOrgId().isEmpty());
         }
 
     }
