@@ -24,6 +24,10 @@ public class RejectOrgHandler implements CommandHandler<RejectOrg, OrgRejected> 
 
     @Override
     public Result<OrgRejected> handle(RejectOrg command) {
+        if (!ObjectId.isValid(command.id)) {
+            return new Result<>(ErrorCode.VALIDATION_FAILED, "Invalid ID");
+        }
+
         Org org = orgsRepository.findById(new ObjectId(command.id));
 
         if (org == null) {
@@ -34,7 +38,7 @@ public class RejectOrgHandler implements CommandHandler<RejectOrg, OrgRejected> 
         }
 
         org.isActive = false;
-        orgsRepository.insert(org);
+        orgsRepository.update(org);
         mailService.sendEmail(command.reason, org.email);
 
         return new Result<>(new OrgRejected(org.id.toString()));
