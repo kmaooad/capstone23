@@ -5,13 +5,13 @@ import edu.kmaooad.capstone23.activities.dal.Activity;
 import edu.kmaooad.capstone23.activities.events.ActivityCompletionChecked;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.Result;
-import io.quarkus.scheduler.Scheduled;
+
 import jakarta.enterprise.context.RequestScoped;
 
 @RequestScoped
 public class CheckActivityCompletionHandler implements CommandHandler<CheckActivityCompletion, ActivityCompletionChecked> {
 
-    @Scheduled(every = "10s")
+
     public Result<ActivityCompletionChecked> handle(CheckActivityCompletion command) {
         Activity activity = command.getActivity();
 
@@ -19,7 +19,7 @@ public class CheckActivityCompletionHandler implements CommandHandler<CheckActiv
                                 command.getActualDate().after(activity.finishDate) ? false : true;
         activity.completed = command.getActualDate().after(activity.finishDate) ? true : false;
 
-        ActivityCompletionChecked result = new ActivityCompletionChecked(activity.id.toString(), activity.inProgress, activity.completed);
+        ActivityCompletionChecked result = new ActivityCompletionChecked(activity.inProgress, activity.completed);
 
         return new Result<ActivityCompletionChecked>(result);
     }
