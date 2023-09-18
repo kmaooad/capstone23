@@ -4,6 +4,7 @@ import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.experts.commands.AcceptInvitationLink;
 import edu.kmaooad.capstone23.experts.events.ExpertCreated;
+import edu.kmaooad.capstone23.experts.handlers.AcceptInvitationLinkHandler;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.QueryParam;
@@ -17,7 +18,7 @@ import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 
 public class AcceptInvitationLinkController {
     @Inject
-    CommandHandler<AcceptInvitationLink, ExpertCreated> commandHandler;
+    AcceptInvitationLinkHandler commandHandler;
 
     @Path("/experts/invitation/accept")
     @APIResponse(responseCode = "200", content = {

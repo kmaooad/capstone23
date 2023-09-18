@@ -18,7 +18,7 @@ import org.junit.jupiter.api.Test;
 public class AcceptInvitationLinkHandlerTest {
 
     @Inject
-    CommandHandler<AcceptInvitationLink, ExpertCreated> acceptInvitationLinkHandler;
+    AcceptInvitationLinkHandler acceptInvitationLinkHandler;
     @Inject
     ExpertInvitationRepository invitationRepository;
     @Inject
