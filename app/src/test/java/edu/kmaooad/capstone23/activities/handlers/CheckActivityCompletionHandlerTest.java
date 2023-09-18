@@ -44,7 +44,7 @@ public class CheckActivityCompletionHandlerTest {
 
 
     @Test
-    @DisplayName("Check Activity Completion BeforeStartDate Handler Test")
+    @DisplayName("Check Activity Completion BeforeStartDate rHandler Test")
     void testSuccessfulCreateBeforeStartDate() {
         Activity activity = new Activity();
         activity.name = "fooBarw";
