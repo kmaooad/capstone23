@@ -17,6 +17,7 @@ public class CreateOrgControllerTests {
     public void testBasicOrgCreation() {
         Map<String, Object> jsonAsMap = new HashMap<>();
         jsonAsMap.put("orgName", "NaUKMA");
+        jsonAsMap.put("orgEmail", "NaUKMA@gmail.com");
 
         given()
                 .contentType("application/json")
@@ -32,6 +33,7 @@ public class CreateOrgControllerTests {
     public void testOrgCreationWithNameValidation() {
         Map<String, Object> jsonAsMap = new HashMap<>();
         jsonAsMap.put("orgName", "Kma0oad_2023");
+        jsonAsMap.put("orgEmail", "NaUKMA@gmail.com");
 
         given()
                 .contentType("application/json")
