@@ -20,7 +20,6 @@ public class UpdateOrgHandler implements CommandHandler<UpdateOrg, OrgUpdated> {
     private OrgsRepository repository;
 
     public Result<OrgUpdated> handle(UpdateOrg command) {
-
         Optional<Org> existingOrg = this.repository.findByIdOptional(new ObjectId(command.orgId));
 
         if (existingOrg.isEmpty()) {

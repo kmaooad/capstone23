@@ -1,9 +1,7 @@
 package edu.kmaooad.capstone23.orgs.controllers;
 
 import edu.kmaooad.capstone23.common.TypicalController;
-import edu.kmaooad.capstone23.orgs.commands.CreateOrg;
 import edu.kmaooad.capstone23.orgs.commands.UpdateOrg;
-import edu.kmaooad.capstone23.orgs.events.OrgCreated;
 import edu.kmaooad.capstone23.orgs.events.OrgUpdated;
 import jakarta.ws.rs.Path;
 import org.eclipse.microprofile.openapi.annotations.media.Content;
