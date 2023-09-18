@@ -16,10 +16,8 @@ import org.junit.jupiter.api.Test;
 @QuarkusTest
 public class ApproveOrgHandlerTest {
 
-    private static final String testOrg_name = "NaUKMA";
-    private static final String testOrg_email = "naukma@ukr.net";
-
-    private String testOrg_id;
+    private static final String testOrg_name = "undefined";
+    private static final String testOrg_email = "undefined@ukr.net";
 
     @Inject
     CommandHandler<ApproveOrg, OrgApproved> handler;
@@ -55,7 +53,7 @@ public class ApproveOrgHandlerTest {
     @DisplayName("Approve Org: Id Validate")
     void testBadIdHandlingApproveOrg() {
         ApproveOrg command = new ApproveOrg();
-        command.setOrgId("incorrect_id");
+        command.setOrgId("wrong");
 
         Result<OrgApproved> result = handler.handle(command);
 

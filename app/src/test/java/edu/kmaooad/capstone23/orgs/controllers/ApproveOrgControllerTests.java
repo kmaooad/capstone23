@@ -38,7 +38,7 @@ public class ApproveOrgControllerTests {
         final String id = testData(false);
 
         Map<String, Object> jsonAsMap = new HashMap<>();
-        jsonAsMap.put("id", id);
+        jsonAsMap.put("orgId", id);
 
         given()
                 .contentType("application/json")

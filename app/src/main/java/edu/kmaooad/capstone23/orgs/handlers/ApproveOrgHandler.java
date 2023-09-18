@@ -12,6 +12,8 @@ import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
 
+import java.util.Optional;
+
 @RequestScoped
 public class ApproveOrgHandler implements CommandHandler<ApproveOrg, OrgApproved> {
 
@@ -24,17 +26,18 @@ public class ApproveOrgHandler implements CommandHandler<ApproveOrg, OrgApproved
     private static final String defaultEmailText = "Your organizations`s submission has been approved";
 
     public Result<OrgApproved> handle(ApproveOrg command) {
-        Org org = orgsRepository.findById(new ObjectId(command.getOrgId()));
-        if (org == null) {
+        final Optional<Org> valid_org = orgsRepository.findById(command.getOrgId());
+        if (valid_org.isEmpty()) {
             return new Result<>(ErrorCode.VALIDATION_FAILED, "Org not found!");
         }
+        final Org org = valid_org.get();
 
         if (org.isActive){
             return new Result<>(ErrorCode.VALIDATION_FAILED, "Org already approved!");
         } else {
             org.isActive = true;
         }
-        orgsRepository.insert(org);
+        orgsRepository.update(org);
 
         mailService.sendEmail(defaultEmailText, org.email);
         OrgApproved result = new OrgApproved(org.id.toString());
