@@ -12,6 +12,8 @@ import edu.kmaooad.capstone23.orgs.dal.OrgsRepository;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 
+import java.util.ArrayList;
+
 @RequestScoped
 public class CreateDepartmentHandler implements CommandHandler<CreateDepartment, DepartmentCreated> {
 
@@ -31,6 +33,8 @@ public class CreateDepartmentHandler implements CommandHandler<CreateDepartment,
             return new Result<>(ErrorCode.EXCEPTION, "Parent not found");
         }
         department.parent = parent.name;
+
+        department.members = new ArrayList<>();
 
         repository.insert(department);
 
