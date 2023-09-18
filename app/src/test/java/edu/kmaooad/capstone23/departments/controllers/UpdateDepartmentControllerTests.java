@@ -2,8 +2,10 @@ package edu.kmaooad.capstone23.departments.controllers;
 
 import edu.kmaooad.capstone23.departments.dal.Department;
 import edu.kmaooad.capstone23.departments.dal.DepartmentsRepository;
+import edu.kmaooad.capstone23.orgs.dal.OrgsRepository;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,10 +20,14 @@ public class UpdateDepartmentControllerTests {
     private String idToUpdate;
 
     @Inject
+    OrgsRepository orgsRepository;
+
+    @Inject
     DepartmentsRepository departmentsRepository;
 
     @BeforeEach
     void setUp() {
+        createParentOrg();
         Department department = new Department();
 
         department.name = "Initial Department";
@@ -30,6 +36,26 @@ public class UpdateDepartmentControllerTests {
         departmentsRepository.insert(department);
 
         idToUpdate = department.id.toString();
+    }
+
+    private void createParentOrg() {
+        Map<String, Object> jsonAsMap = new HashMap<>();
+        jsonAsMap.put("orgName", "NaUKMA");
+        jsonAsMap.put("website", "foo");
+        jsonAsMap.put("industry", "foo");
+
+        given()
+            .contentType("application/json")
+            .body(jsonAsMap)
+            .when()
+            .post("/orgs/create")
+            .then()
+            .statusCode(200);
+    }
+
+    @AfterEach
+    public void tearDown() {
+        orgsRepository.deleteAll();
     }
 
 

@@ -28,6 +28,8 @@ public class UpdateExpertHandlerTest {
     @Inject
     ExpertsRepository expertsRepository;
 
+
+
     @Test
     public void testSuccessfulHandling() {
         String expertId = createTestExpert();
