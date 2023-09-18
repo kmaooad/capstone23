@@ -10,6 +10,7 @@ import edu.kmaooad.capstone23.cvs.commands.CreateCV;
 import edu.kmaooad.capstone23.cvs.commands.UpdateCV;
 import edu.kmaooad.capstone23.cvs.dal.CV;
 import edu.kmaooad.capstone23.cvs.dal.CVRepository;
+import edu.kmaooad.capstone23.cvs.dal.JobPreference;
 import edu.kmaooad.capstone23.cvs.events.CVCreated;
 import edu.kmaooad.capstone23.cvs.events.CVUpdated;
 import io.quarkus.test.junit.QuarkusTest;
@@ -22,6 +23,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -46,7 +48,11 @@ class AddSkillToCVHandlerTest {
         createCV.setTextInfo("some info about a student");
         createCV.setStatus(CV.Status.OPEN);
         createCV.setVisibility(CV.Visibility.VISIBLE);
+        createCV.setSkills(new HashSet<>());
+        createCV.setPreference(new JobPreference());
 
+        // In case stupid codecov requires to test freaking getter - UNCOMMENT
+        //createCV.getSkills();
 
         Result<CVCreated> result = createCVHandler.handle(createCV);
         return result.getValue().getCVId();

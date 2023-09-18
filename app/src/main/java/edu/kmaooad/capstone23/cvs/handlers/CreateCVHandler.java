@@ -23,7 +23,7 @@ public class CreateCVHandler implements CommandHandler<CreateCV, CVCreated> {
     public Result<CVCreated> handle(CreateCV command) {
         CV cv = new CV();
 
-        if(command.getDateTimeCreated() == null) {
+        if (command.getDateTimeCreated() == null) {
             return new Result<>(ErrorCode.VALIDATION_FAILED, "Creation time is not set");
         } else if (command.getDateTimeCreated().isAfter(LocalDateTime.now())) {
             return new Result<>(ErrorCode.VALIDATION_FAILED, "Invalid time of creation");
