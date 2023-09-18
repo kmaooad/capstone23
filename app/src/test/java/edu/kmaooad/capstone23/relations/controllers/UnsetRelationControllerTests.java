@@ -2,33 +2,68 @@ package edu.kmaooad.capstone23.relations.controllers;
 
 import io.quarkus.test.junit.QuarkusTest;
 import org.bson.types.ObjectId;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.is;
 
 @QuarkusTest
 public class UnsetRelationControllerTests {
-
     @Test
     @DisplayName("Test Unsetting Relation Endpoint")
-    void testUnsetRelationEndpoint() {
+    public void testUnsetRelationEndpoint() {
+        ObjectId relationToUnsetID = createDefaultRelation();
+        Assertions.assertNotNull(relationToUnsetID);
+        Map<String, Object> jsonAsMap = new HashMap<>();
+        jsonAsMap.put("id", relationToUnsetID.toHexString());
+        jsonAsMap.put("collectionName1", "courses");
+        jsonAsMap.put("collectionName2", "projects");
+
         given()
-                .when().delete("/relations/unset")
+                .contentType("application/json")
+                .body(jsonAsMap)
+                .when()
+                .post("/relations/unset")
                 .then()
-                .statusCode(200)
-                .body("message", is("Relation unset successfully."));
+                .statusCode(200);
     }
 
     @Test
     @DisplayName("Test Invalid Unset Endpoint - Non-existent Relation ID")
-    void testInvalidUnsetForNonExistentRelation() {
+    public void testInvalidUnsetForNonExistentRelation() {
+        Map<String, Object> jsonAsMap = new HashMap<>();
+        jsonAsMap.put("id", "5f7e47fc8e1f7112d73c93b0");
+
         given()
-                .pathParam("id", new ObjectId("5f7e47fc8e1f7112d73c93b0").toString())  //  non-existent
-                .when().delete("/relations/unset/{id}")
+                .contentType("application/json")
+                .body(jsonAsMap)
+                .when()
+                .post("/relations/unset")
                 .then()
-                .statusCode(400)
-                .body("message", is("Relation not found."));
+                .statusCode(400);
     }
+
+    private ObjectId createDefaultRelation() {
+        Map<String, Object> jsonAsMap = new HashMap<>();
+        jsonAsMap.put("collectionName1", "courses");
+        jsonAsMap.put("collectionName2", "projects");
+        jsonAsMap.put("objectToConnectId1", "5f7e47fc8e1f7112d73c92a1");
+        jsonAsMap.put("objectToConnectId2", "1a4cd132b123a1aa3bc2d142");
+
+        String id = given()
+                .contentType("application/json")
+                .body(jsonAsMap)
+                .when()
+                .post("/relations/set")
+                .then()
+                .statusCode(200)
+                .extract()
+                .path("id");
+        return new ObjectId(id);
+    }
+
 }
