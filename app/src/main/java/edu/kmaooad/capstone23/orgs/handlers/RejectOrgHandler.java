@@ -3,7 +3,6 @@ package edu.kmaooad.capstone23.orgs.handlers;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
-import edu.kmaooad.capstone23.common.ValidatingHandler;
 import edu.kmaooad.capstone23.orgs.commands.RejectOrg;
 import edu.kmaooad.capstone23.orgs.dal.Org;
 import edu.kmaooad.capstone23.orgs.dal.OrgsRepository;
@@ -11,7 +10,8 @@ import edu.kmaooad.capstone23.orgs.events.OrgRejected;
 import edu.kmaooad.capstone23.orgs.services.MailService;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
-import org.bson.types.ObjectId;
+
+import java.util.Optional;
 
 @RequestScoped
 public class RejectOrgHandler implements CommandHandler<RejectOrg, OrgRejected> {
@@ -24,15 +24,12 @@ public class RejectOrgHandler implements CommandHandler<RejectOrg, OrgRejected> 
 
     @Override
     public Result<OrgRejected> handle(RejectOrg command) {
-        if (!ObjectId.isValid(command.id)) {
-            return new Result<>(ErrorCode.VALIDATION_FAILED, "Invalid ID");
-        }
-
-        Org org = orgsRepository.findById(new ObjectId(command.id));
-
-        if (org == null) {
+        final Optional<Org> orgByName = orgsRepository.findById(command.id);
+        if (orgByName.isEmpty()) {
             return new Result<>(ErrorCode.VALIDATION_FAILED, "Org with this ID does not exist");
         }
+        final Org org = orgByName.get();
+
         if (!org.isActive) {
             return new Result<>(ErrorCode.VALIDATION_FAILED, "Org already rejected");
         }
