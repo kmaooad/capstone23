@@ -5,6 +5,8 @@ import edu.kmaooad.capstone23.experts.commands.AcceptInvitationLink;
 import edu.kmaooad.capstone23.experts.events.ExpertCreated;
 import edu.kmaooad.capstone23.experts.handlers.AcceptInvitationLinkHandler;
 import jakarta.inject.Inject;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
@@ -20,6 +22,7 @@ public class AcceptInvitationLinkController {
     AcceptInvitationLinkHandler commandHandler;
 
     @Path("/experts/invitation/accept")
+    @POST
     @APIResponse(responseCode = "200", content = {
             @Content(mediaType = "application/json", schema = @Schema(implementation = ExpertCreated.class))
     })
