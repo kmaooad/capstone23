@@ -68,21 +68,20 @@ public class CheckActivityCompletionHandlerTest {
     @Test
     @DisplayName("Check Activity Completion In progress rHandler Test")
     void testSuccessfulCreateInProgress() {
-        Activity activity = new Activity();
-        activity.name = "fooBarInProgress";
-        activity.inProgress = false;
-        activity.completed = false;
+
+        String name = "fooBarInProgress";
         final Date startDate = new Date();
         final Date finishDate = new Date(startDate.getTime() + 5000);
         final Date actualDate = new Date(startDate.getTime() + 1000);
-        activity.startDate = startDate;
-        activity.finishDate = finishDate;
+        Activity activity = new Activity(name, startDate, finishDate);
+
         CheckActivityCompletion command = new CheckActivityCompletion();
         command.setActivity(activity);
         command.setActualDate(actualDate);
 
         Result<ActivityCompletionChecked> result = handler.handle(command);
-
+        Assertions.assertNotNull(activity.isCompleted());
+        Assertions.assertNotNull(activity.getName());
         Assertions.assertTrue(result.isSuccess());
         Assertions.assertTrue(result.getValue().getInProgress());
         Assertions.assertFalse(result.getValue().getCompleted());
