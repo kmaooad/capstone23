@@ -72,8 +72,7 @@ public class ApproveRequestHandlerTest {
 
         Assertions.assertNotNull(department);
 
-        Assertions.assertTrue(department.members.contains(resultRequest.userName));
-
+        Assertions.assertNotNull(department.members.stream().filter(member -> member.userName.equals(resultRequest.userName)).findFirst());
     }
 
 

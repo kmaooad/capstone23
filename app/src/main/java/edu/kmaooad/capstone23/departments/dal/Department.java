@@ -11,5 +11,5 @@ public class Department {
     public String name;
     public String description;
     public String parent;
-    public ArrayList<String> members;
+    public ArrayList<Member> members;
 }
