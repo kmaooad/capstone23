@@ -11,6 +11,11 @@ public class ExtraActivity {
     public ExtraActivity(ObjectId id) {
         this.id = id;
     }
+    public ExtraActivity() {
+
+    }
+    public ExtraActivity() {
+    }
 
     public ObjectId getId() {
         return id;
