@@ -6,14 +6,14 @@ import jakarta.validation.constraints.Size;
 
 public class CreateExtraActivity {
     @NotNull
-    private String id;
+    private ObjectId id;
     @NotBlank
     @Size(max = 100)
     private String name;
 
-    public String getId() { return id; }
+    public ObjectId getId() { return id; }
 
-    public void setId(String id) { this.id = id; }
+    public void setId(ObjectId id) { this.id = id; }
 
     public String getName() {
         return name;

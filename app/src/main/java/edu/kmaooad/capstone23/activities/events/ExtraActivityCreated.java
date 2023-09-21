@@ -1,13 +1,13 @@
 package edu.kmaooad.capstone23.activities.events;
-
+import org.bson.types.ObjectId;
 public class ExtraActivityCreated {
-    private final String id;
+    private final ObjectId id;
 
-    public ExtraActivityCreated(String id) {
+    public ExtraActivityCreated(ObjectId id) {
         this.id = id;
     }
 
-    public String getId() {
+    public ObjectId getId() {
         return id;
     }
 }
