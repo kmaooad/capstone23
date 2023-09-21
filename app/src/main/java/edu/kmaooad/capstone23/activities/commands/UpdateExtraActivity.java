@@ -6,6 +6,10 @@ import jakarta.validation.constraints.Size;
 public class UpdateExtraActivity {
     private String name;
 
+    public UpdateExtraActivity(ObjectId id) {
+        this.id = id;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
