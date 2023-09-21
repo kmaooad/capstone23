@@ -22,7 +22,7 @@ public class UpdateExtraActivityHandler implements CommandHandler<UpdateExtraAct
             act.name = command.getName();
 
 
-        var result = new ExtraActivityUpdated(act.id.toHexString());
+        var result = new ExtraActivityUpdated(act.getId());
         return new Result<>(result);
     }
 }
