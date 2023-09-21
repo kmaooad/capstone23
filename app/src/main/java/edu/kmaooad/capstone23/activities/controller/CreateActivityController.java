@@ -11,6 +11,6 @@ import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 @Path("/activities/extra/create")
 @APIResponse(responseCode = "200", content = {
     @Content(mediaType = "application/json", schema = @Schema(implementation = CourseCreated.class)) })
-public class CreateCourseController extends TypicalController<CreateCourse, CourseCreated> {
+public class CreateActivityController extends TypicalController<CreateCourse, CourseCreated> {
 
 }
