@@ -1,14 +1,14 @@
 package edu.kmaooad.capstone23.activities.events;
-
+import org.bson.types.ObjectId;
 public class ExtraActivityDeleted {
 
-    private String cvId;
+    private ObjectId cvId;
 
-    public ExtraActivityDeleted(String cvId) {
+    public ExtraActivityDeleted(ObjectId cvId) {
         this.cvId = cvId;
     }
 
-    public String getCVId(){
+    public ObjectId getCVId(){
         return cvId;
     }
 
