@@ -22,7 +22,7 @@ public class CreateExtraActivityHandler implements CommandHandler<CreateExtraAct
         activity.name = command.getName();
 
         repository.insert(activity);
-        var result = new ExtraActivityCreated(activity.id.toHexString());
+        var result = new ExtraActivityCreated(activity.getId());
         return new Result<>(result);
     }
 }
