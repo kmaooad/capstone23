@@ -10,6 +10,6 @@ import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 //@Path("/extraActivities/create")
 //@APIResponse(responseCode = "200", content = {
 //        @Content(mediaType = "application/json", schema = @Schema(implementation = ExtraActivityCreated.class)) })
-//public class CreateExtraActivityController extends TypicalController<CreateExtraActivity, ExtraActivityCreated> {
-//
-//}
+public class CreateExtraActivityController extends TypicalController<CreateExtraActivity, ExtraActivityCreated> {
+
+}
