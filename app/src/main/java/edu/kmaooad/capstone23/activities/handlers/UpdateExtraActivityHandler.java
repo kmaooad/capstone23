@@ -16,7 +16,7 @@ public class UpdateExtraActivityHandler implements CommandHandler<UpdateExtraAct
     ActivityRepository cvRepository;
     @Override
     public Result<ExtraActivityUpdated> handle(UpdateExtraActivity command) {
-        ExtraActivity act = cvRepository.findById(new String(command.getId()));
+        ExtraActivity act = cvRepository.findById(new ObjectId(command.getId()));
 
         if (command.getName() != null)
             act.name = command.getName();

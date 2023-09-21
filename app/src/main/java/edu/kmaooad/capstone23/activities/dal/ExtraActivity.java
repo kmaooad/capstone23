@@ -8,6 +8,10 @@ public class ExtraActivity {
     public ObjectId id;
     public String name;
 
+    public ExtraActivity(ObjectId id) {
+        this.id = id;
+    }
+
     public ObjectId getId() {
         return id;
     }
