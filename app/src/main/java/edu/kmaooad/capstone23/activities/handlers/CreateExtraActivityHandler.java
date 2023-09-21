@@ -11,13 +11,16 @@ import jakarta.inject.Inject;
 @RequestScoped
 public class CreateExtraActivityHandler implements CommandHandler<CreateExtraActivity, ExtraActivityCreated> {
 
+    @Inject
+    ActivityRepository repository;
+
 
     @Override
     public Result<ExtraActivityCreated> handle(CreateExtraActivity command) {
         ExtraActivity activity = new ExtraActivity();
         activity.name = command.getName();
 
-
+        repository.insert(activity);
         var result = new ExtraActivityCreated(activity.id.toHexString());
         return new Result<>(result);
     }
