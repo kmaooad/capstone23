@@ -8,7 +8,7 @@ import org.eclipse.microprofile.openapi.annotations.media.Content;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 
-@Path("/activities/courses/create")
+@Path("/activities/extra/create")
 @APIResponse(responseCode = "200", content = {
     @Content(mediaType = "application/json", schema = @Schema(implementation = CourseCreated.class)) })
 public class CreateCourseController extends TypicalController<CreateCourse, CourseCreated> {

@@ -10,7 +10,7 @@ import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 //@Path("/extraActivities/create")
 //@APIResponse(responseCode = "200", content = {
 //        @Content(mediaType = "application/json", schema = @Schema(implementation = ExtraActivityCreated.class)) })
-@Path("/activities/createExtra")
+//@Path("/activities/createExtra")
 @APIResponse(responseCode = "200", content = {
         @Content(mediaType = "application/json",
                 schema = @Schema(implementation = ExtraActivityCreated.class)) })
