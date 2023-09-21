@@ -7,7 +7,7 @@ import org.bson.types.ObjectId;
 import java.util.Optional;
 
 @ApplicationScoped
-public class ActivityRepository implements PanacheMongoRepository<Course> {
+public class ActivityRepository implements PanacheMongoRepository<ExtraActivity> {
     public Optional<ExtraActivity> findById(String id) {
         try {
             ObjectId objectId = new ObjectId(id);
