@@ -7,7 +7,7 @@ import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.Result;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
-
+import org.bson.types.ObjectId;
 @RequestScoped
 public class UpdateExtraActivityHandler implements CommandHandler<UpdateExtraActivity, ExtraActivityUpdated> {
 
