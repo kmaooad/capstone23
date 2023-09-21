@@ -1,5 +1,5 @@
 package edu.kmaooad.capstone23.activities.handlers;
-
+import edu.kmaooad.capstone23.activities.dal.ExtraActivity;
 import edu.kmaooad.capstone23.activities.commands.CreateExtraActivity;
 import edu.kmaooad.capstone23.activities.dal.Course;
 import edu.kmaooad.capstone23.activities.dal.CourseRepository;
@@ -16,7 +16,7 @@ public class CreateExtraActivityHandler implements CommandHandler<CreateExtraAct
 
     @Override
     public Result<ExtraActivityCreated> handle(CreateExtraActivity command) {
-        Activity activity = new Activity();
+        ExtraActivity activity = new ExtraActivity();
         activity.name = command.getName();
 
 
