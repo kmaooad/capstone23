@@ -1,6 +1,6 @@
 package edu.kmaooad.capstone23.activities.controller;
 
-import edu.kmaooad.capstone23.activities.commands.CreateCourse;
+import edu.kmaooad.capstone23.activities.commands.UpdateCourse;
 import edu.kmaooad.capstone23.activities.events.CourseUpdated;
 import edu.kmaooad.capstone23.common.TypicalController;
 import jakarta.ws.rs.Path;
