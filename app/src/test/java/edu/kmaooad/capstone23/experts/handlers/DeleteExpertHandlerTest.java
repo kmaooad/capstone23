@@ -57,6 +57,8 @@ public class DeleteExpertHandlerTest {
 
         CreateOrg orgCommand = new CreateOrg();
         orgCommand.setOrgName(orgName);
+        orgCommand.industry = "Education";
+        orgCommand.website = "https://www.ukma.edu.ua/eng/";
         orgHandler.handle(orgCommand);
 
         CreateExpert command = new CreateExpert();
