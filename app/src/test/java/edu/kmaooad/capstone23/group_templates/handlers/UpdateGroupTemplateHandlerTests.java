@@ -9,18 +9,11 @@ import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 @QuarkusTest
 public class UpdateGroupTemplateHandlerTests {
-    @BeforeAll
-    static void deleteAllData() {
-        GroupTemplatesRepository repository = new GroupTemplatesRepository();
-        repository.deleteAll();
-    }
-
     @Inject
     UpdateGroupTemplateHandler updateGroupTemplateHandler;
 

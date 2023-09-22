@@ -8,7 +8,6 @@ import edu.kmaooad.capstone23.competences.events.ProjDeleted;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -18,11 +17,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @QuarkusTest
 class DeleteProjectHandlerTest {
-    @BeforeAll
-    static void deleteAllData() {
-        ProjsRepository repository = new ProjsRepository();
-        repository.deleteAll();
-    }
     @Inject
     DeleteProjHandler handler;
     @Inject

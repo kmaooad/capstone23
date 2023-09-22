@@ -18,12 +18,6 @@ package edu.kmaooad.capstone23.activities.controllers;
 @QuarkusTest
     public class UpdateCourseControllerTest {
 
-    @BeforeEach
-    void deleteAllData() {
-        courseRepository.deleteAll();
-    }
-
-
     private ObjectId idToUpdate;
     private ObjectId idWithParent;
 

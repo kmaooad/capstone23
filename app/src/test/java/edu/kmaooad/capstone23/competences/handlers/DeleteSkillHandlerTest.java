@@ -12,16 +12,10 @@ import jakarta.inject.Inject;
 
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 @QuarkusTest
 public class DeleteSkillHandlerTest {
-    @BeforeAll
-    static void deleteAllData() {
-        SkillsRepository skillsRepository = new SkillsRepository();
-        skillsRepository.deleteAll();
-    }
 
     @Inject
     CommandHandler<CreateSkill, SkillCreated> createHandler;

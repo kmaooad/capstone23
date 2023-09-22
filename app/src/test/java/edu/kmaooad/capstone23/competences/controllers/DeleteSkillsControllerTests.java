@@ -1,12 +1,10 @@
 package edu.kmaooad.capstone23.competences.controllers;
 
-import edu.kmaooad.capstone23.competences.dal.ProjsRepository;
 import edu.kmaooad.capstone23.competences.dal.SkillsRepository;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 
 import org.bson.types.ObjectId;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -17,13 +15,6 @@ import static io.restassured.RestAssured.given;
 
 @QuarkusTest
 public class DeleteSkillsControllerTests {
-
-    @BeforeAll
-    static void deleteAllData() {
-        SkillsRepository repository = new SkillsRepository();
-        repository.deleteAll();
-    }
-
     @Inject
     private SkillsRepository repository;
 
@@ -35,14 +26,14 @@ public class DeleteSkillsControllerTests {
         }
 
         String objectId = given()
-                .contentType("application/json")
-                .body(jsonAsMap)
-                .when()
-                .post("/skills/create")
-                .then()
-                .statusCode(200)
-                .extract()
-                .path("skill");
+            .contentType("application/json")
+            .body(jsonAsMap)
+            .when()
+            .post("/skills/create")
+            .then()
+            .statusCode(200)
+            .extract()
+            .path("skill");
 
         return new ObjectId(objectId);
     }
@@ -76,7 +67,7 @@ public class DeleteSkillsControllerTests {
 
     @Test
     @DisplayName("Delete Skill: With children")
-    public void testSkillDeletionWithChildren() {
+    public void testSkillDeletionWithChildren() {        
         ObjectId parentSkill = createTestSkill("creep walk", null);
         // create a child skill
         createTestSkill("hustlin", parentSkill);

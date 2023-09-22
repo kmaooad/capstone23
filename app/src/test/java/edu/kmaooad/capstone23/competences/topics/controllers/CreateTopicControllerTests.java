@@ -1,9 +1,6 @@
 package edu.kmaooad.capstone23.competences.topics.controllers;
 
-import edu.kmaooad.capstone23.competences.dal.SkillsRepository;
-import edu.kmaooad.capstone23.competences.dal.TopicRepository;
 import io.quarkus.test.junit.QuarkusTest;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -14,11 +11,6 @@ import static io.restassured.RestAssured.given;
 
 @QuarkusTest
 public class CreateTopicControllerTests {
-    @BeforeAll
-    static void deleteAllData() {
-        TopicRepository repository = new TopicRepository();
-        repository.deleteAll();
-    }
 
     @Test
     @DisplayName("Create Topic: Basic")

@@ -9,15 +9,13 @@ import edu.kmaooad.capstone23.departments.dal.RequestsRepository;
 import edu.kmaooad.capstone23.departments.events.RequestCreated;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 @QuarkusTest
 public class RequestToJoinDepartmentHandlerTest {
-    @BeforeAll
-    static void deleteAllData() {
-        DepartmentsRepository repository = new DepartmentsRepository();
-        repository.deleteAll();
-    }
     @Inject
     CreateRequestToJoinHandler handler;
 

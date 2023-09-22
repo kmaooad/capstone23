@@ -10,17 +10,15 @@ import edu.kmaooad.capstone23.competences.handlers.UpdateTopicHandler;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
 
 @QuarkusTest
 public class UpdateTopicHandlerTest {
-    @BeforeAll
-    static void deleteAllData() {
-        TopicRepository repository = new TopicRepository();
-        repository.deleteAll();
-    }
 
     private ObjectId idToUpdate;
     private ObjectId parentId;

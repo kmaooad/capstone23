@@ -2,12 +2,10 @@ package edu.kmaooad.capstone23.competences.handlers;
 
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.competences.commands.CreateProj;
-import edu.kmaooad.capstone23.competences.dal.ProjsRepository;
 import edu.kmaooad.capstone23.competences.events.ProjCreated;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -17,11 +15,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @QuarkusTest
 class CreateProjectHandlerTest {
-    @BeforeAll
-    static void deleteAllData() {
-        ProjsRepository repository = new ProjsRepository();
-        repository.deleteAll();
-    }
     @Inject
     CommandHandler<CreateProj, ProjCreated> handler;
 

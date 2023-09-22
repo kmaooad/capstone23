@@ -1,9 +1,6 @@
 package edu.kmaooad.capstone23.group_templates.controllers;
 
-import edu.kmaooad.capstone23.departments.dal.DepartmentsRepository;
-import edu.kmaooad.capstone23.group_templates.dal.GroupTemplatesRepository;
 import io.quarkus.test.junit.QuarkusTest;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -14,11 +11,6 @@ import static io.restassured.RestAssured.given;
 
 @QuarkusTest
 public class CreateGroupTemplateControllerTests {
-    @BeforeAll
-    static void deleteAllData() {
-        GroupTemplatesRepository repository = new GroupTemplatesRepository();
-        repository.deleteAll();
-    }
 
     @Test
     @DisplayName("Create Group Template: Basic")

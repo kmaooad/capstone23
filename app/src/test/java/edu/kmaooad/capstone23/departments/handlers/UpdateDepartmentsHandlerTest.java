@@ -14,12 +14,6 @@ import org.junit.jupiter.api.*;
 
 @QuarkusTest
 public class UpdateDepartmentsHandlerTest {
-    @BeforeAll
-    static void deleteAllData() {
-        DepartmentsRepository repository = new DepartmentsRepository();
-        repository.deleteAll();
-    }
-
     @Inject
     UpdateDepartmentHandler handler;
 

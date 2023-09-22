@@ -3,23 +3,15 @@ package edu.kmaooad.capstone23.group_templates.handlers;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.group_templates.commands.CreateGroupTemplate;
-import edu.kmaooad.capstone23.group_templates.dal.GroupTemplatesRepository;
 import edu.kmaooad.capstone23.group_templates.events.GroupTemplateCreated;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 
 @QuarkusTest
 public class CreateGroupTemplateHandlerTests {
-    @BeforeAll
-    static void deleteAllData() {
-        GroupTemplatesRepository repository = new GroupTemplatesRepository();
-        repository.deleteAll();
-    }
-
     @Inject
     CommandHandler<CreateGroupTemplate, GroupTemplateCreated> handler;
 
