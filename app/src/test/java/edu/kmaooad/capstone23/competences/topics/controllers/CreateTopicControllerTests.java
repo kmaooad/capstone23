@@ -1,4 +1,4 @@
-package edu.kmaooad.capstone23.topics.controllers;
+package edu.kmaooad.capstone23.competences.topics.controllers;
 
 import io.quarkus.test.junit.QuarkusTest;
 import org.junit.jupiter.api.DisplayName;

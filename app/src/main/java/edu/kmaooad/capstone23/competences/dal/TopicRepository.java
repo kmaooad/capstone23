@@ -4,6 +4,7 @@ import io.quarkus.mongodb.panache.PanacheMongoRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import org.bson.types.ObjectId;
 
+import java.util.List;
 import java.util.Optional;
 
 @ApplicationScoped
@@ -15,6 +16,10 @@ public class TopicRepository implements PanacheMongoRepository<Topic> {
         } catch (Exception e) {
             return Optional.empty();
         }
+    }
+
+    public List<Topic> findByParentId(String parentId) {
+        return list("parentId", parentId);
     }
 
     public void insert(Topic topic) {
