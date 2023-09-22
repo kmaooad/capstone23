@@ -67,6 +67,8 @@ public class CreateExpertControllerTest {
     private void createTestOrg() {
         Map<String, Object> jsonAsMap = new HashMap<>();
         jsonAsMap.put("orgName", ORG_NAME);
+        jsonAsMap.put("website", "foo");
+        jsonAsMap.put("industry", "foo");
 
         given()
                 .contentType("application/json")

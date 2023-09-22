@@ -1,20 +1,19 @@
 package edu.kmaooad.capstone23.orgs.controllers;
 
+import edu.kmaooad.capstone23.common.TypicalController;
+import edu.kmaooad.capstone23.orgs.commands.DeleteOrg;
+import edu.kmaooad.capstone23.orgs.events.OrgDeleted;
+import jakarta.ws.rs.Path;
 import org.eclipse.microprofile.openapi.annotations.media.Content;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 
-import edu.kmaooad.capstone23.common.TypicalController;
-import edu.kmaooad.capstone23.orgs.commands.CreateOrg;
-import edu.kmaooad.capstone23.orgs.events.OrgCreated;
-import jakarta.ws.rs.Path;
-
-@Path("/orgs/create")
+@Path("/orgs/delete")
 @APIResponse(responseCode = "200", content = {
     @Content(
         mediaType = "application/json",
-        schema = @Schema(implementation = OrgCreated.class)
+        schema = @Schema(implementation = OrgDeleted.class)
     )}
 )
-public class CreateOrgController extends TypicalController<CreateOrg, OrgCreated> {
+public class DeleteOrgController extends TypicalController<DeleteOrg, OrgDeleted> {
 }
