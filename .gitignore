@@ -40,3 +40,4 @@ local.settings.json
 bin/
 obj/
 
+src/main/resources/application.properties

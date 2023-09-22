@@ -11,6 +11,14 @@ public class CreateOrg {
     @Pattern(regexp = "^[a-zA-Z0-9\s]*$")
     private String orgName;
 
+    @NotBlank
+    public String industry;
+
+    @NotBlank
+    public String website;
+
+    public String description;
+
     public String getOrgName() {
         return orgName;
     }

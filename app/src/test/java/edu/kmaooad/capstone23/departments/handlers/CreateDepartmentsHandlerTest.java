@@ -1,5 +1,8 @@
 package edu.kmaooad.capstone23.departments.handlers;
 
+import edu.kmaooad.capstone23.orgs.commands.CreateOrg;
+import edu.kmaooad.capstone23.orgs.dal.OrgsRepository;
+import edu.kmaooad.capstone23.orgs.handlers.CreateOrgHandler;
 import jakarta.inject.Inject;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
@@ -8,16 +11,40 @@ import edu.kmaooad.capstone23.departments.dal.Department;
 import edu.kmaooad.capstone23.departments.dal.DepartmentsRepository;
 import edu.kmaooad.capstone23.departments.events.DepartmentCreated;
 import io.quarkus.test.junit.QuarkusTest;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
+
 @QuarkusTest
 public class CreateDepartmentsHandlerTest {
     @Inject
     CreateDepartmentHandler handler;
 
     @Inject
+    CreateOrgHandler orgHandler;
+
+    @Inject
     DepartmentsRepository departmentsRepository;
+
+    @Inject
+    OrgsRepository orgsRepository;
+
+    @BeforeEach
+    void setUp() {
+        createParentOrg();
+    }
+
+    @AfterEach
+    public void tearDown() {
+        orgsRepository.deleteAll();
+    }
+
+
+    private void createParentOrg() {
+        CreateOrg orgCommand = new CreateOrg();
+        orgCommand.setOrgName("NaUKMA");
+        orgCommand.industry = "Education";
+        orgCommand.website = "https://www.ukma.edu.ua/eng/";
+        orgHandler.handle(orgCommand);
+    }
 
     @Test
     @DisplayName("Create Departments: Basic successful handling when parent is set correctly")
