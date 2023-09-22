@@ -9,6 +9,7 @@ import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
 
+import java.util.Optional;
 @RequestScoped
 public class DeleteExtraActivityHandler implements CommandHandler<DeleteExtraActivity, ExtraActivityDeleted> {
 
