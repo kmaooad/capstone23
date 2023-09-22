@@ -6,6 +6,8 @@ import org.bson.types.ObjectId;
 
 import java.util.Optional;
 
+import java.util.List;
+
 @ApplicationScoped
 public class OrgsRepository implements PanacheMongoRepository<Org> {
 
@@ -23,5 +25,10 @@ public class OrgsRepository implements PanacheMongoRepository<Org> {
     public Org insert(Org org){
         persist(org);
         return org;
+    }
+
+    public List<Org> bulkInsert(List<Org> ogrs) {
+      persist(ogrs.stream());
+      return ogrs;
     }
 }
