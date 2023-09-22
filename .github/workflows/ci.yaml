@@ -12,7 +12,6 @@ env:
   PACKAGE_DIRECTORY: "./app" # set this to the directory which contains pom.xml file
   JAVA_VERSION: "17" # set this to the java version to use
   QUARKUS_MONGODB_CONNECTION_STRING: ${{ secrets.QUARKUS_MONGODB_CONNECTION_STRING }}
-
 jobs:
   build-and-test:
     runs-on: windows-latest
