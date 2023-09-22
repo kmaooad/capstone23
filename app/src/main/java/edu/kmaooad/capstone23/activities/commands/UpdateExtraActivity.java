@@ -9,7 +9,9 @@ public class UpdateExtraActivity {
     public UpdateExtraActivity(ObjectId id) {
         this.id = id;
     }
+    public UpdateExtraActivity() {
 
+    }
     public void setName(String name) {
         this.name = name;
     }
