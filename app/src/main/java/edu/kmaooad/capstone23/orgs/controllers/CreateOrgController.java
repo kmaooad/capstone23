@@ -11,6 +11,10 @@ import jakarta.ws.rs.Path;
 
 @Path("/orgs/create")
 @APIResponse(responseCode = "200", content = {
-        @Content(mediaType = "application/json", schema = @Schema(implementation = OrgCreated.class)) })
+    @Content(
+        mediaType = "application/json",
+        schema = @Schema(implementation = OrgCreated.class)
+    )}
+)
 public class CreateOrgController extends TypicalController<CreateOrg, OrgCreated> {
 }
