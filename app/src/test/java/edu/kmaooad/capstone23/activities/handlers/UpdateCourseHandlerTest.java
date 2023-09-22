@@ -18,13 +18,18 @@ import java.util.Optional;
 
 @QuarkusTest
 public class UpdateCourseHandlerTest {
-    private ObjectId idToUpdate;
+    @Inject
+    CourseRepository courseRepository;
 
+    @BeforeEach
+    void deleteAllData() {
+        courseRepository.deleteAll();
+    }
+
+    private ObjectId idToUpdate;
 
     @Inject
     UpdateCourseHandler updateCourseHandler;
-    @Inject
-    CourseRepository courseRepository;
 
     @BeforeEach
     void setUp() {

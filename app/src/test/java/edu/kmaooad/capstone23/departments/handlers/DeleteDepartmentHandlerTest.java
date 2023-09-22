@@ -8,13 +8,15 @@ import edu.kmaooad.capstone23.departments.dal.DepartmentsRepository;
 import edu.kmaooad.capstone23.departments.events.DepartmentDeleted;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 @QuarkusTest
 public class DeleteDepartmentHandlerTest {
+    @BeforeAll
+    static void deleteAllData() {
+        DepartmentsRepository repository = new DepartmentsRepository();
+        repository.deleteAll();
+    }
     private String departmentId;
 
     @Inject

@@ -1,7 +1,10 @@
 package edu.kmaooad.capstone23.cvs.controllers;
 
+import edu.kmaooad.capstone23.competences.dal.TopicRepository;
 import edu.kmaooad.capstone23.cvs.dal.CV;
+import edu.kmaooad.capstone23.cvs.dal.CVRepository;
 import io.quarkus.test.junit.QuarkusTest;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Named;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -17,6 +20,11 @@ import static io.restassured.RestAssured.given;
 
 @QuarkusTest
 public class CreateCVControllerTests {
+    @BeforeAll
+    static void deleteAllData() {
+        CVRepository repository = new CVRepository();
+        repository.deleteAll();
+    }
 
     @ParameterizedTest
     @MethodSource("validCVProvider")

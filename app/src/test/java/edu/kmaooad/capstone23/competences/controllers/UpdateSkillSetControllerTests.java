@@ -2,9 +2,11 @@ package edu.kmaooad.capstone23.competences.controllers;
 
 import edu.kmaooad.capstone23.competences.dal.SkillSet;
 import edu.kmaooad.capstone23.competences.dal.SkillSetRepository;
+import edu.kmaooad.capstone23.competences.dal.SkillsRepository;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,6 +19,11 @@ import static org.hamcrest.Matchers.equalTo;
 
 @QuarkusTest
 public class UpdateSkillSetControllerTests {
+    @BeforeAll
+    static void deleteAllData() {
+        SkillsRepository repository = new SkillsRepository();
+        repository.deleteAll();
+    }
 
     @Inject
     SkillSetRepository repository;

@@ -4,18 +4,25 @@ import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.competences.commands.CreateSkill;
 import edu.kmaooad.capstone23.competences.commands.UpdateSkill;
+import edu.kmaooad.capstone23.competences.dal.SkillsRepository;
 import edu.kmaooad.capstone23.competences.events.SkillCreated;
 import edu.kmaooad.capstone23.competences.events.SkillUpdated;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
 
 @QuarkusTest
 public class UpdateSkillHandlerTest {
+    @BeforeAll
+    static void deleteAllData() {
+        SkillsRepository skillsRepository = new SkillsRepository();
+        skillsRepository.deleteAll();
+    }
 
     @Inject
     CommandHandler<UpdateSkill, SkillUpdated> updateHandler;

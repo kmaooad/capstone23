@@ -5,6 +5,7 @@ import edu.kmaooad.capstone23.competences.dal.TopicRepository;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,6 +18,11 @@ import static org.hamcrest.Matchers.notNullValue;
 
 @QuarkusTest
 public class DeleteTopicControllerTests {
+    @BeforeAll
+    static void deleteAllData() {
+        TopicRepository repository = new TopicRepository();
+        repository.deleteAll();
+    }
 
     private ObjectId idToDelete;
     private ObjectId parentId;

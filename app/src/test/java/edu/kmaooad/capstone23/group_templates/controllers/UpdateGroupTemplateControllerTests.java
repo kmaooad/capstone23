@@ -4,6 +4,7 @@ import edu.kmaooad.capstone23.group_templates.dal.GroupTemplate;
 import edu.kmaooad.capstone23.group_templates.dal.GroupTemplatesRepository;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -16,6 +17,11 @@ import static org.hamcrest.Matchers.notNullValue;
 
 @QuarkusTest
 public class UpdateGroupTemplateControllerTests {
+    @BeforeAll
+    static void deleteAllData() {
+        GroupTemplatesRepository repository = new GroupTemplatesRepository();
+        repository.deleteAll();
+    }
 
     @Inject
     GroupTemplatesRepository groupTemplatesRepository;

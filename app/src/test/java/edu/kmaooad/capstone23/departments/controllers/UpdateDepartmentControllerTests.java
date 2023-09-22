@@ -5,10 +5,7 @@ import edu.kmaooad.capstone23.departments.dal.DepartmentsRepository;
 import edu.kmaooad.capstone23.orgs.dal.OrgsRepository;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,6 +14,11 @@ import static io.restassured.RestAssured.given;
 
 @QuarkusTest
 public class UpdateDepartmentControllerTests {
+    @BeforeAll
+    static void deleteAllData() {
+        DepartmentsRepository repository = new DepartmentsRepository();
+        repository.deleteAll();
+    }
     private String idToUpdate;
 
     @Inject

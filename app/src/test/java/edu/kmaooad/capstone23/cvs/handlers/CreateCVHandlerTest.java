@@ -1,6 +1,8 @@
 package edu.kmaooad.capstone23.cvs.handlers;
 
+import edu.kmaooad.capstone23.cvs.dal.CVRepository;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
 import edu.kmaooad.capstone23.cvs.dal.CV;
@@ -12,6 +14,11 @@ import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 @QuarkusTest
 public class CreateCVHandlerTest {
+    @BeforeAll
+    static void deleteAllData() {
+        CVRepository repository = new CVRepository();
+        repository.deleteAll();
+    }
 
     @Inject
     CommandHandler<CreateCV, CVCreated> handler;

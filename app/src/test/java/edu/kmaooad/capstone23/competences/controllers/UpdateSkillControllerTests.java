@@ -1,6 +1,8 @@
 package edu.kmaooad.capstone23.competences.controllers;
 
+import edu.kmaooad.capstone23.competences.dal.SkillsRepository;
 import io.quarkus.test.junit.QuarkusTest;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -11,6 +13,11 @@ import static io.restassured.RestAssured.given;
 
 @QuarkusTest
 public class UpdateSkillControllerTests {
+    @BeforeAll
+    static void deleteAllData() {
+        SkillsRepository repository = new SkillsRepository();
+        repository.deleteAll();
+    }
 
     @Test
     @DisplayName("Update Skill: Basic")

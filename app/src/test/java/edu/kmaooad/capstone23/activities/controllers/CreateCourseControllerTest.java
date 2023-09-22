@@ -1,6 +1,9 @@
 package edu.kmaooad.capstone23.activities.controllers;
 
+import edu.kmaooad.capstone23.activities.dal.CourseRepository;
 import io.quarkus.test.junit.QuarkusTest;
+import jakarta.inject.Inject;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -11,6 +14,14 @@ import static io.restassured.RestAssured.given;
 
 @QuarkusTest
 public class CreateCourseControllerTest {
+    @Inject
+    CourseRepository courseRepository;
+
+    @BeforeEach
+    void deleteAllData() {
+        courseRepository.deleteAll();
+    }
+
     @Test
     @DisplayName("Create Course successful")
     public void testCourseCreation() {
@@ -18,12 +29,12 @@ public class CreateCourseControllerTest {
         jsonAsMap.put("name", "Linear algebra");
 
         given()
-            .contentType("application/json")
-            .body(jsonAsMap)
-            .when()
-            .post("/activities/courses/create")
-            .then()
-            .statusCode(200);
+                .contentType("application/json")
+                .body(jsonAsMap)
+                .when()
+                .post("/activities/courses/create")
+                .then()
+                .statusCode(200);
     }
 
     @Test
@@ -33,11 +44,11 @@ public class CreateCourseControllerTest {
         jsonAsMap.put("name", "");
 
         given()
-            .contentType("application/json")
-            .body(jsonAsMap)
-            .when()
-            .post("/activities/courses/create")
-            .then()
-            .statusCode(400);
+                .contentType("application/json")
+                .body(jsonAsMap)
+                .when()
+                .post("/activities/courses/create")
+                .then()
+                .statusCode(400);
     }
 }

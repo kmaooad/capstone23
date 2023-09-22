@@ -5,6 +5,7 @@ import edu.kmaooad.capstone23.cvs.dal.CVRepository;
 import edu.kmaooad.capstone23.cvs.dal.JobPreference;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -16,6 +17,11 @@ import static io.restassured.RestAssured.given;
 
 @QuarkusTest
 public class CreateJobPrefControllerTests {
+    @BeforeAll
+    static void deleteAllData() {
+        CVRepository repository = new CVRepository();
+        repository.deleteAll();
+    }
 
     @Inject
     CVRepository cvRepository;

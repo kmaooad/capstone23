@@ -1,7 +1,9 @@
 package edu.kmaooad.capstone23.competences.controllers;
 
+import edu.kmaooad.capstone23.competences.dal.SkillsRepository;
 import io.quarkus.test.junit.QuarkusTest;
 import org.bson.types.ObjectId;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -12,6 +14,13 @@ import static io.restassured.RestAssured.given;
 
 @QuarkusTest
 public class CreateSkillsControllerTests {
+
+    @BeforeAll
+    static void deleteAllData() {
+        SkillsRepository skillsRepository = new SkillsRepository();
+        skillsRepository.deleteAll();
+    }
+
 
     @Test
     @DisplayName("Create Skill: Basic")
@@ -42,8 +51,7 @@ public class CreateSkillsControllerTests {
                 .then()
                 .statusCode(200)
                 .extract()
-                .path("skill")
-                ;
+                .path("skill");
 
         Map<String, Object> jsonAsMap2 = new HashMap<>();
         jsonAsMap2.put("skillName", "fruits");
@@ -56,7 +64,7 @@ public class CreateSkillsControllerTests {
                 .post("/skills/create")
                 .then()
                 .statusCode(200)
-                ;
+        ;
 
     }
 

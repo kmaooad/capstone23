@@ -10,15 +10,17 @@ import edu.kmaooad.capstone23.competences.handlers.DeleteTopicHandler;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.util.Optional;
 
 @QuarkusTest
 public class DeleteTopicHandlerTest {
+    @BeforeAll
+    static void deleteAllData() {
+        TopicRepository repository = new TopicRepository();
+        repository.deleteAll();
+    }
     private ObjectId idToDelete;
     private ObjectId parentId;
     private ObjectId idWithParent;
