@@ -1,4 +1,4 @@
-package edu.kmaooad.capstone23.topics.controllers;
+package edu.kmaooad.capstone23.competences.topics.controllers;
 
 import edu.kmaooad.capstone23.competences.dal.Topic;
 import edu.kmaooad.capstone23.competences.dal.TopicRepository;
