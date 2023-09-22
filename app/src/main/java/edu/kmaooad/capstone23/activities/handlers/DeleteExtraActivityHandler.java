@@ -8,7 +8,7 @@ import edu.kmaooad.capstone23.common.Result;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
-
+import edu.kmaooad.capstone23.common.ErrorCode;
 import java.util.Optional;
 @RequestScoped
 public class DeleteExtraActivityHandler implements CommandHandler<DeleteExtraActivity, ExtraActivityDeleted> {
@@ -25,7 +25,7 @@ public class DeleteExtraActivityHandler implements CommandHandler<DeleteExtraAct
 
 
 
-        repository.delete(course);
+        repository.delete(course.get());
         var result = new ExtraActivityDeleted(activity.getId());
         return new Result<>(result);
     }
