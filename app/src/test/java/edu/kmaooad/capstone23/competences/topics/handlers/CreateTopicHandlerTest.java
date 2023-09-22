@@ -1,4 +1,4 @@
-package edu.kmaooad.capstone23.topics.handlers;
+package edu.kmaooad.capstone23.competences.topics.handlers;
 
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
