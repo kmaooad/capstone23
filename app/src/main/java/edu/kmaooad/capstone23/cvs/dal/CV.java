@@ -9,7 +9,6 @@ import java.time.LocalDateTime;
 public class CV {
 
     public ObjectId id;
-//    public Student student;
 
     public LocalDateTime dateTimeCreated;
     public String textInfo;

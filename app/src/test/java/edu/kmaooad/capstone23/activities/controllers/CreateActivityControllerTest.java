@@ -3,6 +3,8 @@ package edu.kmaooad.capstone23.activities.controllers;
 import io.quarkus.test.junit.QuarkusTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,9 +13,13 @@ import static io.restassured.RestAssured.given;
 
 @QuarkusTest
 public class CreateActivityControllerTest {
+
+
+
+
     @Test
     @DisplayName("Create activity successful")
-    public void testCourseCreation() {
+    public void testActivityCreation() {
         Map<String, Object> jsonAsMap = new HashMap<>();
         jsonAsMap.put("name", "Sport");
 
@@ -28,7 +34,7 @@ public class CreateActivityControllerTest {
 
     @Test
     @DisplayName("Create activity name validation")
-    public void testEmptyCourseCreate() {
+    public void testEmptyActivityCreate() {
         Map<String, Object> jsonAsMap = new HashMap<>();
         jsonAsMap.put("name", "");
 
