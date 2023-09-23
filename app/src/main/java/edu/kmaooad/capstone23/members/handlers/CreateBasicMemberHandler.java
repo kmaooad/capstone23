@@ -7,6 +7,7 @@ import edu.kmaooad.capstone23.members.commands.CreateBasicMember;
 import edu.kmaooad.capstone23.members.dal.Member;
 import edu.kmaooad.capstone23.members.dal.MembersRepository;
 import edu.kmaooad.capstone23.members.events.BasicMemberCreated;
+import edu.kmaooad.capstone23.members.exceptions.UniquenessViolationException;
 import edu.kmaooad.capstone23.orgs.dal.Org;
 import edu.kmaooad.capstone23.orgs.dal.OrgsRepository;
 import jakarta.enterprise.context.RequestScoped;
@@ -38,6 +39,8 @@ public class CreateBasicMemberHandler implements CommandHandler<CreateBasicMembe
             return new Result<>(result);
         } catch (IllegalArgumentException e) {
             return new Result<>(ErrorCode.VALIDATION_FAILED, "Invalid org id provided");
+        } catch (UniquenessViolationException e) {
+            return new Result<>(ErrorCode.VALIDATION_FAILED, "Email is not unique");
         }
     }
 }

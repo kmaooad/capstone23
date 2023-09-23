@@ -23,7 +23,7 @@ public class DeleteCVHandlerTest {
     @Inject
     CommandHandler<DeleteCV, CVDeleted> deleteHandler;
 
-    String getCreateCvId(){
+    ObjectId getCreateCvId(){
         CreateCV command = new CreateCV();
         command.setDateTimeCreated(LocalDateTime.now());
         command.setTextInfo("some info about a student");
@@ -37,7 +37,7 @@ public class DeleteCVHandlerTest {
     @Test
     @DisplayName("Delete Cvs: successful handling")
     void testSuccessfulHandling() {
-        ObjectId cvId = new ObjectId(getCreateCvId());
+        ObjectId cvId = getCreateCvId();
         DeleteCV command = new DeleteCV();
         command.setId(cvId);
 
@@ -45,7 +45,7 @@ public class DeleteCVHandlerTest {
 
         Assertions.assertTrue(result.isSuccess());
         Assertions.assertNotNull(result.getValue());
-        Assertions.assertFalse(result.getValue().getCVId().isEmpty());
+        Assertions.assertNotNull(result.getValue().getCVId());
     }
 
 }

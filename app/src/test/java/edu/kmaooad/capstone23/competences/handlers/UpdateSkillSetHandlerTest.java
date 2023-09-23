@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 @QuarkusTest
@@ -39,6 +40,8 @@ public class UpdateSkillSetHandlerTest {
         UpdateSkillSet command = new UpdateSkillSet();
         command.setSkillSetId(idToUpdate.toString());
         command.setSkillSetName("HardSkills");
+        command.setSkillIds(command.getSkillIds());
+
 
         Result<SkillSetUpdated> result = handler.handle(command);
 
