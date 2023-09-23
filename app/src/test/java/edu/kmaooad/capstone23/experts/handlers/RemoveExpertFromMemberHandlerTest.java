@@ -60,6 +60,8 @@ public class RemoveExpertFromMemberHandlerTest {
     private ObjectId createExpertMember() {
         CreateOrg orgCommand = new CreateOrg();
         orgCommand.setOrgName("Dobra Komanda");
+        orgCommand.industry = "Some random industry";
+        orgCommand.website = "Some random website";
         Result<OrgCreated> orgResult = orgHandler.handle(orgCommand);
 
         CreateBasicMember memberCommand = new CreateBasicMember();
@@ -77,6 +79,8 @@ public class RemoveExpertFromMemberHandlerTest {
     private ObjectId createBasicMember() {
         CreateOrg orgCommand = new CreateOrg();
         orgCommand.setOrgName("Pohana Komanda");
+        orgCommand.industry = "Some random industry";
+        orgCommand.website = "Some random website";
         Result<OrgCreated> orgResult = orgHandler.handle(orgCommand);
 
         CreateBasicMember memberCommand = new CreateBasicMember();

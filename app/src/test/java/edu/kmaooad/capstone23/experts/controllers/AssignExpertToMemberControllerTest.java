@@ -31,6 +31,8 @@ public class AssignExpertToMemberControllerTest {
     private ObjectId createTestOrg() {
         Map<String, Object> jsonAsMap = new HashMap<>();
         jsonAsMap.put("orgName", "Persyk Inc");
+        jsonAsMap.put("industry", "Rand industry");
+        jsonAsMap.put("website", "Rand website");
 
         String objectId = given()
                 .contentType("application/json")

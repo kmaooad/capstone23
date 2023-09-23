@@ -62,12 +62,16 @@ public class AssignExpertToMemberHandlerTest {
     private ObjectId createTestMember() {
         CreateOrg orgCommand = new CreateOrg();
         orgCommand.setOrgName("Super Duper Create Team");
+        orgCommand.industry = "Some random industry";
+        orgCommand.website = "Some random website";
 
         CreateBasicMember memberCommand = new CreateBasicMember();
         memberCommand.setFirstName("First");
         memberCommand.setLastName("Last");
         memberCommand.setEmail("mail@test.com");
         memberCommand.setIsExpert("false");
+        System.out.println(orgHandler.handle(orgCommand).getErrorCode());
+        System.out.println(orgHandler.handle(orgCommand).getMessage());
         memberCommand.setOrgId(new ObjectId(orgHandler.handle(orgCommand).getValue().getOrgId()));
 
         return new ObjectId(memberCreatedCommandHandler.handle(memberCommand).getValue().getMemberId());
@@ -76,6 +80,8 @@ public class AssignExpertToMemberHandlerTest {
     private ObjectId createTestExpertMember() {
         CreateOrg orgCommand = new CreateOrg();
         orgCommand.setOrgName("Super Duper Create Team");
+        orgCommand.industry = "Some random industry";
+        orgCommand.website = "Some random website";
 
         CreateBasicMember memberCommand = new CreateBasicMember();
         memberCommand.setFirstName("First");

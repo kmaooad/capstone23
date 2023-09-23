@@ -84,6 +84,8 @@ public class RemoveExpertFromMemberControllerTest {
     private ObjectId createTestOrg() {
         Org org = new Org();
         org.name = "Brovary Club";
+        org.industry = "Some random industry";
+        org.website = "Some random website";
         orgsRepository.insert(org);
         return org.id;
     }
