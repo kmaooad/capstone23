@@ -14,6 +14,7 @@ public class CreateJob {
     @Pattern(regexp = "^[a-zA-Z0-9\s]*$")
     private String name;
     private boolean active;
+
     private List<ObjectId> competencesId;
     private List<ObjectId> activitiesId;
 
@@ -21,6 +22,9 @@ public class CreateJob {
     public CreateJob(String name, boolean active) {
         this.name = name;
         this.active = active;
+
+        this.competencesId = new ArrayList<>();
+        this.activitiesId = new ArrayList<>();
     }
 
     public ObjectId getId() {
