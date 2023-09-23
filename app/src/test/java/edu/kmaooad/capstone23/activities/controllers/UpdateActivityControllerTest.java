@@ -37,15 +37,19 @@ public class UpdateActivityControllerTest {
 
     @Test
     @DisplayName("Update Activity: Non-Existent Activity")
-    public void testUpdateNonExistentActivity(Map<String, Object> jsonAsMap) {
-        given().contentType("application/json")
+    public void testUpdateNonExistentActivity() {
+        Map<String, Object> jsonAsMap = new HashMap<>();
+        jsonAsMap.put("id", "nonExistentId");
+        jsonAsMap.put("name", "Updated Activity");
+
+        given()
+                .contentType("application/json")
                 .body(jsonAsMap)
                 .when()
-                .post("/activities/extra/create")
+                .post("/activities/extra/update")
                 .then()
                 .statusCode(400);
     }
-
 
 
 
