@@ -18,6 +18,8 @@ public class BanEntityControllerTests {
     public String createOrg() {
         Map<String, Object> jsonAsMap = new HashMap<>();
         jsonAsMap.put("orgName", "NaUKMA");
+        jsonAsMap.put("industry", "Education");
+        jsonAsMap.put("website", "https://www.ukma.edu.ua/eng/");
 
         return given().contentType("application/json").body(jsonAsMap).when().post("/orgs/create").then().statusCode(200).extract().path("orgId");
     }
@@ -42,16 +44,11 @@ public class BanEntityControllerTests {
     }
 
     public String createEntity(BannedEntityType entityType, String parentId) {
-        switch (entityType) {
-            case Organization:
-                return createOrg();
-            case Department:
-                return createDepartment(parentId);
-            case Member:
-                return createMember(parentId);
-            default:
-                return null;
-        }
+        return switch (entityType) {
+            case Organization -> createOrg();
+            case Department -> createDepartment(parentId);
+            case Member -> createMember(parentId);
+        };
     }
 
     public void testSuccessfulEntityBan(BannedEntityType entityType, String entityId) {

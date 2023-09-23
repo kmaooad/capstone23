@@ -128,6 +128,8 @@ public class UnbanEntityHandlerTests {
     String createOrg() {
         var command = new CreateOrg();
         command.setOrgName("NaUKMA");
+        command.industry = "Education";
+        command.website = "https://www.ukma.edu.ua/eng/";
 
         Result<OrgCreated> result = createOrgHandler.handle(command);
 

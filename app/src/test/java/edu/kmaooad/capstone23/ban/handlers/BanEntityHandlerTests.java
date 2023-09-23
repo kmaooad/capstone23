@@ -113,15 +113,17 @@ public class BanEntityHandlerTests {
     }
 
     String createEntity(BannedEntityType entityType) {
-        if (entityType == BannedEntityType.Organization) {
-            return createOrg();
-        } else if (entityType == BannedEntityType.Department) {
-            createOrg();
-            return createDepartment("NaUKMA");
-        } else {
-            var orgId = createOrg();
-            return createMember(new ObjectId(orgId));
-        }
+        return switch (entityType) {
+            case Organization -> createOrg();
+            case Department -> {
+                createOrg();
+                yield createDepartment("NaUKMA");
+            }
+            case Member -> {
+                var orgId = createOrg();
+                yield createMember(new ObjectId(orgId));
+            }
+        };
     }
 
     String createMember(ObjectId orgId) {
@@ -158,9 +160,12 @@ public class BanEntityHandlerTests {
     String createOrg() {
         var command = new CreateOrg();
         command.setOrgName("NaUKMA");
+        command.industry = "Education";
+        command.website = "https://www.ukma.edu.ua/eng/";
 
         Result<OrgCreated> result = createOrgHandler.handle(command);
 
+        System.out.println(result.getMessage());
         Assertions.assertTrue(result.isSuccess());
         Assertions.assertNotNull(result.getValue());
         Assertions.assertFalse(result.getValue().getOrgId().isEmpty());
