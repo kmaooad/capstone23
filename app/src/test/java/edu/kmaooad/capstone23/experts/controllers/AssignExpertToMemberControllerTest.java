@@ -3,6 +3,8 @@ package edu.kmaooad.capstone23.experts.controllers;
 import io.quarkus.test.junit.QuarkusTest;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
+
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -52,7 +54,7 @@ public class AssignExpertToMemberControllerTest {
         jsonAsMap.put("firstName", "Bob");
         jsonAsMap.put("lastName", "Kvasolia");
         jsonAsMap.put("orgId", createTestOrg().toString());
-        jsonAsMap.put("email", "bob@ukr.net");
+        jsonAsMap.put("email", randomEmail());
         jsonAsMap.put("isExpert", "false");
 
         String objectId = given()
@@ -66,5 +68,19 @@ public class AssignExpertToMemberControllerTest {
                 .path("memberId");
 
         return new ObjectId(objectId);
+    }
+
+    private String randomEmail() {
+        int leftLimit = 97; // letter 'a'
+        int rightLimit = 122; // letter 'z'
+        int targetStringLength = 10;
+        Random random = new Random();
+
+        String generatedString = random.ints(leftLimit, rightLimit + 1)
+                .limit(targetStringLength)
+                .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+                .toString();
+
+        return generatedString + "@mail.com";
     }
 }

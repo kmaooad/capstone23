@@ -15,6 +15,8 @@ import org.bson.types.ObjectId;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.Random;
+
 @QuarkusTest
 public class AssignExpertToMemberHandlerTest {
 
@@ -68,10 +70,8 @@ public class AssignExpertToMemberHandlerTest {
         CreateBasicMember memberCommand = new CreateBasicMember();
         memberCommand.setFirstName("First");
         memberCommand.setLastName("Last");
-        memberCommand.setEmail("mail@test.com");
+        memberCommand.setEmail(randomEmail());
         memberCommand.setIsExpert("false");
-        System.out.println(orgHandler.handle(orgCommand).getErrorCode());
-        System.out.println(orgHandler.handle(orgCommand).getMessage());
         memberCommand.setOrgId(new ObjectId(orgHandler.handle(orgCommand).getValue().getOrgId()));
 
         return new ObjectId(memberCreatedCommandHandler.handle(memberCommand).getValue().getMemberId());
@@ -86,10 +86,24 @@ public class AssignExpertToMemberHandlerTest {
         CreateBasicMember memberCommand = new CreateBasicMember();
         memberCommand.setFirstName("First");
         memberCommand.setLastName("Last");
-        memberCommand.setEmail("mail@test.com");
+        memberCommand.setEmail(randomEmail());
         memberCommand.setOrgId(new ObjectId(orgHandler.handle(orgCommand).getValue().getOrgId()));
         memberCommand.setIsExpert("true");
 
         return new ObjectId(memberCreatedCommandHandler.handle(memberCommand).getValue().getMemberId());
+    }
+
+    private String randomEmail() {
+        int leftLimit = 97; // letter 'a'
+        int rightLimit = 122; // letter 'z'
+        int targetStringLength = 10;
+        Random random = new Random();
+
+        String generatedString = random.ints(leftLimit, rightLimit + 1)
+                .limit(targetStringLength)
+                .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+                .toString();
+
+        return generatedString + "@mail.com";
     }
 }
