@@ -18,7 +18,7 @@ public class UpdateJobPrefHandler implements CommandHandler<UpdateJobPref, JobPr
 
     @Override
     public Result<JobPrefUpdated> handle(UpdateJobPref command) {
-        CV cv = cvRepository.findById(command.getCvId());
+        CV cv = cvRepository.findById(new ObjectId(command.getCvId()));
 
         if (command.getCategory() != null)
             cv.preference.category = command.getCategory();
@@ -31,7 +31,7 @@ public class UpdateJobPrefHandler implements CommandHandler<UpdateJobPref, JobPr
 
         cvRepository.update(cv);
 
-        JobPrefUpdated result = new JobPrefUpdated(cv.id);
+        JobPrefUpdated result = new JobPrefUpdated(cv.id.toString());
         return new Result<>(result);
     }
 }

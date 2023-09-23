@@ -44,7 +44,7 @@ public class ReadCVHandlerTest {
         createCommand1.setVisibility(CV.Visibility.VISIBLE);
         Result<CVCreated> resultreate1 = createHandler.handle(createCommand1);
 
-        ObjectId cvId1 = resultreate1.getValue().getCVId();
+        ObjectId cvId1 = new ObjectId(resultreate1.getValue().getCVId());
         CreateJobPref command1 = new CreateJobPref();
         command1.setCvId(cvId1);
         command1.setLocation("Kyiv");
@@ -59,7 +59,7 @@ public class ReadCVHandlerTest {
         createCommand2.setVisibility(CV.Visibility.VISIBLE);
         Result<CVCreated> resultreate2 = createHandler.handle(createCommand2);
 
-        ObjectId cvId2 = resultreate2.getValue().getCVId();
+        ObjectId cvId2 = new ObjectId(resultreate2.getValue().getCVId());
         CreateJobPref command2 = new CreateJobPref();
         command2.setCvId(cvId2);
         command2.setLocation("Lviv");
@@ -74,7 +74,7 @@ public class ReadCVHandlerTest {
         createCommand3.setVisibility(CV.Visibility.VISIBLE);
         Result<CVCreated> resultreate3 = createHandler.handle(createCommand3);
 
-        ObjectId cvId3 = resultreate3.getValue().getCVId();
+        ObjectId cvId3 = new ObjectId(resultreate3.getValue().getCVId());
         CreateJobPref command3 = new CreateJobPref();
         command3.setCvId(cvId3);
         command3.setLocation("Lviv");
@@ -89,7 +89,7 @@ public class ReadCVHandlerTest {
         createCommand4.setVisibility(CV.Visibility.VISIBLE);
         Result<CVCreated> resultreate4 = createHandler.handle(createCommand4);
 
-        ObjectId cvId4 = resultreate4.getValue().getCVId();
+        ObjectId cvId4 = new ObjectId(resultreate4.getValue().getCVId());
         CreateJobPref command4 = new CreateJobPref();
         command4.setCvId(cvId4);
         command4.setLocation("Lviv");

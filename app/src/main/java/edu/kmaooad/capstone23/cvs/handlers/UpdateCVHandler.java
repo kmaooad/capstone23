@@ -18,7 +18,7 @@ public class UpdateCVHandler implements CommandHandler<UpdateCV, CVUpdated> {
 
     @Override
     public Result<CVUpdated> handle(UpdateCV command) {
-        CV cv = cvRepository.findById(command.getCvId());
+        CV cv = cvRepository.findById(new ObjectId(command.getCvId()));
 
         if (command.getStatus() != null)
             cv.status = command.getStatus();
@@ -31,7 +31,7 @@ public class UpdateCVHandler implements CommandHandler<UpdateCV, CVUpdated> {
 
         cvRepository.update(cv);
 
-        CVUpdated result = new CVUpdated(cv.id);
+        CVUpdated result = new CVUpdated(cv.id.toString());
         return new Result<>(result);
     }
 }

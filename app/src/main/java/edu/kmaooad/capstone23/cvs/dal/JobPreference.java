@@ -1,16 +1,12 @@
 package edu.kmaooad.capstone23.cvs.dal;
 
-import org.bson.types.ObjectId;
-
-import java.util.Set;
-
 public class JobPreference {
 
     public String location;
     public String industry;
     public Category category;
 
-    public Set<ObjectId> skills;
+//    private List<Competence> competences;
 
     public enum Category {
         FULL_TIME,

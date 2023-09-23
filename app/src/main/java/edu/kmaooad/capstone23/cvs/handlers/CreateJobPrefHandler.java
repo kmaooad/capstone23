@@ -27,7 +27,7 @@ public class CreateJobPrefHandler implements CommandHandler<CreateJobPref, JobPr
         cv.preference = pref;
         cvRepository.update(cv);
 
-        JobPrefCreated result = new JobPrefCreated(cv.id);
+        JobPrefCreated result = new JobPrefCreated(cv.id.toString());
         return new Result<>(result);
     }
 

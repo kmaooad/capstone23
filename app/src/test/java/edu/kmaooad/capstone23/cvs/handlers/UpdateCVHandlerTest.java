@@ -5,8 +5,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
 import edu.kmaooad.capstone23.cvs.dal.CV;
 import java.time.LocalDateTime;
-import java.util.HashSet;
-
 import edu.kmaooad.capstone23.common.*;
 import edu.kmaooad.capstone23.cvs.commands.CreateCV;
 import edu.kmaooad.capstone23.cvs.events.CVCreated;
@@ -25,7 +23,7 @@ public class UpdateCVHandlerTest {
     @Inject
     CommandHandler<UpdateCV, CVUpdated> updateHandler;
 
-    ObjectId getCreateCvId(){
+    String getCreateCvId(){
         CreateCV command = new CreateCV();
         command.setDateTimeCreated(LocalDateTime.now());
         command.setTextInfo("some info about a student");
@@ -44,7 +42,6 @@ public class UpdateCVHandlerTest {
         command.setStatus(CV.Status.CLOSED);
         command.setVisibility(CV.Visibility.HIDDEN);
         command.setTextInfo("new info");
-        command.setSkills(new HashSet<>());
 
         Result<CVUpdated> result = updateHandler.handle(command);
 

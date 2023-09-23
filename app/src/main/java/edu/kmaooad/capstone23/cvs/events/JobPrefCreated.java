@@ -1,16 +1,14 @@
 package edu.kmaooad.capstone23.cvs.events;
 
-import org.bson.types.ObjectId;
-
 public class JobPrefCreated {
 
-    private ObjectId cvId;
+    private String cvId;
 
-    public ObjectId getCVId() {
+    public String getCVId() {
         return cvId;
     }
 
-    public JobPrefCreated(ObjectId cvId) {
+    public JobPrefCreated(String cvId) {
         this.cvId = cvId;
     }
 

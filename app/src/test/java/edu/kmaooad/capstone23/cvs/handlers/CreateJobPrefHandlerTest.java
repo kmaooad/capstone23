@@ -24,7 +24,7 @@ public class CreateJobPrefHandlerTest {
     @Inject
     CommandHandler<CreateJobPref, JobPrefCreated> createJobPrefHandler;
 
-    ObjectId getCreateCvId(){
+    String getCreateCvId(){
         CreateCV command = new CreateCV();
         command.setDateTimeCreated(LocalDateTime.now());
         command.setTextInfo("some info about a student");
@@ -38,7 +38,7 @@ public class CreateJobPrefHandlerTest {
     @Test
     @DisplayName("Create job preferences: successful handling")
     void testSuccessfulHandling() {
-        ObjectId cvId = getCreateCvId();
+        ObjectId cvId = new ObjectId(getCreateCvId());
         CreateJobPref command = new CreateJobPref();
         command.setCvId(cvId);
         command.setLocation("Kyiv");

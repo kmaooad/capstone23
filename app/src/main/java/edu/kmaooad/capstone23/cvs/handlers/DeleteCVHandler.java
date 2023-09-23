@@ -28,7 +28,7 @@ public class DeleteCVHandler implements CommandHandler<DeleteCV, CVDeleted> {
 
         cvRepository.delete(cv);
 
-        return new Result<>(new CVDeleted(cv.id));
+        return new Result<>(new CVDeleted(cv.id.toHexString()));
     }
 
 }
