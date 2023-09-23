@@ -29,7 +29,7 @@ public class DeleteJobPrefHandlerTest {
     @Inject
     CommandHandler<CreateJobPref, JobPrefCreated> createJobPrefHandler;
 
-    String getCreateCvId(){
+    ObjectId getCreateCvId(){
         CreateCV command = new CreateCV();
         command.setDateTimeCreated(LocalDateTime.now());
         command.setTextInfo("some info about a student");
@@ -45,7 +45,7 @@ public class DeleteJobPrefHandlerTest {
     @Test
     @DisplayName("Delete job preferences: successful handling")
     void testSuccessfulHandling() {
-        ObjectId cvId = new ObjectId(getCreateCvId());
+        ObjectId cvId = getCreateCvId();
         CreateJobPref command = new CreateJobPref();
         command.setCvId(cvId);
         command.setLocation("Kyiv");
