@@ -1,4 +1,4 @@
-package edu.kmaooad.capstone23.jobs.handlers;
+package edu.kmaooad.capstone23.orgs.jobs.handlers;
 
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.Result;
