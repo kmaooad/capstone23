@@ -28,7 +28,7 @@ public class CreateDepartmentHandler implements CommandHandler<CreateDepartment,
 
         Org parent = orgsRepository.findByName(command.getParent());
         if (parent == null) {
-            return new Result(ErrorCode.EXCEPTION, "Parent not found");
+            return new Result<>(ErrorCode.EXCEPTION, "Parent not found");
         }
         department.parent = parent.name;
 
@@ -36,6 +36,6 @@ public class CreateDepartmentHandler implements CommandHandler<CreateDepartment,
 
         DepartmentCreated result = new DepartmentCreated(department.id.toString());
 
-        return new Result(result);
+        return new Result<>(result);
     }
 }
