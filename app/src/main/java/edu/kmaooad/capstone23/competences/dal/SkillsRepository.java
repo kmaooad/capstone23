@@ -1,6 +1,7 @@
 package edu.kmaooad.capstone23.competences.dal;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.bson.types.ObjectId;
 
@@ -10,6 +11,14 @@ import jakarta.enterprise.context.ApplicationScoped;
 @ApplicationScoped
 public class SkillsRepository implements PanacheMongoRepository<Skill> {
 
+    public Optional<Skill> findById(String id) {
+        try {
+            var objectId = new ObjectId(id);
+            return findByIdOptional(objectId);
+        } catch (Exception e) {
+            return Optional.empty();
+        }
+    }
 
     public Skill insert(Skill skill) throws IllegalArgumentException {
         if(skill.parentSkill != null && findByIdOptional(skill.parentSkill).isEmpty())
