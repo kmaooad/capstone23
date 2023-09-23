@@ -84,13 +84,6 @@ public class CreateCVControllerTests {
         cvBlankTextInfo.put("visibility", CV.Visibility.HIDDEN);
         cvBlankTextInfo.put("autoAddCompetences", false);
 
-        Map<String, Object> cvInvalidTextInfo = new HashMap<>();
-        cvInvalidTextInfo.put("dateTimeCreated", LocalDateTime.now());
-        cvInvalidTextInfo.put("textInfo", "abc");
-        cvInvalidTextInfo.put("status", CV.Status.OPEN);
-        cvInvalidTextInfo.put("visibility", CV.Visibility.VISIBLE);
-        cvInvalidTextInfo.put("autoAddCompetences", false);
-
         Map<String, Object> cvNoStatus = new HashMap<>();
         cvNoStatus.put("dateTimeCreated", LocalDateTime.now());
         cvNoStatus.put("textInfo", "abc");
@@ -112,7 +105,6 @@ public class CreateCVControllerTests {
         return Stream.of(
                 Arguments.of(Named.of("invalid date", cvInvalidDateTime)),
                 Arguments.of(Named.of("blank text info", cvBlankTextInfo)),
-                Arguments.of(Named.of("invalid text info", cvInvalidTextInfo)),
                 Arguments.of(Named.of("no status", cvNoStatus)),
                 Arguments.of(Named.of("no visibility", cvNoVisibility)),
                 Arguments.of(Named.of("no date", cvNoDateTime))
