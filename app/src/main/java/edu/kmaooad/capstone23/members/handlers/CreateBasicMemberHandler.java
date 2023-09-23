@@ -3,6 +3,8 @@ package edu.kmaooad.capstone23.members.handlers;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
+import edu.kmaooad.capstone23.experts.dal.Expert;
+import edu.kmaooad.capstone23.experts.dal.ExpertsRepository;
 import edu.kmaooad.capstone23.members.commands.CreateBasicMember;
 import edu.kmaooad.capstone23.members.dal.Member;
 import edu.kmaooad.capstone23.members.dal.MembersRepository;
@@ -19,7 +21,8 @@ import java.util.Optional;
 public class CreateBasicMemberHandler implements CommandHandler<CreateBasicMember, BasicMemberCreated> {
     @Inject
     MembersRepository membersRepository;
-
+    @Inject
+    ExpertsRepository expertsRepository;
     @Inject
     OrgsRepository orgsRepository;
 
@@ -31,10 +34,18 @@ public class CreateBasicMemberHandler implements CommandHandler<CreateBasicMembe
             member.lastName = command.getLastName();
             member.email = command.getEmail();
             member.orgId = command.getOrgId();
+            member.isExpert = Boolean.parseBoolean(command.getIsExpert());
             Optional<Org> memberOrg = orgsRepository.findByIdOptional(member.orgId);
             if (memberOrg.isEmpty())
                 return new Result<>(ErrorCode.VALIDATION_FAILED, "Organisation not found");
             membersRepository.insert(member);
+            if (member.isExpert) {
+                Expert expert = new Expert();
+                expert.memberId = member.id;
+                expert.name = member.firstName + " " + member.lastName;
+                expert.org = memberOrg.get();
+                expertsRepository.insert(expert);
+            }
             BasicMemberCreated result = new BasicMemberCreated(member.id.toString());
             return new Result<>(result);
         } catch (IllegalArgumentException e) {

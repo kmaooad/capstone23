@@ -22,7 +22,8 @@ public class CreateMembersHandlerBasicTest extends TestWithOrgSetUp {
         command.setFirstName("firstName");
         command.setLastName("lastName");
         command.setOrgId(createdOrgId);
-        command.setEmail("email@email123.com");
+        command.setEmail("email@email.com");
+        command.setIsExpert("false");
 
         Result<BasicMemberCreated> result = handler.handle(command);
 
@@ -38,6 +39,7 @@ public class CreateMembersHandlerBasicTest extends TestWithOrgSetUp {
         command.setLastName("lastName");
         command.setOrgId(createdOrgId);
         command.setEmail("email.com");
+        command.setIsExpert("false");
 
         Result<BasicMemberCreated> result = handler.handle(command);
 
