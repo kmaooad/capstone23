@@ -52,7 +52,6 @@ public class CreateDepartmentsHandlerTest {
         String parentOrgName = "NaUKMA";
         String departmentName = "FSNST";
 
-
         CreateDepartment command = new CreateDepartment();
         command.setName(departmentName);
         command.setParent(parentOrgName);
@@ -63,7 +62,7 @@ public class CreateDepartmentsHandlerTest {
         Assertions.assertNotNull(result.getValue());
 
         Department createdDepartment = departmentsRepository.findByName(departmentName);
-        Assertions.assertTrue(createdDepartment != null);
+        Assertions.assertNotNull(createdDepartment);
         Assertions.assertEquals(departmentName, createdDepartment.name);
     }
 

@@ -3,14 +3,11 @@ package edu.kmaooad.capstone23.orgs.members.controllers;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.members.commands.CreateBasicMember;
-import edu.kmaooad.capstone23.members.dal.MembersRepository;
 import edu.kmaooad.capstone23.members.events.BasicMemberCreated;
-import edu.kmaooad.capstone23.orgs.dal.Org;
-import edu.kmaooad.capstone23.orgs.dal.OrgsRepository;
+import edu.kmaooad.capstone23.orgs.members.TestWithOrgSetUp;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -21,22 +18,9 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 
 @QuarkusTest
-public class DeleteMemberControllerTest {
+public class DeleteMemberControllerTest extends TestWithOrgSetUp {
     @Inject
     CommandHandler<CreateBasicMember, BasicMemberCreated> createHandler;
-    @Inject
-    OrgsRepository orgsRepository;
-    @Inject
-    MembersRepository membersRepository;
-    private ObjectId createdOrgId;
-
-    @BeforeEach
-    void setUp() {
-        var org = new Org();
-        org.name = "NaUKMA";
-        orgsRepository.insert(org);
-        createdOrgId = org.id;
-    }
 
     @Test
     @DisplayName("Delete member: delete existing")
@@ -45,7 +29,7 @@ public class DeleteMemberControllerTest {
         command.setFirstName("firstName");
         command.setLastName("lastName");
         command.setOrgId(createdOrgId);
-        command.setEmail("email@email.com");
+        command.setEmail("email@email.com12");
         Result<BasicMemberCreated> result = createHandler.handle(command);
 
         Map<String, Object> jsonAsMap = new HashMap<>();
