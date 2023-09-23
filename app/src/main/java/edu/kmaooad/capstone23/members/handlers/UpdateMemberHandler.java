@@ -3,12 +3,10 @@ package edu.kmaooad.capstone23.members.handlers;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
-import edu.kmaooad.capstone23.experts.dal.Expert;
-import edu.kmaooad.capstone23.experts.dal.ExpertsRepository;
-import edu.kmaooad.capstone23.members.commands.CreateBasicMember;
+import edu.kmaooad.capstone23.members.commands.UpdateMember;
 import edu.kmaooad.capstone23.members.dal.Member;
 import edu.kmaooad.capstone23.members.dal.MembersRepository;
-import edu.kmaooad.capstone23.members.events.BasicMemberCreated;
+import edu.kmaooad.capstone23.members.events.MemberUpdated;
 import edu.kmaooad.capstone23.members.exceptions.UniquenessViolationException;
 import edu.kmaooad.capstone23.orgs.dal.Org;
 import edu.kmaooad.capstone23.orgs.dal.OrgsRepository;
@@ -18,35 +16,30 @@ import jakarta.inject.Inject;
 import java.util.Optional;
 
 @RequestScoped
-public class CreateBasicMemberHandler implements CommandHandler<CreateBasicMember, BasicMemberCreated> {
+public class UpdateMemberHandler implements CommandHandler<UpdateMember, MemberUpdated> {
     @Inject
     MembersRepository membersRepository;
-    @Inject
-    ExpertsRepository expertsRepository;
+
     @Inject
     OrgsRepository orgsRepository;
 
     @Override
-    public Result<BasicMemberCreated> handle(CreateBasicMember command) {
+    public Result<MemberUpdated> handle(UpdateMember command) {
         try {
             Member member = new Member();
             member.firstName = command.getFirstName();
             member.lastName = command.getLastName();
             member.email = command.getEmail();
             member.orgId = command.getOrgId();
-            member.isExpert = Boolean.parseBoolean(command.getIsExpert());
+            member.id = command.getId();
             Optional<Org> memberOrg = orgsRepository.findByIdOptional(member.orgId);
+            Optional<Member> existingEntryForMember = membersRepository.findByIdOptional(member.id);
             if (memberOrg.isEmpty())
                 return new Result<>(ErrorCode.VALIDATION_FAILED, "Organisation not found");
-            membersRepository.insert(member);
-            if (member.isExpert) {
-                Expert expert = new Expert();
-                expert.memberId = member.id;
-                expert.name = member.firstName + " " + member.lastName;
-                expert.org = memberOrg.get();
-                expertsRepository.insert(expert);
-            }
-            BasicMemberCreated result = new BasicMemberCreated(member.id.toString());
+            if (existingEntryForMember.isEmpty())
+                return new Result<>(ErrorCode.NOT_FOUND, "Member not found");
+            membersRepository.updateEntry(member);
+            MemberUpdated result = new MemberUpdated(member);
             return new Result<>(result);
         } catch (IllegalArgumentException e) {
             return new Result<>(ErrorCode.VALIDATION_FAILED, "Invalid org id provided");

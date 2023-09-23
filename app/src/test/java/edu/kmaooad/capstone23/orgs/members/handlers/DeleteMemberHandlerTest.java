@@ -6,32 +6,18 @@ import edu.kmaooad.capstone23.members.commands.CreateBasicMember;
 import edu.kmaooad.capstone23.members.commands.DeleteMember;
 import edu.kmaooad.capstone23.members.events.BasicMemberCreated;
 import edu.kmaooad.capstone23.members.events.MemberDeleted;
-import edu.kmaooad.capstone23.orgs.dal.Org;
-import edu.kmaooad.capstone23.orgs.dal.OrgsRepository;
+import edu.kmaooad.capstone23.orgs.members.TestWithOrgSetUp;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
-import org.bson.types.ObjectId;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 @QuarkusTest
-public class DeleteMemberHandlerTest {
+public class DeleteMemberHandlerTest extends TestWithOrgSetUp {
     @Inject
     CommandHandler<DeleteMember, MemberDeleted> deleteHandler;
     @Inject
     CommandHandler<CreateBasicMember, BasicMemberCreated> createHandler;
-    @Inject
-    OrgsRepository orgsRepository;
-    private ObjectId createdOrgId;
-
-    @BeforeEach
-    void setUp() {
-        var org = new Org();
-        org.name = "NaUKMA";
-        orgsRepository.insert(org);
-        createdOrgId = org.id;
-    }
 
     @Test
     void testSuccessfulHandling() {

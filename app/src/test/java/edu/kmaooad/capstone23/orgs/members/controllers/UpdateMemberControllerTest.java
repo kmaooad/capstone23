@@ -12,49 +12,54 @@ import java.util.Map;
 import static io.restassured.RestAssured.given;
 
 @QuarkusTest
-public class CreateMemberControllerTest extends TestWithOrgSetUp {
-
+public class UpdateMemberControllerTest extends TestWithOrgSetUp {
     @Test
-    @DisplayName("Create Member: Basic")
-    public void testBasicMemberCreation() {
+    @DisplayName("Update Member: Basic")
+    public void testBasicMemberUpdate() {
         Map<String, Object> jsonAsMap = new HashMap<>();
         jsonAsMap.put("firstName", "firstName");
         jsonAsMap.put("lastName", "lastName");
         jsonAsMap.put("orgId", createdOrgId.toString());
-        jsonAsMap.put("email", "email@email.com");
-        jsonAsMap.put("isExpert", "true");
+        jsonAsMap.put("email", "email@email123.com");
+
+        var createdMember = createMember();
+
+        jsonAsMap.put("id", createdMember);
 
         given()
                 .contentType("application/json")
                 .body(jsonAsMap)
                 .when()
-                .post("/members/create")
+                .post("/members/update")
                 .then()
                 .statusCode(200);
     }
 
     @Test
-    @DisplayName("Create Member: Email validation")
-    public void testMemberCreationWithEmailValidation() {
+    @DisplayName("Update Member: Email validation")
+    public void testMemberUpdateWithEmailValidation() {
         Map<String, Object> jsonAsMap = new HashMap<>();
         jsonAsMap.put("firstName", "firstName");
         jsonAsMap.put("lastName", "lastName");
         jsonAsMap.put("orgId", createdOrgId.toString());
-        jsonAsMap.put("email", "email.com");
-        jsonAsMap.put("isExpert", "false");
+        jsonAsMap.put("email", "emailemail123");
+
+        var createdMember = createMember();
+
+        jsonAsMap.put("id", createdMember);
 
         given()
                 .contentType("application/json")
                 .body(jsonAsMap)
                 .when()
-                .post("/members/create")
+                .post("/members/update")
                 .then()
                 .statusCode(400);
     }
 
     @Test
-    @DisplayName("Create Member: Org does not exist")
-    public void testMemberCreationWithOrgExistenceValidation() {
+    @DisplayName("Update Member: Org does not exist")
+    public void testMemberUpdateWithOrgExistenceValidation() {
         Map<String, Object> jsonAsMap = new HashMap<>();
         jsonAsMap.put("firstName", "firstName");
         jsonAsMap.put("lastName", "lastName");
@@ -63,13 +68,16 @@ public class CreateMemberControllerTest extends TestWithOrgSetUp {
             newObjectId = new ObjectId();
         jsonAsMap.put("orgId", newObjectId.toString());
         jsonAsMap.put("email", "email@a.com");
-        jsonAsMap.put("isExpert", "false");
+
+        var createdMember = createMember();
+
+        jsonAsMap.put("id", createdMember);
 
         given()
                 .contentType("application/json")
                 .body(jsonAsMap)
                 .when()
-                .post("/members/create")
+                .post("/members/update")
                 .then()
                 .statusCode(400);
     }
