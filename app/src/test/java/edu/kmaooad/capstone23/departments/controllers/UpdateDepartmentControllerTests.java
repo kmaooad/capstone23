@@ -20,10 +20,10 @@ public class UpdateDepartmentControllerTests {
     private String idToUpdate;
 
     @Inject
-    OrgsRepository orgsRepository;
+    DepartmentsRepository departmentsRepository;
 
     @Inject
-    DepartmentsRepository departmentsRepository;
+    OrgsRepository orgsRepository;
 
     @BeforeEach
     void setUp() {
@@ -74,12 +74,12 @@ public class UpdateDepartmentControllerTests {
         jsonAsMap.put("id", idToUpdate);
 
         given()
-            .contentType("application/json")
-            .body(jsonAsMap)
-            .when()
-            .post("/departments/update")
-            .then()
-            .statusCode(200);
+                .contentType("application/json")
+                .body(jsonAsMap)
+                .when()
+                .post("/departments/update")
+                .then()
+                .statusCode(200);
     }
 
 

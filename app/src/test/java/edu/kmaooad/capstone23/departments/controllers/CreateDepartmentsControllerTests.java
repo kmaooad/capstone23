@@ -15,7 +15,6 @@ import static io.restassured.RestAssured.given;
 
 @QuarkusTest
 public class CreateDepartmentsControllerTests {
-
     @Inject
     OrgsRepository orgsRepository;
 
