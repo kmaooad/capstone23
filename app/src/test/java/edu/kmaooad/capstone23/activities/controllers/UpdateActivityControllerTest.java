@@ -35,7 +35,7 @@ public class UpdateActivityControllerTest {
 
     }
 
-    @ParameterizedTest
+    @Test
     @DisplayName("Update Activity: Non-Existent Activity")
     public void testUpdateNonExistentActivity(Map<String, Object> jsonAsMap) {
         given().contentType("application/json")
