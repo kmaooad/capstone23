@@ -18,10 +18,10 @@ public class CreateActivityControllerTest {
 
 
     @Test
-    @DisplayName("Create activity successful")
-    public void testActivityCreation() {
+    @DisplayName("Create Activity successful")
+    public void testCourseCreation() {
         Map<String, Object> jsonAsMap = new HashMap<>();
-        jsonAsMap.put("name", "Sport");
+        jsonAsMap.put("name", "Linear algebra");
 
         given()
                 .contentType("application/json")
@@ -31,6 +31,8 @@ public class CreateActivityControllerTest {
                 .then()
                 .statusCode(200);
     }
+
+
 
     @Test
     @DisplayName("Create activity name validation")

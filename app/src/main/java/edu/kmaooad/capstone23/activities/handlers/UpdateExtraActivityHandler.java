@@ -27,7 +27,7 @@ public class UpdateExtraActivityHandler implements CommandHandler<UpdateExtraAct
 
         cvRepository.update(cv);
 
-        ExtraActivityUpdated result = new ExtraActivityUpdated(cv.getId());
+        ExtraActivityUpdated result = new ExtraActivityUpdated(cv.id);
         return new Result<>(result);
     }
 }

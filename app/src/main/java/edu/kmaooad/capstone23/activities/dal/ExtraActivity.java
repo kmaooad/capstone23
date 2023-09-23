@@ -8,25 +8,5 @@ public class ExtraActivity {
     public ObjectId id;
     public String name;
 
-    public ExtraActivity(ObjectId id) {
-        this.id = id;
-    }
-      public ExtraActivity() {
-    }
 
-    public ObjectId getId() {
-        return id;
-    }
-
-    public void setId(ObjectId id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 }

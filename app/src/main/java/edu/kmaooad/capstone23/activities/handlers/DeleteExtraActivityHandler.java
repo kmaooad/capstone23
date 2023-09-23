@@ -34,6 +34,6 @@ public class DeleteExtraActivityHandler implements CommandHandler<DeleteExtraAct
 
         repository.delete(cv);
 
-        return new Result<>(new ExtraActivityDeleted(cv.getId()));
+        return new Result<>(new ExtraActivityDeleted(cv.id));
     }
 }
