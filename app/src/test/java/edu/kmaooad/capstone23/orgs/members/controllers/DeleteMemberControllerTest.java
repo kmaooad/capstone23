@@ -29,7 +29,8 @@ public class DeleteMemberControllerTest extends TestWithOrgSetUp {
         command.setFirstName("firstName");
         command.setLastName("lastName");
         command.setOrgId(createdOrgId);
-        command.setEmail("email@email.com12");
+        command.setEmail("email@email.com");
+        command.setIsExpert("false");
         Result<BasicMemberCreated> result = createHandler.handle(command);
 
         Map<String, Object> jsonAsMap = new HashMap<>();

@@ -21,7 +21,8 @@ public class CreateMemberControllerTest extends TestWithOrgSetUp {
         jsonAsMap.put("firstName", "firstName");
         jsonAsMap.put("lastName", "lastName");
         jsonAsMap.put("orgId", createdOrgId.toString());
-        jsonAsMap.put("email", "email@email.com1");
+        jsonAsMap.put("email", "email@email.com");
+        jsonAsMap.put("isExpert", "true");
 
         given()
                 .contentType("application/json")
@@ -40,6 +41,7 @@ public class CreateMemberControllerTest extends TestWithOrgSetUp {
         jsonAsMap.put("lastName", "lastName");
         jsonAsMap.put("orgId", createdOrgId.toString());
         jsonAsMap.put("email", "email.com");
+        jsonAsMap.put("isExpert", "false");
 
         given()
                 .contentType("application/json")
@@ -61,6 +63,7 @@ public class CreateMemberControllerTest extends TestWithOrgSetUp {
             newObjectId = new ObjectId();
         jsonAsMap.put("orgId", newObjectId.toString());
         jsonAsMap.put("email", "email@a.com");
+        jsonAsMap.put("isExpert", "false");
 
         given()
                 .contentType("application/json")
