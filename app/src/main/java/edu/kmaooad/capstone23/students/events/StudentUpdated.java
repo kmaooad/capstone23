@@ -15,7 +15,4 @@ public class StudentUpdated {
         return students;
     }
 
-    public void setStudents(List<ObjectId> students) {
-        this.students = students;
-    }
 }
