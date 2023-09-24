@@ -8,8 +8,11 @@ import edu.kmaooad.capstone23.orgs.commands.CreateOrg;
 import edu.kmaooad.capstone23.orgs.events.OrgCreated;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
+import org.bson.types.ObjectId;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
 
 @QuarkusTest
 public class CreateSkillSetHandlerTest {
@@ -27,6 +30,19 @@ public class CreateSkillSetHandlerTest {
         Assertions.assertTrue(result.isSuccess());
         Assertions.assertNotNull(result.getValue());
         Assertions.assertFalse(result.getValue().getSkillSetId().isEmpty());
+    }
+
+    @Test
+    void testNotSuccessfulHandling() {
+        CreateSkillSet command = new CreateSkillSet();
+        command.setSkillSetName("SoftSkills");
+        var list = new ArrayList<ObjectId>();
+        list.add(new ObjectId());
+        command.setSkillIds(list);
+
+        Result<SkillSetCreated> result = handler.handle(command);
+
+        Assertions.assertFalse(result.isSuccess());
     }
 
     @Test

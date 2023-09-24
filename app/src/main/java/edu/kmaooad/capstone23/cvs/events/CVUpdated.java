@@ -1,13 +1,15 @@
 package edu.kmaooad.capstone23.cvs.events;
 
-public class CVUpdated {
-    private String cvId;
+import org.bson.types.ObjectId;
 
-    public String getCVId(){
+public class CVUpdated {
+    private ObjectId cvId;
+
+    public ObjectId getCVId(){
         return cvId;
     }
 
-    public CVUpdated(String cvId) {
+    public CVUpdated(ObjectId cvId) {
         this.cvId = cvId;
     }
 }

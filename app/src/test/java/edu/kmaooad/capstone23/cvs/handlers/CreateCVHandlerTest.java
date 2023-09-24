@@ -29,7 +29,7 @@ public class CreateCVHandlerTest {
 
         Assertions.assertTrue(result.isSuccess());
         Assertions.assertNotNull(result.getValue());
-        Assertions.assertFalse(result.getValue().getCVId().isEmpty());
+        Assertions.assertNotNull(result.getValue().getCVId());
     }
 
     @Test

@@ -29,7 +29,7 @@ public class UpdateJobPrefHandlerTest {
     @Inject
     CommandHandler<UpdateJobPref, JobPrefUpdated> updateJobPrefHandler;
 
-    String getCreateCvId(){
+    ObjectId getCreateCvId(){
         CreateCV command = new CreateCV();
         command.setDateTimeCreated(LocalDateTime.now());
         command.setTextInfo("some info about a student");
@@ -43,7 +43,7 @@ public class UpdateJobPrefHandlerTest {
     @Test
     @DisplayName("Update job preferences: successful handling")
     void testSuccessfulHandling() {
-        ObjectId cvId = new ObjectId(getCreateCvId());
+        ObjectId cvId = getCreateCvId();
         CreateJobPref createJobPrefcommand = new CreateJobPref();
         createJobPrefcommand.setCvId(cvId);
         createJobPrefcommand.setLocation("Kyiv");
