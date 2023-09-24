@@ -1,5 +1,6 @@
 package edu.kmaooad.capstone23.students.service;
 
+import edu.kmaooad.capstone23.students.notification.Notification;
 import io.quarkus.mailer.Mail;
 import io.quarkus.mailer.MockMailbox;
 import io.quarkus.test.junit.QuarkusTest;
@@ -26,16 +27,33 @@ public class StudentNotificationMailServiceTest {
     }
 
     @Test
-    void testNotificationSent() {
+    void testNotificationSentWithSubject() {
         String subject = "Student created";
-        String notification = "Student x has been created";
-        service.sendNotification(TO,subject,notification);
+        String notificationBody = "Student x has been created";
+        Notification notification = new Notification(TO,subject, notificationBody);
+
+        service.sendNotification(notification);
 
         // verify that it was sent
         List<Mail> sent = mailbox.getMailsSentTo(TO);
         Assertions.assertEquals(sent.size(),1);
         Mail actual = sent.get(0);
         Assertions.assertEquals(subject,actual.getSubject());
-        Assertions.assertEquals(notification,actual.getText());
+        Assertions.assertEquals(notificationBody,actual.getText());
     }
+    @Test
+    void testNotificationSentWithoutSubject() {
+        String notificationBody = "Student x has been created";
+        Notification notification = new Notification(TO, notificationBody);
+
+        service.sendNotification(notification);
+
+        // verify that it was sent
+        List<Mail> sent = mailbox.getMailsSentTo(TO);
+        Assertions.assertEquals(sent.size(),1);
+        Mail actual = sent.get(0);
+        Assertions.assertNull(actual.getSubject());
+        Assertions.assertEquals(notificationBody,actual.getText());
+    }
+
 }
