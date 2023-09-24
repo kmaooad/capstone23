@@ -19,8 +19,8 @@ public class OrgsRepository implements PanacheMongoRepository<Org> {
         return find("id", id).firstResult();
     }
   
-    public Org findByEmailDomain(String id) {
-        return find("emailDomain", id).firstResult();
+    public Optional<Org> findByEmailDomainOptional(String email) {
+        return find("emailDomain", email).firstResultOptional();
     }
 
     public Optional<Org> findByIdOptional(String id) {
