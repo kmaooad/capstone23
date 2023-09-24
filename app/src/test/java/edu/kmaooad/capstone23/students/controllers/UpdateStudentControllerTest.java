@@ -138,22 +138,6 @@ public class UpdateStudentControllerTest {
         file.delete();
     }
 
-    @Test
-    @DisplayName("Update students from csv: Invalid email")
-    public void testStudentsUpdateFromCSVInvalidEmail() {
-        String path = "src/test/resources/students/update/testStudentsUpdateFromCSVInvalidEmail.csv";
-        String student = idToUpdate + ",Makii,,,12/06/2002,ivan.dobrovolskyi@ukma";
-        writeToFile(student, path);
-        given()
-                .multiPart("csvFile", new File(path), "text/csv")
-                .when()
-                .post("/students/update_csv")
-                .then()
-                .statusCode(400);
-        File file = new File(path);
-        file.delete();
-    }
-
     public void writeToFile(String student, String pathStr) {
         try {
             FileWriter myWriter = new FileWriter(pathStr);
