@@ -81,10 +81,12 @@ public class CreateMemberByCorpEmailHandlerTest extends TestWithDbClearance {
         command = new CreateMemberByCorpEmail();
         command.setFirstName("firstName");
         command.setLastName("lastName");
+        command.setCorpEmail("newCorpEmail@" + orgEmailDomain);
 
         Result<BasicMemberCreated> result = handler.handle(command);
 
         Assertions.assertFalse(result.isSuccess());
         Assertions.assertEquals(ErrorCode.VALIDATION_FAILED, result.getErrorCode());
+        Assertions.assertEquals(result.getMessage(), "Email is not unique");
     }
 }
