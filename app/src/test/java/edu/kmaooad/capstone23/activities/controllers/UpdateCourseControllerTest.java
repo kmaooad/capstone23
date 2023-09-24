@@ -8,18 +8,14 @@ package edu.kmaooad.capstone23.activities.controllers;
         import org.junit.jupiter.api.BeforeEach;
         import org.junit.jupiter.api.DisplayName;
         import org.junit.jupiter.api.Test;
-
         import java.util.HashMap;
         import java.util.Map;
-
         import static io.restassured.RestAssured.given;
-        import static org.hamcrest.Matchers.notNullValue;
 
 @QuarkusTest
     public class UpdateCourseControllerTest {
 
     private ObjectId idToUpdate;
-    private ObjectId idWithParent;
 
     @Inject
     CourseRepository courseRepository;
