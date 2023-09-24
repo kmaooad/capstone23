@@ -4,7 +4,6 @@ import edu.kmaooad.capstone23.students.dal.Student;
 import edu.kmaooad.capstone23.students.dal.StudentRepository;
 import edu.kmaooad.capstone23.students.parser.CSVStudent;
 import edu.kmaooad.capstone23.students.parser.CreateCSVStudentParser;
-import edu.kmaooad.capstone23.students.parser.UpdateCSVStudentParser;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
@@ -26,8 +25,6 @@ public class UpdateStudentControllerTest {
     StudentRepository repository;
     @Inject
     CreateCSVStudentParser createCSVStudentParser;
-    @Inject
-    UpdateCSVStudentParser updateCSVStudentParser;
 
     private ObjectId idToUpdate;
 
@@ -123,6 +120,22 @@ public class UpdateStudentControllerTest {
     }
 
     @Test
+    @DisplayName("Update student's email from csv: Invalid email")
+    public void testStudentsUpdateEmailFromCSVInvalidEmail() {
+        String path = "src/test/resources/students/update/testStudentsUpdateEmailFromCSVInvalidEmail.csv";
+        String student = idToUpdate + ",,,,,ivan2.dobrovolskyi@";
+        writeToFile(student, path);
+        given()
+                .multiPart("csvFile", new File(path), "text/csv")
+                .when()
+                .post("/students/update_csv")
+                .then()
+                .statusCode(400);
+        File file = new File(path);
+        file.delete();
+    }
+
+    @Test
     @DisplayName("Update students from csv: Invalid DOB")
     public void testStudentsUpdateFromCSVInvalidDOB() {
         String path = "src/test/resources/students/update/testStudentsUpdateFromCSVInvalidDOB.csv";
@@ -137,6 +150,40 @@ public class UpdateStudentControllerTest {
         File file = new File(path);
         file.delete();
     }
+
+    @Test
+    @DisplayName("Update students from csv: Incorrect file type")
+    public void testStudentsUpdateFromCSVIncorrectType() {
+        given()
+                .multiPart("csvFile", new File("src/test/resources/students/incorrect_type.json"), "application/json")
+                .when()
+                .post("/students/update_csv")
+                .then()
+                .statusCode(400);
+    }
+
+    @Test
+    @DisplayName("Update students from csv: Not enough fields")
+    public void testStudentsUpdateFromCSVNotEnoughFields() {
+        given()
+                .multiPart("csvFile", new File("src/test/resources/students/update/missing_id.csv"), "application/json")
+                .when()
+                .post("/students/update_csv")
+                .then()
+                .statusCode(400);
+    }
+
+    @Test
+    @DisplayName("Update students from csv: Too many fields")
+    public void testStudentsUpdateFromCSVTooManyFields() {
+        given()
+                .multiPart("csvFile", new File("src/test/resources/students/update/too_many_fields.csv"), "application/json")
+                .when()
+                .post("/students/update_csv")
+                .then()
+                .statusCode(400);
+    }
+
 
     public void writeToFile(String student, String pathStr) {
         try {
