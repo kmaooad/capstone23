@@ -38,9 +38,9 @@ public class BanEntityHandlerTests {
     @Inject
     CommandHandler<CreateBasicMember, BasicMemberCreated> createMemberHandler;
 
-
     @Inject
     CommandHandler<RemoveAll, AllRemoved> removeAllHandler;
+
     @BeforeEach
     void testInit() {
         removeAllHandler.handle(new RemoveAll());
