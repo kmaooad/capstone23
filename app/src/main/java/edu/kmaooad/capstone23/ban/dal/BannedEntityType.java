@@ -1,13 +1,15 @@
 package edu.kmaooad.capstone23.ban.dal;
 
 public enum BannedEntityType {
-    Member, Department, Organization;
+    Member("Member"), Department("Department"), Organization("Organization");
+
+    private final String name;
+
+    BannedEntityType(String name) {
+        this.name = name;
+    }
 
     public String inferredName() {
-        return switch (this) {
-            case Member -> "Member";
-            case Department -> "Department";
-            case Organization -> "Organization";
-        };
+        return name;
     }
 }
