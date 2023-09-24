@@ -24,6 +24,7 @@ import static org.hamcrest.Matchers.equalTo;
 public class DeleteMemberControllerTest {
     @Inject
     CommandHandler<CreateBasicMember, BasicMemberCreated> createHandler;
+
     @Inject
     OrgsRepository orgsRepository;
     @Inject
