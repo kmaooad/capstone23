@@ -16,6 +16,9 @@ import edu.kmaooad.capstone23.members.dal.MembersRepository;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
+
+import java.util.List;
+
 @RequestScoped
 public class RemoveExpertFromDepartmentHandler
         implements CommandHandler<RemoveExpertFromDepartment, ExpertRemovedFromDepartment> {
@@ -30,17 +33,16 @@ public class RemoveExpertFromDepartmentHandler
         ObjectId departmentId = command.getDepartmentId();
         if (expertId != null && departmentId != null) {
             Expert expert = expertsRepository.findById(expertId);
-            Department department = departmentsRepository.findById(departmentId);
 
             if (expert.department.isEmpty()) {
                 return new Result<>(ErrorCode.NOT_FOUND, "Expert has no department");
             }
 
-            if (!expert.department.contains(department)) {
+            if (!expert.department.stream().anyMatch(p -> p.id.equals(departmentId))) {
                 return new Result<>(ErrorCode.CONFLICT, "Expert is not in this department");
             }
 
-            expert.department.remove(department);
+            expert.department = expert.department.stream().filter(p -> p.id == departmentId).toList();
             expertsRepository.modify(expert);
 
             return new Result<>(new ExpertRemovedFromDepartment(expert.id.toString()));
