@@ -1,5 +1,6 @@
 package edu.kmaooad.capstone23.removeAll.handlers;
 
+import com.mongodb.client.MongoClient;
 import edu.kmaooad.capstone23.activities.dal.CourseRepository;
 import edu.kmaooad.capstone23.ban.dal.EntityBanRepository;
 import edu.kmaooad.capstone23.common.CommandHandler;
@@ -21,73 +22,21 @@ import edu.kmaooad.capstone23.removeAll.commands.RemoveAll;
 import edu.kmaooad.capstone23.removeAll.events.AllRemoved;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 @RequestScoped
 public class RemoveAllHandler implements CommandHandler<RemoveAll, AllRemoved> {
 
+    @ConfigProperty(name = "quarkus.mongodb.database")
+    String databaseName;
     @Inject
-    private OrgsRepository orgsRepository;
-
-    @Inject
-    private DepartmentsRepository departmentsRepository;
-
-    @Inject
-    private RequestsRepository requestsRepository;
-
-    @Inject
-    private ExpertInvitationRepository expertInvitationRepository;
-
-    @Inject
-    private ExpertsRepository expertsRepository;
-
-    @Inject
-    private GroupTemplatesRepository groupTemplatesRepository;
-
-    @Inject
-    private SkillsRepository skillsRepository;
-
-    @Inject
-    private EntityBanRepository entityBanRepository;
-
-    @Inject
-    private MembersRepository membersRepository;
-
-    @Inject
-    private SkillSetRepository skillSetRepository;
-
-    @Inject
-    private CVRepository cvRepository;
-
-    @Inject
-    private ProjsRepository projsRepository;
-
-    @Inject
-    private TopicRepository topicRepository;
-
-    @Inject
-    private CourseRepository courseRepository;
-
-    @Inject
-    private JobRepository jobRepository;
+    MongoClient mongoClient;
 
 
     @Override
     public Result<AllRemoved> handle(RemoveAll command) {
-        orgsRepository.deleteAll();
-        departmentsRepository.deleteAll();
-        skillsRepository.deleteAll();
-        entityBanRepository.deleteAll();
-        membersRepository.deleteAll();
-        requestsRepository.deleteAll();
-        expertInvitationRepository.deleteAll();
-        expertsRepository.deleteAll();
-        groupTemplatesRepository.deleteAll();
-        skillSetRepository.deleteAll();
-        cvRepository.deleteAll();
-        projsRepository.deleteAll();
-        topicRepository.deleteAll();
-        courseRepository.deleteAll();
-        jobRepository.deleteAll();
+        var database = mongoClient.getDatabase(databaseName);
+        database.listCollectionNames().forEach(collectionName -> database.getCollection(collectionName).drop());
 
         return new Result<>(new AllRemoved());
     }
