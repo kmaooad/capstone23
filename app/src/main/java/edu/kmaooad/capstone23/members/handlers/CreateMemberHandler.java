@@ -18,7 +18,7 @@ import jakarta.inject.Inject;
 import java.util.Optional;
 
 @RequestScoped
-public class CreateBasicMemberHandler implements CommandHandler<CreateBasicMember, BasicMemberCreated> {
+public class CreateMemberHandler implements CommandHandler<CreateBasicMember, BasicMemberCreated> {
     @Inject
     MembersRepository membersRepository;
     @Inject
