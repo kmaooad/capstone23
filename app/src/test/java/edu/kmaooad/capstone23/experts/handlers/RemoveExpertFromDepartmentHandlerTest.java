@@ -1,28 +1,40 @@
-package edu.kmaooad.capstone23.experts.controllers;
+package edu.kmaooad.capstone23.experts.handlers;
 
+import edu.kmaooad.capstone23.common.CommandHandler;
+import edu.kmaooad.capstone23.common.Result;
+import edu.kmaooad.capstone23.departments.commands.CreateDepartment;
 import edu.kmaooad.capstone23.departments.dal.Department;
 import edu.kmaooad.capstone23.departments.dal.DepartmentsRepository;
+import edu.kmaooad.capstone23.departments.events.DepartmentCreated;
+import edu.kmaooad.capstone23.experts.commands.CreateExpert;
+import edu.kmaooad.capstone23.experts.commands.RemoveExpertFromDepartment;
 import edu.kmaooad.capstone23.experts.dal.Expert;
 import edu.kmaooad.capstone23.experts.dal.ExpertsRepository;
+import edu.kmaooad.capstone23.experts.events.ExpertCreated;
+import edu.kmaooad.capstone23.experts.events.ExpertRemovedFromDepartment;
 import edu.kmaooad.capstone23.members.dal.Member;
 import edu.kmaooad.capstone23.members.dal.MembersRepository;
+import edu.kmaooad.capstone23.orgs.commands.CreateOrg;
 import edu.kmaooad.capstone23.orgs.dal.Org;
 import edu.kmaooad.capstone23.orgs.dal.OrgsRepository;
+import edu.kmaooad.capstone23.orgs.events.OrgCreated;
 import io.quarkus.test.junit.QuarkusTest;
-import io.restassured.RestAssured;
 import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
-import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Random;
+
 @QuarkusTest
-public class RemoveExpertFromDepartmentControllerTest {
+public class RemoveExpertFromDepartmentHandlerTest {
     private Org org;
     private Department department;
-
+    @Inject
+    CommandHandler<RemoveExpertFromDepartment, ExpertRemovedFromDepartment> removeHandler;
     @Inject
     OrgsRepository orgsRepository;
     @Inject
@@ -39,35 +51,20 @@ public class RemoveExpertFromDepartmentControllerTest {
     }
 
     @Test
-    @DisplayName("Remove Expert From Member: Basic")
-    public void testExpertFromDepartmentRemoval() {
-        Map<String, Object> jsonAsMap = new HashMap<>();
-        jsonAsMap.put("expertId", createTestExpert().toHexString());
-        jsonAsMap.put("departmentId", department.id.toHexString());
+    @DisplayName("Remove Expert From Department Handler: Basic")
+    public void testSuccessfulHandling() {
+        ObjectId expertId = createTestExpert();
+        ObjectId departmentId = department.id;
 
-        RestAssured.given()
-                .contentType("application/json")
-                .body(jsonAsMap)
-                .when()
-                .post("/experts/remove_expert_from_department")
-                .then()
-                .statusCode(200);
+        RemoveExpertFromDepartment command = new RemoveExpertFromDepartment();
+        command.setExpertId(expertId);
+        command.setDepartmentId(departmentId);
 
-        // ERROR: the expert is already removed from department
-        RestAssured.given()
-                .contentType("application/json")
-                .body(jsonAsMap)
-                .when()
-                .post("/experts/remove_expert_from_department")
-                .then()
-                .statusCode(400);
-    }
+        Result<ExpertRemovedFromDepartment> result = removeHandler.handle(command);
 
-    @AfterEach
-    public void tearDown() {
-        membersRepository.deleteAll();
-        orgsRepository.deleteAll();
-        departmentsRepository.deleteAll();
+        Assertions.assertTrue(result.isSuccess());
+        Assertions.assertNotNull(result.getValue());
+        Assertions.assertFalse(expertsRepository.findById(expertId).department.stream().anyMatch(p -> p.id == departmentId));
     }
 
     private Org createTestOrg() {
