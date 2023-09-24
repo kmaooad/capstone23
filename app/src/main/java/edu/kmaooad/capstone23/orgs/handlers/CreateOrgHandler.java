@@ -17,7 +17,6 @@ public class CreateOrgHandler implements CommandHandler<CreateOrg, OrgCreated> {
 
     public Result<OrgCreated> handle(CreateOrg command) {
         Org org = this.mapCommandToEntity(command);
-
         this.repository.insert(org);
 
         OrgCreated result = new OrgCreated(org.id.toString());
@@ -32,6 +31,7 @@ public class CreateOrgHandler implements CommandHandler<CreateOrg, OrgCreated> {
         org.industry = command.industry;
         org.website = command.website;
         org.emailDomain = command.emailDomain;
+        org.isActive = true;
 
         return org;
     }
