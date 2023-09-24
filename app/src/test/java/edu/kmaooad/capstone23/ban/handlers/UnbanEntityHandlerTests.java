@@ -13,10 +13,13 @@ import edu.kmaooad.capstone23.members.commands.CreateBasicMember;
 import edu.kmaooad.capstone23.members.events.BasicMemberCreated;
 import edu.kmaooad.capstone23.orgs.commands.CreateOrg;
 import edu.kmaooad.capstone23.orgs.events.OrgCreated;
+import edu.kmaooad.capstone23.removeAll.commands.RemoveAll;
+import edu.kmaooad.capstone23.removeAll.handlers.AllRemoved;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -39,6 +42,14 @@ public class UnbanEntityHandlerTests {
 
     @Inject
     CommandHandler<CreateBasicMember, BasicMemberCreated> createMemberHandler;
+
+    @Inject
+    CommandHandler<RemoveAll, AllRemoved> removeAllHandler;
+
+    @BeforeEach
+    void testInit() {
+        removeAllHandler.handle(new RemoveAll());
+    }
 
     @Test
     @DisplayName("Unban Org Handler: Basic Test")
@@ -147,10 +158,7 @@ public class UnbanEntityHandlerTests {
         int targetStringLength = 10;
         Random random = new Random();
 
-        String generatedString = random.ints(leftLimit, rightLimit + 1)
-                .limit(targetStringLength)
-                .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
-                .toString();
+        String generatedString = random.ints(leftLimit, rightLimit + 1).limit(targetStringLength).collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append).toString();
 
         return generatedString + "@mail.com";
     }
