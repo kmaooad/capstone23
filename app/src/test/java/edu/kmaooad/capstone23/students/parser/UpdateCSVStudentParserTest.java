@@ -1,6 +1,5 @@
 package edu.kmaooad.capstone23.students.parser;
 
-import edu.kmaooad.capstone23.students.parser.exceptions.NotEnoughValues;
 import edu.kmaooad.capstone23.students.parser.exceptions.TooManyValues;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
@@ -11,6 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.text.ParseException;
 import java.util.List;
 
 @QuarkusTest
@@ -83,6 +83,8 @@ public class UpdateCSVStudentParserTest {
         UpdateCSVStudent u4 = new UpdateCSVStudent();
         u4.setId(new ObjectId("61dc2d31bbe643fc32022a5d"));
         u4.setMiddleName("Mykolaiovych");
+        UpdateCSVStudent u5 = new UpdateCSVStudent();
+        u5.setId(new ObjectId("61dc2d31bbe643fc32022a5e"));
         UpdateCSVStudent u6 = new UpdateCSVStudent();
         u6.setId(new ObjectId("61dc2d31bbe643fc32022a5f"));
         u6.setLastName("Kostenko");
@@ -91,7 +93,7 @@ public class UpdateCSVStudentParserTest {
         Assertions.assertDoesNotThrow(() -> {
             File studentsFile = new File("src/test/resources/students/update/update_multiple_success.csv");
             UpdateCSVStudent[] expected = new UpdateCSVStudent[]{
-                    u1, u2, u3, u4, u6
+                    u1, u2, u3, u4, u5, u6
             };
             List<UpdateCSVStudent> result = updateCSVStudentParser.parse(studentsFile);
             Assertions.assertArrayEquals(expected, result.toArray());
@@ -99,10 +101,10 @@ public class UpdateCSVStudentParserTest {
     }
 
     @Test
-    @DisplayName("Update students from file: Not enough fields")
-    public void testUpdateStudentsNotEnoughFields() {
-        Assertions.assertThrows(NotEnoughValues.class, () -> {
-            File studentsFile = new File("src/test/resources/students/update/update_multiple_success.csv");
+    @DisplayName("Update students from file: Incorrect field placement")
+    public void testUpdateStudentsIncorrectFieldPlacement() {
+        Assertions.assertThrows(ParseException.class, () -> {
+            File studentsFile = new File("src/test/resources/students/update/update_not_enough_fields.csv");
             updateCSVStudentParser.parse(studentsFile);
         });
     }
