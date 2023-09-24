@@ -70,6 +70,30 @@ public class AssignDepartmentToExpertHandlerTest {
                 departmentsRepository.findById(departmentId).id.toHexString()));
     }
 
+    @Test
+    @DisplayName("Assign Department To Expert: Non-Existent Expert")
+    public void testHandlingWithInvalidExpert() {
+        AssignDepartmentToExpert assignDepartmentToExpert = new AssignDepartmentToExpert();
+        assignDepartmentToExpert.setExpertId("64fe000000000a0000000000");
+        assignDepartmentToExpert.setDepartmentId(departmentId.toHexString());
+
+        Result<DepartmentAssignedToExpert> result = assignHandler.handle(assignDepartmentToExpert);
+
+        Assertions.assertEquals(result.getErrorCode(), ErrorCode.NOT_FOUND);
+    }
+
+    @Test
+    @DisplayName("Assign Department To Expert: Non-Existent Department")
+    public void testHandlingWithInvalidDepartment() {
+        AssignDepartmentToExpert assignDepartmentToExpert = new AssignDepartmentToExpert();
+        assignDepartmentToExpert.setExpertId(orgId.toHexString());
+        assignDepartmentToExpert.setDepartmentId("64fe000000000a0000000000");
+
+        Result<DepartmentAssignedToExpert> result = assignHandler.handle(assignDepartmentToExpert);
+
+        Assertions.assertEquals(result.getErrorCode(), ErrorCode.NOT_FOUND);
+    }
+
     @AfterEach
     void tearDown() {
         expertsRepository.deleteAll();
