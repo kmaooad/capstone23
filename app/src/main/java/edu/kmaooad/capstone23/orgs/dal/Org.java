@@ -15,4 +15,6 @@ public class Org {
     public String website;
 
     public String description;
+
+    public String emailDomain;
 }
