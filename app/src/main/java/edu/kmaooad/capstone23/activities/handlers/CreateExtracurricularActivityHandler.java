@@ -12,6 +12,7 @@ import jakarta.inject.Inject;
 @RequestScoped
 public class CreateExtracurricularActivityHandler implements CommandHandler<CreateExtracurricularActivity, ExtracurricularActivityCreated> {
 
+
     @Inject
     private ExtracurricularActivityRepository repository;
 
