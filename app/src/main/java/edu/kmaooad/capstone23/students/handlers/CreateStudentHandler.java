@@ -8,7 +8,7 @@ import edu.kmaooad.capstone23.students.dal.Student;
 import edu.kmaooad.capstone23.students.dal.StudentRepository;
 import edu.kmaooad.capstone23.students.events.StudentsCreated;
 import edu.kmaooad.capstone23.students.parser.CSVStudent;
-import edu.kmaooad.capstone23.students.parser.CSVStudentParser;
+import edu.kmaooad.capstone23.students.parser.CreateCSVStudentParser;
 import edu.kmaooad.capstone23.students.parser.exceptions.IncorrectValuesAmount;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
@@ -26,7 +26,7 @@ public class CreateStudentHandler implements CommandHandler<CreateStudent, Stude
     StudentRepository repository;
 
     @Inject
-    CSVStudentParser parser;
+    CreateCSVStudentParser parser;
 
     @Override
     public Result<StudentsCreated> handle(CreateStudent command) {

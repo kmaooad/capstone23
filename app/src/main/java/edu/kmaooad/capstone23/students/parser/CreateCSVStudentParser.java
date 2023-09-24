@@ -13,10 +13,10 @@ import java.util.List;
 import java.util.TimeZone;
 
 @ApplicationScoped
-public class CSVStudentParser {
+public class CreateCSVStudentParser {
     private static final SimpleDateFormat FORMATTER = new SimpleDateFormat("dd/MM/yyyy");
 
-    public CSVStudentParser() {
+    public CreateCSVStudentParser() {
         FORMATTER.setTimeZone(TimeZone.getTimeZone("GMT"));
         FORMATTER.setLenient(false);
     }
