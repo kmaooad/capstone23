@@ -1,23 +1,26 @@
-package edu.kmaooad.capstone23.group_templates.dal;
+package edu.kmaooad.capstone23.students.dal;
 
 import io.quarkus.mongodb.panache.common.MongoEntity;
+import edu.kmaooad.capstone23.activities.dal.Activity;
 
-import java.sql.Array;
+import org.bson.codecs.pojo.annotations.BsonDiscriminator;
+import org.bson.types.ObjectId;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.bson.types.ObjectId;
-
-import edu.kmaooad.capstone23.activities.dal.Activity;
-
-@MongoEntity(collection = "grouptemplates")
-public class GroupTemplate {
+@MongoEntity(collection = "students")
+public class Student {
     public ObjectId id;
-    public String name;
+    private String name;
     private List<Activity> assignedActivities;
 
-    public GroupTemplate() {
-        this.name = "group";
+    public Student() {
+        this.name = "student";
+        this.assignedActivities = new ArrayList<>();
+    }
+
+    public Student(String name) {
+        this.name = name;
         this.assignedActivities = new ArrayList<>();
     }
 
@@ -33,4 +36,7 @@ public class GroupTemplate {
         return assignedActivities;
     }
 
+    public String getName() {
+        return name;
+    }
 }
