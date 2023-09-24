@@ -23,8 +23,9 @@ public class CreateMemberByCorpEmailHandlerTest extends TestWithDbClearance {
 
     @BeforeEach
     void setUp() {
-        orgsRepository.deleteAll();
+        expertsRepository.deleteAll();
         membersRepository.deleteAll();
+        orgsRepository.deleteAll();
 
         Org org = new Org();
         org.name = "Ubi";
