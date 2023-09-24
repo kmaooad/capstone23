@@ -6,6 +6,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.given;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,6 +20,24 @@ public class CreateOrgControllerTests {
         jsonAsMap.put("orgName", "NaUKMA");
         jsonAsMap.put("industry", "Education");
         jsonAsMap.put("website", "https://www.ukma.edu.ua/eng/");
+
+        given()
+                .contentType("application/json")
+                .body(jsonAsMap)
+                .when()
+                .post("/orgs/create")
+                .then()
+                .statusCode(200);
+    }
+
+    @Test
+    @DisplayName("Create Org: With email domain")
+    public void testBasicOrgWithEmailDomainCreation() {
+        Map<String, Object> jsonAsMap = new HashMap<>();
+        jsonAsMap.put("orgName", "NaUKMA");
+        jsonAsMap.put("industry", "Education");
+        jsonAsMap.put("website", "https://www.ukma.edu.ua/eng/");
+        jsonAsMap.put("emailDomain", "gmail.com");
 
         given()
                 .contentType("application/json")
@@ -55,12 +74,12 @@ public class CreateOrgControllerTests {
         jsonAsMap.put("industry", "foo");
 
         given()
-            .contentType("application/json")
-            .body(jsonAsMap)
-            .when()
-            .post("/orgs/create")
-            .then()
-            .statusCode(400);
+                .contentType("application/json")
+                .body(jsonAsMap)
+                .when()
+                .post("/orgs/create")
+                .then()
+                .statusCode(400);
     }
 
     @Test
@@ -72,11 +91,11 @@ public class CreateOrgControllerTests {
         jsonAsMap.put("industry", "");
 
         given()
-            .contentType("application/json")
-            .body(jsonAsMap)
-            .when()
-            .post("/orgs/create")
-            .then()
-            .statusCode(400);
+                .contentType("application/json")
+                .body(jsonAsMap)
+                .when()
+                .post("/orgs/create")
+                .then()
+                .statusCode(400);
     }
 }
