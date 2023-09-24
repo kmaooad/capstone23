@@ -4,22 +4,15 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import org.bson.types.ObjectId;
 public class DeleteExtraActivity {
-    private String name;
-
-    public void setName(String name) {
-        this.name = name;
-    }
+    private ObjectId id;
 
     public void setId(ObjectId id) {
         this.id = id;
     }
 
-    private ObjectId id;
+
     public ObjectId getId() {
         return id;
     }
 
-    public String getName() {
-        return name;
-    }
 }

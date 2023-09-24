@@ -8,15 +8,6 @@ import java.util.Optional;
 
 @ApplicationScoped
 public class ActivityRepository implements PanacheMongoRepository<ExtraActivity> {
-    public Optional<ExtraActivity> findById(String id) {
-        try {
-            ObjectId objectId = new ObjectId(id);
-            return findByIdOptional(objectId);
-        } catch (Exception e) {
-            return Optional.empty();
-        }
-    }
-
     public ExtraActivity insert(ExtraActivity course) {
         persist(course);
         return course;
