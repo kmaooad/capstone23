@@ -5,8 +5,10 @@ import edu.kmaooad.capstone23.cvs.dal.JobPreference;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Size;
+import org.bson.types.ObjectId;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 public class CreateCV {
 
@@ -14,7 +16,6 @@ public class CreateCV {
     @PastOrPresent
     private LocalDateTime dateTimeCreated;
 
-    @Size(min = 10, max = 500)
     private String textInfo;
 
     @NotNull
@@ -26,6 +27,8 @@ public class CreateCV {
     private boolean autoAddCompetences;
 
     private JobPreference preference;
+
+    private Set<ObjectId> skills;
 
     public LocalDateTime getDateTimeCreated() {
         return dateTimeCreated;
@@ -73,5 +76,13 @@ public class CreateCV {
 
     public void setPreference(JobPreference preference) {
         this.preference = preference;
+    }
+
+    public Set<ObjectId> getSkills() {
+        return skills;
+    }
+
+    public void setSkills(Set<ObjectId> skills) {
+        this.skills = skills;
     }
 }

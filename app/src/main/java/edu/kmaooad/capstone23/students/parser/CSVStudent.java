@@ -1,5 +1,7 @@
 package edu.kmaooad.capstone23.students.parser;
 
+import java.util.Objects;
+
 public class CSVStudent {
     private String firstName;
     private String middleName;
@@ -35,5 +37,20 @@ public class CSVStudent {
         return email;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof CSVStudent that)) return false;
+        return DOBTimestamp == that.DOBTimestamp &&
+                Objects.equals(firstName, that.firstName) &&
+                Objects.equals(middleName, that.middleName) &&
+                Objects.equals(lastName, that.lastName) &&
+                Objects.equals(email, that.email);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(firstName, middleName, lastName, DOBTimestamp, email);
+    }
 }
 

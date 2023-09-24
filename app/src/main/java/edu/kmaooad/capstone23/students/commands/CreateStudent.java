@@ -6,8 +6,6 @@ import org.jboss.resteasy.reactive.PartType;
 import org.jboss.resteasy.reactive.RestForm;
 import org.jboss.resteasy.reactive.multipart.FileUpload;
 
-import java.io.File;
-
 public class CreateStudent {
     @RestForm
     @PartType("text/csv")

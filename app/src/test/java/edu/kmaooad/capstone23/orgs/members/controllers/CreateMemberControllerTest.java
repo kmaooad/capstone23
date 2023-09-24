@@ -1,11 +1,8 @@
 package edu.kmaooad.capstone23.orgs.members.controllers;
 
-import edu.kmaooad.capstone23.orgs.dal.Org;
-import edu.kmaooad.capstone23.orgs.dal.OrgsRepository;
+import edu.kmaooad.capstone23.orgs.members.TestWithOrgSetUp;
 import io.quarkus.test.junit.QuarkusTest;
-import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -15,18 +12,7 @@ import java.util.Map;
 import static io.restassured.RestAssured.given;
 
 @QuarkusTest
-public class CreateMemberControllerTest {
-    @Inject
-    OrgsRepository orgsRepository;
-    private ObjectId createdOrgId;
-
-    @BeforeEach
-    void setUp() {
-        var org = new Org();
-        org.name = "NaUKMA";
-        orgsRepository.insert(org);
-        createdOrgId = org.id;
-    }
+public class CreateMemberControllerTest extends TestWithOrgSetUp {
 
     @Test
     @DisplayName("Create Member: Basic")
@@ -36,6 +22,7 @@ public class CreateMemberControllerTest {
         jsonAsMap.put("lastName", "lastName");
         jsonAsMap.put("orgId", createdOrgId.toString());
         jsonAsMap.put("email", "email@email.com");
+        jsonAsMap.put("isExpert", "true");
 
         given()
                 .contentType("application/json")
@@ -54,6 +41,7 @@ public class CreateMemberControllerTest {
         jsonAsMap.put("lastName", "lastName");
         jsonAsMap.put("orgId", createdOrgId.toString());
         jsonAsMap.put("email", "email.com");
+        jsonAsMap.put("isExpert", "false");
 
         given()
                 .contentType("application/json")
@@ -75,6 +63,7 @@ public class CreateMemberControllerTest {
             newObjectId = new ObjectId();
         jsonAsMap.put("orgId", newObjectId.toString());
         jsonAsMap.put("email", "email@a.com");
+        jsonAsMap.put("isExpert", "false");
 
         given()
                 .contentType("application/json")
