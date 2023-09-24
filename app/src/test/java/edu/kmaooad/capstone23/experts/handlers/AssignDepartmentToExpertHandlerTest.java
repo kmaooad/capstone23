@@ -1,7 +1,6 @@
 package edu.kmaooad.capstone23.experts.handlers;
 
 import edu.kmaooad.capstone23.common.CommandHandler;
-import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.departments.commands.CreateDepartment;
 import edu.kmaooad.capstone23.departments.dal.DepartmentsRepository;
@@ -26,7 +25,7 @@ import org.junit.jupiter.api.Test;
 
 @QuarkusTest
 public class AssignDepartmentToExpertHandlerTest {
-    private static final String ORG_NAME = "Persyk Inc";
+    private static final String ORG_NAME = "Organisationn";
     private ObjectId expertId;
     private ObjectId departmentId;
     private ObjectId orgId;
