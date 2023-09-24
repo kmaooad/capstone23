@@ -53,6 +53,30 @@ public class UpdateCSVStudent {
         this.email = email;
     }
 
+    public ObjectId getId() {
+        return id;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getMiddleName() {
+        return middleName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public long getDOBTimestamp() {
+        return DOBTimestamp;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
