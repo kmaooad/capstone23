@@ -5,6 +5,7 @@ import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.experts.commands.CreateExpert;
 import edu.kmaooad.capstone23.experts.events.ExpertCreated;
 import edu.kmaooad.capstone23.orgs.commands.CreateOrg;
+import edu.kmaooad.capstone23.orgs.dal.OrgsRepository;
 import edu.kmaooad.capstone23.orgs.events.OrgCreated;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
@@ -25,6 +26,8 @@ public class CreateExpertHandlerTest {
 
         CreateOrg orgCommand = new CreateOrg();
         orgCommand.setOrgName(orgName);
+        orgCommand.industry = "Education";
+        orgCommand.website = "https://www.ukma.edu.ua/eng/";
         orgHandler.handle(orgCommand);
 
         CreateExpert command = new CreateExpert();
@@ -44,6 +47,8 @@ public class CreateExpertHandlerTest {
 
         CreateOrg orgCommand = new CreateOrg();
         orgCommand.setOrgName(orgName);
+        orgCommand.industry = "Education";
+        orgCommand.website = "https://www.ukma.edu.ua/eng/";
         orgHandler.handle(orgCommand);
 
         CreateExpert command = new CreateExpert();

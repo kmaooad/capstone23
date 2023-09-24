@@ -2,13 +2,17 @@ package edu.kmaooad.capstone23.experts.dal;
 
 import io.quarkus.mongodb.panache.PanacheMongoRepository;
 import jakarta.enterprise.context.ApplicationScoped;
-import java.util.List;
+import org.bson.types.ObjectId;
 
 @ApplicationScoped
 public class ExpertsRepository implements PanacheMongoRepository<Expert> {
 
     public Expert findByName(String name) {
         return find("name", name).firstResult();
+    }
+
+    public Expert findByMemberId(ObjectId memberId) {
+        return find("memberId", memberId).firstResult();
     }
 
     public Expert insert(Expert expert){

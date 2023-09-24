@@ -5,6 +5,8 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import org.bson.types.ObjectId;
 
+import java.util.List;
+
 public class CreateJob {
     private ObjectId id;
     @NotBlank
@@ -12,14 +14,13 @@ public class CreateJob {
     @Pattern(regexp = "^[a-zA-Z0-9\s]*$")
     private String name;
     private boolean active;
-    private ObjectId[] competencesId;
-    private ObjectId[] activitiesId;
+    private List<ObjectId> competencesId;
+    private List<ObjectId> activitiesId;
 
 
     public CreateJob(String name, boolean active) {
         this.name = name;
         this.active = active;
-
     }
 
     public ObjectId getId() {
@@ -34,11 +35,11 @@ public class CreateJob {
         return active;
     }
 
-    public ObjectId[] getCompetencesId() {
+    public List<ObjectId> getCompetencesId() {
         return competencesId;
     }
 
-    public ObjectId[] getActivitiesId() {
+    public List<ObjectId> getActivitiesId() {
         return activitiesId;
     }
 

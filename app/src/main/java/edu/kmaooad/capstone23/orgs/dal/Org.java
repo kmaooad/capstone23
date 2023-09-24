@@ -8,4 +8,8 @@ import io.quarkus.mongodb.panache.common.MongoEntity;
 public class Org {
     public ObjectId id;
     public String name;
+    public String industry;
+    public String website;
+    public String description;
+    public Boolean isActive;
 }

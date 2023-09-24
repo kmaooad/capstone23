@@ -2,11 +2,14 @@ package edu.kmaooad.capstone23.cvs.commands;
 
 import edu.kmaooad.capstone23.cvs.dal.CV;
 import jakarta.validation.constraints.NotNull;
+import org.bson.types.ObjectId;
+
+import java.util.Set;
 
 public class UpdateCV {
 
     @NotNull
-    private String cvId;
+    private ObjectId cvId;
 
     private CV.Status status;
 
@@ -14,11 +17,14 @@ public class UpdateCV {
 
     private String textInfo;
 
-    public String getCvId() {
+    private Set<ObjectId> skills;
+
+
+    public ObjectId getCvId() {
         return cvId;
     }
 
-    public void setCvId(String cvId) {
+    public void setCvId(ObjectId cvId) {
         this.cvId = cvId;
     }
 
@@ -44,5 +50,13 @@ public class UpdateCV {
 
     public void setTextInfo(String textInfo) {
         this.textInfo = textInfo;
+    }
+
+    public Set<ObjectId> getSkills() {
+        return skills;
+    }
+
+    public void setSkills(Set<ObjectId> skills) {
+        this.skills = skills;
     }
 }
