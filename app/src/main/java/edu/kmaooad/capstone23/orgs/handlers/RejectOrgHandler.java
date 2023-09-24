@@ -24,7 +24,7 @@ public class RejectOrgHandler implements CommandHandler<RejectOrg, OrgRejected> 
 
     @Override
     public Result<OrgRejected> handle(RejectOrg command) {
-        final Optional<Org> optionalOrg = orgsRepository.findById(command.id);
+        final Optional<Org> optionalOrg = orgsRepository.findByIdOptional(command.id);
         if (optionalOrg.isEmpty()) {
             return new Result<>(ErrorCode.VALIDATION_FAILED, "Org with this ID does not exist");
         }

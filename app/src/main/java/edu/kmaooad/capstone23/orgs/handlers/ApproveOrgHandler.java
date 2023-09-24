@@ -26,7 +26,7 @@ public class ApproveOrgHandler implements CommandHandler<ApproveOrg, OrgApproved
     private static final String defaultEmailText = "Your organizations`s submission has been approved";
 
     public Result<OrgApproved> handle(ApproveOrg command) {
-        final Optional<Org> valid_org = orgsRepository.findById(command.getOrgId());
+        final Optional<Org> valid_org = orgsRepository.findByIdOptional(command.getOrgId());
         if (valid_org.isEmpty()) {
             return new Result<>(ErrorCode.VALIDATION_FAILED, "Org not found!");
         }
