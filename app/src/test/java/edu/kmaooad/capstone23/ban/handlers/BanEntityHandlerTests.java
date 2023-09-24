@@ -18,6 +18,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.Random;
+
 @QuarkusTest
 public class BanEntityHandlerTests {
 
@@ -131,7 +133,7 @@ public class BanEntityHandlerTests {
         command.setOrgId(orgId);
         command.setFirstName("John");
         command.setLastName("Doe");
-        command.setEmail("john.doe@example.com");
+        command.setEmail(randomEmail());
 
         Result<BasicMemberCreated> result = createMemberHandler.handle(command);
 
@@ -171,4 +173,18 @@ public class BanEntityHandlerTests {
         Assertions.assertFalse(result.getValue().getOrgId().isEmpty());
         return result.getValue().getOrgId();
     }
+    private String randomEmail() {
+        int leftLimit = 97; // letter 'a'
+        int rightLimit = 122; // letter 'z'
+        int targetStringLength = 10;
+        Random random = new Random();
+
+        String generatedString = random.ints(leftLimit, rightLimit + 1)
+                .limit(targetStringLength)
+                .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+                .toString();
+
+        return generatedString + "@mail.com";
+    }
+
 }
