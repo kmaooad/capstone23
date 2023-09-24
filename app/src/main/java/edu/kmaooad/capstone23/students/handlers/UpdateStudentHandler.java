@@ -10,6 +10,7 @@ import edu.kmaooad.capstone23.students.events.StudentUpdated;
 import edu.kmaooad.capstone23.students.parser.UpdateCSVStudent;
 import edu.kmaooad.capstone23.students.parser.UpdateCSVStudentParser;
 import edu.kmaooad.capstone23.students.parser.exceptions.IncorrectValuesAmount;
+import edu.kmaooad.capstone23.students.parser.exceptions.InvalidEmail;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
@@ -38,6 +39,8 @@ public class UpdateStudentHandler implements CommandHandler<UpdateStudent, Stude
             csvStudents = parser.parse(command.csvFile.uploadedFile().toFile());
         } catch (ParseException e) {
             return new Result<>(ErrorCode.EXCEPTION, "Incorrect date format");
+        } catch (InvalidEmail e) {
+            return new Result<>(ErrorCode.VALIDATION_FAILED, "Email validation failed");
         } catch (FileNotFoundException e) {
             return new Result<>(ErrorCode.NOT_FOUND, "Can't find file " + command.csvFile.uploadedFile().getFileName());
         } catch (IOException | IncorrectValuesAmount e) {

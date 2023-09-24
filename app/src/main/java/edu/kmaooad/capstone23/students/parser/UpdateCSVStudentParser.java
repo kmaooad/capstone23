@@ -1,9 +1,12 @@
 package edu.kmaooad.capstone23.students.parser;
 
 import edu.kmaooad.capstone23.students.parser.exceptions.IncorrectValuesAmount;
+import edu.kmaooad.capstone23.students.parser.exceptions.InvalidEmail;
 import edu.kmaooad.capstone23.students.parser.exceptions.NotEnoughValues;
 import edu.kmaooad.capstone23.students.parser.exceptions.TooManyValues;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.validation.Validator;
 import org.bson.types.ObjectId;
 
 import java.io.*;
@@ -16,6 +19,8 @@ import java.util.TimeZone;
 @ApplicationScoped
 public class UpdateCSVStudentParser {
     private static final SimpleDateFormat FORMATTER = new SimpleDateFormat("dd/MM/yyyy");
+    @Inject
+    Validator validator;
 
     public UpdateCSVStudentParser() {
         FORMATTER.setTimeZone(TimeZone.getTimeZone("GMT"));
@@ -24,7 +29,7 @@ public class UpdateCSVStudentParser {
 
     private static final int STUDENT_FIELDS = 6;
 
-    public List<UpdateCSVStudent> parse(File content) throws ParseException, FileNotFoundException, IOException, IncorrectValuesAmount {
+    public List<UpdateCSVStudent> parse(File content) throws ParseException, FileNotFoundException, IOException, IncorrectValuesAmount, InvalidEmail {
         FileInputStream stream = new FileInputStream(content);
         InputStreamReader reader = new InputStreamReader(stream);
         BufferedReader text = new BufferedReader(reader);
@@ -50,13 +55,14 @@ public class UpdateCSVStudentParser {
         return result;
     }
 
-    private UpdateCSVStudent parse(String[] values) throws ParseException {
+    private UpdateCSVStudent parse(String[] values) throws ParseException, InvalidEmail {
         var student = new UpdateCSVStudent();
         for (int i = 0; i < values.length; i++) {
             if (!values[i].isBlank()) {
                 build(student, i, values[i]);
             }
         }
+        if (!validator.validate(student).isEmpty()) throw new InvalidEmail("TInvalid email provided: ", student.getEmail());
         return student;
     }
 
@@ -83,6 +89,5 @@ public class UpdateCSVStudentParser {
         } catch (ParseException ex) {
             throw new ParseException("Incorrect data format for field", index);
         }
-//        return student;
     }
 }
