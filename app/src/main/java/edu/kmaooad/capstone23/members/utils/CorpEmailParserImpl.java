@@ -1,8 +1,11 @@
 package edu.kmaooad.capstone23.members.utils;
 
+import jakarta.enterprise.context.ApplicationScoped;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+@ApplicationScoped
 public class CorpEmailParserImpl implements CorpEmailParser {
     @Override
     public String getCorpEmailDomain(String email) {
