@@ -14,6 +14,9 @@ public class OrgsRepository implements PanacheMongoRepository<Org> {
     public Org findByName(String name) {
         return find("name", name).firstResult();
     }
+    public Org findById(String id) {
+        return find("id", id).firstResult();
+    }
 
     public Optional<Org> findById(String id) {
         if (!ObjectId.isValid(id)) {

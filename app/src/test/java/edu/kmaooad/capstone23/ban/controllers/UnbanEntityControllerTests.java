@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 import static io.restassured.RestAssured.given;
 
@@ -48,7 +49,7 @@ public class UnbanEntityControllerTests {
         jsonAsMap.put("firstName", "firstName");
         jsonAsMap.put("lastName", "lastName");
         jsonAsMap.put("orgId", orgId);
-        jsonAsMap.put("email", "email@email.com");
+        jsonAsMap.put("email", randomEmail());
 
         return given()
                 .contentType("application/json")
@@ -113,5 +114,19 @@ public class UnbanEntityControllerTests {
         var orgId = createOrg();
         var entityId = createMember(orgId);
         testSuccessfulEntityUnban(BannedEntityType.Member, entityId);
+    }
+
+    private String randomEmail() {
+        int leftLimit = 97; // letter 'a'
+        int rightLimit = 122; // letter 'z'
+        int targetStringLength = 10;
+        Random random = new Random();
+
+        String generatedString = random.ints(leftLimit, rightLimit + 1)
+                .limit(targetStringLength)
+                .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+                .toString();
+
+        return generatedString + "@mail.com";
     }
 }
