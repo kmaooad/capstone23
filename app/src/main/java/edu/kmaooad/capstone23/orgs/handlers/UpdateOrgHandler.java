@@ -21,17 +21,11 @@ public class UpdateOrgHandler implements CommandHandler<UpdateOrg, OrgUpdated> {
     @Inject
     private OrgsRepository repository;
 
-    @Inject
-    private EntityBanRepository entityBanRepository;
-
     public Result<OrgUpdated> handle(UpdateOrg command) {
         Optional<Org> existingOrg = this.repository.findByIdOptional(new ObjectId(command.orgId));
 
         if (existingOrg.isEmpty()) {
             return new Result<>(ErrorCode.EXCEPTION, "Org with given id not found");
-        }
-        if (entityBanRepository.findForEntity(BannedEntityType.Organization, existingOrg.get().id).isPresent()) {
-            return new Result<>(ErrorCode.EXCEPTION, "Org is banned");
         }
 
         Org updatedOrg = this.updateEntity(existingOrg.get(), command);
