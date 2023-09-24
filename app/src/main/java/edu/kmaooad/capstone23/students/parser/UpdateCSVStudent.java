@@ -29,48 +29,24 @@ public class UpdateCSVStudent {
         this.email = email;
     }
 
-    public ObjectId getId() {
-        return id;
-    }
-
     public void setId(ObjectId id) {
         this.id = id;
-    }
-
-    public String getFirstName() {
-        return firstName;
     }
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
-    public String getMiddleName() {
-        return middleName;
-    }
-
     public void setMiddleName(String middleName) {
         this.middleName = middleName;
-    }
-
-    public String getLastName() {
-        return lastName;
     }
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
-    public long getDOBTimestamp() {
-        return DOBTimestamp;
-    }
-
     public void setDOBTimestamp(long DOBTimestamp) {
         this.DOBTimestamp = DOBTimestamp;
-    }
-
-    public String getEmail() {
-        return email;
     }
 
     public void setEmail(String email) {

@@ -38,7 +38,7 @@ public class UpdateCSVStudentParser {
             String input = text.readLine();
             if (input.isBlank()) continue;
             var values = input.split(",");
-            if (values.length < STUDENT_FIELDS) throw new NotEnoughValues(line);
+            if (values.length < 1 || values[0].isBlank()) throw new NotEnoughValues(line);
             if (values.length > STUDENT_FIELDS) throw new TooManyValues(line);
             result.add(parse(values));
         }

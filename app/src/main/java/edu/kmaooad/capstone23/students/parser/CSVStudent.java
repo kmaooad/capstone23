@@ -22,9 +22,6 @@ public class CSVStudent {
         this.email = email;
     }
 
-    public CSVStudent() {
-    }
-
     public String getFirstName() {
         return firstName;
     }
