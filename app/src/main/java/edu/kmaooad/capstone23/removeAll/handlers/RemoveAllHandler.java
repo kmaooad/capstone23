@@ -1,4 +1,4 @@
-package edu.kmaooad.capstone23.removeAll.events;
+package edu.kmaooad.capstone23.removeAll.handlers;
 
 import edu.kmaooad.capstone23.activities.dal.CourseRepository;
 import edu.kmaooad.capstone23.ban.dal.EntityBanRepository;
@@ -12,14 +12,13 @@ import edu.kmaooad.capstone23.cvs.dal.CVRepository;
 import edu.kmaooad.capstone23.departments.dal.DepartmentsRepository;
 import edu.kmaooad.capstone23.experts.dal.ExpertInvitationRepository;
 import edu.kmaooad.capstone23.experts.dal.ExpertsRepository;
-import edu.kmaooad.capstone23.group_templates.dal.GroupTemplate;
 import edu.kmaooad.capstone23.group_templates.dal.GroupTemplatesRepository;
 import edu.kmaooad.capstone23.jobs.dal.JobRepository;
 import edu.kmaooad.capstone23.members.dal.MembersRepository;
 import edu.kmaooad.capstone23.orgs.dal.OrgsRepository;
 import edu.kmaooad.capstone23.orgs.dal.RequestsRepository;
 import edu.kmaooad.capstone23.removeAll.commands.RemoveAll;
-import edu.kmaooad.capstone23.removeAll.handlers.AllRemoved;
+import edu.kmaooad.capstone23.removeAll.events.AllRemoved;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 
