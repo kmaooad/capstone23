@@ -3,8 +3,10 @@ package edu.kmaooad.capstone23.activities.controllers;
         import edu.kmaooad.capstone23.activities.dal.Course;
         import edu.kmaooad.capstone23.activities.dal.CourseRepository;
         import io.quarkus.test.junit.QuarkusTest;
+        import jakarta.ejb.Init;
         import jakarta.inject.Inject;
         import org.bson.types.ObjectId;
+        import org.junit.jupiter.api.BeforeAll;
         import org.junit.jupiter.api.BeforeEach;
         import org.junit.jupiter.api.DisplayName;
         import org.junit.jupiter.api.Test;
@@ -22,11 +24,11 @@ package edu.kmaooad.capstone23.activities.controllers;
 
     @BeforeEach
     void setUp() {
+        courseRepository.deleteAll();
         Course course = new Course();
         course.name = "Initial Course";
         courseRepository.insert(course);
         idToUpdate = course.id;
-
     }
 
     @Test
