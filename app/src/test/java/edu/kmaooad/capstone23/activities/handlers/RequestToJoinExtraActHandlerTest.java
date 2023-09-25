@@ -90,4 +90,23 @@ public class RequestToJoinExtraActHandlerTest {
         Assertions.assertEquals("User is already part of the activity", result.getMessage());
     }
 
+    @Test
+    @DisplayName("Create Request to Join Activity: Error handling when user sends multiple requests for the same activity")
+    public void testMultipleRequestsToJoinActivity() {
+        String userName = "person2";
+
+        RequestToJoinExtraAct initialCommand = new RequestToJoinExtraAct();
+        initialCommand.setUserName(userName);
+        initialCommand.setExtraActId(extraActId);
+        Result<RequestCreated> initialResult = handler.handle(initialCommand);
+        Assertions.assertTrue(initialResult.isSuccess());
+
+        RequestToJoinExtraAct secondCommand = new RequestToJoinExtraAct();
+        secondCommand.setUserName(userName);
+        secondCommand.setExtraActId(extraActId);
+        Result<RequestCreated> secondResult = handler.handle(secondCommand);
+        Assertions.assertFalse(secondResult.isSuccess());
+        Assertions.assertEquals("User is already part of the activity", secondResult.getMessage());
+    }
+
 }
