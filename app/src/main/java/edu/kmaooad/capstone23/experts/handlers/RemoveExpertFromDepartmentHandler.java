@@ -34,15 +34,15 @@ public class RemoveExpertFromDepartmentHandler
         if (expertId != null && departmentId != null) {
             Expert expert = expertsRepository.findById(expertId);
 
-            if (expert.department.isEmpty()) {
+            if (expert.departments.isEmpty()) {
                 return new Result<>(ErrorCode.NOT_FOUND, "Expert has no department");
             }
 
-            if (!expert.department.stream().anyMatch(p -> p.id.equals(departmentId))) {
+            if (!expert.departments.stream().anyMatch(p -> p.id.equals(departmentId))) {
                 return new Result<>(ErrorCode.CONFLICT, "Expert is not in this department");
             }
 
-            expert.department = expert.department.stream().filter(p -> p.id == departmentId).toList();
+            expert.departments = expert.departments.stream().filter(p -> p.id == departmentId).toList();
             expertsRepository.modify(expert);
 
             return new Result<>(new ExpertRemovedFromDepartment(expert.id.toString()));

@@ -64,7 +64,7 @@ public class RemoveExpertFromDepartmentHandlerTest {
 
         Assertions.assertTrue(result.isSuccess());
         Assertions.assertNotNull(result.getValue());
-        Assertions.assertFalse(expertsRepository.findById(expertId).department.stream().anyMatch(p -> p.id == departmentId));
+        Assertions.assertFalse(expertsRepository.findById(expertId).departments.stream().anyMatch(p -> p.id == departmentId));
     }
 
     private Org createTestOrg() {
@@ -106,7 +106,7 @@ public class RemoveExpertFromDepartmentHandlerTest {
         ArrayList<Department> departments = new ArrayList<>();
         departments.add(department);
 
-        expert.department = departments;
+        expert.departments = departments;
         expertsRepository.insert(expert);
 
         return expert.id;

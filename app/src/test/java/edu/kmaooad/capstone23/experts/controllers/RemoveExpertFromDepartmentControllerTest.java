@@ -109,7 +109,7 @@ public class RemoveExpertFromDepartmentControllerTest {
         ArrayList<Department> departments = new ArrayList<>();
         departments.add(department);
 
-        expert.department = departments;
+        expert.departments = departments;
         expertsRepository.insert(expert);
 
         return expert.id;
