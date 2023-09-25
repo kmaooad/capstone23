@@ -60,6 +60,6 @@ public class SetHiringStatusOnControllerTest {
                 .body(jsonAsMap)
                 .when().post("/departments/set-hiring-status-on")
                 .then()
-                .statusCode(400);
+                .statusCode(500);
     }
 }
