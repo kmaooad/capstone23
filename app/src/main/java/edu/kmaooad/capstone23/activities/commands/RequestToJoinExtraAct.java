@@ -13,6 +13,10 @@ public class RequestToJoinExtraAct {
         return extraActId;
     }
 
+    public void setExtraActId(String extraActId) {
+        this.extraActId = extraActId;
+    }
+
     @NotBlank
     @Pattern(regexp = "^[a-zA-Z0-9\s]*$")
     private String userName;

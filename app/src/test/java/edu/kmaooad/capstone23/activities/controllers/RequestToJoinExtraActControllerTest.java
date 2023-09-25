@@ -55,7 +55,7 @@ public class RequestToJoinExtraActControllerTest {
     @Test
     @DisplayName("Create Request to Join Activity: No such activity")
     public void testRequestToJoinActivityWithNonExistentId() {
-        String nonexistentId = "64fbb243275c2222267b87a3";
+        String nonexistentId = "66fbb253275c2222267b87a1";
         String userName = "person1";
 
         given()
@@ -65,6 +65,49 @@ public class RequestToJoinExtraActControllerTest {
                 .post("/extracurricularActivity/request")
                 .then()
                 .statusCode(400);
+    }
+
+    @Test
+    @DisplayName("Create Request to Join Activity: No userName")
+    public void testRequestToJoinActivityWithoutUserName() {
+        String extraActId = idToUpdate;
+
+        given()
+                .contentType("application/json")
+                .body("{\"extraActId\":\"" + extraActId + "\"}")
+                .when()
+                .post("/extracurricularActivity/request")
+                .then()
+                .statusCode(400);
+    }
+
+    @Test
+    @DisplayName("Create Request to Join Activity: No extraActId")
+    public void testRequestToJoinActivityWithoutExtraActId() {
+        String userName = "person1";
+
+        given()
+                .contentType("application/json")
+                .body("{\"userName\":\"" + userName + "\"}")
+                .when()
+                .post("/extracurricularActivity/request")
+                .then()
+                .statusCode(400);
+    }
+
+    @Test
+    @DisplayName("Create Request to Join Activity: Invalid extraActId Format")
+    public void testRequestToJoinActivityWithInvalidExtraActIdFormat() {
+        String userName = "person1";
+        String invalidExtraActId = "invalid_id";
+
+        given()
+                .contentType("application/json")
+                .body("{\"userName\":\"" + userName + "\",\"extraActId\":\"" + invalidExtraActId + "\"}")
+                .when()
+                .post("/extracurricularActivity/request")
+                .then()
+                .statusCode(500);
     }
 
 }
