@@ -71,4 +71,23 @@ public class RequestToJoinExtraActHandlerTest {
         Assertions.assertEquals("Activity not found", result.getMessage());
     }
 
+    @Test
+    @DisplayName("Create Request to Join Activity: Error handling when user is already part of the activity")
+    public void testRequestToJoinActivityWithExistingUser() {
+        String userName = "person1";
+
+        RequestToJoinExtraAct initialCommand = new RequestToJoinExtraAct();
+        initialCommand.setUserName(userName);
+        initialCommand.setExtraActId(extraActId);
+        Result<RequestCreated> initialResult = handler.handle(initialCommand);
+        Assertions.assertTrue(initialResult.isSuccess());
+
+        RequestToJoinExtraAct command = new RequestToJoinExtraAct();
+        command.setUserName(userName);
+        command.setExtraActId(extraActId);
+        Result<RequestCreated> result = handler.handle(command);
+        Assertions.assertFalse(result.isSuccess());
+        Assertions.assertEquals("User is already part of the activity", result.getMessage());
+    }
+
 }

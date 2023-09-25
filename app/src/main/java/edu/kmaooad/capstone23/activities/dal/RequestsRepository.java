@@ -23,5 +23,4 @@ public class RequestsRepository implements PanacheMongoRepository<Request> {
     public List<Request> findListByUserNameAndExtraActId(String userName, String extraActId) {
         return list("userName = ?1 and extraActId = ?2", userName, extraActId);
     }
-
 }
