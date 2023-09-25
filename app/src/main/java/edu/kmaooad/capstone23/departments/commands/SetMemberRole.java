@@ -3,7 +3,7 @@ package edu.kmaooad.capstone23.departments.commands;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
-public class RequestToJoinDepartment {
+public class SetMemberRole {
 
     @NotBlank
     @Size(min = 2, max = 50)
@@ -26,4 +26,14 @@ public class RequestToJoinDepartment {
         this.userName = userName;
     }
 
+
+    @NotBlank
+    private String role;
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
 }
