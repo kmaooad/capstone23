@@ -157,6 +157,7 @@ public class CreateAccessRuleHandlerTests {
         command.setFromEntityType(fromType.toString());
         command.setToEntityId(new ObjectId(toId));
         command.setToEntityType(toType.toString());
+        command.setRuleType("Allow");
 
         Result<AccessRuleCreated> result = ruleHandler.handle(command);
 
