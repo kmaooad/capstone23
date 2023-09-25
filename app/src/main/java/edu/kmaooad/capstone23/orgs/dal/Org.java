@@ -4,6 +4,8 @@ import org.bson.types.ObjectId;
 
 import io.quarkus.mongodb.panache.common.MongoEntity;
 
+import java.util.ArrayList;
+
 @MongoEntity(collection = "orgs")
 public class Org {
     public ObjectId id;
@@ -12,5 +14,6 @@ public class Org {
     public String website;
     public String description;
     public String emailDomain;
+    public ArrayList<String> jobs;
     public Boolean isActive;
 }
