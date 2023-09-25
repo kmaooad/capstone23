@@ -68,6 +68,7 @@ public class RemoveExpertFromDepartmentHandlerTest {
         Assertions.assertTrue(result.isSuccess());
         Assertions.assertNotNull(result.getValue());
         Assertions.assertFalse(expertsRepository.findById(expertId).departments.stream().anyMatch(p -> p.id == departmentId));
+    }
 
     @Test
     @DisplayName("Remove Expert with no department")
