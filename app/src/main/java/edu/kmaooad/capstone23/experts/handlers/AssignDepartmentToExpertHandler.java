@@ -39,6 +39,7 @@ public class AssignDepartmentToExpertHandler
         if (expert.departments.stream().anyMatch(p -> p.id.equals(department.id))) {
             return new Result<>(ErrorCode.CONFLICT, "Expert is already in this department");
         }
+
         expert.departments.add(department);
         expertsRepository.modify(expert);
 

@@ -106,7 +106,7 @@ public class AssignDepartmentToExpertHandlerTest {
 
         Assertions.assertEquals(ErrorCode.CONFLICT, result.getErrorCode());
     }
-
+  
     @AfterEach
     void tearDown() {
         expertsRepository.deleteAll();

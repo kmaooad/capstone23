@@ -19,6 +19,8 @@ public class CreateOrg {
 
     public String description;
 
+    public String emailDomain;
+
     public String getOrgName() {
         return orgName;
     }
