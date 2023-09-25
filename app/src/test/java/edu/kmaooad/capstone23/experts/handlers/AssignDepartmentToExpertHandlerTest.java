@@ -1,6 +1,7 @@
 package edu.kmaooad.capstone23.experts.handlers;
 
 import edu.kmaooad.capstone23.common.CommandHandler;
+import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.departments.commands.CreateDepartment;
 import edu.kmaooad.capstone23.departments.dal.DepartmentsRepository;
@@ -25,7 +26,7 @@ import org.junit.jupiter.api.Test;
 
 @QuarkusTest
 public class AssignDepartmentToExpertHandlerTest {
-    private static final String ORG_NAME = "Organisationn";
+    private static final String ORG_NAME = "Persyk Inc";
     private ObjectId expertId;
     private ObjectId departmentId;
     private ObjectId orgId;
@@ -67,6 +68,43 @@ public class AssignDepartmentToExpertHandlerTest {
                 .toList();
         Assertions.assertTrue(idStrings.contains(
                 departmentsRepository.findById(departmentId).id.toHexString()));
+    }
+
+    @Test
+    @DisplayName("Assign Department To Expert: Non-Existent Expert")
+    public void testHandlingWithInvalidExpert() {
+        AssignDepartmentToExpert assignDepartmentToExpert = new AssignDepartmentToExpert();
+        assignDepartmentToExpert.setExpertId("64fe000000000a0000000000");
+        assignDepartmentToExpert.setDepartmentId(departmentId.toHexString());
+
+        Result<DepartmentAssignedToExpert> result = assignHandler.handle(assignDepartmentToExpert);
+
+        Assertions.assertEquals(result.getErrorCode(), ErrorCode.NOT_FOUND);
+    }
+
+    @Test
+    @DisplayName("Assign Department To Expert: Non-Existent Department")
+    public void testHandlingWithInvalidDepartment() {
+        AssignDepartmentToExpert assignDepartmentToExpert = new AssignDepartmentToExpert();
+        assignDepartmentToExpert.setExpertId(orgId.toHexString());
+        assignDepartmentToExpert.setDepartmentId("64fe000000000a0000000000");
+
+        Result<DepartmentAssignedToExpert> result = assignHandler.handle(assignDepartmentToExpert);
+
+        Assertions.assertEquals(result.getErrorCode(), ErrorCode.NOT_FOUND);
+    }
+
+    @Test
+    @DisplayName("Assign Department To Expert: Expert Is Already In The Wished Department")
+    public void testHandlingWithAlreadyAssignedDepartment() {
+        AssignDepartmentToExpert assignDepartmentToExpert = new AssignDepartmentToExpert();
+        assignDepartmentToExpert.setExpertId(expertId.toHexString());
+        assignDepartmentToExpert.setDepartmentId(departmentId.toHexString());
+
+        assignHandler.handle(assignDepartmentToExpert);
+        Result<DepartmentAssignedToExpert> result = assignHandler.handle(assignDepartmentToExpert);
+
+        Assertions.assertEquals(ErrorCode.CONFLICT, result.getErrorCode());
     }
 
     @AfterEach
