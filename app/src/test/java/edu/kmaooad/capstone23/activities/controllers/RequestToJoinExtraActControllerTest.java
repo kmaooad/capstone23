@@ -80,4 +80,19 @@ public class RequestToJoinExtraActControllerTest {
                 .then()
                 .statusCode(400);
     }
+
+    @Test
+    @DisplayName("Create Request to Join Activity: No extraActId")
+    public void testRequestToJoinActivityWithoutExtraActId() {
+        String userName = "person1";
+
+        given()
+                .contentType("application/json")
+                .body("{\"userName\":\"" + userName + "\"}")
+                .when()
+                .post("/extracurricularActivity/request")
+                .then()
+                .statusCode(400);
+    }
+
 }
