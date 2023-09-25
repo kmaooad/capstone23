@@ -15,13 +15,13 @@ public class CreateAccessRule {
     @NotNull
     private ObjectId fromEntityId;
     @NotNull
-    @Pattern(regexp = "Organization|Department|Member")
+    @Pattern(regexp = "Organisation|Department|Member")
     private String fromEntityType;
 
     @NotNull
     private ObjectId toEntityId;
     @NotNull
-    @Pattern(regexp = "Organization|Department|Course|Group")
+    @Pattern(regexp = "Organisation|Department|Course|Group")
     private String toEntityType;
 
 
