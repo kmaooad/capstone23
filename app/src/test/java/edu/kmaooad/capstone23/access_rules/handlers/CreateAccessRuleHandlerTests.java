@@ -148,7 +148,7 @@ public class CreateAccessRuleHandlerTests {
     @Test
     @DisplayName("Create Access Rule: organisation to department")
     public void createRuleOrganisationToDepartment() {
-        Result<AccessRuleCreated> result = addAccessRule(org, AccessRuleFromEntityType.Organisation, group, AccessRuleToEntityType.Department);
+        Result<AccessRuleCreated> result = addAccessRule(org, AccessRuleFromEntityType.Organisation, department, AccessRuleToEntityType.Department);
         Assertions.assertTrue(result.isSuccess());
     }
     private Result<AccessRuleCreated> addAccessRule(String fromId, AccessRuleFromEntityType fromType, String toId, AccessRuleToEntityType toType){
