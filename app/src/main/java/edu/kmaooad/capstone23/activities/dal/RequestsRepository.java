@@ -16,9 +16,6 @@ public class RequestsRepository implements PanacheMongoRepository<Request> {
         persist(request);
         return request;
     }
-    public void delete(Request request) {
-        deleteById(request.id);
-    }
 
     public List<Request> findListByUserNameAndExtraActId(String userName, String extraActId) {
         return list("userName = ?1 and extraActId = ?2", userName, extraActId);
