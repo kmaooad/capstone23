@@ -35,7 +35,7 @@ public class RemoveExpertFromDepartmentHandler
             Expert expert = expertsRepository.findById(expertId);
 
             if (expert.departments.isEmpty()) {
-                return new Result<>(ErrorCode.NOT_FOUND, "Expert has no departments");
+                return new Result<>(ErrorCode.NOT_FOUND, "Expert has no department");
             }
 
             if (!expert.departments.stream().anyMatch(p -> p.id.equals(departmentId))) {
