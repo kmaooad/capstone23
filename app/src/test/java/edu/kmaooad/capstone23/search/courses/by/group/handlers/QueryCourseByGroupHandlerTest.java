@@ -7,6 +7,7 @@ import edu.kmaooad.capstone23.groups.dal.GroupsRepository;
 import edu.kmaooad.capstone23.relations.dal.Relation;
 import edu.kmaooad.capstone23.relations.dal.RelationRepository;
 import edu.kmaooad.capstone23.search.QueryByIdCommand;
+import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,7 +20,8 @@ import java.util.function.BiFunction;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class QueryCourseByGroupHandlerTest {
+@QuarkusTest
+public class QueryCourseByGroupHandlerTest {
     @Inject
     QueryCourseByGroupHandler handler;
 
@@ -36,13 +38,58 @@ class QueryCourseByGroupHandlerTest {
     private List<Group> defaultGroups;
     private List<Relation> defaultRelations;
 
-    @Test
-    @DisplayName("Basic Query")
-    public void basicQueryTest() {
-        var groupToFindIndex = 0;
+    private void testForGroupIndex(int groupToFindIndex) {
         assertTrue(groupToFindIndex < defaultGroups.size());
 
         var idOfGroupToFindBy = defaultGroups.get(groupToFindIndex).id;
+        var command = new QueryByIdCommand();
+        command.id = idOfGroupToFindBy;
+
+        var result = handler.handle(command);
+        System.out.println(result.getMessage());
+        assertTrue(result.isSuccess());
+
+        var event = result.getValue();
+        var foundCourses = event.queriedCourses();
+        var manuallyFoundCourses = manualSearch(groupToFindIndex);
+
+        assertTrue(areEqualSets(foundCourses, manuallyFoundCourses));
+    }
+
+    @Test
+    @DisplayName("Basic Query")
+    public void basicQueryTest() {
+        testForGroupIndex(0);
+    }
+
+    @Test
+    @DisplayName("Empty Query")
+    public void emptyQueryTest() {
+        testForGroupIndex(2);
+    }
+
+    @Test
+    @DisplayName("Reverted Query")
+    public void revertedQueryTest() {
+        BiFunction<Integer, Integer, Relation> addRevertedRelation = (courseIndex, groupIndex) -> {
+            var courseId = defaultCourses.get(courseIndex).id;
+            var groupId = defaultGroups.get(groupIndex).id;
+            var relation = new Relation(groupId, courseId);
+
+            var optCreatedRelation = relationRepository.createRelation("groups", "courses", relation);
+            assertTrue(optCreatedRelation.isPresent());
+
+            var createdRelation = optCreatedRelation.get();
+            defaultRelations.add(createdRelation);
+
+            return createdRelation;
+        };
+
+        var groupToFindByIndex = 4;
+        var courseToFindIndex = 0;
+        addRevertedRelation.apply(courseToFindIndex, groupToFindByIndex);
+
+        var idOfGroupToFindBy = defaultGroups.get(groupToFindByIndex).id;
         var command = new QueryByIdCommand();
         command.id = idOfGroupToFindBy;
 
@@ -51,22 +98,11 @@ class QueryCourseByGroupHandlerTest {
 
         var event = result.getValue();
         var foundCourses = event.queriedCourses();
-        var manuallyFoundCourses = manualSearch(groupToFindIndex);
 
-        assertFalse(foundCourses.isEmpty());
-        assertEqualSets(foundCourses, manuallyFoundCourses);
-    }
+        System.out.println();
 
-    @Test
-    @DisplayName("Empty Query")
-    public void emptyQueryTest() {
-
-    }
-
-    @Test
-    @DisplayName("Reverted Query")
-    public void revertedQueryTest() {
-
+        assertEquals(foundCourses.size(), 1);
+        assertEquals(foundCourses.get(0).name, defaultCourses.get(courseToFindIndex).name);
     }
 
     private List<Course> manualSearch(int groupIndex) {
@@ -87,18 +123,22 @@ class QueryCourseByGroupHandlerTest {
                 .toList();
     }
 
-    private <T> boolean isSubset(List<T> subset, List<T> set) {
-        return subset.stream()
-                .map(set::contains)
+    private boolean isSubset(List<Course> subset, List<Course> set) {
+        return subset
+                .stream()
+                .map(course -> course.name)
+                .map(name -> {
+                    for(var course : set) {
+                        if(course.name.equals(name))
+                            return true;
+                    }
+                    return false;
+                })
                 .reduce(true, Boolean::logicalAnd);
     }
 
-    private <T> boolean areEqualSets(List<T> set1, List<T> set2) {
+    private boolean areEqualSets(List<Course> set1, List<Course> set2) {
         return isSubset(set1, set2) && isSubset(set2, set1);
-    }
-
-    private <T> void assertEqualSets(List<T> set1, List<T> set2) {
-        assertTrue(areEqualSets(set1, set2));
     }
 
     @BeforeEach
@@ -116,16 +156,21 @@ class QueryCourseByGroupHandlerTest {
     }
 
     private void addDefaultCourses() {
-        defaultCourses = new ArrayList<>() {{
-            add(new Course(){{ name = "course1"; }});
-            add(new Course(){{ name = "course2"; }});
-            add(new Course(){{ name = "course3"; }});
-            add(new Course(){{ name = "course4"; }});
-        }};
+        defaultCourses = new ArrayList<>();
+        defaultCourses.add(createCourse("course1"));
+        defaultCourses.add(createCourse("course2"));
+        defaultCourses.add(createCourse("course3"));
+        defaultCourses.add(createCourse("course4"));
 
         defaultCourses = defaultCourses.stream()
                 .map(courseRepository::insert)
                 .toList();
+    }
+
+    private static Course createCourse(String name) {
+        Course course = new Course();
+        course.name = name;
+        return course;
     }
 
     private void removeDefaultCourses() {
@@ -134,17 +179,24 @@ class QueryCourseByGroupHandlerTest {
     }
 
     private void addDefaultGroups() {
-        defaultGroups = new ArrayList<>() {{
-            add(new Group(){{ name = "group1"; templateId = "someId1"; }});
-            add(new Group(){{ name = "group2"; templateId = "someId2"; }});
-            add(new Group(){{ name = "group3"; templateId = "someId3"; }});
-            add(new Group(){{ name = "group4"; templateId = "someId4"; }});
-            add(new Group(){{ name = "group5"; templateId = "someId5"; }});
-        }};
+        defaultGroups = new ArrayList<>();
+
+        defaultGroups.add(createGroup("group1", "someId1"));
+        defaultGroups.add(createGroup("group2", "someId2"));
+        defaultGroups.add(createGroup("group3", "someId3"));
+        defaultGroups.add(createGroup("group4", "someId4"));
+        defaultGroups.add(createGroup("group5", "someId5"));
 
         defaultGroups = defaultGroups.stream()
                 .map(groupsRepository::insert)
                 .toList();
+    }
+
+    private static Group createGroup(String name, String templateId) {
+        var group = new Group();
+        group.name = name;
+        group.templateId = templateId;
+        return group;
     }
 
     private void removeDefaultGroups() {

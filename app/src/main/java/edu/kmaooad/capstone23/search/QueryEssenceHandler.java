@@ -6,6 +6,8 @@ import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.relations.dal.QueryableRelationRepository;
 import edu.kmaooad.capstone23.relations.dal.Relation;
 import io.quarkus.mongodb.panache.PanacheMongoRepository;
+import jakarta.annotation.PostConstruct;
+import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
 
 import java.util.*;
@@ -19,28 +21,43 @@ public class QueryEssenceHandler <
         EssenceToFindByRepository extends PanacheMongoRepository<EssenceToFindBy>,
         QueryEvent
         > implements CommandHandler<QueryByIdCommand, QueryEvent> {
+    @Inject
+    QueryableRelationRepository relationRepository;
+
+    @Inject
+    EssenceToFindRepository essenceToFindRepository;
+
+    @Inject
+    EssenceToFindByRepository essenceToFindByRepository;
+
     private final Function<List<EssenceToFind>, QueryEvent> constructQueryEvent;
-    private final QueryableRelationRepository relationRepository;
+    private final Function<EssenceToFind, ObjectId> getIdOfEssenceToFind;
+    private final Function<EssenceToFindBy, ObjectId> getIdOfEssenceToFindBy;
     private final Map<ObjectId, EssenceToFind> idsOfEssencesToFind;
     private final Set<ObjectId> idsOfEssencesToFindBy;
 
-    public QueryEssenceHandler(Function<EssenceToFind, ObjectId> getIdOfEssenceToFind,
-                               Function<EssenceToFindBy, ObjectId> getIdOfEssenceToFindBy,
-                               Function<List<EssenceToFind>, QueryEvent> constructQueryEvent,
-                               QueryableRelationRepository relationRepository,
-                               EssenceToFindRepository courseRepository,
-                               EssenceToFindByRepository groupRepository) {
+    public QueryEssenceHandler
+    (
+            Function<EssenceToFind, ObjectId> getIdOfEssenceToFind,
+            Function<EssenceToFindBy, ObjectId> getIdOfEssenceToFindBy,
+            Function<List<EssenceToFind>, QueryEvent> constructQueryEvent
+    )
+    {
         this.constructQueryEvent = constructQueryEvent;
-        this.relationRepository = relationRepository;
+        this.getIdOfEssenceToFind = getIdOfEssenceToFind;
+        this.getIdOfEssenceToFindBy = getIdOfEssenceToFindBy;
         this.idsOfEssencesToFindBy = new HashSet<>();
         this.idsOfEssencesToFind = new HashMap<>();
+    }
 
-        groupRepository.listAll()
+    @PostConstruct
+    private void init() {
+        essenceToFindByRepository.listAll()
                 .stream()
                 .map(getIdOfEssenceToFindBy)
                 .forEach(idsOfEssencesToFindBy::add);
 
-        courseRepository.listAll()
+        essenceToFindRepository.listAll()
                 .forEach(course -> idsOfEssencesToFind.put(getIdOfEssenceToFind.apply(course), course));
     }
 
