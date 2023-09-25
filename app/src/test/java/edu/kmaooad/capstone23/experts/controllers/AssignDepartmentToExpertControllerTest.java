@@ -76,7 +76,6 @@ public class AssignDepartmentToExpertControllerTest {
                 .statusCode(400);
     }
 
-
     @AfterEach
     void tearDown() {
         expertsRepository.deleteAll();

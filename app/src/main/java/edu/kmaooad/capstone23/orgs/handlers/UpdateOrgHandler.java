@@ -19,6 +19,8 @@ public class UpdateOrgHandler implements CommandHandler<UpdateOrg, OrgUpdated> {
     @Inject
     private OrgsRepository repository;
 
+    // demonstrative commit
+
     public Result<OrgUpdated> handle(UpdateOrg command) {
         Optional<Org> existingOrg = this.repository.findByIdOptional(new ObjectId(command.orgId));
 
@@ -40,6 +42,7 @@ public class UpdateOrgHandler implements CommandHandler<UpdateOrg, OrgUpdated> {
         existingOrg.description = command.description;
         existingOrg.industry = command.industry;
         existingOrg.website = command.website;
+        existingOrg.emailDomain = command.emailDomain;
 
         return existingOrg;
     }
