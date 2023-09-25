@@ -8,6 +8,7 @@ import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.orgs.commands.CreateOrg;
 import edu.kmaooad.capstone23.orgs.commands.UpdateOrg;
+import edu.kmaooad.capstone23.orgs.dal.OrgsRepository;
 import edu.kmaooad.capstone23.orgs.events.OrgCreated;
 import edu.kmaooad.capstone23.orgs.events.OrgUpdated;
 import io.quarkus.test.junit.QuarkusTest;
@@ -24,6 +25,9 @@ public class UpdateOrgHandlerTest {
     String createdOrgId;
 
     @Inject
+    OrgsRepository orgsRepository;
+
+    @Inject
     CommandHandler<UpdateOrg, OrgUpdated> handler;
 
     @Inject
@@ -34,6 +38,7 @@ public class UpdateOrgHandlerTest {
 
     @BeforeEach
     public void setup() {
+        orgsRepository.deleteAll();
         CreateOrg command = new CreateOrg();
         command.setOrgName("NaUKMA");
         command.industry = "Education";
@@ -60,6 +65,25 @@ public class UpdateOrgHandlerTest {
     }
 
     @Test
+    @DisplayName("Update Org with emailDomain: Basic")
+    void testSuccessfulHandlingWithEmailDomain() {
+        UpdateOrg command = new UpdateOrg();
+        command.orgId = this.createdOrgId;
+        command.orgName = "KPI";
+        command.industry = "Education";
+        command.website = "https://www.ukma.edu.ua/eng/";
+        command.emailDomain = "gmail.com";
+
+        Assertions.assertNull(orgsRepository.findByEmailDomain("gmail.com"));
+
+        Result<OrgUpdated> result = handler.handle(command);
+
+        Assertions.assertTrue(result.isSuccess());
+        Assertions.assertNotNull(result.getValue());
+        Assertions.assertEquals("gmail.com", orgsRepository.findByEmailDomain("gmail.com").emailDomain);
+    }
+
+    @Test
     @DisplayName("Update Org: Name validation")
     void testNameValidation() {
         UpdateOrg command = new UpdateOrg();
@@ -69,7 +93,7 @@ public class UpdateOrgHandlerTest {
         command.website = "https://www.ukma.edu.ua/eng/";
 
         Result<OrgUpdated> result = handler.handle(command);
-        
+
         Assertions.assertFalse(result.isSuccess());
     }
 

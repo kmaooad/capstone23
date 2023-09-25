@@ -22,4 +22,6 @@ public class UpdateOrg {
     public String website;
 
     public String description;
+
+    public String emailDomain;
 }

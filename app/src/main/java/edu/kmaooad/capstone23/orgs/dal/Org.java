@@ -11,5 +11,6 @@ public class Org {
     public String industry;
     public String website;
     public String description;
+    public String emailDomain;
     public Boolean isActive;
 }
