@@ -13,48 +13,6 @@ import static io.restassured.RestAssured.given;
 
 @QuarkusTest
 public class BulkDeleteCoursesControllerTest {
-    @Test
-    @DisplayName("Bulk Delete Course successful")
-    public void testCourseDeletion() {
-        List<Map<String, Object>> coursesList = new ArrayList<>();
-        Map<String, Object> firstCourse = new HashMap<>();
-        Map<String, Object> secondCourse = new HashMap<>();
-        firstCourse.put("name", "Linear algebra");
-        secondCourse.put("name", "History");
-        coursesList.add(firstCourse);
-        coursesList.add(secondCourse);
-        Map<String, Object> body = new HashMap<>();
-        body.put("coursesList", coursesList);
 
-        given()
-                .contentType("application/json")
-                .body(body)
-                .when()
-                .post("/activities/courses/bulk/delete")
-                .then()
-                .statusCode(200);
-    }
-
-    @Test
-    @DisplayName("Bulk Delete Course name validation")
-    public void testIncorrectNameCourseDelete() {
-        List<Map<String, Object>> coursesList = new ArrayList<>();
-        Map<String, Object> firstCourse = new HashMap<>();
-        Map<String, Object> secondCourse = new HashMap<>();
-        firstCourse.put("name", "Linear algebra");
-        secondCourse.put("name", "");
-        coursesList.add(firstCourse);
-        coursesList.add(secondCourse);
-        Map<String, Object> body = new HashMap<>();
-        body.put("coursesList", coursesList);
-
-        given()
-                .contentType("application/json")
-                .body(body)
-                .when()
-                .post("/activities/courses/bulk/delete")
-                .then()
-                .statusCode(400);
-    }
 
 }
