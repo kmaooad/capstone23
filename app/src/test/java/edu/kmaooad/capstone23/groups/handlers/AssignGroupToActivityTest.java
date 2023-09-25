@@ -4,6 +4,8 @@ import edu.kmaooad.capstone23.activities.dal.Course;
 import edu.kmaooad.capstone23.activities.dal.CourseRepository;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.Result;
+import edu.kmaooad.capstone23.group_templates.commands.CreateGroupTemplate;
+import edu.kmaooad.capstone23.group_templates.events.GroupTemplateCreated;
 import edu.kmaooad.capstone23.groups.commands.AssignGroupToActivity;
 import edu.kmaooad.capstone23.groups.commands.CreateGroup;
 import edu.kmaooad.capstone23.groups.events.ActivityAssigned;
@@ -22,6 +24,8 @@ public class AssignGroupToActivityTest {
     @Inject
     CommandHandler<AssignGroupToActivity, ActivityAssigned> relateHandler;
     @Inject
+    CommandHandler<CreateGroupTemplate, GroupTemplateCreated> templateHandler;
+    @Inject
     CourseRepository courseRepository;
     private ObjectId courseId;
     private Result<GroupCreated> result;
@@ -31,9 +35,14 @@ public class AssignGroupToActivityTest {
         course.name = "Initial Course";
         courseRepository.insert(course);
         courseId = course.id;
-        CreateGroup command = new CreateGroup();
-        command.setGroupName("se");
-        result = handler.handle(command);
+
+        CreateGroupTemplate templateCommand = new CreateGroupTemplate();
+        templateCommand.setGroupTemplateName("template");
+        Result<GroupTemplateCreated> resultForTemplate = templateHandler.handle(templateCommand);
+        CreateGroup commandGroup = new CreateGroup();
+        commandGroup.setGroupName("se");
+        commandGroup.setTemplateId(resultForTemplate.getValue().getGroupTemplateId().toString());
+        result = handler.handle(commandGroup);
 
     }
     @Test
@@ -45,7 +54,8 @@ public class AssignGroupToActivityTest {
 
         Assertions.assertTrue(activityRelatedResult.isSuccess());
         Assertions.assertNotNull(activityRelatedResult.getValue());
-        Assertions.assertTrue(activityRelatedResult.getValue().getGroupId().equals(result.getValue().getGroupId()));
+        ObjectId gr = new ObjectId(result.getValue().getGroupId());
+        Assertions.assertTrue(activityRelatedResult.getValue().getGroupId().equals(gr));
 
 
     }
