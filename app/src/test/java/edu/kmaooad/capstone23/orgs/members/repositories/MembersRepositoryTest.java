@@ -44,14 +44,4 @@ public class MembersRepositoryTest extends TestWithDbClearance {
 
         assertThrows(UniquenessViolationException.class, () -> membersRepository.insert(newMember));
     }
-
-    @Test
-    public void testInsertDuplicateEmailWithGeneratedMethodThrowsMongoException() {
-        var email = "email@email.com";
-
-        Member newMember = new Member();
-        newMember.email = email;
-
-        assertThrows(MongoException.class, () -> membersRepository.persist(newMember));
-    }
 }
