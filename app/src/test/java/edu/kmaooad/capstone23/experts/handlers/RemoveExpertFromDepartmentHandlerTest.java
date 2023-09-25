@@ -103,7 +103,7 @@ public class RemoveExpertFromDepartmentHandlerTest {
         expert.name = "Test Name";
         expert.org = org;
         expert.memberId = createTestMember();
-        expert.department = new ArrayList<>();
+        expert.departments = new ArrayList<>();
         expertsRepository.insert(expert);
 
         return expert.id;
