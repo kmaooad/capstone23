@@ -12,4 +12,6 @@ public class Department {
     public String description;
     public String parent;
     public ArrayList<Member> members;
+
+    public ArrayList<String> jobs;
 }
