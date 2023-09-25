@@ -3,6 +3,7 @@ package edu.kmaooad.capstone23.jobs.events;
 import org.bson.types.ObjectId;
 
 public class ActivityUnrelated {
+
     private final ObjectId jobId;
     private final ObjectId activityId;
 

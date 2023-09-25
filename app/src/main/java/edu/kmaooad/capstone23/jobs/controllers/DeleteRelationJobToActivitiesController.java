@@ -1,6 +1,5 @@
 package edu.kmaooad.capstone23.jobs.controllers;
 
-
 import edu.kmaooad.capstone23.common.TypicalController;
 import edu.kmaooad.capstone23.jobs.commands.DeleteRelateJobToActivities;
 import edu.kmaooad.capstone23.jobs.events.ActivityRelated;
@@ -13,6 +12,6 @@ import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 
 @Path("/jobs/delete_relation_to_activities")
 @APIResponse(responseCode = "200", content = {
-        @Content(mediaType = "application/json", schema = @Schema(implementation = ActivityUnrelated.class)) })
+        @Content(mediaType = "application/json", schema = @Schema(implementation = JobDeleted.class)) })
 public class DeleteRelationJobToActivitiesController extends TypicalController<DeleteRelateJobToActivities, ActivityUnrelated> {
 }
