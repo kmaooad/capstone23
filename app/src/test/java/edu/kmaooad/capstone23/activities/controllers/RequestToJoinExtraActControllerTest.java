@@ -55,8 +55,8 @@ public class RequestToJoinExtraActControllerTest {
     @Test
     @DisplayName("Create Request to Join Activity: No such activity")
     public void testRequestToJoinActivityWithNonExistentId() {
-        String nonexistentId = "64faa243275c2222267b87a3";
-        String userName = "person1";
+        String nonexistentId = "66fbb253275c2222267b87a1";
+        String userName = "person10";
 
         given()
                 .contentType("application/json")
