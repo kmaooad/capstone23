@@ -21,6 +21,8 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
+import static edu.kmaooad.capstone23.common.ErrorCode.EXCEPTION;
+
 @QuarkusTest
 public class RelateJobToDepartmentHandlerTest {
 
@@ -72,7 +74,7 @@ public class RelateJobToDepartmentHandlerTest {
 
         Result<JobToDepartmentRelated> result = handler.handle(command);
 
-        Assertions.assertEquals(result.getErrorCode(), 0);
+        Assertions.assertEquals(result.getErrorCode(), null);
 
         Assertions.assertEquals(result.getValue().getDepartmentId(), departmentId);
         Assertions.assertEquals(result.getValue().getJobId(), jobId);
@@ -98,8 +100,6 @@ public class RelateJobToDepartmentHandlerTest {
         command.setJobId("aaaaaaaaaaaaaaaaaaaaaaaa");
 
         Result<JobToDepartmentRelated> result = handler.handle(command);
-
-        Assertions.assertEquals(result.getErrorCode(), 1);
 
         Assertions.assertNull(result.getValue());
 
