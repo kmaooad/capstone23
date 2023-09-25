@@ -4,13 +4,9 @@ import edu.kmaooad.capstone23.activities.commands.CreateCourse;
 import edu.kmaooad.capstone23.activities.events.CourseCreated;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.Result;
-import edu.kmaooad.capstone23.competences.commands.CreateSkill;
-import edu.kmaooad.capstone23.competences.events.SkillCreated;
 import edu.kmaooad.capstone23.jobs.commands.CreateJob;
 import edu.kmaooad.capstone23.jobs.commands.RelateJobToActivities;
-import edu.kmaooad.capstone23.jobs.commands.RelateJobToCompetences;
 import edu.kmaooad.capstone23.jobs.events.ActivityRelated;
-import edu.kmaooad.capstone23.jobs.events.CompetenceRelated;
 import edu.kmaooad.capstone23.jobs.events.JobCreated;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
@@ -53,7 +49,7 @@ public class DeleteRelateJobToActivitiesControllerTest {
         Map<String, Object> jsonAsMap = new HashMap<>();
 
         jsonAsMap.put("jobId", resultRelateJobToActivities.getValue().getJobId().toHexString());
-        jsonAsMap.put("activityId", resultRelateJobToActivities.getValue().getActivityId().toHexString());
+        jsonAsMap.put("activityId", resultRelateJobToActivities.getValue().getActivitiesId().toHexString());
 
         given()
                 .contentType("application/json")
@@ -77,6 +73,32 @@ public class DeleteRelateJobToActivitiesControllerTest {
 
         jsonAsMap.put("jobId", result.getValue().getJobId().toHexString());
         jsonAsMap.put("activityId", id);
+
+        given()
+                .contentType("application/json")
+                .body(jsonAsMap)
+                .when()
+                .post("/jobs/delete_relation_to_activities")
+                .then()
+                .statusCode(400);
+    }
+
+
+    @Test
+    @DisplayName("Delete Relate Job To Activities: not existed job")
+    public void testJobInvalidRemoving() {
+
+        ObjectId id = new ObjectId("aaaaaaaaaaaaaaaaaaaaaaaa");
+
+        CreateCourse commandCourse = new CreateCourse();
+        commandCourse.setName("Math");
+        Result<CourseCreated> resultCourse = handlerForActivities.handle(commandCourse);
+        ObjectId idCourse = new ObjectId(resultCourse.getValue().getId());
+
+        Map<String, Object> jsonAsMap = new HashMap<>();
+
+        jsonAsMap.put("jobId", id);
+        jsonAsMap.put("activityId", idCourse);
 
         given()
                 .contentType("application/json")
