@@ -53,7 +53,7 @@ public class SetHiringStatusOnControllerTest {
     @DisplayName("Set hiring status on with wrong id")
     void setHiringStatusOnWithWrongId() {
         Map<String, String> jsonAsMap = new HashMap<>();
-        jsonAsMap.put("departmentId", "wrongId");
+        jsonAsMap.put("departmentId", "64fbb243275c1111167b87a3");
 
         given()
                 .contentType("application/json")
