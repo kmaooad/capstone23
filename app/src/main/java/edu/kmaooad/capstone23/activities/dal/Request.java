@@ -6,7 +6,7 @@ import org.bson.types.ObjectId;
 @MongoEntity(collection = "requestsToJoinActivity")
 public class Request {
     public ObjectId id;
-    public String activityId;
+    public String extraActId;
     public String userName;
     public String status;
 }

@@ -1,18 +1,25 @@
 package edu.kmaooad.capstone23.activities.dal;
 
-import edu.kmaooad.capstone23.orgs.dal.Request;
 import io.quarkus.mongodb.panache.PanacheMongoRepository;
+import jakarta.enterprise.context.ApplicationScoped;
 import org.bson.types.ObjectId;
 
-public class RequestsRepository implements PanacheMongoRepository<edu.kmaooad.capstone23.orgs.dal.Request> {
-    public edu.kmaooad.capstone23.orgs.dal.Request findById(String id) {
+import java.util.List;
+
+@ApplicationScoped
+public class RequestsRepository implements PanacheMongoRepository<Request> {
+    public Request findById(String id) {
         return findById(new ObjectId(id));
     }
-    public edu.kmaooad.capstone23.orgs.dal.Request insert(edu.kmaooad.capstone23.orgs.dal.Request request){
+    public Request insert(Request request){
         persist(request);
         return request;
     }
     public void delete(Request request) {
         deleteById(request.id);
+    }
+
+    public List<Request> findListByUserNameAndExtraActId(String userName, String extraActId) {
+        return list("userName = ?1 and extraActId = ?2", userName, extraActId);
     }
 }
