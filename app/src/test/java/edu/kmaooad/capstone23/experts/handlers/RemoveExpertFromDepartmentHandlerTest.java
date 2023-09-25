@@ -54,6 +54,23 @@ public class RemoveExpertFromDepartmentHandlerTest {
     }
 
     @Test
+    @DisplayName("Remove Expert From Department Handler: Basic")
+    public void testSuccessfulHandling() {
+        ObjectId expertId = createTestExpert();
+        ObjectId departmentId = department.id;
+
+        RemoveExpertFromDepartment command = new RemoveExpertFromDepartment();
+        command.setExpertId(expertId);
+        command.setDepartmentId(departmentId);
+
+        Result<ExpertRemovedFromDepartment> result = removeHandler.handle(command);
+
+        Assertions.assertTrue(result.isSuccess());
+        Assertions.assertNotNull(result.getValue());
+        Assertions.assertFalse(expertsRepository.findById(expertId).departments.stream().anyMatch(p -> p.id == departmentId));
+    }
+
+    @Test
     @DisplayName("Remove Expert with no department")
     public void testEmptyDepartments() {
         ObjectId expertId = createTestExpertEmptyDepartment();
@@ -97,6 +114,20 @@ public class RemoveExpertFromDepartmentHandlerTest {
 
         return member.id;
     }
+    
+    private ObjectId createTestExpert() {
+        Expert expert = new Expert();
+        expert.name = "Test Name";
+        expert.org = org;
+        expert.memberId = createTestMember();
+        ArrayList<Department> departments = new ArrayList<>();
+        departments.add(department);
+
+        expert.departments = departments;
+        expertsRepository.insert(expert);
+
+        return expert.id;
+    }
 
     private ObjectId createTestExpertEmptyDepartment() {
         Expert expert = new Expert();
@@ -104,6 +135,7 @@ public class RemoveExpertFromDepartmentHandlerTest {
         expert.org = org;
         expert.memberId = createTestMember();
         expert.departments = new ArrayList<>();
+
         expertsRepository.insert(expert);
 
         return expert.id;
