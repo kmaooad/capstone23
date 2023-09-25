@@ -95,4 +95,20 @@ public class RequestToJoinExtraActControllerTest {
                 .statusCode(400);
     }
 
+    @Test
+    @DisplayName("Create Request to Join Activity: Invalid extraActId Format")
+    public void testRequestToJoinActivityWithInvalidExtraActIdFormat() {
+        String userName = "person1";
+        String invalidExtraActId = "invalid_id";
+
+        given()
+                .contentType("application/json")
+                .body("{\"userName\":\"" + userName + "\",\"extraActId\":\"" + invalidExtraActId + "\"}")
+                .when()
+                .post("/extracurricularActivity/request")
+                .then()
+                .statusCode(500);
+    }
+}
+
 }
