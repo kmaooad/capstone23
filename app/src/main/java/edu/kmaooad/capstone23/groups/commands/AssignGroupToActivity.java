@@ -2,11 +2,11 @@ package edu.kmaooad.capstone23.groups.commands;
 
 import org.bson.types.ObjectId;
 
-public class RelateGroupToActivity {
+public class AssignGroupToActivity {
     private ObjectId groupId;
     private ObjectId activityId;
 
-    public RelateGroupToActivity() {
+    public AssignGroupToActivity() {
     }
 
     public ObjectId getGroupId() {
