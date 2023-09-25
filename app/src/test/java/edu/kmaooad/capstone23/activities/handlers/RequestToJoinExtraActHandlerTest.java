@@ -109,4 +109,25 @@ public class RequestToJoinExtraActHandlerTest {
         Assertions.assertEquals("User is already part of the activity", secondResult.getMessage());
     }
 
+    @Test
+    @DisplayName("Create Request to Join Activity: Basic handling when the activity has no participants yet")
+    public void testRequestToJoinActivityWithNoParticipants() {
+        String userName = "person3";
+
+        ExtracurricularActivity extraAct = new ExtracurricularActivity();
+        extraAct.extracurricularActivityName = "No Participants Activity";
+        extraActRepository.insert(extraAct);
+        String noParticipantsExtraActId = extraAct.id.toString();
+
+        RequestToJoinExtraAct command = new RequestToJoinExtraAct();
+        command.setUserName(userName);
+        command.setExtraActId(noParticipantsExtraActId);
+        Result<RequestCreated> result = handler.handle(command);
+        Assertions.assertTrue(result.isSuccess());
+        Assertions.assertNotNull(result.getValue());
+
+        Request resultRequest = requestsRepository.findById(result.getValue().getId());
+        Assertions.assertNotNull(resultRequest);
+    }
+
 }
