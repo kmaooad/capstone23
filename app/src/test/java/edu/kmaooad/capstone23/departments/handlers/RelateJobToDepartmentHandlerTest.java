@@ -39,6 +39,8 @@ public class RelateJobToDepartmentHandlerTest {
 
     @BeforeEach
     void setUp() {
+        jobRepository.deleteAll();
+        departmentsRepository.deleteAll();
         Department department = new Department();
 
         department.name = "Initial Department";

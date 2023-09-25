@@ -29,6 +29,8 @@ public class RelateJobToDepartmentControllerTest {
 
     @BeforeEach
     void setUp() {
+        jobRepository.deleteAll();
+        departmentsRepository.deleteAll();
         Department department = new Department();
         department.name = "Initial Department";
         department.description = "Initial Department Description";
@@ -87,7 +89,7 @@ public class RelateJobToDepartmentControllerTest {
                 .when()
                 .post("/departments/relate-job-to-department")
                 .then()
-                .statusCode(500);
+                .statusCode(400);
     }
 
     @Test
@@ -104,6 +106,6 @@ public class RelateJobToDepartmentControllerTest {
                 .when()
                 .post("/departments/relate-job-to-department")
                 .then()
-                .statusCode(500);
+                .statusCode(400);
     }
 }
