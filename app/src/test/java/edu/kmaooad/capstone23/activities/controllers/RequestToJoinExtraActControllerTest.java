@@ -1,7 +1,7 @@
 package edu.kmaooad.capstone23.activities.controllers;
 
-import edu.kmaooad.capstone23.activities.dal.ExtraAct;
-import edu.kmaooad.capstone23.activities.dal.ExtraActRepository;
+import edu.kmaooad.capstone23.activities.dal.ExtracurricularActivity;
+import edu.kmaooad.capstone23.activities.dal.ExtracurricularActivityRepository;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,7 +19,7 @@ public class RequestToJoinExtraActControllerTest {
     private String idToUpdate;
 
     @Inject
-    ExtraActRepository extraActRepository;
+    ExtracurricularActivityRepository extraActRepository;
 
     @BeforeEach
     void setUp() {
@@ -34,20 +34,20 @@ public class RequestToJoinExtraActControllerTest {
 
     @Test
     @DisplayName("Create Request to Join Activity: Basic")
-    public void testBasicRequestToJoinOrg() {
+    public void testBasicRequestToJoinAct() {
         Map<String, Object> jsonAsMap = new HashMap<>();
 
         String userName = "person1";
-        String activityId = idToUpdate;
+        String extraActId = idToUpdate;
 
         jsonAsMap.put("userName", userName);
-        jsonAsMap.put("activityId", activityId);
+        jsonAsMap.put("extraActId", extraActId);
 
         given()
                 .contentType("application/json")
                 .body(jsonAsMap)
                 .when()
-                .post("/activities/request")
+                .post("/extracurricularActivity/request")
                 .then()
                 .statusCode(200);
     }
