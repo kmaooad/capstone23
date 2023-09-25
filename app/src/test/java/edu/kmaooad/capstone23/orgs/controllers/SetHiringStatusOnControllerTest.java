@@ -25,11 +25,6 @@ public class SetHiringStatusOnControllerTest {
         orgsRepository.deleteAll();
         Org org = new Org();
         org.name = "Initial Organization";
-        org.description = "Initial Organization Description";
-        org.isActive = true;
-        org.industry = "Initial Organization Industry";
-        org.website = "Initial Organization Website";
-        org.emailDomain = "Initial Organization Domain";
         orgsRepository.insert(org);
 
         idToUpdate = org.id.toString();

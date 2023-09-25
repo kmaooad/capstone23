@@ -25,13 +25,7 @@ public class SetHiringStatusOnHandlerTest {
     void setUp() {
         orgsRepository.deleteAll();
         Org org = new Org();
-
         org.name = "Initial Org";
-        org.description = "Initial Org Description";
-        org.isActive = true;
-        org.industry = "Initial Organization Industry";
-        org.website = "Initial Organization Website";
-        org.emailDomain = "Initial Organization Domain";
         orgsRepository.insert(org);
 
         orgId = org.id.toString();
