@@ -66,4 +66,6 @@ public class RequestToJoinExtraActControllerTest {
                 .then()
                 .statusCode(400);
     }
+
+
 }
