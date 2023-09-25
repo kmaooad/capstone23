@@ -14,8 +14,6 @@ import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
 
-import java.util.List;
-
 @RequestScoped
 public class CreateRequestToJoinExtraActHandler implements CommandHandler<RequestToJoinExtraAct, RequestCreated> {
 
@@ -30,11 +28,6 @@ public class CreateRequestToJoinExtraActHandler implements CommandHandler<Reques
         ExtracurricularActivity act = extraActRepository.findById(new ObjectId(command.getExtraActId()));
         if (act == null) {
             return new Result<>(ErrorCode.EXCEPTION, "Activity not found");
-        }
-
-        List<Request> existingRequests = requestsRepository.findListByUserNameAndExtraActId(command.getUserName(), command.getExtraActId());
-        if (existingRequests != null && !existingRequests.isEmpty()) {
-            return new Result<>(ErrorCode.EXCEPTION, "User is already part of the activity");
         }
 
         Request request = new Request();
