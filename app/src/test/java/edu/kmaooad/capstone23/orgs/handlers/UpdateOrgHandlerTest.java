@@ -79,7 +79,7 @@ public class UpdateOrgHandlerTest {
         var banRequest = new BanEntity();
         banRequest.setReason("Hello there");
         banRequest.setEntityId(new ObjectId(createdOrgId));
-        banRequest.setEntityType(BannedEntityType.Organization.inferredName());
+        banRequest.setEntityType(BannedEntityType.Organization.name());
 
         var banResult = banEntityHandler.handle(banRequest);
 
