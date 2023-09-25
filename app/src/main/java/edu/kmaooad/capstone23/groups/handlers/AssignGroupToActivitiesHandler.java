@@ -32,7 +32,7 @@ public class AssignGroupToActivitiesHandler  implements CommandHandler<AssignGro
         ActivityAssign result = new ActivityAssign(command.getGroupId(), command.getActivityId());
 
         Group g = group.get();
-      //  g.activitiesId.add(command.getActivityId());
+        g.activitiesId.add(command.getActivityId());
 
         repository.update(g);
 
