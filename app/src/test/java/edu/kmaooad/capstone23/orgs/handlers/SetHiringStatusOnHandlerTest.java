@@ -28,6 +28,10 @@ public class SetHiringStatusOnHandlerTest {
 
         org.name = "Initial Org";
         org.description = "Initial Org Description";
+        org.isActive = true;
+        org.industry = "Initial Organization Industry";
+        org.website = "Initial Organization Website";
+        org.emailDomain = "Initial Organization Domain";
         orgsRepository.insert(org);
 
         orgId = org.id.toString();
