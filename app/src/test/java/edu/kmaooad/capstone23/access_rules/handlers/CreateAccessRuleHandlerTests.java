@@ -95,13 +95,13 @@ public class CreateAccessRuleHandlerTests {
     @DisplayName("Create Access Rule: to non existent")
     public void createRuleMemberToNonExistent() {
         Result<AccessRuleCreated> result = addAccessRule(member, AccessRuleFromEntityType.Member, new ObjectId().toString(), AccessRuleToEntityType.Organisation);
-        Assertions.assertTrue(result.isSuccess());
+        Assertions.assertFalse(result.isSuccess());
     }
     @Test
     @DisplayName("Create Access Rule: from non existent")
     public void createRuleMemberFromNonExistent() {
         Result<AccessRuleCreated> result = addAccessRule(new ObjectId().toString(), AccessRuleFromEntityType.Member, new ObjectId().toString(), AccessRuleToEntityType.Organisation);
-        Assertions.assertTrue(result.isSuccess());
+        Assertions.assertFalse(result.isSuccess());
     }
     @Test
     @DisplayName("Create Access Rule: department to organisation")
