@@ -30,6 +30,7 @@ public class CreateOrgHandler implements CommandHandler<CreateOrg, OrgCreated> {
         org.description = command.description;
         org.industry = command.industry;
         org.website = command.website;
+        org.emailDomain = command.emailDomain;
         org.isActive = true;
 
         return org;

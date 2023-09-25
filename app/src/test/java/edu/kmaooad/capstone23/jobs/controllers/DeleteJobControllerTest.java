@@ -1,4 +1,4 @@
-package edu.kmaooad.capstone23.orgs.jobs.controllers;
+package edu.kmaooad.capstone23.jobs.controllers;
 
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.jobs.commands.CreateJob;
