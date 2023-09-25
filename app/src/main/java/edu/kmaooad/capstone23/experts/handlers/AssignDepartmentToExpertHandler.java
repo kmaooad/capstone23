@@ -27,10 +27,15 @@ public class AssignDepartmentToExpertHandler
         Expert expert = expertsRepository.findById(new ObjectId(command.getExpertId()));
         Department department = departmentsRepository.findById(command.getDepartmentId());
 
+        if (expert == null) {
+            return new Result<>(ErrorCode.NOT_FOUND, "Expert not found");
+        } else if (department == null) {
+            return new Result<>(ErrorCode.NOT_FOUND, "Department not found");
+        }
+
         if (expert.departments == null) {
             expert.departments = new ArrayList<>();
         }
-
         expert.departments.add(department);
         expertsRepository.modify(expert);
 

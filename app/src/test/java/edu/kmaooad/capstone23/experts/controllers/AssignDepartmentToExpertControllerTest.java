@@ -42,6 +42,40 @@ public class AssignDepartmentToExpertControllerTest {
                 .statusCode(200);
     }
 
+    @Test
+    @DisplayName("Assign Department To Expert: Non-Existent Expert")
+    public void testAssignDepartmentToInvalidExpert() {
+        Map<String, Object> jsonAsMap = new HashMap<>();
+
+        jsonAsMap.put("expertId", "64fe000000000a0000000000");
+        jsonAsMap.put("departmentId", creatTestDepartment());
+
+        given()
+                .contentType("application/json")
+                .body(jsonAsMap)
+                .when()
+                .post("/experts/departments/assign")
+                .then()
+                .statusCode(400);
+    }
+
+    @Test
+    @DisplayName("Assign Department To Expert: Non-Existent Department")
+    public void testAssignInvalidDepartmentToExpert() {
+        Map<String, Object> jsonAsMap = new HashMap<>();
+
+        jsonAsMap.put("expertId", createTestExpert());
+        jsonAsMap.put("departmentId", "64fe000000000a0000000000");
+
+        given()
+                .contentType("application/json")
+                .body(jsonAsMap)
+                .when()
+                .post("/experts/departments/assign")
+                .then()
+                .statusCode(400);
+    }
+
     @AfterEach
     void tearDown() {
         expertsRepository.deleteAll();
