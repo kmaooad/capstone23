@@ -1,6 +1,7 @@
 package edu.kmaooad.capstone23.experts.handlers;
 
 import edu.kmaooad.capstone23.common.CommandHandler;
+import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.departments.commands.CreateDepartment;
 import edu.kmaooad.capstone23.departments.dal.Department;
@@ -8,10 +9,12 @@ import edu.kmaooad.capstone23.departments.dal.DepartmentsRepository;
 import edu.kmaooad.capstone23.departments.events.DepartmentCreated;
 import edu.kmaooad.capstone23.experts.commands.CreateExpert;
 import edu.kmaooad.capstone23.experts.commands.RemoveExpertFromDepartment;
+import edu.kmaooad.capstone23.experts.commands.RemoveExpertFromMember;
 import edu.kmaooad.capstone23.experts.dal.Expert;
 import edu.kmaooad.capstone23.experts.dal.ExpertsRepository;
 import edu.kmaooad.capstone23.experts.events.ExpertCreated;
 import edu.kmaooad.capstone23.experts.events.ExpertRemovedFromDepartment;
+import edu.kmaooad.capstone23.experts.events.ExpertRemovedFromMember;
 import edu.kmaooad.capstone23.members.dal.Member;
 import edu.kmaooad.capstone23.members.dal.MembersRepository;
 import edu.kmaooad.capstone23.orgs.commands.CreateOrg;
@@ -65,6 +68,19 @@ public class RemoveExpertFromDepartmentHandlerTest {
         Assertions.assertTrue(result.isSuccess());
         Assertions.assertNotNull(result.getValue());
         Assertions.assertFalse(expertsRepository.findById(expertId).departments.stream().anyMatch(p -> p.id == departmentId));
+
+    @Test
+    @DisplayName("Remove Expert with no department")
+    public void testEmptyDepartments() {
+        ObjectId expertId = createTestExpertEmptyDepartment();
+
+        RemoveExpertFromDepartment command = new RemoveExpertFromDepartment();
+        command.setExpertId(expertId);
+        command.setDepartmentId(department.id);
+
+        Result<ExpertRemovedFromDepartment> result = removeHandler.handle(command);
+
+        Assertions.assertEquals(result.getErrorCode(), ErrorCode.NOT_FOUND);
     }
 
     private Org createTestOrg() {
@@ -97,7 +113,7 @@ public class RemoveExpertFromDepartmentHandlerTest {
 
         return member.id;
     }
-
+    
     private ObjectId createTestExpert() {
         Expert expert = new Expert();
         expert.name = "Test Name";
@@ -107,6 +123,18 @@ public class RemoveExpertFromDepartmentHandlerTest {
         departments.add(department);
 
         expert.departments = departments;
+        expertsRepository.insert(expert);
+
+        return expert.id;
+    }
+
+    private ObjectId createTestExpertEmptyDepartment() {
+        Expert expert = new Expert();
+        expert.name = "Test Name";
+        expert.org = org;
+        expert.memberId = createTestMember();
+        expert.departments = new ArrayList<>();
+
         expertsRepository.insert(expert);
 
         return expert.id;
