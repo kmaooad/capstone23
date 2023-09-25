@@ -6,6 +6,7 @@ public class ProfileImageCreate {
 
     public ProfileImageCreate(String id, String base64ImageString) {
         this.base64ImageString = base64ImageString;
+        this.id = id;
     }
 
     public String getBase64ImageString() {
