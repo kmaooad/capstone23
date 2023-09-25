@@ -58,8 +58,7 @@ public class SetHiringStatusOnHandlerTest {
     @DisplayName("Set hiring status on with wrong id")
     void setHiringStatusOnWithWrongId() {
         SetHiringStatusOn command = new SetHiringStatusOn();
-
-        command.setDepartmentId("wrongId");
+        command.setDepartmentId("64fbb243275c1111167b87a3");
 
         Result result = handler.handle(command);
 
