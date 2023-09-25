@@ -72,6 +72,7 @@ public class RequestToJoinExtraActControllerTest {
     public void testRequestToJoinActivityWithoutUserName() {
         String extraActId = idToUpdate;
 
+
         given()
                 .contentType("application/json")
                 .body("{\"extraActId\":\"" + extraActId + "\"}")
