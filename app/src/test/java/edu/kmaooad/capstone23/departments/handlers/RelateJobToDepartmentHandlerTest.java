@@ -107,7 +107,7 @@ public class RelateJobToDepartmentHandlerTest {
 
         Assertions.assertNotNull(department);
 
-        Assertions.assertNull(department.jobs.stream().filter(job -> job.equals("aaaaaaaaaaaaaaaaaaaaaaaa")).findFirst());
+        Assertions.assertNull(department.jobs.stream().filter(job -> job.equals("aaaaaaaaaaaaaaaaaaaaaaaa")).findFirst().orElse(null));
 
     }
 
