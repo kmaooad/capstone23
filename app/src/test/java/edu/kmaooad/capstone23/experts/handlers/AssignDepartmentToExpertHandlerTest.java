@@ -94,6 +94,19 @@ public class AssignDepartmentToExpertHandlerTest {
         Assertions.assertEquals(result.getErrorCode(), ErrorCode.NOT_FOUND);
     }
 
+    @Test
+    @DisplayName("Assign Department To Expert: Expert Is Already In The Wished Department")
+    public void testHandlingWithAlreadyAssignedDepartment() {
+        AssignDepartmentToExpert assignDepartmentToExpert = new AssignDepartmentToExpert();
+        assignDepartmentToExpert.setExpertId(expertId.toHexString());
+        assignDepartmentToExpert.setDepartmentId(departmentId.toHexString());
+
+        assignHandler.handle(assignDepartmentToExpert);
+        Result<DepartmentAssignedToExpert> result = assignHandler.handle(assignDepartmentToExpert);
+
+        Assertions.assertEquals(ErrorCode.CONFLICT, result.getErrorCode());
+    }
+
     @AfterEach
     void tearDown() {
         expertsRepository.deleteAll();
