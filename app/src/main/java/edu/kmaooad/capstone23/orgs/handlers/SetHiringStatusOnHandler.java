@@ -19,12 +19,12 @@ public class SetHiringStatusOnHandler implements CommandHandler<SetHiringStatusO
 
 
     public Result<HiringStatusSettedOn> handle(SetHiringStatusOn command) {
-        String departmentId = command.getOrgId();
+        String orgId = command.getOrgId();
 
-        Org org = orgsRepository.findById(departmentId);
+        Org org = orgsRepository.findById(orgId);
 
         if (org == null) {
-            return new Result<>(ErrorCode.VALIDATION_FAILED, "Department with such Id doesn't exist");
+            return new Result<>(ErrorCode.VALIDATION_FAILED, "Org with such Id doesn't exist");
         }
 
         org.hiringStatus = hiringStatusOn;
