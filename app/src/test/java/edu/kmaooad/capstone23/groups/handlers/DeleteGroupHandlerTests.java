@@ -10,6 +10,7 @@ import edu.kmaooad.capstone23.groups.dal.GroupsRepository;
 import edu.kmaooad.capstone23.groups.events.GroupDeleted;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
+import org.bson.types.ObjectId;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -46,5 +47,22 @@ public class DeleteGroupHandlerTests {
         Assertions.assertNull(groupsRepository.findById(group.id));
 
         Assertions.assertTrue(result.isSuccess());
+    }
+    @Test
+    @DisplayName("Delete Group : Group Does Not Exist")
+    void testDeletingNonExistingGroup() {
+        DeleteGroup deleteGroup = new DeleteGroup();
+        deleteGroup.setId(new ObjectId().toString());
+        Result<GroupDeleted> result = deleteGroupHandler.handle(deleteGroup);
+        Assertions.assertFalse(result.isSuccess());
+    }
+
+    @Test
+    @DisplayName("Delete Group : Bad ID")
+    void testDeletingGroupWithWrongID() {
+        DeleteGroup deleteGroup = new DeleteGroup();
+        deleteGroup.setId("badID");
+        Result<GroupDeleted> result = deleteGroupHandler.handle(deleteGroup);
+        Assertions.assertFalse(result.isSuccess());
     }
 }
