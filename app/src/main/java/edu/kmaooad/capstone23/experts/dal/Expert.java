@@ -6,6 +6,8 @@ import io.quarkus.mongodb.panache.common.MongoEntity;
 import java.util.List;
 import org.bson.types.ObjectId;
 
+import java.util.List;
+
 @MongoEntity(collection = "experts")
 public class Expert {
     public ObjectId id;
