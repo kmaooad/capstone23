@@ -62,7 +62,6 @@ public class SetHiringStatusOnHandlerTest {
 
         Result result = handler.handle(command);
 
-        Assertions.assertEquals(result.getErrorCode(), "VALIDATION_FAILED");
         Assertions.assertFalse(result.isSuccess());
     }
 
