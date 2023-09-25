@@ -76,7 +76,6 @@ public class AssignDepartmentToExpertControllerTest {
                 .statusCode(400);
     }
 
-
     @Test
     @DisplayName("Assign Department To Expert: Expert Is Already In The Wished Department")
     public void testAssignAssignedDepartmentToExpert() {

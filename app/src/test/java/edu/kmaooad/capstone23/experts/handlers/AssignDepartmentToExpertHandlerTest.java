@@ -26,7 +26,7 @@ import org.junit.jupiter.api.Test;
 
 @QuarkusTest
 public class AssignDepartmentToExpertHandlerTest {
-    private static final String ORG_NAME = "Organisationn";
+    private static final String ORG_NAME = "Persyk Inc";
     private ObjectId expertId;
     private ObjectId departmentId;
     private ObjectId orgId;
@@ -106,7 +106,7 @@ public class AssignDepartmentToExpertHandlerTest {
 
         Assertions.assertEquals(ErrorCode.CONFLICT, result.getErrorCode());
     }
-  
+
     @AfterEach
     void tearDown() {
         expertsRepository.deleteAll();
