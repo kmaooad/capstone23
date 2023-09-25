@@ -77,6 +77,31 @@ public class AssignDepartmentToExpertControllerTest {
     }
 
 
+    @Test
+    @DisplayName("Assign Department To Expert: Expert Is Already In The Wished Department")
+    public void testAssignAssignedDepartmentToExpert() {
+        Map<String, Object> jsonAsMap = new HashMap<>();
+
+        jsonAsMap.put("expertId", createTestExpert());
+        jsonAsMap.put("departmentId", creatTestDepartment());
+
+        given()
+                .contentType("application/json")
+                .body(jsonAsMap)
+                .when()
+                .post("/experts/departments/assign")
+                .then()
+                .statusCode(200);
+
+        given()
+                .contentType("application/json")
+                .body(jsonAsMap)
+                .when()
+                .post("/experts/departments/assign")
+                .then()
+                .statusCode(400);
+    }
+
     @AfterEach
     void tearDown() {
         expertsRepository.deleteAll();

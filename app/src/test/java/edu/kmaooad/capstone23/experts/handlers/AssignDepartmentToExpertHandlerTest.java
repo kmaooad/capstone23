@@ -26,7 +26,7 @@ import org.junit.jupiter.api.Test;
 
 @QuarkusTest
 public class AssignDepartmentToExpertHandlerTest {
-    private static final String ORG_NAME = "Persyk Inc";
+    private static final String ORG_NAME = "Organisationn";
     private ObjectId expertId;
     private ObjectId departmentId;
     private ObjectId orgId;
@@ -92,6 +92,19 @@ public class AssignDepartmentToExpertHandlerTest {
         Result<DepartmentAssignedToExpert> result = assignHandler.handle(assignDepartmentToExpert);
 
         Assertions.assertEquals(result.getErrorCode(), ErrorCode.NOT_FOUND);
+    }
+
+    @Test
+    @DisplayName("Assign Department To Expert: Expert Is Already In The Wished Department")
+    public void testHandlingWithAlreadyAssignedDepartment() {
+        AssignDepartmentToExpert assignDepartmentToExpert = new AssignDepartmentToExpert();
+        assignDepartmentToExpert.setExpertId(expertId.toHexString());
+        assignDepartmentToExpert.setDepartmentId(departmentId.toHexString());
+
+        assignHandler.handle(assignDepartmentToExpert);
+        Result<DepartmentAssignedToExpert> result = assignHandler.handle(assignDepartmentToExpert);
+
+        Assertions.assertEquals(ErrorCode.CONFLICT, result.getErrorCode());
     }
 
     @AfterEach
