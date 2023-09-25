@@ -6,7 +6,6 @@ import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.relations.dal.QueryableRelationRepository;
 import edu.kmaooad.capstone23.relations.dal.Relation;
 import io.quarkus.mongodb.panache.PanacheMongoRepository;
-import jakarta.annotation.PostConstruct;
 import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
 
@@ -50,8 +49,10 @@ public class QueryEssenceHandler <
         this.idsOfEssencesToFind = new HashMap<>();
     }
 
-    @PostConstruct
     private void init() {
+        idsOfEssencesToFind.clear();
+        idsOfEssencesToFindBy.clear();
+
         essenceToFindByRepository.listAll()
                 .stream()
                 .map(getIdOfEssenceToFindBy)
@@ -63,6 +64,11 @@ public class QueryEssenceHandler <
 
     @Override
     public Result<QueryEvent> handle(QueryByIdCommand command) {
+        init();
+        return resolve(command);
+    }
+
+    private Result<QueryEvent> resolve(QueryByIdCommand command) {
         var wantedGroupId = command.id;
         Predicate<ObjectId> isGroupId = idsOfEssencesToFindBy::contains;
         Predicate<ObjectId> isCourseId = idsOfEssencesToFind::containsKey;
