@@ -84,4 +84,27 @@ public class DeleteRelateJobToCompetencesControllerTest {
                 .statusCode(400);
     }
 
+    @Test
+    @DisplayName("Delete Relate Job To Competences: not existed job")
+    public void testCompetencesInvalidRemoving() {
+
+        ObjectId id = new ObjectId("aaaaaaaaaaaaaaaaaaaaaaaa");
+
+        CreateSkill commandSkill = new CreateSkill();
+        commandSkill.setSkillName("Tyyyy");
+        Result<SkillCreated> resultSkill = handlerForCompetences.handle(commandSkill);
+
+        Map<String, Object> jsonAsMap = new HashMap<>();
+
+        jsonAsMap.put("jobId", id);
+        jsonAsMap.put("competenceId", resultSkill.getValue().getSkill().toHexString());
+
+        given()
+                .contentType("application/json")
+                .body(jsonAsMap)
+                .when()
+                .post("/jobs/delete_relate_to_competences")
+                .then()
+                .statusCode(400);
+    }
 }
