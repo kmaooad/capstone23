@@ -25,10 +25,7 @@ import edu.kmaooad.capstone23.orgs.events.OrgCreated;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 @QuarkusTest
 public class CreateAccessRuleHandlerTests {
@@ -59,7 +56,7 @@ public class CreateAccessRuleHandlerTests {
     private String org;
     private String group;
     private String course;
-    @BeforeAll
+    @BeforeEach
     private void prepare(){
         member = createMember();
         department = createDepartment();
