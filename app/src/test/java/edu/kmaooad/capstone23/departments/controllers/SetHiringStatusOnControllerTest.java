@@ -23,6 +23,7 @@ public class SetHiringStatusOnControllerTest {
 
     @BeforeEach
     void setUp() {
+        departmentsRepository.deleteAll();
         Department department = new Department();
         department.name = "Initial Department";
         department.description = "Initial Department Description";

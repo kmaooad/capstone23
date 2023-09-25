@@ -25,6 +25,7 @@ public class SetHiringStatusOnHandlerTest {
 
     @BeforeEach
     void setUp() {
+        departmentsRepository.deleteAll();
         Department department = new Department();
 
         department.name = "Initial Department";
