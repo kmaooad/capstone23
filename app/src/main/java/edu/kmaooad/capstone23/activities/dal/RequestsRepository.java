@@ -4,6 +4,8 @@ import io.quarkus.mongodb.panache.PanacheMongoRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import org.bson.types.ObjectId;
 
+import java.util.List;
+
 
 @ApplicationScoped
 public class RequestsRepository implements PanacheMongoRepository<Request> {
@@ -15,4 +17,7 @@ public class RequestsRepository implements PanacheMongoRepository<Request> {
         return request;
     }
 
+    public List<Request> findListByUserNameAndExtraActId(String userName, String extraActId) {
+        return list("userName = ?1 and extraActId = ?2", userName, extraActId);
+    }
 }
