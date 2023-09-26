@@ -4,6 +4,7 @@ import io.quarkus.mongodb.panache.PanacheMongoRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import org.bson.types.ObjectId;
 
+import java.util.List;
 import java.util.Optional;
 
 @ApplicationScoped
@@ -21,4 +22,10 @@ public class CourseRepository implements PanacheMongoRepository<Course> {
         persist(course);
         return course;
     }
+
+    public List<Course> bulkInsert(List<Course> courses) {
+        persist(courses);
+        return courses;
+    }
+
 }

@@ -1,42 +1,43 @@
-package edu.kmaooad.capstone23.orgs.jobs.controllers;
+package edu.kmaooad.capstone23.feed_back.controllers;
 
 import io.quarkus.test.junit.QuarkusTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
 import java.util.HashMap;
 import java.util.Map;
-
 import static io.restassured.RestAssured.given;
 
+
 @QuarkusTest
-public class CreateJobControllerTest {
+public class CreateFeedBackControllerTests {
+
     @Test
-    @DisplayName("Create job: valid input")
-    public void testBasicJobCreation() {
+    @DisplayName("Create FeedBack: Basic")
+    public void testBasicFeedBackCreation() {
         Map<String, Object> jsonAsMap = new HashMap<>();
-        jsonAsMap.put("name", "Professor");
+        jsonAsMap.put("topic", "Review Result");
+        jsonAsMap.put("text", "Test of review result.");
 
         given()
                 .contentType("application/json")
                 .body(jsonAsMap)
                 .when()
-                .post("/jobs/create")
+                .post("/feedBack/create")
                 .then()
                 .statusCode(200);
     }
 
     @Test
-    @DisplayName("Create job: invalid input")
-    public void testJobCreationWithNameValidation() {
+    @DisplayName("Create FeedBack: Topic validation")
+    public void testFeedBackCreationWithNameValidation() {
         Map<String, Object> jsonAsMap = new HashMap<>();
-        jsonAsMap.put("name", "professor_of_linear_algebra");
+        jsonAsMap.put("topic", "Wrong");
 
         given()
                 .contentType("application/json")
                 .body(jsonAsMap)
                 .when()
-                .post("/jobs/create")
+                .post("/feedBack/create")
                 .then()
                 .statusCode(400);
     }
