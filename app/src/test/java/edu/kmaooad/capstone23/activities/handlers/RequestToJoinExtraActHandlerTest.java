@@ -71,4 +71,5 @@ public class RequestToJoinExtraActHandlerTest {
         Assertions.assertEquals("Activity not found", result.getMessage());
     }
 
+  
 }
