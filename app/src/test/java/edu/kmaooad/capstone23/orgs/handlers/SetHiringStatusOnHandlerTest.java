@@ -25,7 +25,9 @@ public class SetHiringStatusOnHandlerTest {
     void setUp() {
         orgsRepository.deleteAll();
         Org org = new Org();
-        org.name = "Initial Org";
+        org.name = "NaUKMA";
+        org.industry = "Education";
+        org.website = "https://www.ukma.edu.ua/eng/";
         orgsRepository.insert(org);
 
         orgId = org.id.toString();
