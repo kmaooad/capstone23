@@ -88,7 +88,7 @@ public class RequestToJoinExtraActControllerTest {
 
         given()
                 .contentType("application/json")
-                .body("{\"extraActId\":\"" + extraActId + "\"}")
+                .body("{\"userName\":\"" + userName + "\"}")
                 .when()
                 .post("/extracurricularActivity/request")
                 .then()
