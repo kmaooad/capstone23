@@ -14,8 +14,13 @@ public class OrgsRepository implements PanacheMongoRepository<Org> {
     public Org findByName(String name) {
         return find("name", name).firstResult();
     }
+
     public Org findById(String id) {
         return find("id", id).firstResult();
+    }
+  
+    public Optional<Org> findByEmailDomainOptional(String email) {
+        return find("emailDomain", email).firstResultOptional();
     }
 
     public Optional<Org> findByIdOptional(String id) {
@@ -31,7 +36,7 @@ public class OrgsRepository implements PanacheMongoRepository<Org> {
     }
 
     public List<Org> bulkInsert(List<Org> ogrs) {
-      persist(ogrs.stream());
-      return ogrs;
+        persist(ogrs.stream());
+        return ogrs;
     }
 }

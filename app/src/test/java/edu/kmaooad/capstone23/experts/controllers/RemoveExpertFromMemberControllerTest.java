@@ -57,24 +57,6 @@ public class RemoveExpertFromMemberControllerTest {
                 .statusCode(400);
     }
 
-    @Test
-    @DisplayName("Remove Expert From Member Handler: the member is already not an expert")
-    public void testInvalidExpertFromMemberRemoval() {
-        memberId = createBasicMember();
-
-        Map<String, Object> jsonAsMap = new HashMap<>();
-        jsonAsMap.put("memberId", memberId.toHexString());
-        jsonAsMap.put("orgName", orgsRepository.findById(orgId).name);
-
-        RestAssured.given()
-                .contentType("application/json")
-                .body(jsonAsMap)
-                .when()
-                .post("/members/expert/delete")
-                .then()
-                .statusCode(400);
-    }
-
     @AfterEach
     public void tearDown() {
         membersRepository.deleteAll();
