@@ -51,4 +51,20 @@ public class RequestToJoinExtraActControllerTest {
                 .then()
                 .statusCode(200);
     }
+
+    @Test
+    @DisplayName("Create Request to Join Activity: No such activity")
+    public void testRequestToJoinActivityWithNonExistentId() {
+        String nonexistentId = "66fbb253275c2222267b87a1";
+        String userName = "person10";
+
+        given()
+                .contentType("application/json")
+                .body("{\"userName\":\"" + userName + "\",\"extraActId\":\"" + nonexistentId + "\"}")
+                .when()
+                .post("/extracurricularActivity/request")
+                .then()
+                .statusCode(400);
+    }
+
 }
