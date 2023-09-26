@@ -88,12 +88,11 @@ public class RequestToJoinExtraActControllerTest {
 
         given()
                 .contentType("application/json")
-                .body("{\"userName\":\"" + userName + "\"}")
+                .body("{\"extraActId\":\"" + extraActId + "\"}")
                 .when()
                 .post("/extracurricularActivity/request")
                 .then()
                 .statusCode(400);
     }
-
 
 }
