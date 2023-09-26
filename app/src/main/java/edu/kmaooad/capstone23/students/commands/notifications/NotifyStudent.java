@@ -1,9 +1,11 @@
 package edu.kmaooad.capstone23.students.commands.notifications;
 
+import jakarta.validation.constraints.Email;
 import org.bson.types.ObjectId;
 
 public abstract class NotifyStudent {
     private final ObjectId studentId;
+    @Email
     private final String email;
 
     public NotifyStudent(ObjectId studentId, String email) {
