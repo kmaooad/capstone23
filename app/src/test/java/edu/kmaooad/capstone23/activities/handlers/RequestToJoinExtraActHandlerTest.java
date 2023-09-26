@@ -36,7 +36,7 @@ public class RequestToJoinExtraActHandlerTest {
 
         extraActId = extraAct.id.toString();
     }
-
+  
     @Test
     @DisplayName("Create Request to Join Activity: Basic")
     public void testBasicRequestToJoinActivity() {
