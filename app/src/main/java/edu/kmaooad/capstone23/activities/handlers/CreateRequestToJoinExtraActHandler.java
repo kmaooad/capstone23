@@ -12,6 +12,7 @@ import edu.kmaooad.capstone23.activities.dal.RequestsRepository;
 import edu.kmaooad.capstone23.departments.events.RequestCreated;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
+import org.bson.types.ObjectId;
 
 @RequestScoped
 public class CreateRequestToJoinExtraActHandler implements CommandHandler<RequestToJoinExtraAct, RequestCreated> {
