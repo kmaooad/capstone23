@@ -1,13 +1,11 @@
 package edu.kmaooad.capstone23.activities.handlers;
 
+import edu.kmaooad.capstone23.activities.dal.ExtracurricularActivity;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 
-import org.bson.types.ObjectId;
-
 import edu.kmaooad.capstone23.activities.commands.RequestToJoinExtraAct;
-import edu.kmaooad.capstone23.activities.dal.ExtracurricularActivity;
 import edu.kmaooad.capstone23.activities.dal.ExtracurricularActivityRepository;
 import edu.kmaooad.capstone23.activities.dal.Request;
 import edu.kmaooad.capstone23.activities.dal.RequestsRepository;
