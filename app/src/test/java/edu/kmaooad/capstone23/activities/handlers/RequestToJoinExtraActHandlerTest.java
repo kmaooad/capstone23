@@ -54,4 +54,22 @@ public class RequestToJoinExtraActHandlerTest {
         Request resultRequest = requestsRepository.findById(result.getValue().getId());
         Assertions.assertNotNull(resultRequest);
     }
+
+    @Test
+    @DisplayName("Create Request to Join Activity: Error handling when activity is not found")
+    public void testRequestToJoinOrgWithNonExistentActivity() {
+        String userName = "person1";
+        extraActId = "64fbb243275c1111167b87a3";
+
+        RequestToJoinExtraAct command = new RequestToJoinExtraAct();
+        command.setUserName(userName);
+        command.setExtraActId(extraActId);
+
+        Result<RequestCreated> result = handler.handle(command);
+
+        Assertions.assertFalse(result.isSuccess());
+        Assertions.assertEquals("Activity not found", result.getMessage());
+    }
+
+  
 }
