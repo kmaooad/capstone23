@@ -89,5 +89,5 @@ public class RequestToJoinExtraActHandlerTest {
         Assertions.assertFalse(result.isSuccess());
         Assertions.assertEquals("User is already part of the activity", result.getMessage());
     }
-
+  
 }
