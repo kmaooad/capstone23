@@ -1,16 +1,20 @@
 package edu.kmaooad.capstone23.students.parser;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
 import org.bson.types.ObjectId;
 
 import java.util.Objects;
 
 public class UpdateCSVStudent {
 
+    @NotNull
     private ObjectId id;
     private String firstName = "";
     private String middleName = "";
     private String lastName = "";
     private long DOBTimestamp = 0;
+    @Email
     private String email = "";
 
     public UpdateCSVStudent() {
@@ -47,6 +51,30 @@ public class UpdateCSVStudent {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public ObjectId getId() {
+        return id;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getMiddleName() {
+        return middleName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public long getDOBTimestamp() {
+        return DOBTimestamp;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     @Override
