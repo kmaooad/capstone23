@@ -30,29 +30,25 @@ public class UpdateCSVStudentParser {
     private static final int STUDENT_FIELDS = 6;
 
     public List<UpdateCSVStudent> parse(File content) throws ParseException, FileNotFoundException, IOException, IncorrectValuesAmount, InvalidEmail {
-        FileInputStream stream = new FileInputStream(content);
-        InputStreamReader reader = new InputStreamReader(stream);
-        BufferedReader text = new BufferedReader(reader);
+        try (FileInputStream stream = new FileInputStream(content)) {
+        try (InputStreamReader reader = new InputStreamReader(stream)) {
+        try (BufferedReader text = new BufferedReader(reader)) {
 
-        List<UpdateCSVStudent> result = new ArrayList<>();
+            List<UpdateCSVStudent> result = new ArrayList<>();
 
-        int line = 0;
+            int line = 0;
 
-        while (text.ready()) {
-            ++line;
-            String input = text.readLine();
-            if (input.isBlank()) continue;
-            var values = input.split(",");
-            if (values.length < 1 || values[0].isBlank()) throw new NotEnoughValues(line);
-            if (values.length > STUDENT_FIELDS) throw new TooManyValues(line);
-            result.add(parse(values));
-        }
-
-        stream.close();
-        reader.close();
-        text.close();
-
-        return result;
+            while (text.ready()) {
+                ++line;
+                String input = text.readLine();
+                if (input.isBlank()) continue;
+                var values = input.split(",");
+                if (values.length < 1 || values[0].isBlank()) throw new NotEnoughValues(line);
+                if (values.length > STUDENT_FIELDS) throw new TooManyValues(line);
+                result.add(parse(values));
+            }
+            return result;
+        }}}
     }
 
     private UpdateCSVStudent parse(String[] values) throws ParseException, InvalidEmail {
