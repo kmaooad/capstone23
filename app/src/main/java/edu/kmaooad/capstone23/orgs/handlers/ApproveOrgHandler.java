@@ -1,5 +1,7 @@
 package edu.kmaooad.capstone23.orgs.handlers;
 
+import edu.kmaooad.capstone23.ban.dal.BannedEntityType;
+import edu.kmaooad.capstone23.ban.dal.EntityBanRepository;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
@@ -10,7 +12,6 @@ import edu.kmaooad.capstone23.orgs.events.OrgApproved;
 import edu.kmaooad.capstone23.orgs.services.MailService;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
-import org.bson.types.ObjectId;
 
 import java.util.Optional;
 
@@ -23,6 +24,9 @@ public class ApproveOrgHandler implements CommandHandler<ApproveOrg, OrgApproved
     @Inject
     private MailService mailService;
 
+    @Inject
+    EntityBanRepository banRepository;
+
     private static final String defaultEmailText = "Your organizations`s submission has been approved";
 
     public Result<OrgApproved> handle(ApproveOrg command) {
@@ -30,9 +34,12 @@ public class ApproveOrgHandler implements CommandHandler<ApproveOrg, OrgApproved
         if (valid_org.isEmpty()) {
             return new Result<>(ErrorCode.VALIDATION_FAILED, "Org not found!");
         }
+        if (banRepository.findForEntity(BannedEntityType.Organization, valid_org.get().id).isPresent()) {
+            return new Result<>(ErrorCode.EXCEPTION, "Org is banned");
+        }
         final Org org = valid_org.get();
 
-        if (org.isActive){
+        if (org.isActive) {
             return new Result<>(ErrorCode.VALIDATION_FAILED, "Org already approved!");
         } else {
             org.isActive = true;
