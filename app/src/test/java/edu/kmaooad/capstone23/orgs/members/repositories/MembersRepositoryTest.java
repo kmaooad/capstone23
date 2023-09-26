@@ -1,5 +1,6 @@
 package edu.kmaooad.capstone23.orgs.members.repositories;
 
+import com.mongodb.MongoException;
 import edu.kmaooad.capstone23.members.dal.Member;
 import edu.kmaooad.capstone23.members.dal.MembersRepository;
 import edu.kmaooad.capstone23.members.exceptions.UniquenessViolationException;
@@ -42,5 +43,15 @@ public class MembersRepositoryTest extends TestWithDbClearance {
         newMember.email = email;
 
         assertThrows(UniquenessViolationException.class, () -> membersRepository.insert(newMember));
+    }
+
+    @Test
+    public void testInsertDuplicateEmailWithGeneratedMethodThrowsMongoException() {
+        var email = "email@email.com";
+
+        Member newMember = new Member();
+        newMember.email = email;
+
+        assertThrows(MongoException.class, () -> membersRepository.persist(newMember));
     }
 }

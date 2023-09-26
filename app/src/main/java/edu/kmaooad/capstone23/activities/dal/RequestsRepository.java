@@ -14,8 +14,5 @@ public class RequestsRepository implements PanacheMongoRepository<Request> {
         persist(request);
         return request;
     }
-    public void delete(Request request) {
-        deleteById(request.id);
-    }
 
 }

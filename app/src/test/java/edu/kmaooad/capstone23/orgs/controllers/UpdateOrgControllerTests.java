@@ -42,12 +42,32 @@ public class UpdateOrgControllerTests {
 
 
         given()
-            .contentType("application/json")
-            .body(body)
-            .when()
-            .post("/orgs/update")
-            .then()
-            .statusCode(200);
+                .contentType("application/json")
+                .body(body)
+                .when()
+                .post("/orgs/update")
+                .then()
+                .statusCode(200);
+    }
+
+    @Test
+    public void testOrgUpdateWithEmailDomain() {
+        Map<String, Object> body = new HashMap<>();
+
+        body.put("orgId", orgId.toString());
+        body.put("orgName", "KPI");
+        body.put("industry", "test");
+        body.put("website", "https://www.google.com");
+        body.put("emailDomain", "gmail.com");
+
+
+        given()
+                .contentType("application/json")
+                .body(body)
+                .when()
+                .post("/orgs/update")
+                .then()
+                .statusCode(200);
     }
 
     @Test
