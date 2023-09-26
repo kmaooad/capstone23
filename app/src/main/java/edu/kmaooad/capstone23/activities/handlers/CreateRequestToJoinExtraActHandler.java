@@ -14,7 +14,6 @@ import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
 
-
 @RequestScoped
 public class CreateRequestToJoinExtraActHandler implements CommandHandler<RequestToJoinExtraAct, RequestCreated> {
 
