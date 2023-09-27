@@ -11,7 +11,7 @@ import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 
 
-@Path("/jobs/assign_group_to_activities")
+@Path("/groups/assign_group_to_activities")
 @APIResponse(responseCode = "200", content = {
         @Content(mediaType = "application/json", schema = @Schema(implementation = ActivityAssigned.class)) })
 public class AssignGroupToActivityController extends TypicalController<AssignGroupToActivity, ActivityAssigned> {
