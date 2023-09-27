@@ -1,5 +1,8 @@
 package edu.kmaooad.capstone23.students.parser;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+
 import java.util.Objects;
 
 public class CSVStudent {
@@ -7,6 +10,8 @@ public class CSVStudent {
     private String middleName;
     private String lastName;
     private long DOBTimestamp;
+    @NotBlank
+    @Email
     private String email;
 
     public CSVStudent(String firstName, String middleName, String lastName, long DOBTimestamp, String email) {

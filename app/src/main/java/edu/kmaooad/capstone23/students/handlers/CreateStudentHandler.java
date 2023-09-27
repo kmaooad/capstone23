@@ -8,8 +8,9 @@ import edu.kmaooad.capstone23.students.dal.Student;
 import edu.kmaooad.capstone23.students.dal.StudentRepository;
 import edu.kmaooad.capstone23.students.events.StudentsCreated;
 import edu.kmaooad.capstone23.students.parser.CSVStudent;
-import edu.kmaooad.capstone23.students.parser.CSVStudentParser;
+import edu.kmaooad.capstone23.students.parser.CreateCSVStudentParser;
 import edu.kmaooad.capstone23.students.parser.exceptions.IncorrectValuesAmount;
+import edu.kmaooad.capstone23.students.parser.exceptions.InvalidEmail;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
@@ -26,18 +27,20 @@ public class CreateStudentHandler implements CommandHandler<CreateStudent, Stude
     StudentRepository repository;
 
     @Inject
-    CSVStudentParser parser;
+    CreateCSVStudentParser parser;
 
     @Override
     public Result<StudentsCreated> handle(CreateStudent command) {
         if (!command.csvFile.contentType().equals("text/csv"))
-            return new Result<>(ErrorCode.EXCEPTION,"Incorrect file type");
+            return new Result<>(ErrorCode.EXCEPTION, "Incorrect file type");
 
         List<CSVStudent> csvStudents;
         try {
             csvStudents = parser.parse(command.csvFile.uploadedFile().toFile());
         } catch (ParseException e) {
             return new Result<>(ErrorCode.EXCEPTION, "Incorrect date format");
+        } catch (InvalidEmail e) {
+            return new Result<>(ErrorCode.VALIDATION_FAILED, "Email validation failed");
         } catch (FileNotFoundException e) {
             return new Result<>(ErrorCode.NOT_FOUND, "Can't find file " + command.csvFile.uploadedFile().getFileName());
         } catch (IOException | IncorrectValuesAmount e) {
@@ -47,7 +50,7 @@ public class CreateStudentHandler implements CommandHandler<CreateStudent, Stude
         List<Student> students = repository.insert(csvStudents);
 
         List<ObjectId> studentIds = new ArrayList<>();
-        for (Student student : students){
+        for (Student student : students) {
             studentIds.add(student.id);
         }
 

@@ -14,7 +14,7 @@ import java.util.List;
 @QuarkusTest
 public class CSVStudentParserTest {
     @Inject
-    CSVStudentParser parser;
+    CreateCSVStudentParser parser;
 
     private static final CSVStudent STUDENT = new CSVStudent(
             "Ivan",
