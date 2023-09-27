@@ -72,7 +72,7 @@ public class AssignGroupToActivityHandlerTest {
         AssignGroupToActivity relateGroupToActivityTwo = new AssignGroupToActivity();
         relateGroupToActivityTwo.setGroupId(new ObjectId(result.getValue().getGroupId()));
         relateGroupToActivityTwo.setActivityId(courseId);
-        Result<ActivityAssigned> activityRelatedResultTwo = relateHandler.handle(relateGroupToActivity);
+        Result<ActivityAssigned> activityRelatedResultTwo = relateHandler.handle(relateGroupToActivityTwo);
 
         Assertions.assertFalse(activityRelatedResultTwo.isSuccess());
         Assertions.assertNull(activityRelatedResultTwo.getValue());
