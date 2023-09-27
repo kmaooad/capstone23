@@ -44,6 +44,7 @@ public class AssignGroupToActivityControllerTest {
 
     private ObjectId idToUpdate;
 
+
     @Inject
     CourseRepository courseRepository;
 
@@ -58,7 +59,7 @@ public class AssignGroupToActivityControllerTest {
 
     @Test
     @DisplayName("Relate Group To Activities: existed group")
-    public void testBasicJobActivityConnectionCreation() {
+    public void testBasicGroupActivityConnectionCreation() {
 
         CreateGroup command = new CreateGroup();
         command.setGroupName("se");
@@ -70,7 +71,6 @@ public class AssignGroupToActivityControllerTest {
         Result<GroupCreated> result = createGroupHandler.handle(command);
 
         Map<String, Object> jsonAsMap = new HashMap<>();
-
         jsonAsMap.put("groupId", result.getValue().getGroupId());
         jsonAsMap.put("activityId", idToUpdate.toString());
 
@@ -86,10 +86,7 @@ public class AssignGroupToActivityControllerTest {
 
     @Test
     @DisplayName("Relate Group To Activities: notExisted group")
-    public void testNotExistedJobActivityConnectionCreation() {
-
-//        CreateJob command = new CreateJob("TeacherUnique", true);
-//        Result<JobCreated> result = CreateJobHandler.handle(command);
+    public void testNotExistedGroupActivityConnectionCreation() {
 
         Map<String, Object> jsonAsMap = new HashMap<>();
         ObjectId id = new ObjectId("aaaaaaaaaaaaaaaaaaaaaaaa");
@@ -104,4 +101,67 @@ public class AssignGroupToActivityControllerTest {
                 .then()
                 .statusCode(400);
     }
+
+    @Test
+    @DisplayName("Relate Group To Activities: notExisted activity")
+    public void testNotExistedActivityActivityConnectionCreation() {
+        CreateGroup command = new CreateGroup();
+        command.setGroupName("se");
+        CreateGroupTemplate templateCommand = new CreateGroupTemplate();
+        templateCommand.setGroupTemplateName("template");
+        Result<GroupTemplateCreated> resultForTemplate = templateHandler.handle(templateCommand);
+        command.setTemplateId(resultForTemplate.getValue().getGroupTemplateId().toString());
+
+        Result<GroupCreated> result = createGroupHandler.handle(command);
+
+        Map<String, Object> jsonAsMap = new HashMap<>();
+        ObjectId id = new ObjectId("aaaaaaaaaaaaaaaaaaaaaaaa");
+        jsonAsMap.put("groupId", result.getValue().getGroupId());
+        jsonAsMap.put("activityId", id);
+
+        given()
+                .contentType("application/json")
+                .body(jsonAsMap)
+                .when()
+                .post("/groups/assign_group_to_activities")
+                .then()
+                .statusCode(400);
+    }
+
+    @Test
+    @DisplayName("Relate Group To Activities: two identical activity")
+    public void testDuplicatedActivityInConnection() {
+        CreateGroup command = new CreateGroup();
+        command.setGroupName("se");
+        CreateGroupTemplate templateCommand = new CreateGroupTemplate();
+        templateCommand.setGroupTemplateName("template");
+        Result<GroupTemplateCreated> resultForTemplate = templateHandler.handle(templateCommand);
+        command.setTemplateId(resultForTemplate.getValue().getGroupTemplateId().toString());
+
+        Result<GroupCreated> result = createGroupHandler.handle(command);
+
+        Map<String, Object> jsonAsMap = new HashMap<>();
+
+        jsonAsMap.put("groupId", result.getValue().getGroupId());
+        jsonAsMap.put("activityId", idToUpdate.toString());
+
+        given()
+                .contentType("application/json")
+                .body(jsonAsMap)
+                .when()
+                .post("/groups/assign_group_to_activities")
+                .then()
+                .statusCode(200);
+
+
+        given()
+                .contentType("application/json")
+                .body(jsonAsMap)
+                .when()
+                .post("/groups/assign_group_to_activities")
+                .then()
+                .statusCode(400);
+    }
+
+
 }
