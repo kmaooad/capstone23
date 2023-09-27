@@ -39,9 +39,9 @@ public class AssignGroupToActivitiesHandler  implements CommandHandler<AssignGro
             return new Result<>(ErrorCode.VALIDATION_FAILED, "This group was previously deleted or never existed");
 
         ActivityAssigned result = new ActivityAssigned(command.getGroupId(), command.getActivityId());
-        Optional<Course> activity = courseRepository.findByIdOptional(command.getGroupId());
+        Optional<Course> activity = courseRepository.findByIdOptional(command.getActivityId());
         if(activity.isEmpty()){
-            Optional<ExtracurricularActivity> activity1 = extracurricularActivityRepository.findByIdOptional(command.getGroupId());
+            Optional<ExtracurricularActivity> activity1 = extracurricularActivityRepository.findByIdOptional(command.getActivityId());
             if(activity1.isEmpty())
                 return new Result<>(ErrorCode.VALIDATION_FAILED, "This activity doesn't exist");
         }
