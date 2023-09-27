@@ -28,6 +28,8 @@ public class AssignGroupToActivitiesHandler  implements CommandHandler<AssignGro
         ActivityAssigned result = new ActivityAssigned(command.getGroupId(), command.getActivityId());
 
         Group g = group.get();
+        if(g.activitiesId.contains(command.getActivityId()))
+            return new Result<>(ErrorCode.VALIDATION_FAILED, "This activity is already assigned to this group");
         g.activitiesId.add(command.getActivityId());
 
         repository.update(g);
