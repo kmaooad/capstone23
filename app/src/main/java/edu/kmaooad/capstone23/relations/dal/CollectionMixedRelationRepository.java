@@ -4,6 +4,7 @@ import io.quarkus.mongodb.panache.PanacheMongoRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import org.bson.types.ObjectId;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -12,7 +13,7 @@ import java.util.Optional;
  * However, leads to relation search degradation.
  */
 @ApplicationScoped
-public class CollectionMixedRelationRepository implements RelationRepository, PanacheMongoRepository<Relation> {
+public class CollectionMixedRelationRepository implements RelationRepository, QueryableRelationRepository, PanacheMongoRepository<Relation> {
     @Override
     public Optional<Relation> createRelation(String collectionName1, String collectionName2, Relation relation) {
         persist(relation);
@@ -26,5 +27,10 @@ public class CollectionMixedRelationRepository implements RelationRepository, Pa
                     delete(foundRelation);
                     return foundRelation;
                 });
+    }
+
+    @Override
+    public List<Relation> readAllRelations() {
+        return listAll();
     }
 }
