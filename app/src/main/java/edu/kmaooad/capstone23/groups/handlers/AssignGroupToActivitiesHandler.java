@@ -23,14 +23,10 @@ public class AssignGroupToActivitiesHandler  implements CommandHandler<AssignGro
     private GroupsRepository repository;
 
     @Inject
-    private ExtracurricularActivityRepository extracurricularActivityRepository;
-
-    @Inject
     private CourseRepository courseRepository;
 
-
     @Inject
-
+    private ExtracurricularActivityRepository extracurricularRepository;
     @Override
     public Result<ActivityAssigned> handle(AssignGroupToActivity command) {
 
@@ -39,12 +35,13 @@ public class AssignGroupToActivitiesHandler  implements CommandHandler<AssignGro
             return new Result<>(ErrorCode.VALIDATION_FAILED, "This group was previously deleted or never existed");
 
         ActivityAssigned result = new ActivityAssigned(command.getGroupId(), command.getActivityId());
-        Optional<Course> activity = courseRepository.findByIdOptional(command.getActivityId());
-        if(activity.isEmpty()){
-            Optional<ExtracurricularActivity> activity1 = extracurricularActivityRepository.findByIdOptional(command.getActivityId());
-            if(activity1.isEmpty())
-                return new Result<>(ErrorCode.VALIDATION_FAILED, "This activity doesn't exist");
-        }
+
+        Optional<Course> course = courseRepository.findByIdOptional(command.getActivityId());
+        Optional<ExtracurricularActivity> extActivity = extracurricularRepository.findByIdOptional(command.getActivityId());
+        if(course.isEmpty() && extActivity.isEmpty())
+            return new Result<>(ErrorCode.VALIDATION_FAILED, "This activity was previously deleted or never existed");
+
+
         Group g = group.get();
         if(g.activitiesId.contains(command.getActivityId()))
             return new Result<>(ErrorCode.VALIDATION_FAILED, "This activity is already assigned to this group");

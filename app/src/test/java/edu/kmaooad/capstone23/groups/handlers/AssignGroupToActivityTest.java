@@ -78,4 +78,18 @@ public class AssignGroupToActivityTest {
         Assertions.assertFalse(activityRelatedResultTwo.isSuccess());
         Assertions.assertNull(activityRelatedResultTwo.getValue());
     }
+
+    @Test
+    void testHandlingUnExistedCourse() {
+        AssignGroupToActivity relateGroupToActivity = new AssignGroupToActivity();
+        relateGroupToActivity.setGroupId(new ObjectId(result.getValue().getGroupId()));
+
+        ObjectId nonexistentCourseId = new ObjectId("aaaaaaaaaaaaaaaaaaaaaaaa");
+        relateGroupToActivity.setActivityId(nonexistentCourseId);
+
+        Result<ActivityAssigned> activityRelatedResult = relateHandler.handle(relateGroupToActivity);
+
+        Assertions.assertFalse(activityRelatedResult.isSuccess());
+        Assertions.assertNull(activityRelatedResult.getValue());
+    }
 }
