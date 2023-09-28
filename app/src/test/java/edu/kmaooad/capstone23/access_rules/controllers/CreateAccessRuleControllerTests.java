@@ -18,6 +18,7 @@ import edu.kmaooad.capstone23.members.commands.CreateBasicMember;
 import edu.kmaooad.capstone23.members.events.BasicMemberCreated;
 import edu.kmaooad.capstone23.orgs.commands.CreateOrg;
 import edu.kmaooad.capstone23.orgs.events.OrgCreated;
+import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.Assertions;
@@ -30,6 +31,7 @@ import java.util.Map;
 
 import static io.restassured.RestAssured.given;
 
+@QuarkusTest
 public class CreateAccessRuleControllerTests {
 
     @Inject
