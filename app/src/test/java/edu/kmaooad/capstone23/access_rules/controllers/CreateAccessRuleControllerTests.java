@@ -139,6 +139,12 @@ public class CreateAccessRuleControllerTests {
         addAccessRule(new ObjectId().toString(), AccessRuleFromEntityType.Member, new ObjectId().toString(), AccessRuleToEntityType.Organisation, 400);
     }
 
+    @Test
+    @DisplayName("Create Access Rule: from invalid Id")
+    public void createRuleMemberFromInvalidId() {
+        addAccessRule(new ObjectId().toString(), AccessRuleFromEntityType.Member, "1234abc", AccessRuleToEntityType.Organisation, 400);
+    }
+
     private String createMember(){
         CreateBasicMember command = new CreateBasicMember();
         command.setOrgId(new ObjectId(createOrg()));
