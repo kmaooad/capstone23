@@ -136,13 +136,13 @@ public class CreateAccessRuleControllerTests {
     @Test
     @DisplayName("Create Access Rule: from non existent")
     public void createRuleMemberFromNonExistent() {
-        addAccessRule(new ObjectId().toString(), AccessRuleFromEntityType.Member, new ObjectId().toString(), AccessRuleToEntityType.Organisation, 400);
+        addAccessRule(new ObjectId().toString(), AccessRuleFromEntityType.Member, org, AccessRuleToEntityType.Organisation, 400);
     }
 
     @Test
     @DisplayName("Create Access Rule: from invalid Id")
     public void createRuleMemberFromInvalidId() {
-        addAccessRule(new ObjectId().toString(), AccessRuleFromEntityType.Member, "1234abc", AccessRuleToEntityType.Organisation, 400);
+        addAccessRule("1234abc", AccessRuleFromEntityType.Member, org, AccessRuleToEntityType.Organisation, 400);
     }
     @Test
     @DisplayName("Create Access Rule: to non existent")
