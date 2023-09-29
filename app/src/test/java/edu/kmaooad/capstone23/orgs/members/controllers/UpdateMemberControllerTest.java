@@ -7,6 +7,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static io.restassured.RestAssured.given;
@@ -19,7 +20,7 @@ public class UpdateMemberControllerTest extends TestWithOrgSetUp {
         Map<String, Object> jsonAsMap = new HashMap<>();
         jsonAsMap.put("firstName", "firstName");
         jsonAsMap.put("lastName", "lastName");
-        jsonAsMap.put("orgId", createdOrgId.toString());
+        jsonAsMap.put("orgId", List.of(createdOrgId.toString()));
         jsonAsMap.put("email", "email@email123.com");
 
         var createdMember = createMember();

@@ -13,6 +13,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 @QuarkusTest
 public class UpdateMemberHandlerTest extends TestWithOrgSetUp {
     @Inject
@@ -24,7 +26,7 @@ public class UpdateMemberHandlerTest extends TestWithOrgSetUp {
         UpdateMember command = new UpdateMember();
         command.setFirstName("firstName");
         command.setLastName("lastName");
-        command.setOrgId(createdOrgId);
+        command.setOrgId(List.of(createdOrgId));
         command.setEmail("email@email123.com");
         command.setId(new ObjectId(createMember()));
 
@@ -41,7 +43,7 @@ public class UpdateMemberHandlerTest extends TestWithOrgSetUp {
         UpdateMember command = new UpdateMember();
         command.setFirstName("firstName");
         command.setLastName("lastName");
-        command.setOrgId(createdOrgId);
+        command.setOrgId(List.of(createdOrgId));
         command.setEmail("email.com");
         command.setId(new ObjectId(createMember()));
 
@@ -57,7 +59,7 @@ public class UpdateMemberHandlerTest extends TestWithOrgSetUp {
         UpdateMember command = new UpdateMember();
         command.setFirstName("firstName");
         command.setLastName("lastName");
-        command.setOrgId(createdOrgId);
+        command.setOrgId(List.of(createdOrgId));
         command.setEmail("email@email.com1");
         command.setId(new ObjectId(createMember()));
 
@@ -73,7 +75,7 @@ public class UpdateMemberHandlerTest extends TestWithOrgSetUp {
         UpdateMember command = new UpdateMember();
         command.setFirstName("firstName");
         command.setLastName("lastName");
-        command.setOrgId(createdOrgId);
+        command.setOrgId(List.of(createdOrgId));
         command.setEmail("email@email12233.com1");
         command.setId(new ObjectId());
 
