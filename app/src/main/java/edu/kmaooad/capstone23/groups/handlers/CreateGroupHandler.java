@@ -25,6 +25,7 @@ public class CreateGroupHandler implements CommandHandler<CreateGroup, GroupCrea
     public Result<GroupCreated> handle(CreateGroup command) {
         Group group = new Group();
         group.name = command.getGroupName();
+        group.activitiesId = command.getActivitiesId();
 
         String templateId = command.getTemplateId();
         if(!ObjectId.isValid(templateId))

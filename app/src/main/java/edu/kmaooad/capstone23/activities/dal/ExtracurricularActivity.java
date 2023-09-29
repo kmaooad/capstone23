@@ -10,7 +10,6 @@ public class ExtracurricularActivity {
 
     public ObjectId id;
 
-
     public String extracurricularActivityName;
     public Date extracurricularActivityDate;
 }

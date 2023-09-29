@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 @QuarkusTest
-public class CreateMembersHandlerBasicTest extends TestWithOrgSetUp {
+public class CreateMemberHandlerTest extends TestWithOrgSetUp {
     @Inject
     CommandHandler<CreateBasicMember, BasicMemberCreated> handler;
 
