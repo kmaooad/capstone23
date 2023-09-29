@@ -1,5 +1,8 @@
 package edu.kmaooad.capstone23.orgs.members.handlers;
 
+import edu.kmaooad.capstone23.ban.commands.BanEntity;
+import edu.kmaooad.capstone23.ban.dal.BannedEntityType;
+import edu.kmaooad.capstone23.ban.events.EntityBanned;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
@@ -17,6 +20,9 @@ import org.junit.jupiter.api.Test;
 public class UpdateMemberHandlerTest extends TestWithOrgSetUp {
     @Inject
     CommandHandler<UpdateMember, MemberUpdated> handler;
+
+    @Inject
+    CommandHandler<BanEntity, EntityBanned> banHandler;
 
     @Test
     @DisplayName("Update member: Basic handling")
@@ -81,5 +87,35 @@ public class UpdateMemberHandlerTest extends TestWithOrgSetUp {
 
         Assertions.assertFalse(result.isSuccess());
         Assertions.assertEquals(ErrorCode.NOT_FOUND, result.getErrorCode());
+    }
+
+    @Test
+    @DisplayName("Update Member: member is banned")
+    void testMemberBanCheck() {
+        var createdMember = createMember();
+
+        var banRequest = new BanEntity();
+        banRequest.setEntityId(createdOrgId);
+        banRequest.setEntityType(BannedEntityType.Organization.name());
+        banRequest.setReason("Hello there");
+
+        var bannedResult = banHandler.handle(banRequest);
+
+        Assertions.assertTrue(bannedResult.isSuccess());
+        Assertions.assertNotNull(bannedResult.getValue());
+
+        UpdateMember command = new UpdateMember();
+        command.setFirstName("firstName");
+        command.setLastName("lastName");
+        command.setOrgId(createdOrgId);
+        command.setEmail("email@email123.com");
+        command.setId(new ObjectId(createdMember));
+
+        Result<MemberUpdated> result = handler.handle(command);
+
+        Assertions.assertFalse(result.isSuccess());
+        Assertions.assertNotNull(result.getMessage());
+        Assertions.assertEquals(result.getErrorCode(), ErrorCode.EXCEPTION);
+        Assertions.assertEquals(result.getMessage(), "Org is banned");
     }
 }
