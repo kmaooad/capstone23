@@ -84,4 +84,20 @@ public class UpdateMemberHandlerTest extends TestWithOrgSetUp {
         Assertions.assertFalse(result.isSuccess());
         Assertions.assertEquals(ErrorCode.NOT_FOUND, result.getErrorCode());
     }
+
+    @Test
+    @DisplayName("Update Member: non-existent org")
+    void testOrgIdExistence() {
+        UpdateMember command = new UpdateMember();
+        command.setFirstName("firstName");
+        command.setLastName("lastName");
+        command.setOrgId(List.of(createdOrgId, new ObjectId()));
+        command.setEmail("email@email12233.com1");
+        command.setId(new ObjectId());
+
+        Result<MemberUpdated> result = handler.handle(command);
+
+        Assertions.assertFalse(result.isSuccess());
+        Assertions.assertEquals(ErrorCode.VALIDATION_FAILED, result.getErrorCode());
+    }
 }
