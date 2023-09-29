@@ -42,7 +42,7 @@ public class UpdateMemberControllerTest extends TestWithOrgSetUp {
         Map<String, Object> jsonAsMap = new HashMap<>();
         jsonAsMap.put("firstName", "firstName");
         jsonAsMap.put("lastName", "lastName");
-        jsonAsMap.put("orgId", createdOrgId.toString());
+        jsonAsMap.put("orgId", List.of(createdOrgId.toString()));
         jsonAsMap.put("email", "emailemail123");
 
         var createdMember = createMember();
@@ -67,7 +67,32 @@ public class UpdateMemberControllerTest extends TestWithOrgSetUp {
         var newObjectId = new ObjectId();
         while (orgsRepository.findByIdOptional(newObjectId).isPresent())
             newObjectId = new ObjectId();
-        jsonAsMap.put("orgId", newObjectId.toString());
+        jsonAsMap.put("orgId", List.of(newObjectId.toString()));
+        jsonAsMap.put("email", "email@a.com");
+
+        var createdMember = createMember();
+
+        jsonAsMap.put("id", createdMember);
+
+        given()
+                .contentType("application/json")
+                .body(jsonAsMap)
+                .when()
+                .post("/members/update")
+                .then()
+                .statusCode(400);
+    }
+
+    @Test
+    @DisplayName("Update Member: One of the orgs does not exist")
+    public void testMemberUpdateWithMultipleOrgExistenceValidation() {
+        Map<String, Object> jsonAsMap = new HashMap<>();
+        jsonAsMap.put("firstName", "firstName");
+        jsonAsMap.put("lastName", "lastName");
+        var newObjectId = new ObjectId();
+        while (orgsRepository.findByIdOptional(newObjectId).isPresent())
+            newObjectId = new ObjectId();
+        jsonAsMap.put("orgId", List.of(createdOrgId, newObjectId.toString()));
         jsonAsMap.put("email", "email@a.com");
 
         var createdMember = createMember();
