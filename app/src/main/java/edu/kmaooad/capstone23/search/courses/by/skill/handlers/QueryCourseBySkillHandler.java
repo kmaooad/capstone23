@@ -1,4 +1,4 @@
-package edu.kmaooad.capstone23.search.courses.by.skill.handler;
+package edu.kmaooad.capstone23.search.courses.by.skill.handlers;
 
 import edu.kmaooad.capstone23.activities.dal.Course;
 import edu.kmaooad.capstone23.activities.dal.CourseRepository;
