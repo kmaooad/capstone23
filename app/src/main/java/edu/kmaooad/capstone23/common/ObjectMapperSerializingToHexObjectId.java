@@ -10,7 +10,7 @@ import org.bson.types.ObjectId;
 import java.io.IOException;
 
 /**
- * @implNote Can be used in prior of <ObjectMapper> to
+ * @implNote Can be used in prior of <ObjectMapper> to serialize <ObjectId> as hex
  */
 public class ObjectMapperSerializingToHexObjectId extends ObjectMapper {
   ObjectMapperSerializingToHexObjectId() {

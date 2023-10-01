@@ -16,4 +16,12 @@ public class CreateParticipant {
   public String getUserId() {
     return userId;
   }
+
+  public void setChatId(String chatId) {
+    this.chatId = chatId;
+  }
+
+  public void setUserId(String userId) {
+    this.userId = userId;
+  }
 }
