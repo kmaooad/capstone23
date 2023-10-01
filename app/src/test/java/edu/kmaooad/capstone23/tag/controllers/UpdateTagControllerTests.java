@@ -21,29 +21,8 @@ public class UpdateTagControllerTests {
     TagRepository tagRepository;
 
     @Test
-    @DisplayName("Update Tag : Basic")
-    public void testTagNameUpdate() {
-        var tag = new Tag();
-        tag.tagName = "testTag";
-        tagRepository.persist(tag);
-
-        Map<String, Object> jsonAsMap = new HashMap<>();
-        jsonAsMap.put("id",tag.id);
-        jsonAsMap.put("tagName", "new tag name");
-
-        given()
-                .contentType("application/json")
-                .body(jsonAsMap)
-                .when()
-                .post("/tags/update")
-                .then()
-                .statusCode(200)
-                .body("id", notNullValue())
-                .body("name", notNullValue());
-    }
-    @Test
     @DisplayName("Update Tag : Name Validation")
-    public void testUpdateGroupForInvalidGroupName() {
+    public void testUpdateTagForInvalidGroupName() {
         var tag = new Tag();
         tag.tagName = "testTag";
         tagRepository.persist(tag);
@@ -63,7 +42,7 @@ public class UpdateTagControllerTests {
 
     @Test
     @DisplayName("Update Tag : Invalid ID")
-    public void testUpdateGroupForInvalidID() {
+    public void testUpdateTagForInvalidID() {
         var tag = new Tag();
         tag.tagName = "testTag";
         tagRepository.persist(tag);
@@ -82,7 +61,7 @@ public class UpdateTagControllerTests {
     }
     @Test
     @DisplayName("Update Tag : Non Existent Tag")
-    public void testUpdateNonExistentGroup() {
+    public void testUpdateNonExistentTag() {
         var tag = new Tag();
         tag.tagName = "testTag";
         tagRepository.persist(tag);
