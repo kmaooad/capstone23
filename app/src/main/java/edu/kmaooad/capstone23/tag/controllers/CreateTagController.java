@@ -1,7 +1,6 @@
 package edu.kmaooad.capstone23.tag.controllers;
 
 import edu.kmaooad.capstone23.common.TypicalController;
-import edu.kmaooad.capstone23.experts.commands.CreateInvitationLink;
 import edu.kmaooad.capstone23.tag.commands.CreateTag;
 import edu.kmaooad.capstone23.tag.events.TagCreated;
 import jakarta.ws.rs.Path;
