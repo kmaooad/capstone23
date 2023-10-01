@@ -10,4 +10,12 @@ public class TagCreated {
         this.objectId = objectId;
         this.tagName = tagName;
     }
+
+    public String getTagName() {
+        return tagName;
+    }
+
+    public ObjectId getObjectId() {
+        return objectId;
+    }
 }
