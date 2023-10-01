@@ -22,7 +22,7 @@ public class AddTagToCourseHandler implements CommandHandler<AddTagToCourse, Tag
 
     @Override
     public Result<TagAddedToCourse> handle(AddTagToCourse command) {
-        var course = courseRepository.find("courseName", command.getCourseName()).firstResult();
+        var course = courseRepository.find("name", command.getCourseName()).firstResult();
         var tag = tagRepository.find("tagName", command.getTagName()).firstResult();
 
         if (tag == null) {
