@@ -46,7 +46,6 @@ public class UpdateTagHandlerTests {
         var tag = new Tag();
         tag.tagName = "testTag";
         tagRepository.persist(tag);
-        tagRepository.persist(tag);
 
         UpdateTag command = new UpdateTag();
         command.id = tag.id;
@@ -61,7 +60,6 @@ public class UpdateTagHandlerTests {
     public void testUpdateNonExistentGroup() {
         var tag = new Tag();
         tag.tagName = "testTag";
-        tagRepository.persist(tag);
         tagRepository.persist(tag);
 
         UpdateTag command = new UpdateTag();
