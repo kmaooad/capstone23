@@ -5,22 +5,22 @@ import org.junit.jupiter.api.Assertions;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
-public class ControllerTest<T> {
+public class ControllerTest<PayloadType> {
   protected final String endpointUrl;
 
   protected ControllerTest(String url) {
     this.endpointUrl = url;
   }
 
-  protected void assertRequestSucceeds(T payload) {
+  protected void assertRequestSucceeds(PayloadType payload) {
     assertResponseStatusCode(payload, 200);
   }
 
-  protected void assertRequestFails(T payload) {
-    assertResponseStatusCode(payload, 500);
+  protected void assertRequestFails(PayloadType payload) {
+    assertResponseStatusCode(payload, 400);
   }
 
-  private void assertResponseStatusCode(T payload, int statusCode) {
+  private void assertResponseStatusCode(PayloadType payload, int statusCode) {
     RestAssured.given()
         .contentType("application/json")
         .body(mapPayloadToStringifiedJson(payload))
@@ -30,7 +30,7 @@ public class ControllerTest<T> {
         .statusCode(statusCode);
   }
 
-  protected String mapPayloadToStringifiedJson(T entity) {
+  protected String mapPayloadToStringifiedJson(PayloadType entity) {
     try {
       ObjectMapper mapper = new ObjectMapper();
 
