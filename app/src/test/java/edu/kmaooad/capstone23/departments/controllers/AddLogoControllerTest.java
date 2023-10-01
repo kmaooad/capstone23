@@ -39,25 +39,24 @@ public class AddLogoControllerTest {
     public void testBasicAddLogo() {
         Map<String, Object> jsonAsMap = new HashMap<>();
 
-        String departmentId = idToUpdate;
 
-        jsonAsMap.put("departmentId", departmentId);
+        jsonAsMap.put("departmentId", idToUpdate);
 
-        File logoFile = new File("src/test/resources/departments/img.png");
+        String logo = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAYAA";
 
-        jsonAsMap.put("logo", logoFile);
+        jsonAsMap.put("logo", logo);
 
         String logoName = "img.png";
 
         jsonAsMap.put("logoName", logoName);
 
         given()
-            .contentType("application/json")
-            .body(jsonAsMap)
-            .when()
-            .post("/departments/add-logo")
-            .then()
-            .statusCode(200);
+                .contentType("application/json")
+                .body(jsonAsMap)
+                .when()
+                .post("/departments/add-logo")
+                .then()
+                .statusCode(200);
     }
 
 
@@ -70,20 +69,20 @@ public class AddLogoControllerTest {
 
         jsonAsMap.put("departmentId", departmentId);
 
-        File logoFile = new File("src/test/resources/departments/img.png");
+        String logo = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAYAA";
 
-        jsonAsMap.put("logo", logoFile);
+        jsonAsMap.put("logo", logo);
 
         String logoName = "img.png";
 
         jsonAsMap.put("logoName", logoName);
 
         given()
-            .contentType("application/json")
-            .body(jsonAsMap)
-            .when()
-            .post("/departments/add-logo")
-            .then()
-            .statusCode(400);
+                .contentType("application/json")
+                .body(jsonAsMap)
+                .when()
+                .post("/departments/add-logo")
+                .then()
+                .statusCode(400);
     }
 }

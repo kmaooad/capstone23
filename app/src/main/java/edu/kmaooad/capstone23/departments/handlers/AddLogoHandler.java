@@ -11,9 +11,6 @@ import edu.kmaooad.capstone23.departments.events.LogoAdded;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 
-import java.io.File;
-
-
 @RequestScoped
 public class AddLogoHandler implements CommandHandler<AddLogo, LogoAdded> {
     @Inject
@@ -31,9 +28,9 @@ public class AddLogoHandler implements CommandHandler<AddLogo, LogoAdded> {
 
 
         String fileName = command.getLogoName();
-        File logoFile = command.getLogo();
+        String fileContent = command.getLogo();
 
-        if (logoFile == null) {
+        if (fileContent == null) {
             return new Result<>(ErrorCode.VALIDATION_FAILED, "Logo file is required");
         }
 
@@ -43,15 +40,6 @@ public class AddLogoHandler implements CommandHandler<AddLogo, LogoAdded> {
 
         Logo logo = new Logo();
         logo.fileName = fileName;
-
-
-        byte[] fileContent;
-        try {
-            fileContent = org.apache.commons.io.FileUtils.readFileToByteArray(logoFile);
-        } catch (Exception e) {
-            return new Result<>(ErrorCode.VALIDATION_FAILED, "Error while reading logo file");
-        }
-
         logo.file = fileContent;
 
         department.logo = logo;

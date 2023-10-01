@@ -6,5 +6,5 @@ import io.quarkus.mongodb.panache.common.MongoEntity;
 @MongoEntity()
 public class Logo {
     public String fileName;
-    public byte[] file;
+    public String file;
 }

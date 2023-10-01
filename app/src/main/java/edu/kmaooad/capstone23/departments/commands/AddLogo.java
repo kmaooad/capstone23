@@ -3,8 +3,6 @@ package edu.kmaooad.capstone23.departments.commands;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
-import java.io.File;
-
 public class AddLogo {
 
     @NotBlank
@@ -20,13 +18,14 @@ public class AddLogo {
     }
 
     @NotBlank
-    private File logo;
+    @Size(min = 2, max = 100)
+    private String logo;
 
-    public void setLogo(File logo) {
+    public void setLogo(String logo) {
         this.logo = logo;
     }
 
-    public File getLogo() {
+    public String getLogo() {
         return logo;
     }
 

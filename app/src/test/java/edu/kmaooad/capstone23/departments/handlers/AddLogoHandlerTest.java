@@ -2,14 +2,9 @@ package edu.kmaooad.capstone23.departments.handlers;
 
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.departments.commands.AddLogo;
-import edu.kmaooad.capstone23.departments.commands.UpdateDepartment;
 import edu.kmaooad.capstone23.departments.dal.Department;
 import edu.kmaooad.capstone23.departments.dal.DepartmentsRepository;
-import edu.kmaooad.capstone23.departments.events.DepartmentUpdated;
 import edu.kmaooad.capstone23.departments.events.LogoAdded;
-import edu.kmaooad.capstone23.orgs.commands.CreateOrg;
-import edu.kmaooad.capstone23.orgs.dal.OrgsRepository;
-import edu.kmaooad.capstone23.orgs.handlers.CreateOrgHandler;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 import org.junit.jupiter.api.*;
@@ -45,9 +40,11 @@ public class AddLogoHandlerTest {
         AddLogo command = new AddLogo();
         command.setDepartmentId(idToUpdate);
 
-        File logoFile = new File("src/test/resources/departments/img.png");
 
-        command.setLogo(logoFile);
+        String logo = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAYAA";
+
+
+        command.setLogo(logo);
         command.setLogoName("img.png");
 
         Result<LogoAdded> result = handler.handle(command);
@@ -59,6 +56,8 @@ public class AddLogoHandlerTest {
         Assertions.assertEquals(department.logo.fileName, "img.png");
 
         Assertions.assertNotNull(department.logo.file);
+
+        Assertions.assertEquals(department.logo.file, logo);
     }
 
 }
