@@ -14,7 +14,7 @@ import java.util.ArrayList;
 @RequestScoped
 public class CreateCourseHandler implements CommandHandler<CreateCourse, CourseCreated> {
     @Inject
-    private CourseRepository courseRepository;
+    CourseRepository courseRepository;
 
     @Override
     public Result<CourseCreated> handle(CreateCourse command) {

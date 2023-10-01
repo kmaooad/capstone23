@@ -15,7 +15,7 @@ import java.util.List;
 @RequestScoped
 public class BulkCreateCoursesHandler implements CommandHandler<BulkCreateCourses, BulkCoursesCreated> {
     @Inject
-    private CourseRepository repository;
+    CourseRepository repository;
 
     @Override
     public Result<BulkCoursesCreated> handle(BulkCreateCourses command) {
