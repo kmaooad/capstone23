@@ -39,12 +39,17 @@ public class SetHiringStatusOffHandler implements CommandHandler<SetHiringStatus
 
         department.hiringStatus = hiringStatusOff;
 
-        department.jobs.forEach(jobId -> {
-            Optional<Job> job = jobRepository.findByIdOptional(new ObjectId(jobId));
-            Job j = job.get();
-            j.active = false;
-            jobRepository.update(j);
-        });
+        if (department.jobs != null) {
+            department.jobs.forEach(jobId -> {
+                Job job = jobRepository.findById(new ObjectId(jobId));
+                if (job == null) {
+                    return;
+                }
+                job.active = false;
+                jobRepository.update(job);
+            });
+        }
+
 
         departmentsRepository.update(department);
 
