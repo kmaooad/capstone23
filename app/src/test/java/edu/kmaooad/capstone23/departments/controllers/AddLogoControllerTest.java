@@ -2,14 +2,13 @@ package edu.kmaooad.capstone23.departments.controllers;
 
 import edu.kmaooad.capstone23.departments.dal.Department;
 import edu.kmaooad.capstone23.departments.dal.DepartmentsRepository;
-import edu.kmaooad.capstone23.departments.dal.Request;
-import edu.kmaooad.capstone23.departments.dal.RequestsRepository;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -17,11 +16,8 @@ import java.util.Map;
 import static io.restassured.RestAssured.given;
 
 @QuarkusTest
-public class ApproveJoinRequestControllerTest {
+public class AddLogoControllerTest {
     private String idToUpdate;
-
-    @Inject
-    RequestsRepository requestsRepository;
 
     @Inject
     DepartmentsRepository departmentsRepository;
@@ -35,45 +31,58 @@ public class ApproveJoinRequestControllerTest {
         department.members = new ArrayList<>();
         departmentsRepository.insert(department);
 
-        Request request = new Request();
-        request.userName = "user1@umkma.edu";
-        request.departmentId = department.id.toString();
-        request.status = "pending";
-        requestsRepository.insert(request);
-
-        idToUpdate = request.id.toString();
+        idToUpdate = department.id.toString();
     }
 
-
     @Test
-    @DisplayName("Approve Join Request: Basic")
-    public void testBasicApproveJoinRequest() {
+    @DisplayName("Add Logo: Basic")
+    public void testBasicAddLogo() {
         Map<String, Object> jsonAsMap = new HashMap<>();
 
-        String requestId = idToUpdate;
+        String departmentId = idToUpdate;
 
-        jsonAsMap.put("requestId", requestId);
+        jsonAsMap.put("departmentId", departmentId);
+
+        File logoFile = new File("src/test/resources/departments/img.png");
+
+        jsonAsMap.put("logo", logoFile);
+
+        String logoName = "img.png";
+
+        jsonAsMap.put("logoName", logoName);
 
         given()
             .contentType("application/json")
             .body(jsonAsMap)
             .when()
-            .post("/departments/approve-request")
+            .post("/departments/add-logo")
             .then()
             .statusCode(200);
     }
 
 
     @Test
-    @DisplayName("Approve Join Request: No such request")
-    public void testApproveJoinRequestWithNonExistentId() {
-        String nonexistentId = "64fbb243275c1111167b87a3";
+    @DisplayName("Add Logo: Invalid Department Id")
+    public void testInvalidDepartmentIdAddLogo() {
+        Map<String, Object> jsonAsMap = new HashMap<>();
+
+        String departmentId = "64fbb243275c1111167b87a3";
+
+        jsonAsMap.put("departmentId", departmentId);
+
+        File logoFile = new File("src/test/resources/departments/img.png");
+
+        jsonAsMap.put("logo", logoFile);
+
+        String logoName = "img.png";
+
+        jsonAsMap.put("logoName", logoName);
 
         given()
             .contentType("application/json")
-            .body("{\"requestId\":\"" + nonexistentId + "\"}")
+            .body(jsonAsMap)
             .when()
-            .post("/departments/approve-request")
+            .post("/departments/add-logo")
             .then()
             .statusCode(400);
     }
