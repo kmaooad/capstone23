@@ -10,6 +10,7 @@ import edu.kmaooad.capstone23.common.Result;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 
+import java.util.ArrayList;
 import java.util.List;
 @RequestScoped
 public class BulkCreateCoursesHandler implements CommandHandler<BulkCreateCourses, BulkCoursesCreated> {
@@ -21,6 +22,7 @@ public class BulkCreateCoursesHandler implements CommandHandler<BulkCreateCourse
         List<Course> courses = command.getCoursesList().stream().map(courseCommand -> {
             var course = new Course();
             course.name = courseCommand.getName();
+            course.tags = new ArrayList<>();
             return course;
         }).toList();
 
