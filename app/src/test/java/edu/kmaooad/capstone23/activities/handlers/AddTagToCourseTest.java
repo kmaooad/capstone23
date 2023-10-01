@@ -28,20 +28,20 @@ public class AddTagToCourseTest {
     @BeforeEach
     public void setup() {
         var course = new Course();
-        course.name = "Test_Course";
+        course.name = "TestCourse";
         course.tags = new ArrayList<>();
         courseRepository.insert(course);
 
         var tag = new Tag();
-        tag.tagName = "Test_Tag";
+        tag.tagName = "TestTag";
         tagRepository.persist(tag);
     }
 
     @Test
     void testAddTagToCourse() {
         var addTagToCourse = new AddTagToCourse();
-        addTagToCourse.setCourseName("Test_Course");
-        addTagToCourse.setTagName("Test_Tag");
+        addTagToCourse.setCourseName("TestCourse");
+        addTagToCourse.setTagName("TestTag");
         var result = addTagToCourseHandler.handle(addTagToCourse);
         assertTrue(result.isSuccess());
         assertEquals(addTagToCourse.getCourseName(), result.getValue().getCourseName());
