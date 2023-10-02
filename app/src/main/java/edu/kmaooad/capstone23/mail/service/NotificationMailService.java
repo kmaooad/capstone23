@@ -11,6 +11,10 @@ public class NotificationMailService {
     Mailer mailer;
 
     public void sendNotification(Notification notification) {
+        if (notification == null) {
+            throw new IllegalArgumentException("Notification cannot be null");
+        }
+
         Mail mail = new Mail()
                 .addTo(notification.getEmail())
                 .setText(notification.getBody());
