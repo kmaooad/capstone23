@@ -32,11 +32,11 @@ public class CreateRequestToJoinHandler implements CommandHandler<RequestToJoinO
     public Result<RequestCreated> handle(RequestToJoinOrg command) {
 
 
-        Org department = orgsRepository.findById(new ObjectId(command.getOrgId()));
-        if (department == null) {
-            return new Result(ErrorCode.EXCEPTION, "Org not found");
+        Org org = orgsRepository.findById(new ObjectId(command.getOrgId()));
+        if (org == null) {
+            return new Result<>(ErrorCode.EXCEPTION, "Org not found");
         }
-        if (banRepository.findForEntity(BannedEntityType.Organization, department.id).isPresent())
+        if (banRepository.findForEntity(BannedEntityType.Organization, org.id).isPresent())
             return new Result<>(ErrorCode.EXCEPTION, "Org is banned");
 
         Request request = new Request();
@@ -49,6 +49,6 @@ public class CreateRequestToJoinHandler implements CommandHandler<RequestToJoinO
 
         RequestCreated result = new RequestCreated(request.id.toString());
 
-        return new Result(result);
+        return new Result<>(result);
     }
 }
