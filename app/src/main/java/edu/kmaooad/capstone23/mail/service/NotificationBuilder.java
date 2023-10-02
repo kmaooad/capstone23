@@ -1,4 +1,4 @@
-package edu.kmaooad.capstone23.mail;
+package edu.kmaooad.capstone23.mail.service;
 
 import edu.kmaooad.capstone23.students.commands.notifications.NotifyStudent;
 import jakarta.enterprise.context.ApplicationScoped;

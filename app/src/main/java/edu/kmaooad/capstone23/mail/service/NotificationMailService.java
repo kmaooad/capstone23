@@ -1,4 +1,4 @@
-package edu.kmaooad.capstone23.mail;
+package edu.kmaooad.capstone23.mail.service;
 
 import io.quarkus.mailer.Mail;
 import io.quarkus.mailer.Mailer;

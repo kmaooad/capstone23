@@ -1,7 +1,7 @@
 package edu.kmaooad.capstone23.students.service;
 
-import edu.kmaooad.capstone23.mail.NotificationMailService;
-import edu.kmaooad.capstone23.mail.Notification;
+import edu.kmaooad.capstone23.mail.service.NotificationMailService;
+import edu.kmaooad.capstone23.mail.service.Notification;
 import io.quarkus.mailer.Mail;
 import io.quarkus.mailer.MockMailbox;
 import io.quarkus.test.junit.QuarkusTest;
