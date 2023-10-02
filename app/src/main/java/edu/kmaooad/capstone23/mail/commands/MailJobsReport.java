@@ -11,7 +11,7 @@ public class MailJobsReport {
     private String recipientEmail;
 
     //blank to all records
-    private Integer recordsCount;
+    private int recordsCount;
 
     public String getRecipientEmail() {
         return recipientEmail;
@@ -21,7 +21,7 @@ public class MailJobsReport {
         this.recipientEmail = orgEmail;
     }
 
-    public Integer getRecordsCount() {
+    public int getRecordsCount() {
         return recordsCount;
     }
 

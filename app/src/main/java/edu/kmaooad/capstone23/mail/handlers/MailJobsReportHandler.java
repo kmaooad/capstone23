@@ -5,6 +5,7 @@ import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.mail.commands.MailJobsReport;
 import edu.kmaooad.capstone23.mail.events.JobsReportMailed;
+import edu.kmaooad.capstone23.mail.events.OrgsReportMailed;
 import edu.kmaooad.capstone23.mail.service.Notification;
 import edu.kmaooad.capstone23.mail.service.NotificationMailService;
 import edu.kmaooad.capstone23.jobs.dal.Job;
@@ -30,37 +31,44 @@ public class MailJobsReportHandler implements CommandHandler<MailJobsReport, Job
         String leftAlignFormat = "| %-6s | %-6d | %-10d | %-9d |%n";
         Job currentJob;
 
-        finalBody += finalBody.format("+--------+--------+------------+%n");
-        finalBody += finalBody.format("| ID     | NAME   | IS ACTIVE  |%n");
-        finalBody += finalBody.format("+--------+--------+------------+%n");
+        finalBody += ("+--------+--------+------------+%n");
+        finalBody += ("| ID     | NAME   | IS ACTIVE  |%n");
+        finalBody += ("+--------+--------+------------+%n");
         for (int i = 0; i < count; i++) {
             currentJob = jobsRepository.listAll().get(i);
-            finalBody += finalBody.format(leftAlignFormat, currentJob.id, currentJob.name,
-                    currentJob.active);
+            finalBody += "| " + currentJob.id.toString() + " | " + currentJob.name + " | " +
+                    currentJob.active + " | ";
         }
-        finalBody += finalBody.format("+--------+--------+------------+%n");
+        finalBody += ("+--------+--------+------------+%n");
         return finalBody;
     }
 
     public Result<JobsReportMailed> handle(MailJobsReport command) {
-        Integer countOfRecords = command.getRecordsCount();
-        if (countOfRecords == null) {
-            countOfRecords = Math.toIntExact(jobsRepository.count());
+        int countOfRecords = 0;
+        int count = command.getRecordsCount();
+        if (jobsRepository != null) {
+            if (count == 0) {
+                countOfRecords = Math.toIntExact(jobsRepository.count());
+            }
+            if (count < 0) {
+                return new Result<>(ErrorCode.VALIDATION_FAILED, "Incorrect size of report!");
+            }
+            if (count > jobsRepository.count()) {
+                countOfRecords = Math.toIntExact(jobsRepository.count());
+            }
+            if (count < jobsRepository.count()) {
+                countOfRecords = count;
+            }
         }
-        if (countOfRecords < 0) {
-            return new Result<>(ErrorCode.VALIDATION_FAILED, "Incorrect size of report!");
+        if (countOfRecords == 0) {
+            notificationBody = "No jobs detected!";
+        } else {
+            notificationBody = formatBodyMessage(countOfRecords);
         }
-        if (countOfRecords > Math.toIntExact(jobsRepository.count())) {
-            countOfRecords = Math.toIntExact(jobsRepository.count());
-        }
-
-        notificationBody = formatBodyMessage(countOfRecords);
         notification = new Notification(command.getRecipientEmail(), subject, notificationBody);
-
         service.sendNotification(notification);
 
         JobsReportMailed result = new JobsReportMailed(command.getRecipientEmail(), countOfRecords);
-
         return new Result<>(result);
     }
 }

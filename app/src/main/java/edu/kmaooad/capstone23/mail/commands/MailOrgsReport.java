@@ -10,8 +10,8 @@ public class MailOrgsReport {
     @Pattern(regexp = "^[\\w-.]+@([\\w-]+\\.)+[\\w-]{2,4}$")
     private String recipientEmail;
 
-    //blank to all records
-    private Integer recordsCount;
+    //zero to all records
+    private int recordsCount;
 
     public String getRecipientEmail() {
         return recipientEmail;
@@ -21,7 +21,7 @@ public class MailOrgsReport {
         this.recipientEmail = orgEmail;
     }
 
-    public Integer getRecordsCount() {
+    public int getRecordsCount() {
         return recordsCount;
     }
 
