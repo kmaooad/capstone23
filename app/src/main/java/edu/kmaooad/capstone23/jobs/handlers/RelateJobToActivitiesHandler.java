@@ -45,6 +45,8 @@ public class RelateJobToActivitiesHandler  implements CommandHandler<RelateJobTo
         ActivityRelated result = new ActivityRelated(command.getJobId(), command.getActivityId());
 
         Job j = job.get();
+        if(j.activitiesId.contains(command.getActivityId()))
+            return new Result<>(ErrorCode.VALIDATION_FAILED, "This activity is already related to this job");
         j.activitiesId.add(command.getActivityId());
 
         // Save the updated job back to the repository

@@ -60,4 +60,24 @@ public class RelateJobToActivitiesHandlerTest {
         Assertions.assertFalse(activityRelatedResult.isSuccess());
         Assertions.assertNull(activityRelatedResult.getValue());
     }
+
+    @Test
+    void testDeclineADuplicatesInRelationHandling() {
+        RelateJobToActivities relateJobToActivity = new RelateJobToActivities();
+        relateJobToActivity.setJobId(result.getValue().getJobId());
+        relateJobToActivity.setActivityId(courseId);
+        Result<ActivityRelated> activityRelatedResult = relateHandler.handle(relateJobToActivity);
+
+        Assertions.assertTrue(activityRelatedResult.isSuccess());
+        Assertions.assertNotNull(activityRelatedResult.getValue());
+        Assertions.assertEquals(activityRelatedResult.getValue().getJobId(), result.getValue().getJobId());
+
+        RelateJobToActivities relateJobToActivityTwo = new RelateJobToActivities();
+        relateJobToActivityTwo.setJobId(result.getValue().getJobId());
+        relateJobToActivityTwo.setActivityId(courseId);
+        Result<ActivityRelated> activityRelatedResultTwo = relateHandler.handle(relateJobToActivityTwo);
+
+        Assertions.assertFalse(activityRelatedResultTwo.isSuccess());
+        Assertions.assertNull(activityRelatedResultTwo.getValue());
+    }
 }
