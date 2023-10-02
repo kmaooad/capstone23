@@ -39,11 +39,11 @@ public class AssignExpertToProjectControllerTest {
 
     @Test
     @DisplayName("Assign Expert to project: Basic")
-    public void testAssignExpertToProject() {
+    public void testInvalidParameter() {
         Map<String, Object> jsonAsMap = new HashMap<>();
 
         jsonAsMap.put("expertId", createTestExpert().toString());
-        jsonAsMap.put("projectId", createTestProject().toString());
+        jsonAsMap.put("projectId", "Random wrong id");
 
         given()
                 .contentType("application/json")
@@ -51,7 +51,7 @@ public class AssignExpertToProjectControllerTest {
                 .when()
                 .post("/experts/assign_expert_to_project")
                 .then()
-                .statusCode(200);
+                .statusCode(400);
     }
 
     private ObjectId createTestProject() {
@@ -91,24 +91,6 @@ public class AssignExpertToProjectControllerTest {
 
         return new ObjectId(objectId);
     }
-
-//    private Org createTestOrg() {
-//        Org org = new Org();
-//        org.name = "Brovary Club";
-//        org.industry = "Some random industry";
-//        org.website = "Some random website";
-//        orgsRepository.insert(org);
-//        return org;
-//    }
-//
-//    private ObjectId createTestExpert() {
-//        Expert expert = new Expert();
-//        expert.name = "Test Name";
-//        expert.org = org;
-//        expertsRepository.insert(expert);
-//
-//        return expert.id;
-//    }
 
     private void createTestOrg() {
         Map<String, Object> jsonAsMap = new HashMap<>();
