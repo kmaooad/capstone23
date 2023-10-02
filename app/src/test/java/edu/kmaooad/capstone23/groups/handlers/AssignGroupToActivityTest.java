@@ -56,7 +56,26 @@ public class AssignGroupToActivityTest {
         Assertions.assertNotNull(activityRelatedResult.getValue());
         ObjectId gr = new ObjectId(result.getValue().getGroupId());
         Assertions.assertTrue(activityRelatedResult.getValue().getGroupId().equals(gr));
+    }
 
+    @Test
+    void testDeclineADublicateRelationHandling() {
+        AssignGroupToActivity relateGroupToActivity = new AssignGroupToActivity();
+        relateGroupToActivity.setGroupId(new ObjectId(result.getValue().getGroupId()));
+        relateGroupToActivity.setActivityId(courseId);
+        Result<ActivityAssigned> activityRelatedResult = relateHandler.handle(relateGroupToActivity);
 
+        Assertions.assertTrue(activityRelatedResult.isSuccess());
+        Assertions.assertNotNull(activityRelatedResult.getValue());
+        ObjectId gr = new ObjectId(result.getValue().getGroupId());
+        Assertions.assertEquals(activityRelatedResult.getValue().getGroupId(), gr);
+
+        AssignGroupToActivity relateGroupToActivityTwo = new AssignGroupToActivity();
+        relateGroupToActivityTwo.setGroupId(new ObjectId(result.getValue().getGroupId()));
+        relateGroupToActivityTwo.setActivityId(courseId);
+        Result<ActivityAssigned> activityRelatedResultTwo = relateHandler.handle(relateGroupToActivity);
+
+        Assertions.assertFalse(activityRelatedResultTwo.isSuccess());
+        Assertions.assertNull(activityRelatedResultTwo.getValue());
     }
 }
