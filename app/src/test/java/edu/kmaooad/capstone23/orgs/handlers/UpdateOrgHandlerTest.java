@@ -74,13 +74,13 @@ public class UpdateOrgHandlerTest {
         command.website = "https://www.ukma.edu.ua/eng/";
         command.emailDomain = "gmail.com";
 
-        Assertions.assertNull(orgsRepository.findByEmailDomain("gmail.com"));
+        Assertions.assertTrue(orgsRepository.findByEmailDomainOptional("gmail.com").isEmpty());
 
         Result<OrgUpdated> result = handler.handle(command);
 
         Assertions.assertTrue(result.isSuccess());
         Assertions.assertNotNull(result.getValue());
-        Assertions.assertEquals("gmail.com", orgsRepository.findByEmailDomain("gmail.com").emailDomain);
+        Assertions.assertEquals("gmail.com", orgsRepository.findByEmailDomainOptional("gmail.com").get().emailDomain);
     }
 
     @Test
