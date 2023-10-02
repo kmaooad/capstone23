@@ -2,11 +2,8 @@ package edu.kmaooad.capstone23.experts.controllers;
 
 import edu.kmaooad.capstone23.competences.dal.ProjsRepository;
 import edu.kmaooad.capstone23.departments.dal.Department;
-import edu.kmaooad.capstone23.departments.dal.DepartmentsRepository;
 import edu.kmaooad.capstone23.experts.dal.Expert;
 import edu.kmaooad.capstone23.experts.dal.ExpertsRepository;
-import edu.kmaooad.capstone23.members.dal.Member;
-import edu.kmaooad.capstone23.members.dal.MembersRepository;
 import edu.kmaooad.capstone23.orgs.dal.Org;
 import edu.kmaooad.capstone23.orgs.dal.OrgsRepository;
 import io.quarkus.test.junit.QuarkusTest;
@@ -16,15 +13,16 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static io.restassured.RestAssured.given;
 @QuarkusTest
 public class AssignExpertToProjectControllerTest {
 
     private static final String ORG_NAME = "Random Org";
-    private Org org;
-    private Department department;
+    private ObjectId project;
     @Inject
     ProjsRepository projsRepository;
     @Inject
@@ -35,15 +33,16 @@ public class AssignExpertToProjectControllerTest {
     @BeforeEach
     public void setUp() {
         createTestOrg();
+        project = createTestProject();
     }
 
     @Test
-    @DisplayName("Assign Expert to project: Basic")
-    public void testAssignExpertToProject() {
+    @DisplayName("Assign Expert to project that he/she already have")
+    public void testExpertAssignedToProjAlready() {
         Map<String, Object> jsonAsMap = new HashMap<>();
 
-        jsonAsMap.put("expertId", createTestExpert().toString());
-        jsonAsMap.put("projectId", createTestProject().toString());
+        jsonAsMap.put("expertId", createTestExpertWithProject().toString());
+        jsonAsMap.put("projectId", project.toString());
 
         given()
                 .contentType("application/json")
@@ -51,7 +50,7 @@ public class AssignExpertToProjectControllerTest {
                 .when()
                 .post("/experts/assign_expert_to_project")
                 .then()
-                .statusCode(200);
+                .statusCode(400);
     }
 
     private ObjectId createTestProject() {
@@ -74,41 +73,16 @@ public class AssignExpertToProjectControllerTest {
         return new ObjectId(objectId);
     }
 
-    private ObjectId createTestExpert() {
-        Map<String, Object> jsonAsMap = new HashMap<>();
-        jsonAsMap.put("expertName", "New Super Random Expert");
-        jsonAsMap.put("orgName", ORG_NAME);
 
-        String objectId =  given()
-                .contentType("application/json")
-                .body(jsonAsMap)
-                .when()
-                .post("/experts/create")
-                .then()
-                .statusCode(200)
-                .extract()
-                .path("expertId");
+    private ObjectId createTestExpertWithProject() {
+        Expert expert = new Expert();
+        expert.name = "Test Name";
+        expert.org = orgsRepository.findByName(ORG_NAME);
+        expert.projects = List.of(projsRepository.findById(project));
+        expertsRepository.insert(expert);
 
-        return new ObjectId(objectId);
+        return expert.id;
     }
-
-//    private Org createTestOrg() {
-//        Org org = new Org();
-//        org.name = "Brovary Club";
-//        org.industry = "Some random industry";
-//        org.website = "Some random website";
-//        orgsRepository.insert(org);
-//        return org;
-//    }
-//
-//    private ObjectId createTestExpert() {
-//        Expert expert = new Expert();
-//        expert.name = "Test Name";
-//        expert.org = org;
-//        expertsRepository.insert(expert);
-//
-//        return expert.id;
-//    }
 
     private void createTestOrg() {
         Map<String, Object> jsonAsMap = new HashMap<>();
