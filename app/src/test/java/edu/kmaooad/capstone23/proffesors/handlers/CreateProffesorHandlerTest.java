@@ -47,6 +47,32 @@ import jakarta.inject.Inject;
 
             Assertions.assertFalse(result.isSuccess());
         }
+        @Test
+        @DisplayName("Create Cvs: successful handling")
+        void testnotSuccessfulWithoutEmail() {
+            CreateProffesor command = new CreateProffesor();
+            command.setName("Masha");
+            command.setLastName("Shevchenko");
+
+
+            Result<ProffesorCreated> result = handler.handle(command);
+
+            Assertions.assertFalse(result.isSuccess());
+        }
+
+        @Test
+        @DisplayName("Create Cvs: name null")
+        void testNotRightemail() {
+            CreateProffesor command = new CreateProffesor();
+
+            command.setName("Masha");
+            command.setEmail("post...gmail.com");
+            command.setLastName("Shevchenko");
+
+            Result<ProffesorCreated> result = handler.handle(command);
+
+            Assertions.assertFalse(result.isSuccess());
+        }
     }
 
 
