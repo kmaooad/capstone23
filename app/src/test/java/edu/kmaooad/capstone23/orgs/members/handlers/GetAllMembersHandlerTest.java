@@ -22,7 +22,6 @@ public class GetAllMembersHandlerTest extends TestWithMembersSetUp {
     GetAllMembersHandler handler;
 
     @Test
-    @Disabled // skip test case to unblock CI (by @D. Pelovych)
     @DisplayName("Read all members: Basic handling")
     void testSuccessfulHandling() {
         GetAllMembers command = new GetAllMembers();
