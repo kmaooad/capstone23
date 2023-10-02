@@ -11,12 +11,12 @@ import static io.restassured.RestAssured.given;
 
 
 @QuarkusTest
-public class MailOrgsReportControllerTest {
+public class MailJobsReportControllerTest {
     private String testEmail = "naukma@ukr.net";
     private int count = 5;
 
     @Test
-    @DisplayName("Mail orgs report: valid input")
+    @DisplayName("Mail jobs report: valid input")
     public void testBasicMailReport() {
         Map<String, Object> jsonAsMap = new HashMap<>();
         jsonAsMap.put("recipientEmail", testEmail);
@@ -26,13 +26,13 @@ public class MailOrgsReportControllerTest {
                 .contentType("application/json")
                 .body(jsonAsMap)
                 .when()
-                .post("/mail/orgs/report")
+                .post("/mail/jobs/report")
                 .then()
                 .statusCode(200);
     }
 
     @Test
-    @DisplayName("Mail orgs report: invalid input")
+    @DisplayName("Mail jobs report: invalid input")
     public void testBasicMailReportWithValidation() {
         Map<String, Object> jsonAsMap = new HashMap<>();
         jsonAsMap.put("test@gmail.com", -5);
@@ -41,7 +41,7 @@ public class MailOrgsReportControllerTest {
                 .contentType("application/json")
                 .body(jsonAsMap)
                 .when()
-                .post("/mail/orgs/report")
+                .post("/mail/jobs/report")
                 .then()
                 .statusCode(400);
     }
