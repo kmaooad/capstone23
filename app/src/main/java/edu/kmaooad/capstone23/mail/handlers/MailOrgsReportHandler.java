@@ -11,8 +11,6 @@ import edu.kmaooad.capstone23.orgs.dal.Org;
 import edu.kmaooad.capstone23.orgs.dal.OrgsRepository;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
-import io.quarkus.mailer.Mail;
-import io.quarkus.mailer.Mailer;
 
 @RequestScoped
 public class MailOrgsReportHandler implements CommandHandler<MailOrgsReport, OrgsReportMailed> {
