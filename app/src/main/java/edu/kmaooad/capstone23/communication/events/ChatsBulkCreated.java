@@ -8,4 +8,8 @@ public class ChatsBulkCreated {
   public ChatsBulkCreated(List<ChatCreated> createdChats) {
     this.createdChats = createdChats;
   }
+
+  public List<ChatCreated> getChats() {
+    return createdChats;
+  }
 }
