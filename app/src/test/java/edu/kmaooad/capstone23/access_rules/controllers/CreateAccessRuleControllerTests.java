@@ -115,6 +115,50 @@ public class CreateAccessRuleControllerTests {
     public void createRuleDepartmentToCourse() {
         addAccessRule(department, AccessRuleFromEntityType.Department, course, AccessRuleToEntityType.Course,200);
     }
+    @Test
+    @DisplayName("Create Access Rule: organisation to course")
+    public void createRuleOrganisationToCourse() {
+        addAccessRule(org, AccessRuleFromEntityType.Organisation, course, AccessRuleToEntityType.Course,200);
+    }
+    @Test
+    @DisplayName("Create Access Rule: organisation to organisation")
+    public void createRuleOrganisationToOrganisation() {
+        addAccessRule(org, AccessRuleFromEntityType.Organisation, createOrg(), AccessRuleToEntityType.Organisation,200);
+    }
+    @Test
+    @DisplayName("Create Access Rule: organisation to group")
+    public void createRuleOrganisationToGroup() {
+        addAccessRule(org, AccessRuleFromEntityType.Organisation, group, AccessRuleToEntityType.Group,200);
+    }
+    @Test
+    @DisplayName("Create Access Rule: organisation to department")
+    public void createRuleOrganisationToDepartment() {
+        addAccessRule(org, AccessRuleFromEntityType.Organisation, department, AccessRuleToEntityType.Department,200);
+    }
+
+    @Test
+    @DisplayName("Create Access Rule: from non existent")
+    public void createRuleMemberFromNonExistent() {
+        addAccessRule(new ObjectId().toString(), AccessRuleFromEntityType.Member, org, AccessRuleToEntityType.Organisation, 400);
+    }
+
+    @Test
+    @DisplayName("Create Access Rule: from invalid Id")
+    public void createRuleMemberFromInvalidId() {
+        addAccessRule("1234abc", AccessRuleFromEntityType.Member, org, AccessRuleToEntityType.Organisation, 400);
+    }
+  
+    @Test
+    @DisplayName("Create Access Rule: to non existent")
+    public void createRuleMemberToNonExistent() {
+        addAccessRule(member, AccessRuleFromEntityType.Member, new ObjectId().toString(), AccessRuleToEntityType.Organisation, 400);
+    }
+
+    @Test
+    @DisplayName("Create Access Rule: to invalid Id")
+    public void createRuleMemberToInvalidId() {
+        addAccessRule(member, AccessRuleFromEntityType.Member, "1234abc", AccessRuleToEntityType.Organisation, 400);
+    }
 
     private String createMember(){
         CreateBasicMember command = new CreateBasicMember();
