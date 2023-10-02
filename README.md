@@ -75,6 +75,14 @@ Each UoW consists of:
   - Assign experts from existing members
     - Mark existing member an expert
     - Remove expert status from member
+   
+-Proffesors
+  -Mass create/update/delete proffesors 
+  -assign a group of students to proffesor
+  -Assign activities (pending and completed)
+  -assign job
+  -Manually assign/unassign activity to proffesor
+
 - Students
   - Bulk import
     - Mass create/update students from CSV, send email notifications
