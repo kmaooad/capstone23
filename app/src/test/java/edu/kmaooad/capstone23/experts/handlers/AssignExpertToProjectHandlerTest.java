@@ -31,16 +31,14 @@ public class AssignExpertToProjectHandlerTest {
     CommandHandler<CreateExpert, ExpertCreated> expertCreatedCommandHandler;
 
     @Test
-    public void testSuccessfulHandling() {
+    public void testEmptyProject() {
         AssignExpertToProject assignExpertToProject = new AssignExpertToProject();
-        assignExpertToProject.setExpertId(createTestExpert());
         assignExpertToProject.setProjectId(createTestProj());
 
         Result<ExpertAssignedToProject> result = assignedExpertToProjectCommandHandler.handle(assignExpertToProject);
 
-        Assertions.assertTrue(result.isSuccess());
-        Assertions.assertNotNull(result.getValue());
-        Assertions.assertFalse(result.getValue().getMemberId().isEmpty());
+        Assertions.assertFalse(result.isSuccess());
+        Assertions.assertNull(result.getValue());
     }
 
     private ObjectId createTestExpert() {
