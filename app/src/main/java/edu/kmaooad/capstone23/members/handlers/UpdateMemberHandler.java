@@ -41,8 +41,8 @@ public class UpdateMemberHandler implements CommandHandler<UpdateMember, MemberU
                 return new Result<>(ErrorCode.VALIDATION_FAILED, "Organisation not found");
             if (existingEntryForMember.isEmpty())
                 return new Result<>(ErrorCode.NOT_FOUND, "Member not found");
-            if(banRepository.findForEntity(BannedEntityType.Organization, memberOrg.get().id).isPresent())
-                return new Result<>(ErrorCode.EXCEPTION, "Org is banned");
+            if(banRepository.findForEntity(BannedEntityType.Member, member.id).isPresent())
+                return new Result<>(ErrorCode.EXCEPTION, "Member is banned");
             membersRepository.updateEntry(member);
             MemberUpdated result = new MemberUpdated(member);
             return new Result<>(result);

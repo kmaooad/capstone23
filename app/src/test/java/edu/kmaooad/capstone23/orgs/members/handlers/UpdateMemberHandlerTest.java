@@ -149,8 +149,8 @@ public class UpdateMemberHandlerTest extends TestWithOrgSetUp {
         var createdMember = createMember();
 
         var banRequest = new BanEntity();
-        banRequest.setEntityId(createdOrgId);
-        banRequest.setEntityType(BannedEntityType.Organization.name());
+        banRequest.setEntityId(new ObjectId(createdMember));
+        banRequest.setEntityType(BannedEntityType.Member.name());
         banRequest.setReason("Hello there");
 
         var bannedResult = banHandler.handle(banRequest);
@@ -161,7 +161,7 @@ public class UpdateMemberHandlerTest extends TestWithOrgSetUp {
         UpdateMember command = new UpdateMember();
         command.setFirstName("firstName");
         command.setLastName("lastName");
-        command.setOrgId(createdOrgId);
+        command.setOrgId(List.of(createdOrgId));
         command.setEmail("email@email123.com");
         command.setId(new ObjectId(createdMember));
 
@@ -170,6 +170,6 @@ public class UpdateMemberHandlerTest extends TestWithOrgSetUp {
         Assertions.assertFalse(result.isSuccess());
         Assertions.assertNotNull(result.getMessage());
         Assertions.assertEquals(result.getErrorCode(), ErrorCode.EXCEPTION);
-        Assertions.assertEquals(result.getMessage(), "Org is banned");
+        Assertions.assertEquals(result.getMessage(), "Member is banned");
     }
 }
