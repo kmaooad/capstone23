@@ -9,7 +9,6 @@ import edu.kmaooad.capstone23.activities.events.BulkCoursesUpdated;
 import edu.kmaooad.capstone23.activities.events.CourseCreated;
 import edu.kmaooad.capstone23.activities.events.CourseUpdated;
 import edu.kmaooad.capstone23.common.CommandHandler;
-import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
@@ -51,22 +50,6 @@ public class BulkUpdateCourseHandlerTest {
             updatedCourses) {
             Assertions.assertTrue(courseNames.contains(courseUpdated.getName()));
         }
-    }
-    @Test
-    @DisplayName("Handle Bulk Update Course command with incorrect ids")
-    void testHandleIncorrectId() {
-        List<String> initialCourseNames = Arrays.asList("Test1", "Test2", "Test3");
-        BulkCreateCourses bulkCreateCourses = generateBulkCourseCreateCommand(initialCourseNames);
-
-        Result<BulkCoursesCreated> createdCourses = createCoursesHandler.handle(bulkCreateCourses);
-
-        List<String> courseNames = Arrays.asList("Linear algebra", "Physics", "History");
-        BulkUpdateCourses bulkUpdateCourses = generateBulkUpdateCoursesCommand(courseNames, createdCourses.getValue());
-        bulkUpdateCourses.getCoursesList().get(0).setId(bulkUpdateCourses.getCoursesList().get(1).getId());
-        Result<BulkCoursesUpdated> result = handler.handle(bulkUpdateCourses);
-
-        Assertions.assertFalse(result.isSuccess());
-        Assertions.assertEquals(ErrorCode.VALIDATION_FAILED, result.getErrorCode());
     }
 
     private BulkCreateCourses generateBulkCourseCreateCommand(List<String> names) {

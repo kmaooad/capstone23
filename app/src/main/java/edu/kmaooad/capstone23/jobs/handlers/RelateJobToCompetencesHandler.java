@@ -29,7 +29,7 @@ public class RelateJobToCompetencesHandler implements CommandHandler<RelateJobTo
         CompetenceRelated result = new CompetenceRelated(command.getJobId(), command.getCompetenceId());
 
         Job j = job.get();
-        j.activitiesId.add(command.getCompetenceId());
+        j.competencesId.add(command.getCompetenceId());
 
         repository.update(j);
 

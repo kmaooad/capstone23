@@ -9,7 +9,6 @@ import edu.kmaooad.capstone23.activities.events.BulkCoursesUpdated;
 import edu.kmaooad.capstone23.activities.events.CourseCreated;
 import edu.kmaooad.capstone23.activities.events.CourseUpdated;
 import edu.kmaooad.capstone23.common.CommandHandler;
-import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
@@ -30,12 +29,6 @@ public class BulkUpdateCourseHandler implements CommandHandler<BulkUpdateCourses
             course.name = courseCommand.getName();
             return course;
         }).toList();
-
-        var courseIds = courses.stream().map(course -> course.id.toHexString()).distinct().toList();
-        var coursesInDb = repository.findCoursesCountByIds(courseIds);
-        if (coursesInDb != courses.size()) {
-            return new Result<>(ErrorCode.VALIDATION_FAILED, "Some courses have incorrect IDs");
-        }
 
         repository.bulkUpdate(courses);
 
