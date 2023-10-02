@@ -10,7 +10,6 @@ import edu.kmaooad.capstone23.groups.commands.AssignGroupToActivity;
 import edu.kmaooad.capstone23.groups.commands.CreateGroup;
 import edu.kmaooad.capstone23.groups.events.ActivityAssigned;
 import edu.kmaooad.capstone23.groups.events.GroupCreated;
-import edu.kmaooad.capstone23.jobs.events.ActivityRelated;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
@@ -18,7 +17,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 @QuarkusTest
-public class AssignGroupToActivityTest {
+public class AssignGroupToActivityHandlerTest {
     @Inject
     CommandHandler<CreateGroup, GroupCreated> handler;
     @Inject
