@@ -23,14 +23,6 @@ import static io.restassured.RestAssured.given;
 public class AssignExpertToProjectControllerTest {
 
     private static final String ORG_NAME = "Random Org";
-    private Org org;
-    private Department department;
-    @Inject
-    ProjsRepository projsRepository;
-    @Inject
-    OrgsRepository orgsRepository;
-    @Inject
-    ExpertsRepository expertsRepository;
 
     @BeforeEach
     public void setUp() {
