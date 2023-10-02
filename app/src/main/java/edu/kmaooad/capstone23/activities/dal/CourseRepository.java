@@ -27,5 +27,9 @@ public class CourseRepository implements PanacheMongoRepository<Course> {
         persist(courses);
         return courses;
     }
+    public List<Course> bulkUpdate(List<Course> courses) {
+        persistOrUpdate(courses);
+        return courses;
+    }
 
 }

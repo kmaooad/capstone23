@@ -3,7 +3,6 @@ package edu.kmaooad.capstone23.members.dal;
 import edu.kmaooad.capstone23.members.exceptions.UniquenessViolationException;
 import io.quarkus.mongodb.panache.PanacheMongoRepository;
 import jakarta.enterprise.context.ApplicationScoped;
-import org.bson.types.ObjectId;
 
 import java.util.Optional;
 
@@ -36,7 +35,7 @@ public class MembersRepository implements PanacheMongoRepository<Member> {
   
     public Member updateEntry(Member member) throws UniquenessViolationException {
         var existingMember = findMemberByEmail(member.email);
-        if (existingMember.isPresent())
+        if (existingMember.isPresent() && !existingMember.get().id.equals(member.id))
             throw new UniquenessViolationException("Email is not unique");
         update(member);
         return member;
