@@ -29,7 +29,9 @@ import java.time.LocalDateTime;
             if (command.getEmail() == null) {
                 return new Result<>(ErrorCode.VALIDATION_FAILED, "email is not set");
             }
-
+            if (command.getLastName() == null) {
+                return new Result<>(ErrorCode.VALIDATION_FAILED, "email is not set");
+            }
             cv.firstName = command.getName();
             cv.lastName = command.getLastName();
             cv.email = command.getEmail();
