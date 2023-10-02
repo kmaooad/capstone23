@@ -115,6 +115,26 @@ public class CreateAccessRuleControllerTests {
     public void createRuleDepartmentToCourse() {
         addAccessRule(department, AccessRuleFromEntityType.Department, course, AccessRuleToEntityType.Course,200);
     }
+    @Test
+    @DisplayName("Create Access Rule: organisation to course")
+    public void createRuleOrganisationToCourse() {
+        addAccessRule(org, AccessRuleFromEntityType.Organisation, course, AccessRuleToEntityType.Course,200);
+    }
+    @Test
+    @DisplayName("Create Access Rule: organisation to organisation")
+    public void createRuleOrganisationToOrganisation() {
+        addAccessRule(org, AccessRuleFromEntityType.Organisation, createOrg(), AccessRuleToEntityType.Organisation,200);
+    }
+    @Test
+    @DisplayName("Create Access Rule: organisation to group")
+    public void createRuleOrganisationToGroup() {
+        addAccessRule(org, AccessRuleFromEntityType.Organisation, group, AccessRuleToEntityType.Group,200);
+    }
+    @Test
+    @DisplayName("Create Access Rule: organisation to department")
+    public void createRuleOrganisationToDepartment() {
+        addAccessRule(org, AccessRuleFromEntityType.Organisation, department, AccessRuleToEntityType.Department,200);
+    }
 
     private String createMember(){
         CreateBasicMember command = new CreateBasicMember();
