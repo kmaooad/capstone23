@@ -20,7 +20,7 @@ import jakarta.inject.Inject;
         CommandHandler<CreateProffesor, ProffesorCreated> handler;
 
         @Test
-        @DisplayName("Create Cvs: successful handling")
+        @DisplayName("Create Proffesors: successful handling")
         void testSuccessfulHandling() {
             CreateProffesor command = new CreateProffesor();
             command.setName("Masha");
@@ -36,7 +36,7 @@ import jakarta.inject.Inject;
         }
 
         @Test
-        @DisplayName("Create Cvs: name null")
+        @DisplayName("Create Proffesor: name null")
         void testNotSuccessfulHandling() {
             CreateProffesor command = new CreateProffesor();
             //DateTimeCreated null
@@ -48,7 +48,7 @@ import jakarta.inject.Inject;
             Assertions.assertFalse(result.isSuccess());
         }
         @Test
-        @DisplayName("Create Cvs: successful handling")
+        @DisplayName("Create Proffesors: email null")
         void testnotSuccessfulWithoutEmail() {
             CreateProffesor command = new CreateProffesor();
             command.setName("Masha");
@@ -61,7 +61,7 @@ import jakarta.inject.Inject;
         }
 
         @Test
-        @DisplayName("Create Cvs: name null")
+        @DisplayName("Create Proffesor: email not right")
         void testNotRightemail() {
             CreateProffesor command = new CreateProffesor();
 
