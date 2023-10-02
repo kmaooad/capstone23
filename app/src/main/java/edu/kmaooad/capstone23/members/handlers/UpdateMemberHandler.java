@@ -1,5 +1,7 @@
 package edu.kmaooad.capstone23.members.handlers;
 
+import edu.kmaooad.capstone23.ban.dal.BannedEntityType;
+import edu.kmaooad.capstone23.ban.dal.EntityBanRepository;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
@@ -22,6 +24,9 @@ public class UpdateMemberHandler implements CommandHandler<UpdateMember, MemberU
     @Inject
     OrgsRepository orgsRepository;
 
+    @Inject
+    EntityBanRepository banRepository;
+
     @Override
     public Result<MemberUpdated> handle(UpdateMember command) {
         try {
@@ -36,6 +41,8 @@ public class UpdateMemberHandler implements CommandHandler<UpdateMember, MemberU
                 return new Result<>(ErrorCode.VALIDATION_FAILED, "Organisation not found");
             if (existingEntryForMember.isEmpty())
                 return new Result<>(ErrorCode.NOT_FOUND, "Member not found");
+            if(banRepository.findForEntity(BannedEntityType.Member, member.id).isPresent())
+                return new Result<>(ErrorCode.EXCEPTION, "Member is banned");
             membersRepository.updateEntry(member);
             MemberUpdated result = new MemberUpdated(member);
             return new Result<>(result);
