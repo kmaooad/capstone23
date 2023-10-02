@@ -14,6 +14,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 @QuarkusTest
 public class UpdateMemberHandlerTest extends TestWithOrgSetUp {
     @Inject
@@ -25,7 +27,7 @@ public class UpdateMemberHandlerTest extends TestWithOrgSetUp {
         UpdateMember command = new UpdateMember();
         command.setFirstName("firstName");
         command.setLastName("lastName");
-        command.setOrgId(createdOrgId);
+        command.setOrgId(List.of(createdOrgId));
         command.setEmail("email@email123.com");
         command.setId(new ObjectId(createMember()));
 
@@ -42,7 +44,7 @@ public class UpdateMemberHandlerTest extends TestWithOrgSetUp {
         UpdateMember command = new UpdateMember();
         command.setFirstName("firstName");
         command.setLastName("lastName");
-        command.setOrgId(createdOrgId);
+        command.setOrgId(List.of(createdOrgId));
         command.setEmail("email.com");
         command.setId(new ObjectId(createMember()));
 
@@ -60,14 +62,14 @@ public class UpdateMemberHandlerTest extends TestWithOrgSetUp {
         Member member = new Member();
         member.firstName = "New";
         member.lastName = "Member";
-        member.orgId = createdOrgId;
+        member.orgId = List.of(createdOrgId);
         member.email = notUniqueEmail;
         membersRepository.insert(member);
 
         UpdateMember command = new UpdateMember();
         command.setFirstName("firstName");
         command.setLastName("lastName");
-        command.setOrgId(createdOrgId);
+        command.setOrgId(List.of(createdOrgId));
         command.setEmail(notUniqueEmail);
         command.setId(new ObjectId(createMember()));
 
@@ -83,7 +85,7 @@ public class UpdateMemberHandlerTest extends TestWithOrgSetUp {
         UpdateMember command = new UpdateMember();
         command.setFirstName("firstName");
         command.setLastName("lastName");
-        command.setOrgId(createdOrgId);
+        command.setOrgId(List.of(createdOrgId));
         command.setEmail("email@email12233.com1");
         command.setId(new ObjectId());
 
@@ -94,12 +96,28 @@ public class UpdateMemberHandlerTest extends TestWithOrgSetUp {
     }
 
     @Test
+    @DisplayName("Update Member: non-existent org")
+    void testOrgIdExistence() {
+        UpdateMember command = new UpdateMember();
+        command.setFirstName("firstName");
+        command.setLastName("lastName");
+        command.setOrgId(List.of(createdOrgId, new ObjectId()));
+        command.setEmail("email@email12233.com1");
+        command.setId(new ObjectId());
+
+        Result<MemberUpdated> result = handler.handle(command);
+
+        Assertions.assertFalse(result.isSuccess());
+        Assertions.assertEquals(ErrorCode.VALIDATION_FAILED, result.getErrorCode());
+    }
+
+    @Test
     @DisplayName("Update member: only name field update")
     void testUpdateOnlyMemberName() {
         Member member = new Member();
         member.firstName = "New";
         member.lastName = "Member";
-        member.orgId = createdOrgId;
+        member.orgId = List.of(createdOrgId);
         member.email = "updateOnlyMemberName@gmail.com";
         member = membersRepository.insert(member);
 
