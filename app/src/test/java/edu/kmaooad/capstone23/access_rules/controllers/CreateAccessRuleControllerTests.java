@@ -52,6 +52,9 @@ public class CreateAccessRuleControllerTests {
     @Inject
     CommandHandler<CreateCourse, CourseCreated> courseHandler;
 
+    @Inject
+    CommandHandler<CreateAccessRule, AccessRuleCreated> ruleHandler;
+
     private String member;
     private String department;
     private String org;
@@ -144,6 +147,7 @@ public class CreateAccessRuleControllerTests {
     public void createRuleMemberFromInvalidId() {
         addAccessRule("1234abc", AccessRuleFromEntityType.Member, org, AccessRuleToEntityType.Organisation, 400);
     }
+  
     @Test
     @DisplayName("Create Access Rule: to non existent")
     public void createRuleMemberToNonExistent() {
