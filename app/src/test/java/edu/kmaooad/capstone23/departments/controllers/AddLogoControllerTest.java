@@ -24,6 +24,7 @@ public class AddLogoControllerTest {
 
     @BeforeEach
     void setUp() {
+        departmentsRepository.deleteAll();
         Department department = new Department();
         department.name = "Initial Department";
         department.description = "Initial Department Description";
@@ -42,7 +43,7 @@ public class AddLogoControllerTest {
 
         jsonAsMap.put("departmentId", idToUpdate);
 
-        String logo = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAYAA";
+        String logo = "https://img.freepik.com/free-vector/bird-colorful-logo-gradient-vector_343694-1365.jpg";
 
         jsonAsMap.put("logo", logo);
 

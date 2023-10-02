@@ -2,10 +2,14 @@ package edu.kmaooad.capstone23.departments.events;
 
 public class LogoAdded {
 
-    private String id;
+    private String departmentId;
 
-    public LogoAdded(String id) {
-        this.id = id;
+    public String getDepartmentId() {
+        return departmentId;
+    }
+
+    public LogoAdded(String departmentId) {
+        this.departmentId = departmentId;
     }
 
 }

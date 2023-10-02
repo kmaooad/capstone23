@@ -18,7 +18,6 @@ public class AddLogo {
     }
 
     @NotBlank
-    @Size(min = 2, max = 100)
     private String logo;
 
     public void setLogo(String logo) {

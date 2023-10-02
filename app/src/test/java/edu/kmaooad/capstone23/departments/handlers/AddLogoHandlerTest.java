@@ -9,8 +9,6 @@ import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 import org.junit.jupiter.api.*;
 
-import java.io.File;
-
 @QuarkusTest
 public class AddLogoHandlerTest {
     @Inject
