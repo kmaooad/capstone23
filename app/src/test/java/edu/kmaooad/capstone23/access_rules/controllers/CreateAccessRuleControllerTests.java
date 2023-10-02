@@ -52,6 +52,9 @@ public class CreateAccessRuleControllerTests {
     @Inject
     CommandHandler<CreateCourse, CourseCreated> courseHandler;
 
+    @Inject
+    CommandHandler<CreateAccessRule, AccessRuleCreated> ruleHandler;
+
     private String member;
     private String department;
     private String org;
