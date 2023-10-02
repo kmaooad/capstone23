@@ -1,5 +1,7 @@
 package edu.kmaooad.capstone23.students.notification;
 
+import edu.kmaooad.capstone23.mail.Notification;
+import edu.kmaooad.capstone23.mail.NotificationBuilder;
 import edu.kmaooad.capstone23.students.commands.notifications.NotifyStudent;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
