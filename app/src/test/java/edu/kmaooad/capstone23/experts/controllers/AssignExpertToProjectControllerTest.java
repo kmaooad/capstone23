@@ -23,14 +23,6 @@ import static io.restassured.RestAssured.given;
 public class AssignExpertToProjectControllerTest {
 
     private static final String ORG_NAME = "Random Org";
-    private Org org;
-    private Department department;
-    @Inject
-    ProjsRepository projsRepository;
-    @Inject
-    OrgsRepository orgsRepository;
-    @Inject
-    ExpertsRepository expertsRepository;
 
     @BeforeEach
     public void setUp() {
@@ -91,24 +83,6 @@ public class AssignExpertToProjectControllerTest {
 
         return new ObjectId(objectId);
     }
-
-//    private Org createTestOrg() {
-//        Org org = new Org();
-//        org.name = "Brovary Club";
-//        org.industry = "Some random industry";
-//        org.website = "Some random website";
-//        orgsRepository.insert(org);
-//        return org;
-//    }
-//
-//    private ObjectId createTestExpert() {
-//        Expert expert = new Expert();
-//        expert.name = "Test Name";
-//        expert.org = org;
-//        expertsRepository.insert(expert);
-//
-//        return expert.id;
-//    }
 
     private void createTestOrg() {
         Map<String, Object> jsonAsMap = new HashMap<>();
