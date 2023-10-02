@@ -38,6 +38,10 @@ public class ReadCVHandler implements CommandHandler<ReadCV, CVRead> {
             cvs = cvs.filter(
                     x -> x.preference != null && x.preference.category.equals(command.getCategory()));
 
+        if (command.getTextInfo() != null)
+            cvs = cvs.filter(
+                    x -> x.textInfo != null && x.textInfo.contains(command.getTextInfo()));
+
         CVRead res = new CVRead(cvs.toList());
         return new Result<>(res);
     }

@@ -31,6 +31,7 @@ public class ReadCVControllerTests {
         cv.status = CV.Status.OPEN;
         cv.visibility = CV.Visibility.VISIBLE;
         cv.preference = new JobPreference("Kyiv", "Marketing", JobPreference.Category.PART_TIME);
+        cv.textInfo = "info";
         cvRepository.persist(cv);
 
         CV cv1 = new CV();
@@ -38,12 +39,14 @@ public class ReadCVControllerTests {
         cv1.status = edu.kmaooad.capstone23.cvs.dal.CV.Status.OPEN;
         cv1.visibility = CV.Visibility.HIDDEN;
         cv1.preference = new JobPreference("Kyiv", "Marketing", JobPreference.Category.FULL_TIME);
+        cv1.textInfo = "info1";
         cvRepository.persist(cv1);
 
         CV cv2 = new CV();
         cv2.dateTimeCreated = LocalDateTime.now();
         cv2.status = CV.Status.CLOSED;
         cv2.visibility = CV.Visibility.VISIBLE;
+        cv2.textInfo = "info2";
         cvRepository.persist(cv2);
 
         CV cv3 = new CV();
@@ -51,6 +54,7 @@ public class ReadCVControllerTests {
         cv3.status = CV.Status.CLOSED;
         cv3.visibility = CV.Visibility.VISIBLE;
         cv3.preference = new JobPreference("Kyiv", "IT", JobPreference.Category.PART_TIME);
+        cv3.textInfo = "text";
         cvRepository.persist(cv3);
 
         CV cv4 = new CV();
@@ -148,6 +152,22 @@ public class ReadCVControllerTests {
                 .statusCode(200)
                 .assertThat()
                 .body("cvs", hasSize(1));
+    }
+
+    @Test
+    @DisplayName("Read CV: textInfo")
+    public void readCVByTextInfo(){
+        Map<String, Object> jsonAsMap = new HashMap<>();
+        jsonAsMap.put("textInfo", "info");
+        given()
+                .contentType("application/json")
+                .body(jsonAsMap)
+                .when()
+                .post("/cvs/read")
+                .then()
+                .statusCode(200)
+                .assertThat()
+                .body("cvs", hasSize(2));
     }
 
 

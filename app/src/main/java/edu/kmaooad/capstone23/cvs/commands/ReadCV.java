@@ -11,6 +11,8 @@ public class ReadCV {
 
     private String location;
 
+    public String textInfo;
+
     private JobPreference.Category category;
 
     public CV.Status getStatus() {
@@ -45,6 +47,13 @@ public class ReadCV {
         this.category = category;
     }
 
+    public String getTextInfo() {
+        return textInfo;
+    }
+
+    public void setTextInfo(String textInfo) {
+        this.textInfo = textInfo;
+    }
 
 
 }
