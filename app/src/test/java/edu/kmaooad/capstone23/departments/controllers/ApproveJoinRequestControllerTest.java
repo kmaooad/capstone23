@@ -51,7 +51,6 @@ public class ApproveJoinRequestControllerTest {
         Map<String, Object> jsonAsMap = new HashMap<>();
 
         String requestId = idToUpdate;
-        System.out.println("requestId: " + requestId);
 
         jsonAsMap.put("requestId", requestId);
 
