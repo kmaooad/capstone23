@@ -10,7 +10,6 @@ import edu.kmaooad.capstone23.groups.commands.AssignGroupToActivity;
 import edu.kmaooad.capstone23.groups.commands.CreateGroup;
 import edu.kmaooad.capstone23.groups.events.ActivityAssigned;
 import edu.kmaooad.capstone23.groups.events.GroupCreated;
-import edu.kmaooad.capstone23.jobs.events.ActivityRelated;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
@@ -18,7 +17,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 @QuarkusTest
-public class AssignGroupToActivityTest {
+public class AssignGroupToActivityHandlerTest {
     @Inject
     CommandHandler<CreateGroup, GroupCreated> handler;
     @Inject
@@ -73,9 +72,23 @@ public class AssignGroupToActivityTest {
         AssignGroupToActivity relateGroupToActivityTwo = new AssignGroupToActivity();
         relateGroupToActivityTwo.setGroupId(new ObjectId(result.getValue().getGroupId()));
         relateGroupToActivityTwo.setActivityId(courseId);
-        Result<ActivityAssigned> activityRelatedResultTwo = relateHandler.handle(relateGroupToActivity);
+        Result<ActivityAssigned> activityRelatedResultTwo = relateHandler.handle(relateGroupToActivityTwo);
 
         Assertions.assertFalse(activityRelatedResultTwo.isSuccess());
         Assertions.assertNull(activityRelatedResultTwo.getValue());
+    }
+
+    @Test
+    void testHandlingUnExistedCourse() {
+        AssignGroupToActivity relateGroupToActivity = new AssignGroupToActivity();
+        relateGroupToActivity.setGroupId(new ObjectId(result.getValue().getGroupId()));
+
+        ObjectId nonexistentCourseId = new ObjectId("aaaaaaaaaaaaaaaaaaaaaaaa");
+        relateGroupToActivity.setActivityId(nonexistentCourseId);
+
+        Result<ActivityAssigned> activityRelatedResult = relateHandler.handle(relateGroupToActivity);
+
+        Assertions.assertFalse(activityRelatedResult.isSuccess());
+        Assertions.assertNull(activityRelatedResult.getValue());
     }
 }
