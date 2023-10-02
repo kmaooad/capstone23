@@ -149,3 +149,7 @@ Each UoW consists of:
   - Request to join an org/dep
   - Approve a join request
   - Bulk import
+- Tags
+  - Manage tags
+    - Create/update/delete tags(name)
+  - Add tags to activities(course and extracurricular)
