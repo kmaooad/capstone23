@@ -1,10 +1,13 @@
 package edu.kmaooad.capstone23.cvs.controllers;
 
+import edu.kmaooad.capstone23.competences.dal.Skill;
+import edu.kmaooad.capstone23.competences.dal.SkillsRepository;
 import edu.kmaooad.capstone23.cvs.dal.CV;
 import edu.kmaooad.capstone23.cvs.dal.CVRepository;
 import edu.kmaooad.capstone23.cvs.dal.JobPreference;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
+import org.bson.types.ObjectId;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -15,6 +18,8 @@ import static org.hamcrest.Matchers.*;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 
 @QuarkusTest
@@ -23,8 +28,26 @@ public class ReadCVControllerTests {
     @Inject
     CVRepository cvRepository;
 
+    @Inject
+    SkillsRepository skillsRepository;
+
     @BeforeEach
     public void setup() {
+        skillsRepository.deleteAll();
+        cvRepository.deleteAll();
+
+        Skill skill1 = new Skill();
+        skill1.name = "testskill";
+        skillsRepository.insert(skill1);
+
+        Skill skill2 = new Skill();
+        skill2.name = "Python";
+        skillsRepository.insert(skill2);
+
+        Skill skill3 = new Skill();
+        skill3.name = "DB";
+        skillsRepository.insert(skill3);
+
         cvRepository.deleteAll();
         CV cv = new CV();
         cv.dateTimeCreated = LocalDateTime.now();
@@ -32,6 +55,8 @@ public class ReadCVControllerTests {
         cv.visibility = CV.Visibility.VISIBLE;
         cv.preference = new JobPreference("Kyiv", "Marketing", JobPreference.Category.PART_TIME);
         cv.textInfo = "info";
+        cv.skills = new HashSet<>();
+        cv.skills.addAll(List.of(skill1.id, skill2.id, skill3.id));
         cvRepository.persist(cv);
 
         CV cv1 = new CV();
@@ -69,6 +94,7 @@ public class ReadCVControllerTests {
     @AfterEach
     public void clear(){
         cvRepository.deleteAll();
+        skillsRepository.deleteAll();
     }
 
     @Test
@@ -170,5 +196,22 @@ public class ReadCVControllerTests {
                 .body("cvs", hasSize(2));
     }
 
+    @Test
+    @DisplayName("Read CV: skill")
+    public void readCVBySkills(){
+        ObjectId id = skillsRepository.find("name = 'testskill'").firstResult().id;
+        Map<String, Object> jsonAsMap = new HashMap<>();
+        jsonAsMap.put("skill", id.toString());
+
+        given()
+                .contentType("application/json")
+                .body(jsonAsMap)
+                .when()
+                .post("/cvs/read")
+                .then()
+                .statusCode(200)
+                .assertThat()
+                .body("cvs", hasSize(1));
+    }
 
 }
