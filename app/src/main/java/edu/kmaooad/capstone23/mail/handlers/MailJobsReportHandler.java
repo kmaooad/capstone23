@@ -5,7 +5,6 @@ import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.mail.commands.MailJobsReport;
 import edu.kmaooad.capstone23.mail.events.JobsReportMailed;
-import edu.kmaooad.capstone23.mail.events.OrgsReportMailed;
 import edu.kmaooad.capstone23.mail.service.Notification;
 import edu.kmaooad.capstone23.mail.service.NotificationMailService;
 import edu.kmaooad.capstone23.jobs.dal.Job;
