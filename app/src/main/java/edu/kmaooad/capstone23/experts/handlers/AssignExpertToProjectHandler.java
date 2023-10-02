@@ -12,6 +12,9 @@ import edu.kmaooad.capstone23.experts.events.ExpertAssignedToProject;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
+
+import java.util.List;
+
 @RequestScoped
 public class AssignExpertToProjectHandler implements CommandHandler<AssignExpertToProject, ExpertAssignedToProject> {
 
@@ -22,7 +25,7 @@ public class AssignExpertToProjectHandler implements CommandHandler<AssignExpert
 
     public Result<ExpertAssignedToProject> handle(AssignExpertToProject command) {
         ObjectId projId = command.getProjectId();
-        ObjectId expertId = command.getProjectId();
+        ObjectId expertId = command.getExpertId();
         Project proj = projsRepository.findById(projId);
         Expert expert = expertsRepository.findById(expertId);
 
@@ -34,12 +37,16 @@ public class AssignExpertToProjectHandler implements CommandHandler<AssignExpert
             return new Result<>(ErrorCode.NOT_FOUND, "Expert not found");
         }
 
-        if (expert.projects.stream().anyMatch(p -> p.id.equals(proj.id))) {
-            return new Result<>(ErrorCode.CONFLICT, "Expert is already assigned to project");
+        if (expert.projects != null) {
+            if (expert.projects.stream().anyMatch(p -> p.id.equals(projId))) {
+                return new Result<>(ErrorCode.CONFLICT, "Expert is already assigned to project");
+            }
+            expert.projects.add(proj);
+        } else {
+            expert.projects = List.of(proj);
         }
 
-        expert.projects.add(proj);
-        expertsRepository.insert(expert);
+        expertsRepository.modify(expert);
 
         return new Result<ExpertAssignedToProject>(new ExpertAssignedToProject(expert.id.toString()));
     }
