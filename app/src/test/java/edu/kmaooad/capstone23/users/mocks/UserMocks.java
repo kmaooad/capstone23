@@ -1,14 +1,55 @@
 package edu.kmaooad.capstone23.users.mocks;
 
+import edu.kmaooad.capstone23.common.Mocks;
 import edu.kmaooad.capstone23.users.dal.entities.User;
 
-public class UserMocks {
+public class UserMocks extends Mocks {
   public static User validUser() {
     User user = new User();
 
     user.firstName = "John";
     user.lastName = "Doe";
-    user.email = "john.doe@mail.com";
+    user.email = mockValidEmail();
+
+    return user;
+  }
+
+  public static User userWithNoFirstName() {
+    User user = UserMocks.validUser();
+
+    user.firstName = "";
+
+    return user;
+  }
+
+  public static User userWithExhaustiveFirstName() {
+    User user = UserMocks.validUser();
+
+    user.firstName = mockLongString();
+
+    return user;
+  }
+
+  public static User userWithNoLastName() {
+    User user = UserMocks.validUser();
+
+    user.lastName = "";
+
+    return user;
+  }
+
+  public static User userWithExhaustiveLastName() {
+    User user = UserMocks.validUser();
+
+    user.lastName = mockLongString();
+
+    return user;
+  }
+
+  public static User userWithInvalidEmail() {
+    User user = UserMocks.validUser();
+
+    user.email = mockInvalidEmail();
 
     return user;
   }
