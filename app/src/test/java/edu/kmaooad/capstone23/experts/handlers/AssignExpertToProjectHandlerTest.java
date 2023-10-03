@@ -42,7 +42,18 @@ public class AssignExpertToProjectHandlerTest {
         Assertions.assertNotNull(result.getValue());
         Assertions.assertFalse(result.getValue().getMemberId().isEmpty());
     }
+  
+    @Test
+    public void testEmptyExpert() {
+        AssignExpertToProject assignExpertToProject = new AssignExpertToProject();
+        assignExpertToProject.setProjectId(createTestProj());
 
+        Result<ExpertAssignedToProject> result = assignedExpertToProjectCommandHandler.handle(assignExpertToProject);
+
+        Assertions.assertFalse(result.isSuccess());
+        Assertions.assertNull(result.getValue());
+    }
+  
     private ObjectId createTestExpert() {
         CreateOrg orgCommand = new CreateOrg();
         orgCommand.setOrgName("Super Duper Create Team");

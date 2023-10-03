@@ -45,6 +45,22 @@ public class AssignExpertToProjectControllerTest {
                 .then()
                 .statusCode(200);
     }
+  
+   @Test
+   @DisplayName("Invalud Parameter")
+   public void testInvalidParameter() {
+        Map<String, Object> jsonAsMap = new HashMap<>();
+
+        jsonAsMap.put("expertId", createTestExpert().toString());
+        jsonAsMap.put("projectId", "Random wrong id");
+        given()
+                .contentType("application/json")
+                .body(jsonAsMap)
+                .when()
+                .post("/experts/assign_expert_to_project")
+                .then()
+            .statusCode(400);
+     }
 
     private ObjectId createTestProject() {
         Map<String, Object> jsonAsMap = new HashMap<>();
