@@ -16,7 +16,11 @@ public class OrgsRepository implements PanacheMongoRepository<Org> {
     }
 
     public Org findById(String id) {
-        return find("id", id).firstResult();
+       try {
+              return findById(new ObjectId(id));
+         } catch (IllegalArgumentException e) {
+              return null;
+       }
     }
   
     public Optional<Org> findByEmailDomainOptional(String email) {
