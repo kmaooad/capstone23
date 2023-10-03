@@ -7,28 +7,16 @@ import edu.kmaooad.capstone23.communication.dal.entities.Chat;
 import edu.kmaooad.capstone23.communication.events.ChatCreated;
 import edu.kmaooad.capstone23.communication.mocks.ChatMocks;
 import io.quarkus.test.junit.QuarkusTest;
-import jakarta.inject.Inject;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 
 @QuarkusTest
 public class CreateChatHandlerTest extends HandlerTest<Chat, CreateChat, ChatCreated> {
-  private CreateChat command;
-
-  @Inject
-  CreateChatHandler handler;
-
-  @BeforeEach
-  public void initCommand() {
-    command = new CreateChat();
-  }
-
   @Test
   @DisplayName("Should succeed if command is valid")
-  public void shouldSucceedIfCommandValid() {
-    Result<ChatCreated> result = handleCommandWithPayload(ChatMocks.validChat());
+  public void shouldSucceedIfValidCommand() {
+    Result<ChatCreated> result = run(ChatMocks.validChat());
 
     assertHandled(result);
   }
@@ -36,7 +24,7 @@ public class CreateChatHandlerTest extends HandlerTest<Chat, CreateChat, ChatCre
   @Test
   @DisplayName("Should deny command if chat access type is invalid")
   public void shouldDenyCommandIfInvalidAccessType() {
-    Result<ChatCreated> result = handleCommandWithPayload(ChatMocks.chatWithNoType());
+    Result<ChatCreated> result = run(ChatMocks.chatWithNoType());
 
     assertDenied(result);
   }
@@ -44,7 +32,7 @@ public class CreateChatHandlerTest extends HandlerTest<Chat, CreateChat, ChatCre
   @Test
   @DisplayName("Should deny command if chat name is exhaustive")
   public void shouldDenyCommandIfExhaustiveName() {
-    Result<ChatCreated> result = handleCommandWithPayload(ChatMocks.chatWithExhaustiveName());
+    Result<ChatCreated> result = run(ChatMocks.chatWithExhaustiveName());
 
     assertDenied(result);
   }
@@ -52,16 +40,19 @@ public class CreateChatHandlerTest extends HandlerTest<Chat, CreateChat, ChatCre
   @Test
   @DisplayName("Should deny command if chat name is empty")
   public void shouldDenyCommandIfEmptyName() {
-    Result<ChatCreated> result = handleCommandWithPayload(ChatMocks.chatWithNoName());
+    Result<ChatCreated> result = run(ChatMocks.chatWithNoName());
 
     assertDenied(result);
   }
 
   @Override
-  protected Result<ChatCreated> handleCommandWithPayload(Chat chat) {
+  public void initCommand() {
+    command = new CreateChat();
+  }
+
+  @Override
+  protected void insertPayload(Chat chat) {
     command.setName(chat.name);
     command.setAccessType(chat.accessType);
-
-    return handler.handle(command);
   }
 }
