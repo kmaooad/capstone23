@@ -45,7 +45,7 @@ public class AssignExpertToProjectControllerTest {
                 .then()
                 .statusCode(200);
     }
-  
+
    @Test
    @DisplayName("Invalid ProjectId")
    public void testInvalidProjectId() {
