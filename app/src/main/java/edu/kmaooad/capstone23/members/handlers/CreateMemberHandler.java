@@ -15,10 +15,11 @@ import edu.kmaooad.capstone23.orgs.dal.OrgsRepository;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 
+import java.util.List;
 import java.util.Optional;
 
 @RequestScoped
-public class CreateBasicMemberHandler implements CommandHandler<CreateBasicMember, BasicMemberCreated> {
+public class CreateMemberHandler implements CommandHandler<CreateBasicMember, BasicMemberCreated> {
     @Inject
     MembersRepository membersRepository;
     @Inject
@@ -33,9 +34,9 @@ public class CreateBasicMemberHandler implements CommandHandler<CreateBasicMembe
             member.firstName = command.getFirstName();
             member.lastName = command.getLastName();
             member.email = command.getEmail();
-            member.orgId = command.getOrgId();
+            member.orgId = List.of(command.getOrgId());
             member.isExpert = Boolean.parseBoolean(command.getIsExpert());
-            Optional<Org> memberOrg = orgsRepository.findByIdOptional(member.orgId);
+            Optional<Org> memberOrg = orgsRepository.findByIdOptional(command.getOrgId());
             if (memberOrg.isEmpty())
                 return new Result<>(ErrorCode.VALIDATION_FAILED, "Organisation not found");
             membersRepository.insert(member);

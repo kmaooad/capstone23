@@ -11,6 +11,6 @@ import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 
 @Path("/jobs/relate_to_activities")
 @APIResponse(responseCode = "200", content = {
-        @Content(mediaType = "application/json", schema = @Schema(implementation = JobDeleted.class)) })
+        @Content(mediaType = "application/json", schema = @Schema(implementation = ActivityRelated.class)) })
 public class RelateJobToActivitiesController extends TypicalController<RelateJobToActivities, ActivityRelated> {
 }
