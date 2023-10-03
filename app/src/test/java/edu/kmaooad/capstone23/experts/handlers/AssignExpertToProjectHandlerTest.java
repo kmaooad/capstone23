@@ -30,7 +30,6 @@ import java.util.List;
 
 @QuarkusTest
 public class AssignExpertToProjectHandlerTest {
-
     private Org org;
     private ObjectId project;
 
@@ -40,6 +39,7 @@ public class AssignExpertToProjectHandlerTest {
     ProjsRepository projsRepository;
     @Inject
     ExpertsRepository expertsRepository;
+
     @Inject
     CommandHandler<CreateOrg, OrgCreated> orgHandler;
     @Inject
@@ -60,12 +60,48 @@ public class AssignExpertToProjectHandlerTest {
         AssignExpertToProject assignExpertToProject = new AssignExpertToProject();
         assignExpertToProject.setExpertId(createTestExpertWithProj());
         assignExpertToProject.setProjectId(project);
+      
+         Result<ExpertAssignedToProject> result = assignedExpertToProjectCommandHandler.handle(assignExpertToProject);
+
+        Assertions.assertFalse(result.isSuccess());
+        Assertions.assertNull(result.getValue());
+        Assertions.assertEquals(result.getErrorCode(), ErrorCode.CONFLICT);
+    }
+
+    @Test
+    public void testSuccessfulHandling() {
+        AssignExpertToProject assignExpertToProject = new AssignExpertToProject();
+        assignExpertToProject.setExpertId(createTestExpert());
+        assignExpertToProject.setProjectId(createTestProj());
+
+        Result<ExpertAssignedToProject> result = assignedExpertToProjectCommandHandler.handle(assignExpertToProject);
+
+        Assertions.assertTrue(result.isSuccess());
+        Assertions.assertNotNull(result.getValue());
+        Assertions.assertFalse(result.getValue().getMemberId().isEmpty());
+    }
+  
+    @Test
+    public void testEmptyExpert() {
+        AssignExpertToProject assignExpertToProject = new AssignExpertToProject();
+        assignExpertToProject.setProjectId(createTestProj());
 
         Result<ExpertAssignedToProject> result = assignedExpertToProjectCommandHandler.handle(assignExpertToProject);
 
         Assertions.assertFalse(result.isSuccess());
         Assertions.assertNull(result.getValue());
         Assertions.assertEquals(result.getErrorCode(), ErrorCode.CONFLICT);
+    }
+  
+    @Test
+    public void testEmptyProject() {
+       AssignExpertToProject assignExpertToProject = new AssignExpertToProject();
+       assignExpertToProject.setExpertId(createTestExpert());
+
+       Result<ExpertAssignedToProject> result = assignedExpertToProjectCommandHandler.handle(assignExpertToProject);
+
+       Assertions.assertFalse(result.isSuccess());
+       Assertions.assertNull(result.getValue());
     }
 
     private Org createTestOrg() {
@@ -85,6 +121,20 @@ public class AssignExpertToProjectHandlerTest {
         expertsRepository.insert(expert);
 
         return expert.id;
+    }
+
+    private ObjectId createTestExpert() {
+        CreateOrg orgCommand = new CreateOrg();
+        orgCommand.setOrgName("Super Duper Create Team");
+        orgCommand.industry = "Some random industry";
+        orgCommand.website = "Some random website";
+        orgHandler.handle(orgCommand);
+
+        CreateExpert expertCommand = new CreateExpert();
+        expertCommand.setExpertName("Test Name");
+        expertCommand.setOrgName("Super Duper Create Team");
+
+        return new ObjectId(expertCreatedCommandHandler.handle(expertCommand).getValue().getExpertId());
     }
 
     private ObjectId createTestProj() {
