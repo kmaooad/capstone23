@@ -1,11 +1,18 @@
 package edu.kmaooad.capstone23.departments.handlers;
 
+import edu.kmaooad.capstone23.ban.commands.BanEntity;
+import edu.kmaooad.capstone23.ban.dal.BannedEntityType;
+import edu.kmaooad.capstone23.ban.events.EntityBanned;
+import edu.kmaooad.capstone23.common.CommandHandler;
+import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.departments.commands.SetMemberRole;
 import edu.kmaooad.capstone23.departments.dal.*;
 import edu.kmaooad.capstone23.departments.events.MemberRoleSetted;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
+
+import org.bson.types.ObjectId;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -18,6 +25,9 @@ public class SetMemberRoleHandlerTest {
 
     @Inject
     SetMemberRoleHandler handler;
+
+    @Inject
+    CommandHandler<BanEntity, EntityBanned> banHandler;
 
     @Inject
     DepartmentsRepository departmentsRepository;
@@ -108,4 +118,30 @@ public class SetMemberRoleHandlerTest {
         Assertions.assertFalse(result.isSuccess());
     }
 
+    @Test
+    @DisplayName("SetMemberRoleHandler department banned")
+    public void testSetMemberRoleOnBannedDepartment() {
+        String departmentId = this.departmentId;
+        String nonexistentUserName = "Wannabe banned";
+        String role = "New Role";
+
+        BanEntity banRequest = new BanEntity();
+        banRequest.setEntityType(BannedEntityType.Department.name());
+        banRequest.setReason("Hello there");
+        banRequest.setEntityId(new ObjectId(departmentId));
+        var banResult = banHandler.handle(banRequest);
+        Assertions.assertTrue(banResult.isSuccess());
+
+        SetMemberRole command = new SetMemberRole();
+        command.setDepartmentId(departmentId);
+        command.setUserName(nonexistentUserName);
+        command.setRole(role);
+
+        Result<MemberRoleSetted> result = handler.handle(command);
+
+        Assertions.assertFalse(result.isSuccess());
+        Assertions.assertNotNull(result.getMessage());
+        Assertions.assertEquals(result.getErrorCode(), ErrorCode.EXCEPTION);
+        Assertions.assertEquals(result.getMessage(), "Department is banned");
+    }
 }
