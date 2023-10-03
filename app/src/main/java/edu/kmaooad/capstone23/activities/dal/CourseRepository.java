@@ -18,6 +18,13 @@ public class CourseRepository implements PanacheMongoRepository<Course> {
         }
     }
 
+    public long findCoursesCountByIds(List<String> ids) {
+        return ids.stream().filter(id -> {
+            var course = findById(id);
+            return course.isPresent();
+        }).count();
+    }
+
     public Course insert(Course course) {
         persist(course);
         return course;
@@ -25,6 +32,10 @@ public class CourseRepository implements PanacheMongoRepository<Course> {
 
     public List<Course> bulkInsert(List<Course> courses) {
         persist(courses);
+        return courses;
+    }
+    public List<Course> bulkUpdate(List<Course> courses) {
+        persistOrUpdate(courses);
         return courses;
     }
 
