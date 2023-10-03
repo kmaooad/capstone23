@@ -37,7 +37,7 @@ public class TestWithMembersSetUp {
         Member member1 = new Member();
         member1.firstName = "First";
         member1.lastName = "Member";
-        member1.orgId = firstOrg;
+        member1.orgId = List.of(firstOrg);
         member1.email = "fstMember@email.com";
         membersRepository.insert(member1);
         firstOrgMembers.add(member1.id);
@@ -45,7 +45,7 @@ public class TestWithMembersSetUp {
         Member member2 = new Member();
         member2.firstName = "Second";
         member2.lastName = "Member";
-        member2.orgId = firstOrg;
+        member2.orgId = List.of(firstOrg);
         member2.email = "sndMember@email.com";
         membersRepository.insert(member2);
         firstOrgMembers.add(member2.id);
@@ -53,7 +53,7 @@ public class TestWithMembersSetUp {
         Member member3 = new Member();
         member3.firstName = "Third";
         member3.lastName = "Member";
-        member3.orgId = firstOrg;
+        member3.orgId = List.of(firstOrg);
         member3.email = "thrdMember@email.com";
         membersRepository.insert(member3);
         firstOrgMembers.add(member3.id);
@@ -67,7 +67,7 @@ public class TestWithMembersSetUp {
         Member member4 = new Member();
         member4.firstName = "Fourth";
         member4.lastName = "Member";
-        member4.orgId = secondOrg;
+        member4.orgId = List.of(secondOrg);
         member4.email = "frthMember@email.com";
         membersRepository.insert(member4);
         secondOrgMembers.add(member4.id);
@@ -82,7 +82,7 @@ public class TestWithMembersSetUp {
         Member member = new Member();
         member.firstName = "Another";
         member.lastName = "Member";
-        member.orgId = org.id;
+        member.orgId = List.of(org.id);
         member.email = memberEmail;
         membersRepository.insert(member);
     }
