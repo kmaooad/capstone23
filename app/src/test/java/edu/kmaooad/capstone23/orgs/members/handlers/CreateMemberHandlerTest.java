@@ -9,10 +9,11 @@ import edu.kmaooad.capstone23.orgs.members.TestWithOrgSetUp;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 @QuarkusTest
-public class CreateMembersHandlerBasicTest extends TestWithOrgSetUp {
+public class CreateMemberHandlerTest extends TestWithOrgSetUp {
     @Inject
     CommandHandler<CreateBasicMember, BasicMemberCreated> handler;
 
