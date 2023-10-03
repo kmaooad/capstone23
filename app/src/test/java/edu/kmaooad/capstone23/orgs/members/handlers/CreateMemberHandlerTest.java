@@ -49,7 +49,6 @@ public class CreateMemberHandlerTest extends TestWithOrgSetUp {
     }
 
     @Test
-    @Disabled // skip test case to unblock CI (by @D. Pelovych)
     void testEmailUniquenessValidation() {
         CreateBasicMember command = new CreateBasicMember();
         command.setFirstName("firstName");
