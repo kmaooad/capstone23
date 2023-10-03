@@ -35,7 +35,7 @@ public class MailOrgsReportHandler implements CommandHandler<MailOrgsReport, Org
         for (int i = 0; i < count; i++) {
             currentOrg = orgsRepository.listAll().get(i);
             finalBody += "| " + currentOrg.id.toString() + " | " + currentOrg.name + " | " + currentOrg.industry + " | "
-                    + currentOrg.isActive.toString() + "|\n";
+                    + currentOrg.isActive + "|\n";
         }
         finalBody += ("+--------+--------+------------+-----------+\n");
         return finalBody;
