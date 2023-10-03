@@ -1,8 +1,9 @@
 package edu.kmaooad.capstone23.communication.mocks;
 
+import edu.kmaooad.capstone23.common.Mocks;
 import edu.kmaooad.capstone23.communication.dal.entities.Chat;
 
-public class ChatMocks {
+public class ChatMocks extends Mocks {
   public static Chat validChat() {
     Chat chat = new Chat();
 
@@ -23,7 +24,7 @@ public class ChatMocks {
   public static Chat chatWithExhaustiveName() {
     Chat chat = new Chat();
 
-    chat.name = "Lorem".repeat(50);
+    chat.name = mockLongString();
     chat.accessType = Chat.AccessType.Public;
 
     return chat;
