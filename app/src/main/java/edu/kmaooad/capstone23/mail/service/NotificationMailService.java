@@ -1,17 +1,20 @@
-package edu.kmaooad.capstone23.students.service;
+package edu.kmaooad.capstone23.mail.service;
 
-import edu.kmaooad.capstone23.students.notification.Notification;
 import io.quarkus.mailer.Mail;
 import io.quarkus.mailer.Mailer;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
 @ApplicationScoped
-public class StudentNotificationMailService {
+public class NotificationMailService {
     @Inject
     Mailer mailer;
 
     public void sendNotification(Notification notification) {
+        if (notification == null) {
+            throw new IllegalArgumentException("Notification cannot be null");
+        }
+
         Mail mail = new Mail()
                 .addTo(notification.getEmail())
                 .setText(notification.getBody());

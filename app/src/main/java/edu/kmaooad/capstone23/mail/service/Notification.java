@@ -1,4 +1,4 @@
-package edu.kmaooad.capstone23.students.notification;
+package edu.kmaooad.capstone23.mail.service;
 
 public class Notification {
     private final String email;
