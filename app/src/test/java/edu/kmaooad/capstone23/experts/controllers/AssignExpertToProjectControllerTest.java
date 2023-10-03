@@ -15,7 +15,6 @@ import org.bson.types.ObjectId;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
 import java.util.*;
 
 import static io.restassured.RestAssured.given;
@@ -24,9 +23,20 @@ public class AssignExpertToProjectControllerTest {
 
     private static final String ORG_NAME = "Random Org";
 
+    private ObjectId project;
+    @Inject
+    ProjsRepository projsRepository;
+    @Inject
+    OrgsRepository orgsRepository;
+    @Inject
+    ExpertsRepository expertsRepository;
+
+
     @BeforeEach
     public void setUp() {
         createTestOrg();
+
+        project = createTestProject();
     }
 
     @Test
@@ -79,6 +89,24 @@ public class AssignExpertToProjectControllerTest {
                 .statusCode(400);
    }
 
+    @Test
+    @DisplayName("Assign Expert to project that he/she already have")
+    public void testExpertAssignedToProjAlready() {
+        Map<String, Object> jsonAsMap = new HashMap<>();
+
+        jsonAsMap.put("expertId", createTestExpertWithProject().toString());
+        jsonAsMap.put("projectId", project.toString());
+  
+         given()
+                .contentType("application/json")
+                .body(jsonAsMap)
+                .when()
+                .post("/experts/assign_expert_to_project")
+                .then()
+                .statusCode(400);
+    }
+  
+  
     private ObjectId createTestProject() {
         Map<String, Object> jsonAsMap = new HashMap<>();
         jsonAsMap.put("name", "OOK");
@@ -116,6 +144,16 @@ public class AssignExpertToProjectControllerTest {
 
         return new ObjectId(objectId);
     }
+  
+      private ObjectId createTestExpertWithProject() {
+        Expert expert = new Expert();
+        expert.name = "Test Name";
+        expert.org = orgsRepository.findByName(ORG_NAME);
+        expert.projects = List.of(projsRepository.findById(project));
+        expertsRepository.insert(expert);
+
+        return expert.id;
+      }
 
     private void createTestOrg() {
         Map<String, Object> jsonAsMap = new HashMap<>();

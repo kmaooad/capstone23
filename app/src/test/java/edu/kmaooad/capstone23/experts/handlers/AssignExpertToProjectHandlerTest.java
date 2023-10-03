@@ -48,7 +48,7 @@ public class AssignExpertToProjectHandlerTest {
     CommandHandler<AssignExpertToProject, ExpertAssignedToProject> assignedExpertToProjectCommandHandler;
     @Inject
     CommandHandler<CreateExpert, ExpertCreated> expertCreatedCommandHandler;
-
+  
     @BeforeEach
     public void setUp() {
         org = createTestOrg();
