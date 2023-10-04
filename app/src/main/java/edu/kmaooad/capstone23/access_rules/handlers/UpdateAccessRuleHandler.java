@@ -43,6 +43,10 @@ public class UpdateAccessRuleHandler implements CommandHandler<UpdateAccessRule,
     public Result<AccessRuleUpdated> handle(UpdateAccessRule command) {
         if(!ObjectId.isValid(command.getId()))
             return new Result<>(ErrorCode.VALIDATION_FAILED, "Object Id is invalid");
+        if(!ObjectId.isValid(command.getFromEntityId()))
+            return new Result<>(ErrorCode.VALIDATION_FAILED, "From entity Id is invalid");
+        if(!ObjectId.isValid(command.getToEntityId()))
+            return new Result<>(ErrorCode.VALIDATION_FAILED, "To entity Id is invalid");
         AccessRule accessRule = accessRuleRepository.findById(new ObjectId(command.getId()));
 
         if (accessRule == null) {
