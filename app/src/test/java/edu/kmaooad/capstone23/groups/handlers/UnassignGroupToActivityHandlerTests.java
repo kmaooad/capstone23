@@ -80,4 +80,14 @@ public class UnassignGroupToActivityHandlerTests {
         Assertions.assertNull(activityUnassignedResult.getValue());
     }
 
+    @Test
+    void testHandlingNotAssignedActivity() {
+        UnassignGroupToActivity unassignGroupToActivity = new UnassignGroupToActivity();
+        unassignGroupToActivity.setGroupId(new ObjectId(result.getValue().getGroupId()));
+        unassignGroupToActivity.setActivityId(courseId);
+        Result<ActivityUnassigned> activityUnassignedResult = unassignHandler.handle(unassignGroupToActivity);
+        Assertions.assertFalse(activityUnassignedResult.isSuccess());
+        Assertions.assertNull(activityUnassignedResult.getValue());
+    }
+
 }
