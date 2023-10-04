@@ -1,5 +1,7 @@
 package edu.kmaooad.capstone23.orgs.handlers;
 
+import edu.kmaooad.capstone23.ban.dal.BannedEntityType;
+import edu.kmaooad.capstone23.ban.dal.EntityBanRepository;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
@@ -23,6 +25,9 @@ public class RelateJobToOrgHandler implements CommandHandler<RelateJobToOrg, Job
     @Inject
     private JobRepository jobRepository;
 
+    @Inject
+    EntityBanRepository banRepository;
+
     public Result<JobToOrgRelated> handle(RelateJobToOrg command) {
         String orgId = command.getOrgId();
 
@@ -30,6 +35,9 @@ public class RelateJobToOrgHandler implements CommandHandler<RelateJobToOrg, Job
 
         if (org == null) {
             return new Result(ErrorCode.EXCEPTION, "Org not found");
+        }
+        if(banRepository.findForEntity(BannedEntityType.Organization, org.id).isPresent()) {
+            return new Result<>(ErrorCode.EXCEPTION, "Org is banned");
         }
 
         String jobId = command.getJobId();
