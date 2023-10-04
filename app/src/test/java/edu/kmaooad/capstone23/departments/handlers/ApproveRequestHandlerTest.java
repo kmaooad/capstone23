@@ -2,6 +2,7 @@ package edu.kmaooad.capstone23.departments.handlers;
 
 import edu.kmaooad.capstone23.ban.commands.BanEntity;
 import edu.kmaooad.capstone23.ban.handlers.BanEntityHandler;
+import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.departments.commands.ApproveJoinRequest;
 import edu.kmaooad.capstone23.departments.dal.Department;
@@ -117,5 +118,7 @@ public class ApproveRequestHandlerTest {
 
         Result<RequestApproved> result = handler.handle(command);
         Assertions.assertFalse(result.isSuccess());
+        Assertions.assertEquals(ErrorCode.EXCEPTION, result.getErrorCode());
+        Assertions.assertEquals("Department is banned", result.getMessage());
     }
 }
