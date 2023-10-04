@@ -3,11 +3,11 @@ package edu.kmaooad.capstone23.students.handlers;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
+import edu.kmaooad.capstone23.mail.service.NotificationMailService;
 import edu.kmaooad.capstone23.students.commands.notifications.NotifyStudent;
 import edu.kmaooad.capstone23.students.events.StudentNotified;
-import edu.kmaooad.capstone23.students.notification.Notification;
-import edu.kmaooad.capstone23.students.notification.NotificationBuilder;
-import edu.kmaooad.capstone23.students.service.StudentNotificationMailService;
+import edu.kmaooad.capstone23.mail.service.Notification;
+import edu.kmaooad.capstone23.mail.service.NotificationBuilder;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
@@ -20,7 +20,7 @@ public class NotifyStudentHandler implements CommandHandler<NotifyStudent, Stude
     NotificationBuilder notificationBuilder;
 
     @Inject
-    StudentNotificationMailService service;
+    NotificationMailService service;
 
     @Override
     public Result<StudentNotified> handle(NotifyStudent command) {

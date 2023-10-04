@@ -9,15 +9,18 @@ import edu.kmaooad.capstone23.common.Result;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 
+import java.util.ArrayList;
+
 @RequestScoped
 public class CreateCourseHandler implements CommandHandler<CreateCourse, CourseCreated> {
     @Inject
-    private CourseRepository courseRepository;
+    CourseRepository courseRepository;
 
     @Override
     public Result<CourseCreated> handle(CreateCourse command) {
         Course course = new Course();
         course.name = command.getName();
+        course.tags = new ArrayList<>();
 
         courseRepository.insert(course);
 

@@ -12,4 +12,9 @@ public class Department {
     public String description;
     public String parent;
     public ArrayList<Member> members;
+    public String hiringStatus;
+
+    public ArrayList<String> jobs;
+
+    public Logo logo;
 }
