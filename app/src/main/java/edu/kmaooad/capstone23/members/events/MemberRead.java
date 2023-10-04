@@ -3,9 +3,11 @@ package edu.kmaooad.capstone23.members.events;
 import edu.kmaooad.capstone23.members.dal.Member;
 import org.bson.types.ObjectId;
 
+import java.util.List;
+
 public class MemberRead {
     private ObjectId id;
-    private ObjectId orgId;
+    private List<ObjectId> orgId;
     private String firstName;
     private String lastName;
     private String email;
@@ -30,11 +32,11 @@ public class MemberRead {
         this.id = id;
     }
 
-    public ObjectId getOrgId() {
+    public List<ObjectId> getOrgId() {
         return orgId;
     }
 
-    public void setOrgId(ObjectId orgId) {
+    public void setOrgId(List<ObjectId> orgId) {
         this.orgId = orgId;
     }
 

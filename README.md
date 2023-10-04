@@ -136,6 +136,7 @@ Each UoW consists of:
 - Organizations
   - Manage orgs
     - Create/update/delete org as admin (type: education/industry, name, website, description)
+    - Add/delete org logo
   - Self-signup
     - Submit org as org member
   - Activate/deactivate an org
@@ -143,6 +144,7 @@ Each UoW consists of:
     - Reject org submission with reason/suggestions
   - Manage departments
     - Create/update/delete depts (name, desc, parent)
+    - Add/delete department logo
   - Manage members
   - Assign/change a member’s role (admin/member)
   - Join an org with corp email
