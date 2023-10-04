@@ -1,4 +1,4 @@
-package edu.kmaooad.capstone23.students.notification;
+package edu.kmaooad.capstone23.mail.service;
 
 import edu.kmaooad.capstone23.students.commands.notifications.NotifyStudent;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -12,9 +12,8 @@ public class NotificationBuilder {
         else return null;
     }
 
-    static class CreateStudent {
-        static final String SUBJECT = "Welcome to Capstone23";
-
+    public static class CreateStudent {
+        public static final String SUBJECT = "Welcome to Capstone23";
         public static Notification build(NotifyStudent.Create student) {
             String body = String.format(
                     "Welcome %s, student with id: '%s' added to Capstone23",
