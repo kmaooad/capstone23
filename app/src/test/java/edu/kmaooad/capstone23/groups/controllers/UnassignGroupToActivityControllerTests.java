@@ -116,4 +116,34 @@ public class UnassignGroupToActivityControllerTests {
                 .statusCode(400);
     }
 
+    @Test
+    @DisplayName("Delete Relate Group To Activities: not existed Activities")
+    public void testNotExistedActivityConnectionCreation() {
+        CreateCourse commandCourse = new CreateCourse();
+        commandCourse.setName("Math");
+        Result<CourseCreated> resultCourse = handlerForActivities.handle(commandCourse);
+        ObjectId idCourse = new ObjectId(resultCourse.getValue().getId());
+
+        CreateGroup command = new CreateGroup();
+        command.setGroupName("se");
+        CreateGroupTemplate templateCommand = new CreateGroupTemplate();
+        templateCommand.setGroupTemplateName("template");
+        Result<GroupTemplateCreated> resultForTemplate = templateHandler.handle(templateCommand);
+        command.setTemplateId(resultForTemplate.getValue().getGroupTemplateId().toString());
+
+        Result<GroupCreated> result = createGroupHandler.handle(command);
+
+        Map<String, Object> jsonAsMap = new HashMap<>();
+
+        jsonAsMap.put("groupId", result.getValue().getGroupId());
+        jsonAsMap.put("activityId", idCourse);
+
+        given()
+                .contentType("application/json")
+                .body(jsonAsMap)
+                .when()
+                .post("/groups/unassign_group_to_activities")
+                .then()
+                .statusCode(400);
+    }
 }
