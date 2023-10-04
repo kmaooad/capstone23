@@ -10,21 +10,23 @@ import edu.kmaooad.capstone23.groups.commands.AssignGroupToActivity;
 import edu.kmaooad.capstone23.groups.commands.CreateGroup;
 import edu.kmaooad.capstone23.groups.commands.UnassignGroupToActivity;
 import edu.kmaooad.capstone23.groups.events.ActivityAssigned;
-import edu.kmaooad.capstone23.groups.events.ActivityUnassign;
+import edu.kmaooad.capstone23.groups.events.ActivityUnassigned;
 import edu.kmaooad.capstone23.groups.events.GroupCreated;
+import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class UnassignGroupToActivityTests {
+@QuarkusTest
+public class UnassignGroupToActivityHandlerTests {
     @Inject
     CommandHandler<CreateGroup, GroupCreated> handler;
     @Inject
     CommandHandler<AssignGroupToActivity, ActivityAssigned> relateHandler;
     @Inject
-    CommandHandler<UnassignGroupToActivity, ActivityUnassign> unassignHandler;
+    CommandHandler<UnassignGroupToActivity, ActivityUnassigned> unassignHandler;
     @Inject
     CommandHandler<CreateGroupTemplate, GroupTemplateCreated> templateHandler;
     @Inject
@@ -62,7 +64,7 @@ public class UnassignGroupToActivityTests {
         UnassignGroupToActivity unassignGroupToActivity = new UnassignGroupToActivity();
         unassignGroupToActivity.setGroupId(new ObjectId(result.getValue().getGroupId()));
         unassignGroupToActivity.setActivityId(courseId);
-        Result<ActivityUnassign> activityUnassignedResult = unassignHandler.handle(unassignGroupToActivity);
+        Result<ActivityUnassigned> activityUnassignedResult = unassignHandler.handle(unassignGroupToActivity);
         Assertions.assertTrue(activityUnassignedResult.isSuccess());
         Assertions.assertNotNull(activityUnassignedResult.getValue());
         Assertions.assertTrue(activityUnassignedResult.getValue().getGroupId().equals(gr));
