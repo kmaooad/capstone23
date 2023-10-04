@@ -133,13 +133,13 @@ public class UpdateAccessRuleHandlerTests {
         return rule.id.toString();
     }
 
-    private Result<AccessRuleUpdated> updateAccessRule(String fromId, AccessRuleFromEntityType fromType, String toId, AccessRuleToEntityType toType){
+    private Result<AccessRuleUpdated> updateAccessRule(String ruleId,String fromId, AccessRuleFromEntityType fromType, String toId, AccessRuleToEntityType toType){
         UpdateAccessRule command = new UpdateAccessRule();
-        command.setId(rule);
-        command.setFromEntityId(member);
-        command.setFromEntityType(AccessRuleFromEntityType.Member.toString());
-        command.setToEntityId(department);
-        command.setToEntityType(AccessRuleToEntityType.Department.toString());
+        command.setId(ruleId);
+        command.setFromEntityId(fromId);
+        command.setFromEntityType(fromType.toString());
+        command.setToEntityId(toId);
+        command.setToEntityType(toType.toString());
         command.setRuleType("Allow");
         Result<AccessRuleUpdated> result = ruleHandler.handle(command);
 
@@ -148,27 +148,27 @@ public class UpdateAccessRuleHandlerTests {
     @Test
     @DisplayName("Update Access Rule: member to department")
     public void updateRuleMemberToDepartment() {
-        Result<AccessRuleUpdated> result = updateAccessRule(member, AccessRuleFromEntityType.Member, department, AccessRuleToEntityType.Department);
+        Result<AccessRuleUpdated> result = updateAccessRule(rule,member, AccessRuleFromEntityType.Member, department, AccessRuleToEntityType.Department);
         Assertions.assertTrue(result.isSuccess());
     }
 
     @Test
     @DisplayName("Update Access Rule: member to group")
     public void updateRuleMemberToGroup() {
-        Result<AccessRuleUpdated> result = updateAccessRule(member, AccessRuleFromEntityType.Member, group, AccessRuleToEntityType.Group);
+        Result<AccessRuleUpdated> result = updateAccessRule(rule,member, AccessRuleFromEntityType.Member, group, AccessRuleToEntityType.Group);
         Assertions.assertTrue(result.isSuccess());
     }
     @Test
     @DisplayName("Update Access Rule: member to course")
     public void updateRuleMemberToCourse() {
-        Result<AccessRuleUpdated> result = updateAccessRule(member, AccessRuleFromEntityType.Member, course, AccessRuleToEntityType.Course);
+        Result<AccessRuleUpdated> result = updateAccessRule(rule,member, AccessRuleFromEntityType.Member, course, AccessRuleToEntityType.Course);
         Assertions.assertTrue(result.isSuccess());
     }
 
     @Test
     @DisplayName("Update Access Rule: member to organisation")
     public void updateRuleMemberToOrganisation() {
-        Result<AccessRuleUpdated> result = updateAccessRule(member, AccessRuleFromEntityType.Member, org, AccessRuleToEntityType.Organisation);
+        Result<AccessRuleUpdated> result = updateAccessRule(rule,member, AccessRuleFromEntityType.Member, org, AccessRuleToEntityType.Organisation);
         Assertions.assertTrue(result.isSuccess());
     }
 }
