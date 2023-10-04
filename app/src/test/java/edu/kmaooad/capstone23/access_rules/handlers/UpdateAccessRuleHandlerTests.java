@@ -188,13 +188,26 @@ public class UpdateAccessRuleHandlerTests {
     @Test
     @DisplayName("Update Access Rule: invalid FromId")
     public void updateRuleInvalidFromId() {
-        Result<AccessRuleUpdated> result = updateAccessRule(rule , "12345abc", AccessRuleFromEntityType.Member, org, AccessRuleToEntityType.Organisation);
+        Result<AccessRuleUpdated> result = updateAccessRule(rule , new ObjectId().toString(), AccessRuleFromEntityType.Member, org, AccessRuleToEntityType.Organisation);
         Assertions.assertFalse(result.isSuccess());
     }
     @Test
     @DisplayName("Update Access Rule: invalid ToId")
     public void updateRuleInvalidToId() {
-        Result<AccessRuleUpdated> result = updateAccessRule(rule , member, AccessRuleFromEntityType.Member, "12345abc", AccessRuleToEntityType.Organisation);
+        Result<AccessRuleUpdated> result = updateAccessRule(rule , member, AccessRuleFromEntityType.Member, new ObjectId().toString(), AccessRuleToEntityType.Organisation);
+        Assertions.assertFalse(result.isSuccess());
+    }
+
+    @Test
+    @DisplayName("Update Access Rule: non existent FromId")
+    public void updateRuleNonExistentFromId() {
+        Result<AccessRuleUpdated> result = updateAccessRule(rule , new ObjectId().toString(), AccessRuleFromEntityType.Member, org, AccessRuleToEntityType.Organisation);
+        Assertions.assertFalse(result.isSuccess());
+    }
+    @Test
+    @DisplayName("Update Access Rule: non existent ToId")
+    public void updateRuleNonExistentToId() {
+        Result<AccessRuleUpdated> result = updateAccessRule(rule , member, AccessRuleFromEntityType.Member, new ObjectId().toString(), AccessRuleToEntityType.Organisation);
         Assertions.assertFalse(result.isSuccess());
     }
 
