@@ -47,6 +47,7 @@ import jakarta.inject.Inject;
 
             Assertions.assertFalse(result.isSuccess());
         }
+
         @Test
         @DisplayName("Create Proffesors: email null")
         void testnotSuccessfulWithoutEmail() {
@@ -73,6 +74,7 @@ import jakarta.inject.Inject;
 
             Assertions.assertFalse(result.isSuccess());
         }
+
     }
 
 
