@@ -184,4 +184,18 @@ public class UpdateAccessRuleHandlerTests {
         Result<AccessRuleUpdated> result = updateAccessRule(new ObjectId().toString() ,member, AccessRuleFromEntityType.Member, org, AccessRuleToEntityType.Organisation);
         Assertions.assertFalse(result.isSuccess());
     }
+
+    @Test
+    @DisplayName("Update Access Rule: invalid FromId")
+    public void updateRuleInvalidFromId() {
+        Result<AccessRuleUpdated> result = updateAccessRule(rule , "12345abc", AccessRuleFromEntityType.Member, org, AccessRuleToEntityType.Organisation);
+        Assertions.assertFalse(result.isSuccess());
+    }
+    @Test
+    @DisplayName("Update Access Rule: invalid ToId")
+    public void updateRuleInvalidToId() {
+        Result<AccessRuleUpdated> result = updateAccessRule(rule , member, AccessRuleFromEntityType.Member, "12345abc", AccessRuleToEntityType.Organisation);
+        Assertions.assertFalse(result.isSuccess());
+    }
+
 }
