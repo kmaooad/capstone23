@@ -29,9 +29,7 @@ public class UnassignGroupToActivitiesHandler  implements CommandHandler<Unassig
     public Result<ActivityUnassigned> handle(UnassignGroupToActivity command) {
 
         Optional<Group> group = repository.findByIdOptional(command.getGroupId());
-
         ActivityUnassigned result = new ActivityUnassigned(command.getGroupId(), command.getActivityId());
-
         Group g = group.get();
         g.activitiesId.remove(command.getActivityId());
         repository.update(g);
