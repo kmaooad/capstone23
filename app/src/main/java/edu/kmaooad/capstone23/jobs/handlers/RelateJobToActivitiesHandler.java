@@ -1,6 +1,9 @@
 package edu.kmaooad.capstone23.jobs.handlers;
 
+import edu.kmaooad.capstone23.activities.dal.Course;
 import edu.kmaooad.capstone23.activities.dal.CourseRepository;
+import edu.kmaooad.capstone23.activities.dal.ExtracurricularActivity;
+import edu.kmaooad.capstone23.activities.dal.ExtracurricularActivityRepository;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
@@ -21,6 +24,11 @@ public class RelateJobToActivitiesHandler  implements CommandHandler<RelateJobTo
 
     @Inject
     private JobRepository repository;
+    @Inject
+    private ExtracurricularActivityRepository extracurricularRepository;
+    @Inject
+    private CourseRepository courseRepository;
+
 
     @Override
     public Result<ActivityRelated> handle(RelateJobToActivities command) {
@@ -29,9 +37,16 @@ public class RelateJobToActivitiesHandler  implements CommandHandler<RelateJobTo
         if(job.isEmpty())
             return new Result<>(ErrorCode.VALIDATION_FAILED, "This job was previously deleted or never existed");
 
+        Optional<Course> course = courseRepository.findByIdOptional(command.getActivityId());
+        Optional<ExtracurricularActivity> extActivity = extracurricularRepository.findByIdOptional(command.getActivityId());
+        if(course.isEmpty() && extActivity.isEmpty())
+            return new Result<>(ErrorCode.VALIDATION_FAILED, "This activity was previously deleted or never existed");
+
         ActivityRelated result = new ActivityRelated(command.getJobId(), command.getActivityId());
 
         Job j = job.get();
+        if(j.activitiesId.contains(command.getActivityId()))
+            return new Result<>(ErrorCode.VALIDATION_FAILED, "This activity is already related to this job");
         j.activitiesId.add(command.getActivityId());
 
         // Save the updated job back to the repository
