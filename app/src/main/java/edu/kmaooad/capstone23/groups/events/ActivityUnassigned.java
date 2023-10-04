@@ -2,11 +2,11 @@ package edu.kmaooad.capstone23.groups.events;
 
 import org.bson.types.ObjectId;
 
-public class ActivityUnassign {
+public class ActivityUnassigned {
     private final ObjectId groupId;
     private final ObjectId activityId;
 
-    public ActivityUnassign(ObjectId groupId, ObjectId activityId) {
+    public ActivityUnassigned(ObjectId groupId, ObjectId activityId) {
         this.groupId = groupId;
         this.activityId = activityId;
     }
