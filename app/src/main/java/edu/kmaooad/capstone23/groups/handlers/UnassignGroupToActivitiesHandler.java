@@ -29,14 +29,8 @@ public class UnassignGroupToActivitiesHandler  implements CommandHandler<Unassig
     public Result<ActivityUnassigned> handle(UnassignGroupToActivity command) {
 
         Optional<Group> group = repository.findByIdOptional(command.getGroupId());
-        if(group.isEmpty())
-            return new Result<>(ErrorCode.VALIDATION_FAILED, "This group was previously deleted or never existed");
-
         ActivityUnassigned result = new ActivityUnassigned(command.getGroupId(), command.getActivityId());
-
         Group g = group.get();
-        if (!g.activitiesId.contains(command.getActivityId()))
-            return new Result<>(ErrorCode.VALIDATION_FAILED, "This job doesn't contain this activity");
         g.activitiesId.remove(command.getActivityId());
         repository.update(g);
 
