@@ -12,6 +12,8 @@ import jakarta.inject.Inject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @QuarkusTest
@@ -28,7 +30,7 @@ public class MembersRepositoryTest extends TestWithDbClearance {
         var org = new Org();
         org.name = "NaUKMA";
         orgsRepository.insert(org);
-        member.orgId = org.id;
+        member.orgId = List.of(org.id);
         member.lastName = "last";
         member.firstName = "first";
         member.email = "email@email.com";

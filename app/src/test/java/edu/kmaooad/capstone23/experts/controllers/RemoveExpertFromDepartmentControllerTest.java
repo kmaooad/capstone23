@@ -95,7 +95,7 @@ public class RemoveExpertFromDepartmentControllerTest {
         member.firstName = "Test";
         member.lastName = "Member";
         member.email = randomEmail();
-        member.orgId = org.id;
+        member.orgId = List.of(org.id);
         membersRepository.insert(member);
 
         return member.id;
