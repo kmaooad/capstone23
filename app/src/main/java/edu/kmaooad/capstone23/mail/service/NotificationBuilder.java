@@ -24,8 +24,8 @@ public class NotificationBuilder {
         }
     }
 
-    static class UpdateStudent {
-        static final String SUBJECT = "Updated info in Capstone23";
+    public static class UpdateStudent {
+        public static final String SUBJECT = "Updated info in Capstone23";
 
         public static Notification build(NotifyStudent.Update student) {
             String stInfo = "";
