@@ -51,7 +51,9 @@ import jakarta.inject.Inject;
         }
 
         @Test
-        @DisplayName("Create Proffesor:not successful handling")
+
+        @DisplayName("Create Proffesors: email null")
+
         void testnotSuccessfulWithoutEmail() {
             CreateProffesor command = new CreateProffesor();
             command.setName("Masha");
@@ -64,7 +66,8 @@ import jakarta.inject.Inject;
         }
 
         @Test
-        @DisplayName("Create Proffesors: email not right")
+        @DisplayName("Create Proffesor: email not right")
+
         void testNotRightemail() {
             CreateProffesor command = new CreateProffesor();
 
@@ -76,6 +79,7 @@ import jakarta.inject.Inject;
 
             Assertions.assertFalse(result.isSuccess());
         }
+
 
         @Test
         @DisplayName("Create Proffesors: lastname null")
@@ -103,6 +107,7 @@ import jakarta.inject.Inject;
 
             Assertions.assertFalse(result.isSuccess());
         }
+
 
     }
 
