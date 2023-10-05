@@ -1,5 +1,10 @@
 package edu.kmaooad.capstone23.orgs.handlers;
 
+import edu.kmaooad.capstone23.ban.commands.BanEntity;
+import edu.kmaooad.capstone23.ban.dal.BannedEntityType;
+import edu.kmaooad.capstone23.ban.events.EntityBanned;
+import edu.kmaooad.capstone23.common.CommandHandler;
+import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.jobs.dal.Job;
 import edu.kmaooad.capstone23.jobs.dal.JobRepository;
@@ -28,6 +33,9 @@ public class RelateJobToOrgHandlerTest {
 
     @Inject
     JobRepository jobRepository;
+
+    @Inject
+    CommandHandler<BanEntity, EntityBanned> banEntity;
 
     private String orgId;
 
@@ -103,4 +111,30 @@ public class RelateJobToOrgHandlerTest {
 
     }
 
+    @Test
+    @DisplayName("Relate Job To Department: banned org")
+    public void testBannedOrgConnectionCreation() {
+        var banRequest = new BanEntity();
+        banRequest.setEntityId(new ObjectId(orgId));
+        banRequest.setReason("Hello there");
+        banRequest.setEntityType(BannedEntityType.Organization.name());
+
+        var banResult = banEntity.handle(banRequest);
+
+        Assertions.assertTrue(banResult.isSuccess());
+        Assertions.assertNotNull(banResult.getValue());
+
+
+        RelateJobToOrg command = new RelateJobToOrg();
+        command.setOrgId(orgId);
+        command.setJobId(jobId);
+
+        Result<JobToOrgRelated> result = handler.handle(command);
+
+        Assertions.assertFalse(result.isSuccess());
+        Assertions.assertNotNull(result.getMessage());
+        Assertions.assertEquals(result.getErrorCode(), ErrorCode.EXCEPTION);
+        Assertions.assertEquals(result.getMessage(), "Org is banned");
+
+    }
 }
