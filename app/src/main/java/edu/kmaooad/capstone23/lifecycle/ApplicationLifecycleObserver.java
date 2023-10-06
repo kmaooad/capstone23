@@ -2,6 +2,7 @@ package edu.kmaooad.capstone23.lifecycle;
 
 import com.mongodb.client.model.IndexOptions;
 import edu.kmaooad.capstone23.members.dal.MembersRepository;
+import edu.kmaooad.capstone23.users.dal.repositories.UserRepository;
 import io.quarkus.runtime.StartupEvent;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.event.Observes;
@@ -12,11 +13,15 @@ import org.bson.Document;
 public class ApplicationLifecycleObserver {
     @Inject
     MembersRepository membersRepository;
+    @Inject
+    UserRepository usersRepository;
 
     void onStart(@Observes StartupEvent ev) {
-        // Ensure uniqueness of Member email
-        Document index = new Document("email", 1);
+        // Ensure uniqueness of User email
+        Document indexMember = new Document("email", 1);
         IndexOptions options = new IndexOptions().unique(true);
-        membersRepository.mongoCollection().createIndex(index, options);
+        membersRepository.mongoCollection().createIndex(indexMember, options);
+        Document indexUser = new Document("email", 2);
+        usersRepository.mongoCollection().createIndex(indexUser, options);
     }
 }
