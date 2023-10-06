@@ -21,9 +21,8 @@ public class ApplicationLifecycleObserver {
         Document indexMember = new Document("email", 1);
         IndexOptions options = new IndexOptions().unique(true);
         membersRepository.mongoCollection().createIndex(indexMember, options);
-        // delete previously duplicated test data
-        usersRepository.delete("email", "john.doe@mail.com");
-        Document indexUser = new Document("email", 2);
+        Document indexUser = new Document("unique_email", 1);
+        options.sparse(true);
         usersRepository.mongoCollection().createIndex(indexUser, options);
     }
 }
