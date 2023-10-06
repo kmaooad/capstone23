@@ -1,25 +1,27 @@
 package edu.kmaooad.capstone23.members.events;
 
 import edu.kmaooad.capstone23.members.dal.Member;
+import edu.kmaooad.capstone23.users.dal.repositories.UserRepository;
 import org.bson.types.ObjectId;
-
-import java.util.List;
 
 public class MemberRead {
     private ObjectId id;
-    private List<ObjectId> orgId;
+    private ObjectId orgId;
     private String firstName;
     private String lastName;
     private String email;
     private boolean isExpert;
     private boolean isAdmin;
 
-    public MemberRead(Member member) {
+    public MemberRead(Member member, UserRepository userRepository) {
         setId(member.id);
         setOrgId(member.orgId);
-        setFirstName(member.firstName);
-        setLastName(member.lastName);
-        setEmail(member.email);
+        var userEntry = userRepository.findById(member.userId.toString());
+        if (userEntry.isPresent()) {
+            setFirstName(userEntry.get().firstName);
+            setLastName(userEntry.get().firstName);
+            setEmail(userEntry.get().firstName);
+        }
         setExpert(member.isExpert);
         setAdmin(member.isAdmin);
     }
@@ -32,11 +34,11 @@ public class MemberRead {
         this.id = id;
     }
 
-    public List<ObjectId> getOrgId() {
+    public ObjectId getOrgId() {
         return orgId;
     }
 
-    public void setOrgId(List<ObjectId> orgId) {
+    public void setOrgId(ObjectId orgId) {
         this.orgId = orgId;
     }
 

@@ -7,12 +7,12 @@ import edu.kmaooad.capstone23.members.exceptions.UniquenessViolationException;
 import edu.kmaooad.capstone23.orgs.dal.Org;
 import edu.kmaooad.capstone23.orgs.dal.OrgsRepository;
 import edu.kmaooad.capstone23.orgs.members.TestWithDbClearance;
+import edu.kmaooad.capstone23.users.dal.repositories.UserRepository;
+import edu.kmaooad.capstone23.users.mocks.UserMocks;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -22,7 +22,12 @@ public class MembersRepositoryTest extends TestWithDbClearance {
     MembersRepository membersRepository;
 
     @Inject
+    UserRepository userRepository;
+
+    @Inject
     OrgsRepository orgsRepository;
+
+    protected Member setUpMember;
 
     @BeforeEach
     void setUp() {
@@ -30,29 +35,27 @@ public class MembersRepositoryTest extends TestWithDbClearance {
         var org = new Org();
         org.name = "NaUKMA";
         orgsRepository.insert(org);
-        member.orgId = List.of(org.id);
-        member.lastName = "last";
-        member.firstName = "first";
-        member.email = "email@email.com";
+        member.orgId = org.id;
+        var user = userRepository.insert(UserMocks.validUser());
+        member.userId = user.id;
         membersRepository.persist(member);
+        setUpMember = member;
     }
 
     @Test
     public void testInsertDuplicateEmail() {
-        var email = "email@email.com";
-
         Member newMember = new Member();
-        newMember.email = email;
+        newMember.orgId = setUpMember.orgId;
+        newMember.userId = setUpMember.userId;
 
         assertThrows(UniquenessViolationException.class, () -> membersRepository.insert(newMember));
     }
 
     @Test
-    public void testInsertDuplicateEmailWithGeneratedMethodThrowsMongoException() {
-        var email = "email@email.com";
-
+    public void testInsertDuplicateOrgAndUserIdsGeneratedMethodThrowsMongoException() {
         Member newMember = new Member();
-        newMember.email = email;
+        newMember.orgId = setUpMember.orgId;
+        newMember.userId = setUpMember.userId;
 
         assertThrows(MongoException.class, () -> membersRepository.persist(newMember));
     }

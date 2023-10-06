@@ -28,4 +28,8 @@ public class UserRepository implements PanacheMongoRepository<User> {
 
     return user;
   }
+
+  public void deleteByEmail (String email) {
+    delete("unique_email", email);
+  }
 }
