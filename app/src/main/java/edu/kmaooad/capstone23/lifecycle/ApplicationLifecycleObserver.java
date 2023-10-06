@@ -18,10 +18,10 @@ public class ApplicationLifecycleObserver {
 
     void onStart(@Observes StartupEvent ev) {
         // Ensure uniqueness of User email
+        usersRepository.mongoCollection().dropIndexes();
         Document indexMember = new Document("email", 1);
         IndexOptions options = new IndexOptions().unique(true);
         membersRepository.mongoCollection().createIndex(indexMember, options);
-        usersRepository.mongoCollection().dropIndexes();
         Document indexUser = new Document("unique_email", 1);
         options.sparse(true);
         usersRepository.mongoCollection().createIndex(indexUser, options);
