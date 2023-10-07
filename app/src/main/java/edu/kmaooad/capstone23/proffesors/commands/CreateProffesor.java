@@ -7,7 +7,6 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
 
 import jakarta.validation.constraints.Size;
-
 import org.bson.types.ObjectId;
 
 import java.time.LocalDateTime;
@@ -23,8 +22,6 @@ import java.util.Set;
 @NotNull
 @Size(min = 1, max = 40)
         private String lastName;
-
-
 
         public String getLastName() {
             return lastName;
