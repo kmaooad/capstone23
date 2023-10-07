@@ -20,7 +20,8 @@ import jakarta.inject.Inject;
         CommandHandler<CreateProffesor, ProffesorCreated> handler;
 
         @Test
-        @DisplayName("Create Proffesors: successful handling")
+        @DisplayName("Create Proffesor: successful handling")
+
         void testSuccessfulHandling() {
             CreateProffesor command = new CreateProffesor();
             command.setName("Masha");
@@ -47,6 +48,65 @@ import jakarta.inject.Inject;
 
             Assertions.assertFalse(result.isSuccess());
         }
+
+        @Test
+
+        @DisplayName("Create Proffesors: email null")
+
+        void testnotSuccessfulWithoutEmail() {
+            CreateProffesor command = new CreateProffesor();
+            command.setName("Masha");
+            command.setLastName("Shevchenko");
+
+
+            Result<ProffesorCreated> result = handler.handle(command);
+
+            Assertions.assertFalse(result.isSuccess());
+        }
+
+        @Test
+        @DisplayName("Create Proffesor: email not right")
+
+        void testNotRightemail() {
+            CreateProffesor command = new CreateProffesor();
+
+            command.setName("Masha");
+            command.setEmail("post...gmail.com");
+            command.setLastName("Shevchenko");
+
+            Result<ProffesorCreated> result = handler.handle(command);
+
+            Assertions.assertFalse(result.isSuccess());
+        }
+
+
+        @Test
+        @DisplayName("Create Proffesors: lastname null")
+        void testNoLastname() {
+            CreateProffesor command = new CreateProffesor();
+
+            command.setName("Masha");
+            command.setEmail("post@gmail.com");
+
+            Result<ProffesorCreated> result = handler.handle(command);
+
+            Assertions.assertFalse(result.isSuccess());
+        }
+
+        @Test
+        @DisplayName("Create Proffesors: lastname not right")
+        void testNotRightLastname() {
+            CreateProffesor command = new CreateProffesor();
+
+            command.setName("Masha");
+            command.setLastName("ehd;iwehfuigfuigfuifghkdjgfkljdfgsjdgfjsgfjsdgfslgfsugfu");
+            command.setEmail("post@gmail.com");
+
+            Result<ProffesorCreated> result = handler.handle(command);
+
+            Assertions.assertFalse(result.isSuccess());
+        }
+
     }
 
 

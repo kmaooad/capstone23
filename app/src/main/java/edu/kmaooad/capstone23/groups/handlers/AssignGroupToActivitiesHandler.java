@@ -1,5 +1,9 @@
 package edu.kmaooad.capstone23.groups.handlers;
 
+import edu.kmaooad.capstone23.activities.dal.Course;
+import edu.kmaooad.capstone23.activities.dal.CourseRepository;
+import edu.kmaooad.capstone23.activities.dal.ExtracurricularActivity;
+import edu.kmaooad.capstone23.activities.dal.ExtracurricularActivityRepository;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
@@ -18,6 +22,11 @@ public class AssignGroupToActivitiesHandler  implements CommandHandler<AssignGro
     @Inject
     private GroupsRepository repository;
 
+    @Inject
+    private CourseRepository courseRepository;
+
+    @Inject
+    private ExtracurricularActivityRepository extracurricularRepository;
     @Override
     public Result<ActivityAssigned> handle(AssignGroupToActivity command) {
 
@@ -26,6 +35,12 @@ public class AssignGroupToActivitiesHandler  implements CommandHandler<AssignGro
             return new Result<>(ErrorCode.VALIDATION_FAILED, "This group was previously deleted or never existed");
 
         ActivityAssigned result = new ActivityAssigned(command.getGroupId(), command.getActivityId());
+
+        Optional<Course> course = courseRepository.findByIdOptional(command.getActivityId());
+        Optional<ExtracurricularActivity> extActivity = extracurricularRepository.findByIdOptional(command.getActivityId());
+        if(course.isEmpty() && extActivity.isEmpty())
+            return new Result<>(ErrorCode.VALIDATION_FAILED, "This activity was previously deleted or never existed");
+
 
         Group g = group.get();
         if(g.activitiesId.contains(command.getActivityId()))
