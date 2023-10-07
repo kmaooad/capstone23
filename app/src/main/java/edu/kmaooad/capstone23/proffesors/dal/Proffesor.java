@@ -13,7 +13,6 @@ public class Proffesor {
     public ObjectId id;
     public String firstName;
 
-
     public Set<ObjectId> activities;
 
     public Proffesor() {
