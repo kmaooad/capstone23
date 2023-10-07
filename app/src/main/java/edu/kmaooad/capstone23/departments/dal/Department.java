@@ -15,4 +15,6 @@ public class Department {
     public String hiringStatus;
 
     public ArrayList<String> jobs;
+
+    public Logo logo;
 }

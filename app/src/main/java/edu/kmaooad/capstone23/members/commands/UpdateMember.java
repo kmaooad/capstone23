@@ -6,6 +6,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import org.bson.types.ObjectId;
 
+import java.util.List;
+
 public class UpdateMember {
     @NotBlank
     @Size(min = 1)
@@ -14,7 +16,7 @@ public class UpdateMember {
     @Size(min = 1)
     private String lastName;
     @NotNull
-    private ObjectId orgId;
+    private List<ObjectId> orgId;
     @NotNull
     private ObjectId id;
     @NotBlank
@@ -45,11 +47,11 @@ public class UpdateMember {
         this.email = email;
     }
 
-    public ObjectId getOrgId() {
+    public List<ObjectId> getOrgId() {
         return orgId;
     }
 
-    public void setOrgId(ObjectId orgId) {
+    public void setOrgId(List<ObjectId> orgId) {
         this.orgId = orgId;
     }
 
