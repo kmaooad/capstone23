@@ -20,7 +20,6 @@ import jakarta.inject.Inject;
         CommandHandler<CreateProffesor, ProffesorCreated> handler;
 
         @Test
-
         @DisplayName("Create Proffesor: successful handling")
 
         void testSuccessfulHandling() {
@@ -107,7 +106,6 @@ import jakarta.inject.Inject;
 
             Assertions.assertFalse(result.isSuccess());
         }
-
 
     }
 
