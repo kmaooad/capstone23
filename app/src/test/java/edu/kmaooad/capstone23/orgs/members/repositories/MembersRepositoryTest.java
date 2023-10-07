@@ -11,9 +11,11 @@ import edu.kmaooad.capstone23.users.dal.repositories.UserRepository;
 import edu.kmaooad.capstone23.users.mocks.UserMocks;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
+import org.bson.types.ObjectId;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @QuarkusTest
@@ -43,12 +45,27 @@ public class MembersRepositoryTest extends TestWithDbClearance {
     }
 
     @Test
-    public void testInsertDuplicateEmail() {
+    public void testInsertDuplicateOrgAndUserId() {
         Member newMember = new Member();
         newMember.orgId = setUpMember.orgId;
         newMember.userId = setUpMember.userId;
 
         assertThrows(UniquenessViolationException.class, () -> membersRepository.insert(newMember));
+    }
+
+    @Test
+    public void testUpdateToHaveWithDuplicatedUserAndOrgId() {
+        Member newMember = new Member();
+        newMember.orgId = setUpMember.orgId;
+        newMember.userId = new ObjectId();
+
+        assertDoesNotThrow(() -> {
+            membersRepository.insert(newMember);
+        });
+
+        newMember.userId = setUpMember.userId;
+
+        assertThrows(UniquenessViolationException.class, () -> membersRepository.updateEntry(newMember));
     }
 
     @Test
