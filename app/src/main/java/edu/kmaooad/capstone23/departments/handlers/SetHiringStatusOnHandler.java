@@ -3,6 +3,7 @@ package edu.kmaooad.capstone23.departments.handlers;
 import edu.kmaooad.capstone23.ban.commands.IsEntityBanned;
 import edu.kmaooad.capstone23.ban.dal.BannedEntityType;
 import edu.kmaooad.capstone23.ban.events.EntityIsBanned;
+import edu.kmaooad.capstone23.ban.handlers.IsBannedHandler;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
@@ -19,7 +20,7 @@ public class SetHiringStatusOnHandler implements CommandHandler<SetHiringStatusO
     private DepartmentsRepository departmentsRepository;
 
     @Inject
-    CommandHandler<IsEntityBanned, EntityIsBanned> isBannedHandler;
+    IsBannedHandler isBannedHandler;
 
     private final String hiringStatusOn = "We are hiring";
 
@@ -32,8 +33,20 @@ public class SetHiringStatusOnHandler implements CommandHandler<SetHiringStatusO
         if (department == null) {
             return new Result<>(ErrorCode.VALIDATION_FAILED, "Department with such Id doesn't exist");
         }
-        if (isBannedHandler.handle(new IsEntityBanned(department.id, BannedEntityType.Organization.name())).isSuccess())
-            return new Result<>(ErrorCode.VALIDATION_FAILED, "Department is banned");
+
+        {
+            IsEntityBanned request = new IsEntityBanned(department.id, BannedEntityType.Department.name());
+            Result<EntityIsBanned> result = isBannedHandler.handle(request);
+            if (!result.isSuccess()) {
+                return new Result<>(result.getErrorCode(), "check if banned failed with " + result.getMessage());
+            }
+
+            EntityIsBanned res = result.getValue();
+            boolean isBanned = res.value();
+            if (isBanned) {
+                return new Result<>(ErrorCode.VALIDATION_FAILED, "Department is banned");
+            }
+        }
 
         department.hiringStatus = hiringStatusOn;
 
@@ -41,6 +54,6 @@ public class SetHiringStatusOnHandler implements CommandHandler<SetHiringStatusO
 
         HiringStatusSettedOn result = new HiringStatusSettedOn(department.id.toString());
 
-        return new Result(result);
+        return new Result<>(result);
     }
 }

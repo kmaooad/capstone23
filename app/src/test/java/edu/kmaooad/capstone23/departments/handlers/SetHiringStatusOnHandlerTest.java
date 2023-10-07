@@ -2,7 +2,9 @@ package edu.kmaooad.capstone23.departments.handlers;
 
 import edu.kmaooad.capstone23.ban.commands.BanEntity;
 import edu.kmaooad.capstone23.ban.dal.BannedEntityType;
+import edu.kmaooad.capstone23.ban.dal.EntityBanRepository;
 import edu.kmaooad.capstone23.ban.events.EntityBanned;
+import edu.kmaooad.capstone23.ban.handlers.BanEntityHandler;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
@@ -30,12 +32,16 @@ public class SetHiringStatusOnHandlerTest {
     CommandHandler<BanEntity, EntityBanned> banHandler;
 
     @Inject
+    EntityBanRepository entityBanRepository;
+
+    @Inject
     DepartmentsRepository departmentsRepository;
     private String departmentId;
 
     @BeforeEach
     void setUp() {
         departmentsRepository.deleteAll();
+        entityBanRepository.deleteAll();
         Department department = new Department();
 
         department.name = "Initial Department";
@@ -55,14 +61,15 @@ public class SetHiringStatusOnHandlerTest {
 
         command.setDepartmentId(departmentId);
 
-        Result result = handler.handle(command);
+        Result<HiringStatusSettedOn> result = handler.handle(command);
 
-        Assertions.assertEquals(result.getErrorCode(), null);
+        Assertions.assertEquals(null, result.getMessage());
+        Assertions.assertEquals(null, result.getErrorCode());
         Assertions.assertTrue(result.isSuccess());
 
         Department department = departmentsRepository.findById(departmentId);
 
-        Assertions.assertEquals(department.hiringStatus, "We are hiring");
+        Assertions.assertEquals("We are hiring", department.hiringStatus);
     }
 
     @Test
@@ -71,7 +78,7 @@ public class SetHiringStatusOnHandlerTest {
         SetHiringStatusOn command = new SetHiringStatusOn();
         command.setDepartmentId("64fbb243275c1111167b87a3");
 
-        Result result = handler.handle(command);
+        Result<HiringStatusSettedOn> result = handler.handle(command);
 
         Assertions.assertFalse(result.isSuccess());
     }
