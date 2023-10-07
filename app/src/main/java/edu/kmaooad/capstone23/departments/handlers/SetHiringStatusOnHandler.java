@@ -1,5 +1,8 @@
 package edu.kmaooad.capstone23.departments.handlers;
 
+import edu.kmaooad.capstone23.ban.commands.IsEntityBanned;
+import edu.kmaooad.capstone23.ban.dal.BannedEntityType;
+import edu.kmaooad.capstone23.ban.events.EntityIsBanned;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
@@ -15,6 +18,9 @@ public class SetHiringStatusOnHandler implements CommandHandler<SetHiringStatusO
     @Inject
     private DepartmentsRepository departmentsRepository;
 
+    @Inject
+    CommandHandler<IsEntityBanned, EntityIsBanned> isBannedHandler;
+
     private final String hiringStatusOn = "We are hiring";
 
 
@@ -26,6 +32,8 @@ public class SetHiringStatusOnHandler implements CommandHandler<SetHiringStatusO
         if (department == null) {
             return new Result<>(ErrorCode.VALIDATION_FAILED, "Department with such Id doesn't exist");
         }
+        if (isBannedHandler.handle(new IsEntityBanned(department.id, BannedEntityType.Organization.name())).isSuccess())
+            return new Result<>(ErrorCode.VALIDATION_FAILED, "Department is banned");
 
         department.hiringStatus = hiringStatusOn;
 
