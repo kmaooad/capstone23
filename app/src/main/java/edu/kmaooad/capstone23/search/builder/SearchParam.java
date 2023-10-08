@@ -1,8 +1,13 @@
 package edu.kmaooad.capstone23.search.builder;
 
 public abstract class SearchParam {
+    protected String query;
     protected String paramName;
     protected Object paramValue;
+
+    protected SearchParam(Object paramValue) {
+        this(null, paramValue);
+    }
 
     protected SearchParam(String paramName, Object paramValue) {
         this.paramName = paramName;
@@ -17,5 +22,5 @@ public abstract class SearchParam {
         return paramValue;
     }
 
-    public abstract String getQuery();
+    public String getQuery() { return query; };
 }
