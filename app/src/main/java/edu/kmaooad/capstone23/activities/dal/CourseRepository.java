@@ -1,6 +1,8 @@
 package edu.kmaooad.capstone23.activities.dal;
 
+import edu.kmaooad.capstone23.tag.dal.Tag;
 import io.quarkus.mongodb.panache.PanacheMongoRepository;
+import io.quarkus.mongodb.panache.PanacheQuery;
 import jakarta.enterprise.context.ApplicationScoped;
 import org.bson.types.ObjectId;
 
@@ -37,6 +39,11 @@ public class CourseRepository implements PanacheMongoRepository<Course> {
     public List<Course> bulkUpdate(List<Course> courses) {
         persistOrUpdate(courses);
         return courses;
+    }
+
+    public List<Course> findByTag(Tag tag) {
+        PanacheQuery<Course> query = find("tags", tag);
+        return query.list();
     }
 
 }
