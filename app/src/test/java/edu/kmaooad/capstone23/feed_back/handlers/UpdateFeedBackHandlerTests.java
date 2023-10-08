@@ -79,4 +79,15 @@ public class UpdateFeedBackHandlerTests {
         Assertions.assertFalse(result.isSuccess());
         Assertions.assertEquals(ErrorCode.VALIDATION_FAILED, result.getErrorCode());
     }
+
+    @Test
+    void testTopicLengthIsTooShort() {
+        UpdateFeedBack command = new UpdateFeedBack();
+        command.setFeedBackId(feedBack.id.toString());
+        command.setTopic("Abc");
+
+        Result<FeedBackUpdated> result = handler.handle(command);
+        Assertions.assertFalse(result.isSuccess());
+    }
+
 }
