@@ -38,4 +38,14 @@ public class CreateFeedBackHandlerTests {
         Assertions.assertFalse(result.isSuccess());
     }
 
+    @Test
+    void testTopicLengthIsTooShort() {
+        CreateFeedBack command = new CreateFeedBack();
+        command.setTopic("Abc");
+        command.setText("Test of review result.");
+
+        Result<FeedBackCreated> result = handler.handle(command);
+        Assertions.assertFalse(result.isSuccess());
+    }
+
 }
