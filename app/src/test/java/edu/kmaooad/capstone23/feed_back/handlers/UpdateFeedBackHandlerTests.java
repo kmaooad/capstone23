@@ -90,4 +90,15 @@ public class UpdateFeedBackHandlerTests {
         Assertions.assertFalse(result.isSuccess());
     }
 
+
+    @Test
+    void testTopicLengthIsTooLong() {
+        UpdateFeedBack command = new UpdateFeedBack();
+        command.setFeedBackId(feedBack.id.toString());
+        command.setTopic("AbcAbcAbcAbcAbcAbcAbcAbcAbcAbcAbcAbcAbc");
+
+        Result<FeedBackUpdated> result = handler.handle(command);
+        Assertions.assertFalse(result.isSuccess());
+    }
+
 }
