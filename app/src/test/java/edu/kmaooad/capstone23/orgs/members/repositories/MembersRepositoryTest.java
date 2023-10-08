@@ -77,4 +77,16 @@ public class MembersRepositoryTest extends TestWithDbClearance {
 
         assertThrows(UniquenessViolationException.class, () -> membersRepository.updateEntry(newMember));
     }
+
+    @Test
+    public void testUpdateNonExistentMember() {
+        var user = userRepository.insert(UserMocks.validUser());
+
+        Member member = new Member();
+        member.id = new ObjectId();
+        member.orgId = setUpMember.orgId;
+        member.userId = user.id;
+
+        assertThrows(MemberNotFoundException.class, () -> membersRepository.updateEntry(member));
+    }
 }
