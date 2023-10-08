@@ -3,6 +3,8 @@ package edu.kmaooad.capstone23.search.builder;
 import io.quarkus.panache.common.Parameters;
 import org.antlr.v4.runtime.misc.Pair;
 
+import java.util.Objects;
+
 public class SearchBuilder {
     private StringBuilder query;
     private Parameters parameters;
@@ -16,8 +18,8 @@ public class SearchBuilder {
         if (!query.isEmpty()) query.append(", ");
         query.append(param.getQuery());
 
-        parameters
-                .and(param.getParamName(), param.getParamValue());
+        if (Objects.nonNull(param.getParamName()))
+            parameters.and(param.getParamName(), param.getParamValue());
         return this;
     }
 
