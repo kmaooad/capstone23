@@ -92,4 +92,21 @@ public class UpdateFeedBackControllerTests {
     }
 
 
+    @Test
+    @DisplayName("Update FeedBack: Topic validation too many symbols")
+    public void testUpdateFeedBackTopicValidationTooManySymbols() {
+        Map<String, Object> jsonAsMap = new HashMap<>();
+        jsonAsMap.put("feedBackId", feedBack.id.toString());
+        jsonAsMap.put("topic", "Too many characters for topic");
+        jsonAsMap.put("text", "Test of review result.");
+
+        given()
+                .contentType("application/json")
+                .body(jsonAsMap)
+                .when()
+                .post("/feedback/update")
+                .then()
+                .statusCode(400);
+    }
+
 }
