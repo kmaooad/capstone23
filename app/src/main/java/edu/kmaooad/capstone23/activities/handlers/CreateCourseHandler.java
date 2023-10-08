@@ -20,7 +20,6 @@ public class CreateCourseHandler implements CommandHandler<CreateCourse, CourseC
     public Result<CourseCreated> handle(CreateCourse command) {
         Course course = new Course();
         course.name = command.getName();
-        course.tags = new ArrayList<>();
 
         courseRepository.insert(course);
 

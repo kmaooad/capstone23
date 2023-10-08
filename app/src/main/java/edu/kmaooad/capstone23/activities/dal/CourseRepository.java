@@ -42,8 +42,9 @@ public class CourseRepository implements PanacheMongoRepository<Course> {
     }
 
     public List<Course> findByTag(Tag tag) {
-        PanacheQuery<Course> query = find("tags", tag);
-        return query.list();
+        return findAll().stream().filter(course -> {
+            return course.tags != null && course.tags.contains(tag);
+        }).toList();
     }
 
 }
