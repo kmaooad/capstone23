@@ -121,7 +121,7 @@ public class UpdateFeedBackControllerTests {
                 .contentType("application/json")
                 .body(jsonAsMap)
                 .when()
-                .post("/feedBack/update")
+                .post("/feedback/update")
                 .then()
                 .statusCode(400);
     }
