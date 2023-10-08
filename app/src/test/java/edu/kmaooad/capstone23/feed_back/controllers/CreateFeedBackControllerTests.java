@@ -57,4 +57,20 @@ public class CreateFeedBackControllerTests {
                 .then()
                 .statusCode(400);
     }
+
+    @Test
+    @DisplayName("Create FeedBack: Topic validation too many symbols")
+    public void testCreateFeedBackTopicValidationTooManySymbols() {
+        Map<String, Object> jsonAsMap = new HashMap<>();
+        jsonAsMap.put("topic", "Too many characters for topic");
+        jsonAsMap.put("text", "Create FeedBack Topic Validation");
+
+        given()
+                .contentType("application/json")
+                .body(jsonAsMap)
+                .when()
+                .post("/feedBack/create")
+                .then()
+                .statusCode(400);
+    }
 }
