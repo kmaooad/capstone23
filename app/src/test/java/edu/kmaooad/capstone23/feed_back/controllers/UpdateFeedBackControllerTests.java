@@ -109,4 +109,21 @@ public class UpdateFeedBackControllerTests {
                 .statusCode(400);
     }
 
+    @Test
+    @DisplayName("Update FeedBack: Topic validation less symbols")
+    public void testUpdateFeedBackTopicValidationLessSymbols() {
+        Map<String, Object> jsonAsMap = new HashMap<>();
+        jsonAsMap.put("feedBackId", feedBack.id.toString());
+        jsonAsMap.put("topic", "less");
+        jsonAsMap.put("text", "Test of review result.");
+
+        given()
+                .contentType("application/json")
+                .body(jsonAsMap)
+                .when()
+                .post("/feedBack/update")
+                .then()
+                .statusCode(400);
+    }
+
 }
