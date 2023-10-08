@@ -98,4 +98,14 @@ public class MembersRepositoryTest extends TestWithDbClearance {
 
         assertThrows(MemberNotFoundException.class, () -> membersRepository.updateEntry(member));
     }
+
+    @Test
+    public void testUpdateOnlyUser() {
+        var user = userRepository.insert(UserMocks.validUser());
+
+        setUpMember.userId = user.id;
+
+        membersRepository.updateEntry(setUpMember);
+        assertEquals(setUpMember.userId, membersRepository.findById(setUpMember.id).userId);
+    }
 }
