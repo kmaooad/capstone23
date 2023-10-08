@@ -33,6 +33,12 @@ public class DeleteAccessRuleControllerTests {
         deleteAccessRule(accessRuleId, 200);
     }
 
+    @Test
+    @DisplayName("Delete Access Rule: invalid ID format")
+    public void deleteRuleInvalidId() {
+        deleteAccessRule("1234abc", 400);
+    }
+
 
     private void deleteAccessRule(String ruleId, int expectedResult){
         Map<String, Object> jsonAsMap = new HashMap<>();
