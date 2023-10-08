@@ -16,8 +16,7 @@ import org.bson.types.ObjectId;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 @QuarkusTest
 public class MembersRepositoryTest extends TestWithDbClearance {
@@ -61,6 +60,16 @@ public class MembersRepositoryTest extends TestWithDbClearance {
         newMember.userId = setUpMember.userId;
 
         assertThrows(MongoException.class, () -> membersRepository.persist(newMember));
+    }
+
+    @Test
+    public void testUpdateIsExpertFieldInMember() {
+        var memberIsExpertBeforeUpdate = membersRepository.findById(setUpMember.id).isExpert;
+
+        setUpMember.isExpert = !memberIsExpertBeforeUpdate;
+        var updatedMember = membersRepository.updateEntry(setUpMember);
+
+        assertNotEquals(memberIsExpertBeforeUpdate, updatedMember.isExpert);
     }
 
     @Test
