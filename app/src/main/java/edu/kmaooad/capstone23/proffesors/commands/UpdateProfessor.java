@@ -61,4 +61,5 @@ public class UpdateProfessor {
         this.professorId = professorId;
     }
 
+
 }
