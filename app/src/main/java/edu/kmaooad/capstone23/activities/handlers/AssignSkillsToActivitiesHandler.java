@@ -35,6 +35,9 @@ public class AssignSkillsToActivitiesHandler implements CommandHandler<AddSkillT
             return new Result<>(ErrorCode.EXCEPTION, "Has not existing skillSet");
 
         var skillIds = activity.skillIds;
+        if (skillIds != null && skillIds.contains(command.getSkillId())) {
+            return new Result<>(ErrorCode.EXCEPTION, "Already contains skill");
+        }
 
         if (skillIds == null) {
             activity.skillIds = new ArrayList<>();
