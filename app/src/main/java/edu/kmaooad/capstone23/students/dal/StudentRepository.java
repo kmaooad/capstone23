@@ -34,6 +34,8 @@ public class StudentRepository implements PanacheMongoRepository<Student> {
             builder.and(new PrefixSearchParam("lastName", query.getLastName()));
         if (query.getFullName() != null)
             builder.and(new FullNameSearchParam(query.getFullName()));
+        if (query.getEmail() != null)
+            builder.and(new PrefixSearchParam("email", query.getEmail()));
         var searchPair = builder.build();
 
         return find(searchPair.a, searchPair.b)
