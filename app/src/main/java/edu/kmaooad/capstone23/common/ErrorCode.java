@@ -4,5 +4,5 @@ public enum ErrorCode {
     VALIDATION_FAILED,
     EXCEPTION,
     NOT_FOUND,
-    CONFLICT
+    DELETE_FAILED, CONFLICT
 }

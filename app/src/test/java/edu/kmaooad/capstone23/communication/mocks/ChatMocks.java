@@ -3,6 +3,7 @@ package edu.kmaooad.capstone23.communication.mocks;
 import edu.kmaooad.capstone23.common.Mocks;
 import edu.kmaooad.capstone23.communication.dal.entities.Chat;
 import edu.kmaooad.capstone23.communication.utils.ChatsListWrapper;
+import org.bson.types.ObjectId;
 
 import java.util.Collections;
 import java.util.List;
@@ -55,6 +56,18 @@ public class ChatMocks extends Mocks {
     chat.name = "";
     chat.accessType = Chat.AccessType.Public;
 
+    return chat;
+  }
+
+  public static Chat validChatId() {
+    Chat chat = new Chat();
+    chat.id = new ObjectId("55153a8014829a865bbf700d");
+    return chat;
+  }
+
+  public static Chat invalidChatId() {
+    Chat chat = new Chat();
+    chat.id = new ObjectId("55153a8014829b865bbf700d");
     return chat;
   }
 }
