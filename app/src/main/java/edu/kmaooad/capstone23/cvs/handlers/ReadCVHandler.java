@@ -19,6 +19,7 @@ public class ReadCVHandler implements CommandHandler<ReadCV, CVRead> {
     @Inject
     CVRepository cvRepository;
 
+
     @Override
     public Result<CVRead> handle(ReadCV command) {
         Stream<CV> cvs = cvRepository.find("visibility", "VISIBLE").stream();
@@ -37,6 +38,14 @@ public class ReadCVHandler implements CommandHandler<ReadCV, CVRead> {
         if (command.getCategory() != null)
             cvs = cvs.filter(
                     x -> x.preference != null && x.preference.category.equals(command.getCategory()));
+
+        if (command.getTextInfo() != null)
+            cvs = cvs.filter(
+                    x -> x.textInfo != null && x.textInfo.contains(command.getTextInfo()));
+
+        if (command.getSkill() != null)
+            cvs = cvs.filter(
+                    x -> x.skills != null && x.skills.contains(command.getSkill()));
 
         CVRead res = new CVRead(cvs.toList());
         return new Result<>(res);
