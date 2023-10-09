@@ -65,15 +65,21 @@ public class BanServiceTests {
         deptId = createDepartment();
         addAccessRule(AccessRuleFromEntityType.Member, memberId, AccessRuleToEntityType.Course, courseId);
         addAccessRule(AccessRuleFromEntityType.Member, memberId, AccessRuleToEntityType.Department, deptId);
+        addAccessRule(AccessRuleFromEntityType.Department, memberId, AccessRuleToEntityType.Course, courseId);
     }
 
 
     @Test
-    @DisplayName("Ban Existing Entity")
+    @DisplayName("Ban Existing Member")
     public void banExistingMember() {
         
         Result<EntityBanned> result = banService.banEntity(memberId, AccessRuleFromEntityType.Member);
         Assertions.assertTrue(result.isSuccess());
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         List<AccessRule> accessRules = accessRuleRepository.findByEntityIdAndType(memberId, AccessRuleFromEntityType.Member);
 

@@ -40,7 +40,7 @@ public class BanService {
         if (!entityExists(fromEntityType, entityId)) {
             return new Result<>(ErrorCode.VALIDATION_FAILED, "Entity doesn't exist");
         }
-        accessRuleRepository.ban(entityId, fromEntityType.name());
+        accessRuleRepository.ban(entityId, fromEntityType);
     
         EntityBanned bannedEvent = new EntityBanned(entityId, fromEntityType);
         return new Result<>(bannedEvent);

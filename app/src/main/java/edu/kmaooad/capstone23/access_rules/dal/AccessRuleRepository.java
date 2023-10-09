@@ -1,5 +1,6 @@
 package edu.kmaooad.capstone23.access_rules.dal;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.bson.types.ObjectId;
@@ -20,12 +21,16 @@ public class AccessRuleRepository implements PanacheMongoRepository<AccessRule> 
     }
 
     public List<AccessRule> findByEntityIdAndType(ObjectId entityId, AccessRuleFromEntityType entityType) {
-        return find("entityId = ?1 and entityType = ?2", entityId, entityType).list();
+        List<AccessRule> listFrom = find("fromEntityId = ?1 and fromEntityType = ?2", entityId, entityType).list();
+        List<AccessRule> listTo = find("toEntityId = ?1 and toEntityType = ?2", entityId, entityType).list();
+        List<AccessRule> combinedList = new ArrayList<>(listFrom);
+        combinedList.addAll(listTo);
+        return combinedList;
     }
 
-    public void ban(ObjectId entityId, String entityType) {
-        update("banned = true where fromEntityId = ?1 and fromEntityType = ?2", entityId, entityType);
-        update("banned = true where toEntityId = ?1 and toEntityType = ?2", entityId, entityType);
+    public void ban(ObjectId entityId, AccessRuleFromEntityType entityType) {
+        update("banned = ?1", true).where("fromEntityId = ?1 and fromEntityType = ?2", entityId, entityType);
+        update("banned = ?1", true).where("toEntityId = ?1 and toEntityType = ?2", entityId, entityType);
     }
 
 }
