@@ -1,6 +1,7 @@
 package edu.kmaooad.capstone23.students.service;
 
-import edu.kmaooad.capstone23.students.notification.Notification;
+import edu.kmaooad.capstone23.mail.service.NotificationMailService;
+import edu.kmaooad.capstone23.mail.service.Notification;
 import io.quarkus.mailer.Mail;
 import io.quarkus.mailer.MockMailbox;
 import io.quarkus.test.junit.QuarkusTest;
@@ -19,7 +20,7 @@ public class StudentNotificationMailServiceTest {
     MockMailbox mailbox;
 
     @Inject
-    StudentNotificationMailService service;
+    NotificationMailService service;
 
     @BeforeEach
     void init() {

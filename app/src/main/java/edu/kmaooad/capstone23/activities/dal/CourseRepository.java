@@ -6,6 +6,7 @@ import org.bson.types.ObjectId;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @ApplicationScoped
 public class CourseRepository implements PanacheMongoRepository<Course> {
@@ -16,6 +17,13 @@ public class CourseRepository implements PanacheMongoRepository<Course> {
         } catch (Exception e) {
             return Optional.empty();
         }
+    }
+
+    public long findCoursesCountByIds(List<String> ids) {
+        return ids.stream().filter(id -> {
+            var course = findById(id);
+            return course.isPresent();
+        }).count();
     }
 
     public Course insert(Course course) {
@@ -31,5 +39,15 @@ public class CourseRepository implements PanacheMongoRepository<Course> {
         persistOrUpdate(courses);
         return courses;
     }
+
+    public void bulkDelete(List<Course> courses) {
+
+        List<ObjectId> objectIds = courses.stream()
+                .map(id -> new ObjectId(id.toString()))
+                .collect(Collectors.toList());
+
+        delete("id in ?1", objectIds);
+    }
+
 
 }
