@@ -56,6 +56,7 @@ public class BanServiceTests {
     private ObjectId memberId;
     private ObjectId courseId;
     private ObjectId deptId;
+    private ObjectId deptId2;
 
     @BeforeEach
     public void setup() {
@@ -63,9 +64,10 @@ public class BanServiceTests {
         memberId = createMember();
         courseId = createCourse();
         deptId = createDepartment();
+        deptId2 = createDepartment();
         addAccessRule(AccessRuleFromEntityType.Member, memberId, AccessRuleToEntityType.Course, courseId);
         addAccessRule(AccessRuleFromEntityType.Member, memberId, AccessRuleToEntityType.Department, deptId);
-        addAccessRule(AccessRuleFromEntityType.Department, memberId, AccessRuleToEntityType.Course, courseId);
+        addAccessRule(AccessRuleFromEntityType.Department, deptId2, AccessRuleToEntityType.Course, courseId);
     }
 
 
@@ -75,13 +77,20 @@ public class BanServiceTests {
         
         Result<EntityBanned> result = banService.banEntity(memberId, AccessRuleFromEntityType.Member);
         Assertions.assertTrue(result.isSuccess());
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
         List<AccessRule> accessRules = accessRuleRepository.findByEntityIdAndType(memberId, AccessRuleFromEntityType.Member);
+
+        for (AccessRule rule : accessRules) {
+            Assertions.assertTrue(rule.banned);
+        }
+    }
+
+    @Test
+    @DisplayName("Ban Existing Department")
+    public void banExistingDepartment() {
+        
+        Result<EntityBanned> result = banService.banEntity(deptId, AccessRuleFromEntityType.Department);
+        Assertions.assertTrue(result.isSuccess());
+        List<AccessRule> accessRules = accessRuleRepository.findByEntityIdAndType(deptId, AccessRuleFromEntityType.Department);
 
         for (AccessRule rule : accessRules) {
             Assertions.assertTrue(rule.banned);
