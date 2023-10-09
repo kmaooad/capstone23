@@ -24,6 +24,7 @@ class UpdateProfessorHandlerTest {
 
     @Inject
     CommandHandler<UpdateProfessor, ProfessorUpdated> updateHandler;
+    
 
     @Test
     @DisplayName("Update professor test: basic test")
