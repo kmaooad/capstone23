@@ -14,20 +14,22 @@ public class CreateChatHandler implements CommandHandler<CreateChat, ChatCreated
   @Inject
   ChatRepository chatRepository;
 
-  private final Chat chat = new Chat();
+  private Chat chat;
 
   @Override
   public Result<ChatCreated> handle(CreateChat command) {
-    initFromCommand(command);
+    initChat(command);
 
-    this.chatRepository.insert(chat);
+    chatRepository.insert(chat);
 
     ChatCreated createdChat = new ChatCreated(chat.id.toHexString());
 
     return new Result<ChatCreated>(createdChat);
   }
 
-  private void initFromCommand(CreateChat command) {
+  private void initChat(CreateChat command) {
+    chat = new Chat();
+
     chat.name = command.getName();
     chat.description = command.getDescription();
     chat.accessType = Chat.AccessType.valueOf(command.getAccessType());

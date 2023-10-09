@@ -32,7 +32,7 @@ public class ControllerTest<PayloadType> {
 
   protected String mapPayloadToStringifiedJson(PayloadType entity) {
     try {
-      ObjectMapper mapper = new ObjectMapper();
+      ObjectMapper mapper = new ObjectMapperSerializingToHexObjectId();
 
       return mapper.writeValueAsString(entity);
     } catch (JsonProcessingException exception) {
