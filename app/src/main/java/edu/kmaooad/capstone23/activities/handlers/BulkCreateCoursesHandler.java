@@ -22,7 +22,6 @@ public class BulkCreateCoursesHandler implements CommandHandler<BulkCreateCourse
         List<Course> courses = command.getCoursesList().stream().map(courseCommand -> {
             var course = new Course();
             course.name = courseCommand.getName();
-            course.tags = new ArrayList<>();
             return course;
         }).toList();
 

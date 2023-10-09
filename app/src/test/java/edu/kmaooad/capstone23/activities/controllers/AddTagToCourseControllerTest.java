@@ -28,7 +28,6 @@ public class AddTagToCourseControllerTest {
     public void setup() {
         var course = new Course();
         course.name = "TestCourse";
-        course.tags = new ArrayList<>();
         courseRepository.insert(course);
 
         var tag = new Tag();

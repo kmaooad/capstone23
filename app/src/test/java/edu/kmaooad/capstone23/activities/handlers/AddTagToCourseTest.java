@@ -29,7 +29,6 @@ public class AddTagToCourseTest {
     public void setup() {
         var course = new Course();
         course.name = "TestCourse";
-        course.tags = new ArrayList<>();
         courseRepository.insert(course);
 
         var tag = new Tag();
@@ -73,6 +72,5 @@ public class AddTagToCourseTest {
         courseRepository.deleteAll();
         tagRepository.deleteAll();
     }
-
 
 }

@@ -92,6 +92,7 @@ Each UoW consists of:
     - Create/update/delete any extra activities (e.g. projects, hackathons, challenges etc.)
   - Manage courses
     - Manually create/update/delete courses
+    - Find courses by tags
   - Assign competences to activities
     - Manually set/unset relation between activity and competences
 - Jobs
