@@ -1,6 +1,7 @@
 package edu.kmaooad.capstone23.experts.handlers;
 
 import edu.kmaooad.capstone23.common.CommandHandler;
+import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.competences.dal.Project;
 import edu.kmaooad.capstone23.competences.dal.ProjsRepository;
@@ -55,6 +56,18 @@ public class RemoveExpertFromProjectHandlerTest {
         Assertions.assertTrue(expertsRepository
                 .findById(new ObjectId(result.getValue().getExpertId()))
                 .projects.isEmpty());
+    }
+
+    @Test
+    @DisplayName("Remove Expert From Member Handler: Invalid Project")
+    public void testInvalidProjectHandling() {
+        RemoveExpertFromProject command = new RemoveExpertFromProject();
+        command.setExpertId(expert.id);
+        command.setProjectId(new ObjectId( "64fe000000000a0000000000"));
+
+        Result<ExpertRemovedFromProject> result = removeHandler.handle(command);
+
+        Assertions.assertEquals(ErrorCode.NOT_FOUND, result.getErrorCode());
     }
 
     @AfterEach

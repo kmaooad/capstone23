@@ -52,6 +52,22 @@ public class RemoveExpertFromProjectControllerTest {
                 .statusCode(200);
     }
 
+    @Test
+    @DisplayName("Remove Expert From Project: Invalid Project")
+    public void testExpertFromInvalidProjectRemoval() {
+        Map<String, Object> jsonAsMap = new HashMap<>();
+        jsonAsMap.put("expertId", expert.id.toHexString());
+        jsonAsMap.put("projectId", "64fe000000000a0000000000");
+
+        RestAssured.given()
+                .contentType("application/json")
+                .body(jsonAsMap)
+                .when()
+                .post("/experts/remove_expert_from_project")
+                .then()
+                .statusCode(400);
+    }
+
     @AfterEach
     public void tearDown() {
         projsRepository.deleteById(project.id);
