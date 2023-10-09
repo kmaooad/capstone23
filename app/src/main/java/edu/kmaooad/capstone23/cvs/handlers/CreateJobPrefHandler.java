@@ -28,6 +28,10 @@ public class CreateJobPrefHandler implements CommandHandler<CreateJobPref, JobPr
         } else if(command.getLocation().length()<1 || command.getLocation().length()>100){
             return new Result<>(ErrorCode.VALIDATION_FAILED, "Invalid size of location");
         }
+
+        if (command.getCategory() == null ) {
+            return new Result<>(ErrorCode.VALIDATION_FAILED, "Category cannot be null");
+        }
         pref.industry = command.getIndustry();
         pref.location = command.getLocation();
         pref.category = command.getCategory();
