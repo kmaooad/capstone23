@@ -4,11 +4,9 @@ import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.experts.commands.AssignExpertToMember;
-import edu.kmaooad.capstone23.experts.commands.DeleteExpert;
 import edu.kmaooad.capstone23.experts.dal.Expert;
 import edu.kmaooad.capstone23.experts.dal.ExpertsRepository;
 import edu.kmaooad.capstone23.experts.events.ExpertAssigned;
-import edu.kmaooad.capstone23.experts.events.ExpertDeleted;
 import edu.kmaooad.capstone23.members.dal.Member;
 import edu.kmaooad.capstone23.members.dal.MembersRepository;
 import edu.kmaooad.capstone23.orgs.dal.Org;
@@ -42,7 +40,8 @@ public class AssignExpertToMemberHandler implements CommandHandler<AssignExpertT
         member.isExpert = true;
         membersRepository.modify(member);
 
-        Org org = orgsRepository.findById(member.orgId);
+        //TODO fix expert assignment logic
+        Org org = orgsRepository.findById(member.orgId.get(0));
         Expert expert = new Expert();
         expert.name = member.firstName + member.lastName;
         expert.org = org;
