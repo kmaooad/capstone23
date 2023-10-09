@@ -17,6 +17,8 @@ public class ExtracurricularActivity {
 
     public List<ObjectId> skillIds;
 
+    public List<ObjectId> skillIds;
+
     public List<Tag> tags;
 
 }
