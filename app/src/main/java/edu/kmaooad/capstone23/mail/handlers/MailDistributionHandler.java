@@ -71,9 +71,10 @@ public class MailDistributionHandler implements CommandHandler<MailDistribution,
 
     public Result<DistributionCompleted> handle(MailDistribution command){
         notificationBody = command.getMessageBody();
+
         TypeOfDistribution target = command.getDistributionTarget();
         List<String> emails = getEmailList(target);
-        if (emails == null) {
+        if (emails == null || emails.size() == 0) {
             return new Result<>(ErrorCode.VALIDATION_FAILED, "Incorrect type of distribution or repo is empty!");
         }
 
@@ -82,7 +83,7 @@ public class MailDistributionHandler implements CommandHandler<MailDistribution,
             service.sendNotification(notification);
         }
 
-        DistributionCompleted result = new DistributionCompleted(command.getDistributionTarget().getValue());
+        DistributionCompleted result = new DistributionCompleted(command.getMessageBody(), command.getDistributionTarget());
         return new Result<>(result);
     }
 }
