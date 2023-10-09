@@ -178,6 +178,7 @@ public class UpdateAccessRuleHandlerTests {
         Result<AccessRuleUpdated> result = updateAccessRule("12345abc" ,member, AccessRuleFromEntityType.Member, org, AccessRuleToEntityType.Organisation);
         Assertions.assertFalse(result.isSuccess());
     }
+
     @Test
     @DisplayName("Update Access Rule: non existent ObjectId")
     public void updateRuleNonExistentRuleId() {
