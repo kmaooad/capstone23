@@ -171,4 +171,11 @@ public class UpdateAccessRuleHandlerTests {
         Result<AccessRuleUpdated> result = updateAccessRule(rule,member, AccessRuleFromEntityType.Member, org, AccessRuleToEntityType.Organisation);
         Assertions.assertTrue(result.isSuccess());
     }
+
+    @Test
+    @DisplayName("Update Access Rule: invalid ObjectId")
+    public void updateRuleInvalidRuleId() {
+        Result<AccessRuleUpdated> result = updateAccessRule("12345abc" ,member, AccessRuleFromEntityType.Member, org, AccessRuleToEntityType.Organisation);
+        Assertions.assertFalse(result.isSuccess());
+    }
 }
