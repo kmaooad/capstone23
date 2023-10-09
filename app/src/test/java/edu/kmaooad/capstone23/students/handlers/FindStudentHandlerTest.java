@@ -83,6 +83,18 @@ public class FindStudentHandlerTest {
     }
 
     @Test
+    @DisplayName("Find students by email")
+    public void testFindStudentsByEmail() {
+        FindStudent command = new FindStudent();
+        command.setEmail("ivan.dobrovolskyi@ukma.edu.");
+        Result<StudentsFound> result = handler.handle(command);
+
+        Assertions.assertTrue(result.isSuccess());
+        Assertions.assertNotNull(result.getValue());
+        Assertions.assertEquals(3, result.getValue().getStudents().size());
+    }
+
+    @Test
     @DisplayName("Find students by fullname: first name")
     public void testFindStudentsByFullNameFirstName() {
         FindStudent command = new FindStudent();
