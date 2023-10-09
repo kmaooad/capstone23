@@ -52,6 +52,54 @@ public class RemoveExpertFromProjectControllerTest {
                 .statusCode(200);
     }
 
+    @Test
+    @DisplayName("Remove Expert From Project: Null Expert")
+    public void testNullExpertFromProjectRemoval() {
+        Map<String, Object> jsonAsMap = new HashMap<>();
+        jsonAsMap.put("expertId", null);
+        jsonAsMap.put("projectId", project.id.toHexString());
+
+        RestAssured.given()
+                .contentType("application/json")
+                .body(jsonAsMap)
+                .when()
+                .post("/experts/remove_expert_from_project")
+                .then()
+                .statusCode(400);
+    }
+
+    @Test
+    @DisplayName("Remove Expert From Project: Null Project")
+    public void testExpertFromNullProjectRemoval() {
+        Map<String, Object> jsonAsMap = new HashMap<>();
+        jsonAsMap.put("expertId", expert.id.toHexString());
+        jsonAsMap.put("projectId", null);
+
+        RestAssured.given()
+                .contentType("application/json")
+                .body(jsonAsMap)
+                .when()
+                .post("/experts/remove_expert_from_project")
+                .then()
+                .statusCode(400);
+    }
+
+    @Test
+    @DisplayName("Remove Expert From Project: Null Expert & Project")
+    public void testNullExpertFromNullProjectRemoval() {
+        Map<String, Object> jsonAsMap = new HashMap<>();
+        jsonAsMap.put("expertId", null);
+        jsonAsMap.put("projectId", null);
+
+        RestAssured.given()
+                .contentType("application/json")
+                .body(jsonAsMap)
+                .when()
+                .post("/experts/remove_expert_from_project")
+                .then()
+                .statusCode(400);
+    }
+
     @AfterEach
     public void tearDown() {
         projsRepository.deleteById(project.id);
