@@ -79,6 +79,7 @@ class UpdateProfessorHandlerTest {
 
         assertNotNull(updateProfessor.getProfessorId());
 
+
         assertNull(updateProfessor.getFirstName());
         assertNull(updateProfessor.getLastName());
         assertNull(updateProfessor.getEmail());
