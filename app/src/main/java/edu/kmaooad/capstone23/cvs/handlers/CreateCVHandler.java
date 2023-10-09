@@ -31,6 +31,10 @@ public class CreateCVHandler implements CommandHandler<CreateCV, CVCreated> {
             return new Result<>(ErrorCode.VALIDATION_FAILED, "Text info cannot be blank");
         }
 
+        if (command.getVisibility() == null) {
+            return new Result<>(ErrorCode.VALIDATION_FAILED, "Visibility cannot be null");
+        }
+
         cv.dateTimeCreated = command.getDateTimeCreated();
         cv.textInfo = command.getTextInfo();
         cv.status = command.getStatus();
