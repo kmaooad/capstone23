@@ -196,6 +196,7 @@ public class ReadCVControllerTests {
                 .body("cvs", hasSize(2));
     }
 
+
     @Test
     @DisplayName("Read CV: skill")
     public void readCVBySkills(){
@@ -213,5 +214,6 @@ public class ReadCVControllerTests {
                 .assertThat()
                 .body("cvs", hasSize(1));
     }
+
 
 }
