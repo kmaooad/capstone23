@@ -16,14 +16,23 @@ public class CreateOrgHandler implements CommandHandler<CreateOrg, OrgCreated> {
     private OrgsRepository repository;
 
     public Result<OrgCreated> handle(CreateOrg command) {
-
-        Org org = new Org();
-        org.name = command.getOrgName();
-
-        repository.insert(org);
+        Org org = this.mapCommandToEntity(command);
+        this.repository.insert(org);
 
         OrgCreated result = new OrgCreated(org.id.toString());
 
         return new Result<OrgCreated>(result);
+    }
+
+    private Org mapCommandToEntity(CreateOrg command) {
+        Org org = new Org();
+        org.name = command.getOrgName();
+        org.description = command.description;
+        org.industry = command.industry;
+        org.website = command.website;
+        org.emailDomain = command.emailDomain;
+        org.isActive = true;
+
+        return org;
     }
 }

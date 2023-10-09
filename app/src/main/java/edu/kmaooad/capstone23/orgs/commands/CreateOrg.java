@@ -13,6 +13,16 @@ public class CreateOrg {
     private String orgName;
     private HiringStatus hiringStatus;
 
+    @NotBlank
+    public String industry;
+
+    @NotBlank
+    public String website;
+
+    public String description;
+
+    public String emailDomain;
+
     public String getOrgName() {
         return orgName;
     }
