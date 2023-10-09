@@ -75,18 +75,13 @@ public class BanServiceTests {
         
         Result<EntityBanned> result = banService.banEntity(memberId, AccessRuleFromEntityType.Member);
         Assertions.assertTrue(result.isSuccess());
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
         List<AccessRule> accessRules = accessRuleRepository.findByEntityIdAndType(memberId, AccessRuleFromEntityType.Member);
 
         for (AccessRule rule : accessRules) {
             Assertions.assertTrue(rule.banned);
         }
     }
+    
 
    
     private ObjectId createMember(){
