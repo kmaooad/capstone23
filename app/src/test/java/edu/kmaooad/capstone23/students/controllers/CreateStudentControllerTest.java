@@ -76,4 +76,15 @@ public class CreateStudentControllerTest {
                 .statusCode(200);
     }
 
+    @Test
+    @DisplayName("Create students from csv: invalid email")
+    public void testsStudentsCreationFromCSVInvalidEmail() {
+        given()
+                .multiPart("csvFile", new File("src/test/resources/students/invalid_email.csv"), "text/csv")
+                .when()
+                .post("students/create_csv")
+                .then()
+                .statusCode(400);
+    }
+
 }

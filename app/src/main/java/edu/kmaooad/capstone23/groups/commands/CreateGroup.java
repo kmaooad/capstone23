@@ -2,6 +2,10 @@ package edu.kmaooad.capstone23.groups.commands;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import org.bson.types.ObjectId;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CreateGroup {
     @NotBlank
@@ -9,6 +13,12 @@ public class CreateGroup {
     private String groupName;
     @NotBlank
     private String templateId;
+
+    private List<ObjectId> activitiesId;
+    public CreateGroup(){
+
+        this.activitiesId = new ArrayList<>();
+    }
 
     public String getGroupName() {
         return groupName;
@@ -24,5 +34,9 @@ public class CreateGroup {
 
     public void setTemplateId(String templateId) {
         this.templateId = templateId;
+    }
+
+    public List<ObjectId> getActivitiesId() {
+        return activitiesId;
     }
 }
