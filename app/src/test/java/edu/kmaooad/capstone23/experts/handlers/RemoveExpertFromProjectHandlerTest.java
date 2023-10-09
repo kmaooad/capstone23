@@ -1,6 +1,7 @@
 package edu.kmaooad.capstone23.experts.handlers;
 
 import edu.kmaooad.capstone23.common.CommandHandler;
+import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.competences.dal.Project;
 import edu.kmaooad.capstone23.competences.dal.ProjsRepository;
@@ -13,7 +14,6 @@ import edu.kmaooad.capstone23.orgs.dal.OrgsRepository;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 import java.util.ArrayList;
-import java.util.List;
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
@@ -56,6 +56,19 @@ public class RemoveExpertFromProjectHandlerTest {
         Assertions.assertTrue(expertsRepository
                 .findById(new ObjectId(result.getValue().getExpertId()))
                 .projects.isEmpty());
+    }
+
+    @Test
+    @DisplayName("Remove Expert From Project: Removal Of Already Removed Expert")
+    public void testRemovalOfRemovedExpertHandling() {
+        RemoveExpertFromProject command = new RemoveExpertFromProject();
+        command.setExpertId(expert.id);
+        command.setProjectId(project.id);
+
+        removeHandler.handle(command);
+        Result<ExpertRemovedFromProject> result = removeHandler.handle(command);
+
+        Assertions.assertEquals(ErrorCode.NOT_FOUND, result.getErrorCode());
     }
 
     @AfterEach

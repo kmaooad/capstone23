@@ -11,7 +11,6 @@ import io.restassured.RestAssured;
 import jakarta.inject.Inject;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -51,6 +50,30 @@ public class RemoveExpertFromProjectControllerTest {
                 .post("/experts/remove_expert_from_project")
                 .then()
                 .statusCode(200);
+    }
+
+    @Test
+    @DisplayName("Remove Expert From Project: Removal Of Already Removed Expert")
+    public void testRemovedExpertFromProjectRemoval() {
+        Map<String, Object> jsonAsMap = new HashMap<>();
+        jsonAsMap.put("expertId", expert.id.toHexString());
+        jsonAsMap.put("projectId", project.id.toHexString());
+
+        RestAssured.given()
+                .contentType("application/json")
+                .body(jsonAsMap)
+                .when()
+                .post("/experts/remove_expert_from_project")
+                .then()
+                .statusCode(200);
+
+        RestAssured.given()
+                .contentType("application/json")
+                .body(jsonAsMap)
+                .when()
+                .post("/experts/remove_expert_from_project")
+                .then()
+                .statusCode(400);
     }
 
     @AfterEach
