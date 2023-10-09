@@ -1,5 +1,7 @@
 package edu.kmaooad.capstone23.departments.handlers;
 
+import edu.kmaooad.capstone23.ban.dal.BannedEntityType;
+import edu.kmaooad.capstone23.ban.dal.EntityBanRepository;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
@@ -21,11 +23,17 @@ public class UpdateDepartmentHandler implements CommandHandler<UpdateDepartment,
     @Inject
     private OrgsRepository orgsRepository;
 
+    @Inject
+    private EntityBanRepository banRepository;
+
     public Result<DepartmentUpdated> handle(UpdateDepartment command) {
 
         Department department = repository.findById(command.getId());
         if (department == null) {
-            return new Result(ErrorCode.EXCEPTION, "Department not found");
+            return new Result<>(ErrorCode.EXCEPTION, "Department not found");
+        }
+        if (banRepository.findForEntity(BannedEntityType.Department, department.id).isPresent()) {
+            return new Result<>(ErrorCode.EXCEPTION, "Department is banned");
         }
 
         department.name = command.getName();
@@ -35,7 +43,7 @@ public class UpdateDepartmentHandler implements CommandHandler<UpdateDepartment,
         Org parent = orgsRepository.findByName(command.getParent());
 
         if (parent == null) {
-            return new Result(ErrorCode.EXCEPTION, "Parent not found");
+            return new Result<>(ErrorCode.EXCEPTION, "Parent not found");
         }
 
         department.parent = parent.name;
@@ -44,6 +52,6 @@ public class UpdateDepartmentHandler implements CommandHandler<UpdateDepartment,
 
         DepartmentUpdated result = new DepartmentUpdated(department.id.toString(), department.name, department.description, department.parent);
 
-        return new Result(result);
+        return new Result<>(result);
     }
 }
