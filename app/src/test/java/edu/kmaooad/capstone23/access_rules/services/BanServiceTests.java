@@ -57,6 +57,7 @@ public class BanServiceTests {
     private ObjectId courseId;
     private ObjectId deptId;
     private ObjectId deptId2;
+    private ObjectId orgId;
 
     @BeforeEach
     public void setup() {
@@ -65,9 +66,11 @@ public class BanServiceTests {
         courseId = createCourse();
         deptId = createDepartment();
         deptId2 = createDepartment();
+        orgId = createOrg();
         addAccessRule(AccessRuleFromEntityType.Member, memberId, AccessRuleToEntityType.Course, courseId);
         addAccessRule(AccessRuleFromEntityType.Member, memberId, AccessRuleToEntityType.Department, deptId);
         addAccessRule(AccessRuleFromEntityType.Department, deptId2, AccessRuleToEntityType.Course, courseId);
+        addAccessRule(AccessRuleFromEntityType.Organisation, orgId, AccessRuleToEntityType.Course, courseId);
     }
 
 
@@ -97,10 +100,23 @@ public class BanServiceTests {
         }
     }
 
+    @Test
+    @DisplayName("Ban Existing Organisation")
+    public void banExistingOrganisation() {
+        
+        Result<EntityBanned> result = banService.banEntity(orgId, AccessRuleFromEntityType.Organisation);
+        Assertions.assertTrue(result.isSuccess());
+        List<AccessRule> accessRules = accessRuleRepository.findByEntityIdAndType(orgId, AccessRuleFromEntityType.Organisation);
+
+        for (AccessRule rule : accessRules) {
+            Assertions.assertTrue(rule.banned);
+        }
+    }
+
    
     private ObjectId createMember(){
         CreateBasicMember command = new CreateBasicMember();
-        command.setOrgId(new ObjectId(createOrg()));
+        command.setOrgId(createOrg());
         command.setFirstName("John");
         command.setLastName("Doe");
         String id = new ObjectId().toString();
@@ -111,13 +127,13 @@ public class BanServiceTests {
         return new ObjectId(result.getValue().getMemberId());
     }
 
-    private String createOrg(){
+    private ObjectId createOrg(){
         CreateOrg command = new CreateOrg();
         command.setOrgName("NaUKMA");
         command.industry = "Education";
         command.website = "https://www.ukma.edu.ua/eng/";
         Result<OrgCreated> result = createOrgHandler.handle(command);
-        return result.getValue().getOrgId();
+        return new ObjectId(result.getValue().getOrgId());
     }    
 
     private ObjectId createCourse(){
