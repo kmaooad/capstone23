@@ -15,8 +15,15 @@ public class Proffesor {
 
     public Set<ObjectId> activities;
 
+    public JobPreference preference;
+
+
+    public String lastName;
+
+    public String email;
+
     public Proffesor() {
-        this.activities = new HashSet<ObjectId>();
+        this.activities = new HashSet<>();
     }
 
     public JobPreference getPreference() {
@@ -27,11 +34,5 @@ public class Proffesor {
         this.preference = preference;
     }
 
-    public JobPreference preference;
-
-
-    public String lastName;
-
-    public String email;
 }
 
