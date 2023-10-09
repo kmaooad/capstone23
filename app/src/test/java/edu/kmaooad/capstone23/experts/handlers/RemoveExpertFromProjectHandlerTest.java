@@ -67,7 +67,7 @@ public class RemoveExpertFromProjectHandlerTest {
 
         Result<ExpertRemovedFromProject> result = removeHandler.handle(command);
 
-        Assertions.assertEquals(ErrorCode.CONFLICT, result.getErrorCode());
+        Assertions.assertEquals(ErrorCode.NOT_FOUND, result.getErrorCode());
     }
 
     @AfterEach
