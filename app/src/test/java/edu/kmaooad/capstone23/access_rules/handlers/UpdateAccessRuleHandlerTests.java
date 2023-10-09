@@ -178,6 +178,7 @@ public class UpdateAccessRuleHandlerTests {
         Result<AccessRuleUpdated> result = updateAccessRule("12345abc" ,member, AccessRuleFromEntityType.Member, org, AccessRuleToEntityType.Organisation);
         Assertions.assertFalse(result.isSuccess());
     }
+
     @Test
     @DisplayName("Update Access Rule: non existent ObjectId")
     public void updateRuleNonExistentRuleId() {
@@ -188,7 +189,7 @@ public class UpdateAccessRuleHandlerTests {
     @Test
     @DisplayName("Update Access Rule: invalid FromId")
     public void updateRuleInvalidFromId() {
-        Result<AccessRuleUpdated> result = updateAccessRule(rule , new ObjectId().toString(), AccessRuleFromEntityType.Member, org, AccessRuleToEntityType.Organisation);
+        Result<AccessRuleUpdated> result = updateAccessRule(rule , "12345abc", AccessRuleFromEntityType.Member, org, AccessRuleToEntityType.Organisation);
         Assertions.assertFalse(result.isSuccess());
     }
     @Test
@@ -210,5 +211,4 @@ public class UpdateAccessRuleHandlerTests {
         Result<AccessRuleUpdated> result = updateAccessRule(rule , member, AccessRuleFromEntityType.Member, new ObjectId().toString(), AccessRuleToEntityType.Organisation);
         Assertions.assertFalse(result.isSuccess());
     }
-
 }
