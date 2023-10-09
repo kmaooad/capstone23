@@ -3,6 +3,8 @@ package edu.kmaooad.capstone23.experts.handlers;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
+import edu.kmaooad.capstone23.competences.dal.Project;
+import edu.kmaooad.capstone23.competences.dal.ProjsRepository;
 import edu.kmaooad.capstone23.experts.commands.RemoveExpertFromProject;
 import edu.kmaooad.capstone23.experts.dal.Expert;
 import edu.kmaooad.capstone23.experts.dal.ExpertsRepository;
@@ -16,6 +18,8 @@ public class RemoveExpertFromProjectHandler
         implements CommandHandler<RemoveExpertFromProject, ExpertRemovedFromProject> {
     @Inject
     ExpertsRepository expertsRepository;
+    @Inject
+    ProjsRepository projsRepository;
 
     @Override
     public Result<ExpertRemovedFromProject> handle(RemoveExpertFromProject command) {
@@ -23,6 +27,13 @@ public class RemoveExpertFromProjectHandler
         ObjectId projectId = command.getProjectId();
         if (expertId != null && projectId != null) {
             Expert expert = expertsRepository.findById(expertId);
+            Project project = projsRepository.findById(projectId);
+
+            if (expert == null) {
+                return new Result<>(ErrorCode.NOT_FOUND, "Nonexistent expert");
+            } else if (project == null) {
+                return new Result<>(ErrorCode.NOT_FOUND, "Nonexistent project");
+            }
 
             if (expert.projects.isEmpty()) {
                 return new Result<>(ErrorCode.NOT_FOUND, "Expert has no projects");
