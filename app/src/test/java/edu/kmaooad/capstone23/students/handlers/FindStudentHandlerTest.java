@@ -83,6 +83,42 @@ public class FindStudentHandlerTest {
     }
 
     @Test
+    @DisplayName("Find students by fullname: first name")
+    public void testFindStudentsByFullNameFirstName() {
+        FindStudent command = new FindStudent();
+        command.setFullName("Iva");
+        Result<StudentsFound> result = handler.handle(command);
+
+        Assertions.assertTrue(result.isSuccess());
+        Assertions.assertNotNull(result.getValue());
+        Assertions.assertEquals(3, result.getValue().getStudents().size());
+    }
+
+    @Test
+    @DisplayName("Find students by fullname: middle name")
+    public void testFindStudentsByFullNameMiddleName() {
+        FindStudent command = new FindStudent();
+        command.setFullName("Oleksandrovych");
+        Result<StudentsFound> result = handler.handle(command);
+
+        Assertions.assertTrue(result.isSuccess());
+        Assertions.assertNotNull(result.getValue());
+        Assertions.assertEquals(2, result.getValue().getStudents().size());
+    }
+
+    @Test
+    @DisplayName("Find students by fullname: last name")
+    public void testFindStudentsByFullNameLastName() {
+        FindStudent command = new FindStudent();
+        command.setFullName("Dobrovolskyiii");
+        Result<StudentsFound> result = handler.handle(command);
+
+        Assertions.assertTrue(result.isSuccess());
+        Assertions.assertNotNull(result.getValue());
+        Assertions.assertEquals(1, result.getValue().getStudents().size());
+    }
+
+    @Test
     @DisplayName("Find students by multiple filters: Empty")
     public void testFindStudentsByMultipleFiltersEmpty() {
         FindStudent command = new FindStudent();
