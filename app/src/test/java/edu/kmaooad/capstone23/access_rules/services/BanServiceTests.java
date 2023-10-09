@@ -16,6 +16,7 @@ import edu.kmaooad.capstone23.departments.events.DepartmentCreated;
 import edu.kmaooad.capstone23.orgs.commands.CreateOrg;
 import edu.kmaooad.capstone23.orgs.events.OrgCreated;
 import edu.kmaooad.capstone23.common.CommandHandler;
+import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 
 import io.quarkus.test.junit.QuarkusTest;
@@ -111,6 +112,16 @@ public class BanServiceTests {
         for (AccessRule rule : accessRules) {
             Assertions.assertTrue(rule.banned);
         }
+    }
+
+    @Test
+    @DisplayName("Ban Non-existing Member")
+    public void banNonExistingMember() {
+        ObjectId nonExistingMemberId = new ObjectId();
+        Result<EntityBanned> result = banService.banEntity(nonExistingMemberId, AccessRuleFromEntityType.Member);
+        
+        Assertions.assertFalse(result.isSuccess());
+        Assertions.assertEquals(ErrorCode.VALIDATION_FAILED, result.getErrorCode());
     }
 
    
