@@ -57,4 +57,17 @@ public class AssignSkillsToActivitiesHandlerTest {
         Assertions.assertNotNull(result.getValue());
         Assertions.assertEquals(result.getValue().getActivity().id, activityId);
     }
+
+    @Test
+    void testSkillAlreadyAddedToSkillSetInSkillToSkillSetAdditionHandling() {
+        var command = new AddSkillToActivity();
+        command.setSkillId(skillId);
+        command.setActivityId(activityId);
+
+        Result<SkillToActivityAdded> result = addSkillToActivityHandler.handle(command);
+        Assertions.assertTrue(result.isSuccess());
+
+        Result<SkillToActivityAdded> resultSecond = addSkillToActivityHandler.handle(command);
+        Assertions.assertFalse(resultSecond.isSuccess());
+    }
 }

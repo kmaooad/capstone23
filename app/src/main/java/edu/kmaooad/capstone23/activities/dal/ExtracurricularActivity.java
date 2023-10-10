@@ -14,11 +14,7 @@ public class ExtracurricularActivity {
 
     public String extracurricularActivityName;
     public Date extracurricularActivityDate;
-
-    public List<ObjectId> skillIds;
-
     public List<ObjectId> skillIds;
 
     public List<Tag> tags;
-
 }
