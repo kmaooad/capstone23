@@ -37,12 +37,18 @@ public class CreateCVHandler implements CommandHandler<CreateCV, CVCreated> {
             return new Result<>(ErrorCode.VALIDATION_FAILED, "Text info cannot be blank");
         }
 
+
+        if (command.getVisibility() == null) {
+            return new Result<>(ErrorCode.VALIDATION_FAILED, "Visibility cannot be null");
+        }
+
         if (command.getStudentId() != null) {
             if (!ObjectId.isValid(command.getStudentId()))
                 return new Result<>(ErrorCode.VALIDATION_FAILED, "invalid student id");
             Student st = studentRepository.findById(new ObjectId(command.getStudentId()));
             if (st == null)
                 return new Result<>(ErrorCode.NOT_FOUND, "student with id " + command.getStudentId() + " not found");
+
         }
 
         cv.dateTimeCreated = command.getDateTimeCreated();
