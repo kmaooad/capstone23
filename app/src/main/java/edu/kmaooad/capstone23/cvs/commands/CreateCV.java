@@ -4,7 +4,6 @@ import edu.kmaooad.capstone23.cvs.dal.CV;
 import edu.kmaooad.capstone23.cvs.dal.JobPreference;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
-import jakarta.validation.constraints.Size;
 import org.bson.types.ObjectId;
 
 import java.time.LocalDateTime;
@@ -29,6 +28,8 @@ public class CreateCV {
     private JobPreference preference;
 
     private Set<ObjectId> skills;
+
+    private String studentId;
 
     public LocalDateTime getDateTimeCreated() {
         return dateTimeCreated;
@@ -84,5 +85,13 @@ public class CreateCV {
 
     public void setSkills(Set<ObjectId> skills) {
         this.skills = skills;
+    }
+
+    public String getStudentId() {
+        return studentId;
+    }
+
+    public void setStudentId(String studentId) {
+        this.studentId = studentId;
     }
 }
