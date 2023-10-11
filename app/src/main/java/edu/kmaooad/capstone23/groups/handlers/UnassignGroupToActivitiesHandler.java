@@ -36,6 +36,10 @@ public class UnassignGroupToActivitiesHandler  implements CommandHandler<Unassig
 
         if(!g.activitiesId.contains(command.getActivityId()))
             return new Result<>(ErrorCode.VALIDATION_FAILED, "This activity is not assigned to this group");
+
+
+        if(!g.activitiesId.contains(command.getActivityId()))
+            return new Result<>(ErrorCode.VALIDATION_FAILED, "This activity is not assigned to this group");
       
 
         g.activitiesId.remove(command.getActivityId());

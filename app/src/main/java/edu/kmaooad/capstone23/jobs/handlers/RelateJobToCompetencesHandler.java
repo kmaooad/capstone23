@@ -1,8 +1,13 @@
 package edu.kmaooad.capstone23.jobs.handlers;
 
+import edu.kmaooad.capstone23.activities.dal.Course;
+import edu.kmaooad.capstone23.activities.dal.CourseRepository;
+import edu.kmaooad.capstone23.activities.dal.ExtracurricularActivity;
+import edu.kmaooad.capstone23.activities.dal.ExtracurricularActivityRepository;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
+import edu.kmaooad.capstone23.competences.dal.*;
 import edu.kmaooad.capstone23.jobs.commands.RelateJobToActivities;
 import edu.kmaooad.capstone23.jobs.commands.RelateJobToCompetences;
 import edu.kmaooad.capstone23.jobs.dal.Job;
@@ -19,12 +24,25 @@ public class RelateJobToCompetencesHandler implements CommandHandler<RelateJobTo
     @Inject
     private JobRepository repository;
 
+    @Inject
+    private ProjsRepository projsRepository;
+    @Inject
+    private SkillsRepository skillsRepository;
+    @Inject
+    private TopicRepository topicRepository;
+
     @Override
     public Result<CompetenceRelated> handle(RelateJobToCompetences command) {
 
         Optional<Job> job = repository.findByIdOptional(command.getJobId());
         if(job.isEmpty())
             return new Result<>(ErrorCode.VALIDATION_FAILED, "This job was previously deleted or never existed");
+
+        Optional<Project> project = projsRepository.findByIdOptional(command.getCompetenceId());
+        Optional<Skill> skill = skillsRepository.findByIdOptional(command.getCompetenceId());
+        Optional<Topic> topic = topicRepository.findByIdOptional(command.getCompetenceId());
+        if(project.isEmpty() && skill.isEmpty() && topic.isEmpty())
+            return new Result<>(ErrorCode.VALIDATION_FAILED, "This competence was previously deleted or never existed");
 
         CompetenceRelated result = new CompetenceRelated(command.getJobId(), command.getCompetenceId());
 
