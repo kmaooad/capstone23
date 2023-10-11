@@ -70,4 +70,14 @@ public class UnassignGroupToActivityHandlerTests {
         Assertions.assertTrue(activityUnassignedResult.getValue().getGroupId().equals(gr));
     }
 
+    @Test
+    void testHandlingNotExistedGroup() {
+        UnassignGroupToActivity unassignGroupToActivity = new UnassignGroupToActivity();
+        unassignGroupToActivity.setGroupId(new ObjectId("aaaaaaaaaaaaaaaaaaaaaaaa"));
+        unassignGroupToActivity.setActivityId(courseId);
+        Result<ActivityUnassigned> activityUnassignedResult = unassignHandler.handle(unassignGroupToActivity);
+        Assertions.assertFalse(activityUnassignedResult.isSuccess());
+        Assertions.assertNull(activityUnassignedResult.getValue());
+    }
+
 }
