@@ -3,6 +3,7 @@ package edu.kmaooad.capstone23.groups.controllers;
 import edu.kmaooad.capstone23.activities.commands.CreateCourse;
 import edu.kmaooad.capstone23.activities.dal.Course;
 import edu.kmaooad.capstone23.activities.dal.CourseRepository;
+
 import edu.kmaooad.capstone23.activities.events.CourseCreated;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.Result;
@@ -20,6 +21,7 @@ import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.BeforeEach;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -53,6 +55,7 @@ public class UnassignGroupToActivityControllerTests {
         idToUpdate = course.id;
 
     }
+
     @Test
     @DisplayName("Delete Relate Job To Activities: existed relation, valid input")
     public void testBasicJobActivitiesConnectionRemoving() {
@@ -115,5 +118,6 @@ public class UnassignGroupToActivityControllerTests {
                 .then()
                 .statusCode(400);
     }
+
 
 }
