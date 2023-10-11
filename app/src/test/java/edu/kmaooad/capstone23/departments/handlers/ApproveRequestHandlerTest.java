@@ -1,5 +1,8 @@
 package edu.kmaooad.capstone23.departments.handlers;
 
+import edu.kmaooad.capstone23.ban.commands.BanEntity;
+import edu.kmaooad.capstone23.ban.handlers.BanEntityHandler;
+import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.departments.commands.ApproveJoinRequest;
 import edu.kmaooad.capstone23.departments.dal.Department;
@@ -9,6 +12,8 @@ import edu.kmaooad.capstone23.departments.dal.RequestsRepository;
 import edu.kmaooad.capstone23.departments.events.RequestApproved;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
+import jakarta.validation.constraints.AssertTrue;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -28,6 +33,9 @@ public class ApproveRequestHandlerTest {
     @Inject
     RequestsRepository requestsRepository;
 
+    @Inject
+    BanEntityHandler banEntityHandler;
+
     private String requestId;
 
     @BeforeEach
@@ -40,13 +48,13 @@ public class ApproveRequestHandlerTest {
         department.members = new ArrayList<>();
         departmentsRepository.insert(department);
 
-       Request request = new Request();
-       request.userName = "user1@ukma.edu";
-       request.departmentId = department.id.toString();
-       request.status = "pending";
-       requestsRepository.insert(request);
+        Request request = new Request();
+        request.userName = "user1@ukma.edu";
+        request.departmentId = department.id.toString();
+        request.status = "pending";
+        requestsRepository.insert(request);
 
-       requestId = request.id.toString();
+        requestId = request.id.toString();
     }
 
 
@@ -90,4 +98,27 @@ public class ApproveRequestHandlerTest {
         Assertions.assertEquals("Request not found", result.getMessage());
     }
 
+
+    @Test
+    @DisplayName("Approve Join Request: Error handling when department is banned")
+    public void testApproveJoinRequesForBannedDepartment() {
+        var request = requestsRepository.findById(requestId);
+        var department = departmentsRepository.findById(request.departmentId);
+
+        BanEntity banCommand = new BanEntity();
+        banCommand.setEntityType("Department");
+        banCommand.setEntityId(department.id);
+        banCommand.setReason("Hello there");
+
+        var banResult = banEntityHandler.handle(banCommand);
+        Assertions.assertTrue(banResult.isSuccess());
+
+        ApproveJoinRequest command = new ApproveJoinRequest();
+        command.setRequestId(requestId);
+
+        Result<RequestApproved> result = handler.handle(command);
+        Assertions.assertFalse(result.isSuccess());
+        Assertions.assertEquals(ErrorCode.EXCEPTION, result.getErrorCode());
+        Assertions.assertEquals("Department is banned", result.getMessage());
+    }
 }

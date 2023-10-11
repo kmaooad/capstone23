@@ -2,6 +2,7 @@ package edu.kmaooad.capstone23.cvs.commands;
 
 import edu.kmaooad.capstone23.cvs.dal.CV;
 import edu.kmaooad.capstone23.cvs.dal.JobPreference;
+import org.bson.types.ObjectId;
 
 public class ReadCV {
 
@@ -11,7 +12,11 @@ public class ReadCV {
 
     private String location;
 
+    public String textInfo;
+
     private JobPreference.Category category;
+
+    private ObjectId skill;
 
     public CV.Status getStatus() {
         return status;
@@ -45,6 +50,19 @@ public class ReadCV {
         this.category = category;
     }
 
+    public String getTextInfo() {
+        return textInfo;
+    }
 
+    public void setTextInfo(String textInfo) {
+        this.textInfo = textInfo;
+    }
 
+    public ObjectId getSkill() {
+        return skill;
+    }
+
+    public void setSkill(ObjectId skill) {
+        this.skill = skill;
+    }
 }

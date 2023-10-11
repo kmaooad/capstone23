@@ -90,7 +90,7 @@ public class AssignExpertToProjectHandlerTest {
 
         Assertions.assertFalse(result.isSuccess());
         Assertions.assertNull(result.getValue());
-        Assertions.assertEquals(result.getErrorCode(), ErrorCode.CONFLICT);
+        Assertions.assertEquals(ErrorCode.NOT_FOUND, result.getErrorCode());
     }
   
     @Test
