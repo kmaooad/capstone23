@@ -4,6 +4,7 @@ package edu.kmaooad.capstone23.activities.controllers;
 import edu.kmaooad.capstone23.activities.dal.ExtracurricularActivity;
 import edu.kmaooad.capstone23.activities.dal.ExtracurricularActivityRepository;
 import edu.kmaooad.capstone23.competences.dal.Skill;
+import edu.kmaooad.capstone23.competences.dal.SkillsRepository;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
@@ -22,7 +23,10 @@ public class RemoveSkillFromActivityControllerTest {
 
     @Inject
     private ExtracurricularActivityRepository activityRepository;
+    
     @Inject
+    SkillsRepository skillsRepository;
+
     private ExtracurricularActivity activity;
 
     private ObjectId activityId;
@@ -32,6 +36,7 @@ public class RemoveSkillFromActivityControllerTest {
     void setUp() {
         Skill skill = new Skill();
         skill.name = "Sociable";
+        skillsRepository.insert(skill);
         skillId = skill.id;
 
         ExtracurricularActivity activity = new ExtracurricularActivity();
