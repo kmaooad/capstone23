@@ -1,9 +1,17 @@
 package edu.kmaooad.capstone23.departments.handlers;
 
+import edu.kmaooad.capstone23.ban.commands.BanEntity;
+import edu.kmaooad.capstone23.ban.dal.BannedEntityType;
+import edu.kmaooad.capstone23.ban.events.EntityBanned;
+import edu.kmaooad.capstone23.common.CommandHandler;
+import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.departments.commands.SetHiringStatusOff;
+import edu.kmaooad.capstone23.departments.commands.SetHiringStatusOn;
 import edu.kmaooad.capstone23.departments.dal.Department;
 import edu.kmaooad.capstone23.departments.dal.DepartmentsRepository;
+import edu.kmaooad.capstone23.departments.events.HiringStatusSettedOff;
+import edu.kmaooad.capstone23.departments.events.HiringStatusSettedOn;
 import edu.kmaooad.capstone23.jobs.dal.Job;
 import edu.kmaooad.capstone23.jobs.dal.JobRepository;
 import io.quarkus.test.junit.QuarkusTest;
@@ -25,6 +33,9 @@ public class SetHiringStatusOffHandlerTest {
 
     @Inject
     DepartmentsRepository departmentsRepository;
+
+    @Inject
+    CommandHandler<BanEntity, EntityBanned> banHandler;
 
     @Inject
     JobRepository jobRepository;
@@ -96,4 +107,28 @@ public class SetHiringStatusOffHandlerTest {
         Assertions.assertFalse(result.isSuccess());
     }
 
+    @Test
+    @DisplayName("Set hiring off test: Department is banned")
+    void setHiringStatusWithBannedTest() {
+        var banRequest = new BanEntity();
+        banRequest.setEntityId(new ObjectId(departmentId));
+        banRequest.setEntityType(BannedEntityType.Department.name());
+        banRequest.setReason("Hello there");
+
+        var banResult = banHandler.handle(banRequest);
+
+        Assertions.assertTrue(banResult.isSuccess());
+        Assertions.assertNotNull(banResult.getValue());
+
+        SetHiringStatusOff command = new SetHiringStatusOff();
+
+        command.setDepartmentId(departmentId);
+
+        Result<HiringStatusSettedOff> result = handler.handle(command);
+
+        Assertions.assertFalse(result.isSuccess());
+        Assertions.assertEquals(result.getErrorCode(), ErrorCode.VALIDATION_FAILED);
+        Assertions.assertEquals(result.getMessage(), "Department is banned");
+
+    }
 }

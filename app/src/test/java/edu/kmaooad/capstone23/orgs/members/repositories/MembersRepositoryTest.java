@@ -55,6 +55,21 @@ public class MembersRepositoryTest extends TestWithDbClearance {
     }
 
     @Test
+    public void testUpdateToHaveWithDuplicatedUserAndOrgId() {
+        Member newMember = new Member();
+        newMember.orgId = setUpMember.orgId;
+        newMember.userId = new ObjectId();
+
+        assertDoesNotThrow(() -> {
+            membersRepository.insert(newMember);
+        });
+
+        newMember.userId = setUpMember.userId;
+
+        assertThrows(UniquenessViolationException.class, () -> membersRepository.updateEntry(newMember));
+    }
+
+    @Test
     public void testInsertDuplicateOrgAndUserIdsGeneratedMethodThrowsMongoException() {
         Member newMember = new Member();
         newMember.orgId = setUpMember.orgId;

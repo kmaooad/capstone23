@@ -45,4 +45,45 @@ public class CreateCVHandlerTest {
 
         Assertions.assertFalse(result.isSuccess());
     }
+
+    @Test
+    @DisplayName("Create Cvs: wrong DateTimeCreated")
+    void testWrongDateTimeCreatedHandling() {
+        CreateCV command = new CreateCV();
+        command.setDateTimeCreated(LocalDateTime.now().plusYears(1));
+        command.setTextInfo("some info about a student");
+        command.setStatus(CV.Status.OPEN);
+        command.setVisibility(CV.Visibility.VISIBLE);
+
+        Result<CVCreated> result = handler.handle(command);
+
+        Assertions.assertFalse(result.isSuccess());
+    }
+
+    @Test
+    @DisplayName("Create Cvs: text info is blank")
+    void testTextInfoIsBlankHandling() {
+        CreateCV command = new CreateCV();
+        command.setDateTimeCreated(LocalDateTime.now());
+        command.setTextInfo(" ");
+        command.setStatus(CV.Status.OPEN);
+        command.setVisibility(CV.Visibility.VISIBLE);
+
+        Result<CVCreated> result = handler.handle(command);
+
+        Assertions.assertFalse(result.isSuccess());
+    }
+
+    @Test
+    @DisplayName("Create Cvs: visibility is null")
+    void testVisibilityIsNullHandling() {
+        CreateCV command = new CreateCV();
+        command.setDateTimeCreated(LocalDateTime.now());
+        command.setTextInfo("some info about a student");
+        command.setStatus(CV.Status.OPEN);
+
+        Result<CVCreated> result = handler.handle(command);
+
+        Assertions.assertFalse(result.isSuccess());
+    }
 }
