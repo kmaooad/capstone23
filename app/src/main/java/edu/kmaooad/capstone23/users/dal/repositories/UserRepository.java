@@ -18,7 +18,7 @@ public class UserRepository implements PanacheMongoRepository<User> {
   }
 
   public Optional<User> findByEmail(@Email String email) {
-    PanacheQuery<User> user = find("email", email);
+    PanacheQuery<User> user = find("unique_email", email);
 
     return user.firstResultOptional();
   }
