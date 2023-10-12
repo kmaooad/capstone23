@@ -16,8 +16,7 @@ import org.bson.types.ObjectId;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 @QuarkusTest
 public class MembersRepositoryTest extends TestWithDbClearance {
@@ -79,19 +78,15 @@ public class MembersRepositoryTest extends TestWithDbClearance {
     }
 
     @Test
-    public void testUpdateToHaveWithDuplicatedUserAndOrgId() {
-        Member newMember = new Member();
-        newMember.orgId = setUpMember.orgId;
-        newMember.userId = new ObjectId();
+    public void testUpdateIsExpertFieldInMember() {
+        var memberIsExpertBeforeUpdate = membersRepository.findById(setUpMember.id).isExpert;
 
-        assertDoesNotThrow(() -> {
-            membersRepository.insert(newMember);
-        });
+        setUpMember.isExpert = !memberIsExpertBeforeUpdate;
+        var updatedMember = membersRepository.updateEntry(setUpMember);
 
-        newMember.userId = setUpMember.userId;
-
-        assertThrows(UniquenessViolationException.class, () -> membersRepository.updateEntry(newMember));
+        assertNotEquals(memberIsExpertBeforeUpdate, updatedMember.isExpert);
     }
+
 
     @Test
     public void testUpdateNonExistentMember() {
@@ -103,5 +98,15 @@ public class MembersRepositoryTest extends TestWithDbClearance {
         member.userId = user.id;
 
         assertThrows(MemberNotFoundException.class, () -> membersRepository.updateEntry(member));
+    }
+
+    @Test
+    public void testUpdateOnlyUser() {
+        var user = userRepository.insert(UserMocks.validUser());
+
+        setUpMember.userId = user.id;
+
+        membersRepository.updateEntry(setUpMember);
+        assertEquals(setUpMember.userId, membersRepository.findById(setUpMember.id).userId);
     }
 }
