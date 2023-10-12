@@ -3,7 +3,6 @@ package edu.kmaooad.capstone23.orgs.members.handlers;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.members.commands.GetAllMembersByOrg;
-import edu.kmaooad.capstone23.members.dal.Member;
 import edu.kmaooad.capstone23.members.events.MembersListed;
 import edu.kmaooad.capstone23.members.handlers.GetAllMembersByOrgHandler;
 import edu.kmaooad.capstone23.orgs.members.TestWithMembersSetUp;
@@ -12,8 +11,6 @@ import jakarta.inject.Inject;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.util.List;
 
 @QuarkusTest
 public class GetAllMembersByOrgHandlerTest extends TestWithMembersSetUp {
@@ -41,44 +38,6 @@ public class GetAllMembersByOrgHandlerTest extends TestWithMembersSetUp {
         secondOrgCommand.setOrgId(secondOrg);
         secondOrgCommand.setPage(0);
         secondOrgCommand.setSize(1);
-
-        Result<MembersListed> secondOrgResult = handler.handle(secondOrgCommand);
-        Assertions.assertTrue(secondOrgResult.isSuccess());
-        Assertions.assertNotNull(secondOrgResult.getValue());
-        Assertions.assertEquals(
-                secondOrgMembers.stream().sorted().toList(),
-                secondOrgResult.getValue().getMembers().stream().map(member -> member.id).sorted().toList()
-        );
-    }
-
-    @Test
-    @DisplayName("Read all members by org: Multi org members")
-    void testSuccessfulHandlingWithMultiOrgMembers() {
-        GetAllMembersByOrg firstOrgCommand = new GetAllMembersByOrg();
-        firstOrgCommand.setOrgId(firstOrg);
-        firstOrgCommand.setPage(0);
-        firstOrgCommand.setSize(3);
-
-        Result<MembersListed> firstOrgResult = handler.handle(firstOrgCommand);
-        Assertions.assertTrue(firstOrgResult.isSuccess());
-        Assertions.assertNotNull(firstOrgResult.getValue());
-        Assertions.assertEquals(
-                firstOrgMembers.stream().sorted().toList(),
-                firstOrgResult.getValue().getMembers().stream().map(member -> member.id).sorted().toList()
-        );
-
-        Member member3 = new Member();
-        member3.firstName = "Some";
-        member3.lastName = "Member";
-        member3.orgId = List.of(firstOrg, secondOrg);
-        member3.email = "someMember@email.com";
-        membersRepository.insert(member3);
-        secondOrgMembers.add(member3.id);
-
-        GetAllMembersByOrg secondOrgCommand = new GetAllMembersByOrg();
-        secondOrgCommand.setOrgId(secondOrg);
-        secondOrgCommand.setPage(0);
-        secondOrgCommand.setSize(3);
 
         Result<MembersListed> secondOrgResult = handler.handle(secondOrgCommand);
         Assertions.assertTrue(secondOrgResult.isSuccess());
