@@ -3,6 +3,7 @@ package edu.kmaooad.capstone23.orgs.members.repositories;
 import com.mongodb.MongoException;
 import edu.kmaooad.capstone23.members.dal.Member;
 import edu.kmaooad.capstone23.members.dal.MembersRepository;
+import edu.kmaooad.capstone23.members.exceptions.MemberNotFoundException;
 import edu.kmaooad.capstone23.members.exceptions.UniquenessViolationException;
 import edu.kmaooad.capstone23.orgs.dal.Org;
 import edu.kmaooad.capstone23.orgs.dal.OrgsRepository;
@@ -75,5 +76,32 @@ public class MembersRepositoryTest extends TestWithDbClearance {
         newMember.userId = setUpMember.userId;
 
         assertThrows(MongoException.class, () -> membersRepository.persist(newMember));
+    }
+
+    @Test
+    public void testUpdateToHaveWithDuplicatedUserAndOrgId() {
+        Member newMember = new Member();
+        newMember.orgId = setUpMember.orgId;
+        newMember.userId = new ObjectId();
+
+        assertDoesNotThrow(() -> {
+            membersRepository.insert(newMember);
+        });
+
+        newMember.userId = setUpMember.userId;
+
+        assertThrows(UniquenessViolationException.class, () -> membersRepository.updateEntry(newMember));
+    }
+
+    @Test
+    public void testUpdateNonExistentMember() {
+        var user = userRepository.insert(UserMocks.validUser());
+
+        Member member = new Member();
+        member.id = new ObjectId();
+        member.orgId = setUpMember.orgId;
+        member.userId = user.id;
+
+        assertThrows(MemberNotFoundException.class, () -> membersRepository.updateEntry(member));
     }
 }
