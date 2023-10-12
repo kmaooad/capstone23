@@ -42,6 +42,18 @@ public class IsBannedHandlerTest {
         Assertions.assertNotNull(isBannedResult.getValue());
         Assertions.assertTrue(isBannedResult.getValue().value());
 
+    }
+
+    @Test
+    @DisplayName("Is not Banned Handler: Basic Test")
+    void testSuccessfulNotBannedHandling() {
+        var org = createOrg();
+
+        var isBannedResult = isBannedHandler.handle(new IsEntityBanned(new ObjectId(org), BannedEntityType.Organization.name()));
+
+        Assertions.assertTrue(isBannedResult.isSuccess());
+        Assertions.assertNotNull(isBannedResult.getValue());
+        Assertions.assertFalse(isBannedResult.getValue().value());
 
     }
 
@@ -53,7 +65,6 @@ public class IsBannedHandlerTest {
 
         Result<OrgCreated> result = createOrgHandler.handle(command);
 
-        System.out.println(result.getMessage());
         Assertions.assertTrue(result.isSuccess());
         Assertions.assertNotNull(result.getValue());
         Assertions.assertFalse(result.getValue().getOrgId().isEmpty());

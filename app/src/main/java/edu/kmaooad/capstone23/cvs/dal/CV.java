@@ -25,6 +25,8 @@ public class CV {
 
     public JobPreference preference;
 
+    public String studentId;
+
     public enum Status {
         OPEN,
         CLOSED,
