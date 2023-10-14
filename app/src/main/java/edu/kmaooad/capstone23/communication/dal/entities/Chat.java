@@ -9,6 +9,7 @@ public class Chat {
   public String name;
   public String description;
   public AccessType accessType;
+  public Boolean archived;
 
   public enum AccessType {
     Private,
