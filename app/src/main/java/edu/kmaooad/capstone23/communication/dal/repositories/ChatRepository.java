@@ -35,4 +35,25 @@ public class ChatRepository implements PanacheMongoRepository<Chat> {
 
     return chats;
   }
+
+  public List<Chat> bulkUpdate(List<Chat> chatsToUpdate) {
+    chatsToUpdate.forEach(this::updateChat);
+    return chatsToUpdate;
+  }
+
+  private void updateChat(Chat chatToUpdate) {
+    Optional<Chat> existingChatOpt = findById(chatToUpdate.id.toHexString());
+
+    if (existingChatOpt.isPresent()) {
+      Chat existingChat = existingChatOpt.get();
+
+      // Update fields of the existing chat from the provided chatToUpdate
+      existingChat.name = chatToUpdate.name;
+      existingChat.description = chatToUpdate.description;
+      existingChat.accessType = chatToUpdate.accessType;
+
+      // Persist the changes
+      persistOrUpdate(existingChat);
+    }
+  }
 }
