@@ -1,7 +1,7 @@
 package edu.kmaooad.capstone23.orgs.handlers;
 
-import edu.kmaooad.capstone23.ban.dal.BannedEntityType;
-import edu.kmaooad.capstone23.ban.dal.EntityBanRepository;
+import edu.kmaooad.capstone23.ban.commands.IsEntityBannedV2;
+import edu.kmaooad.capstone23.ban.events.EntityIsBannedV2;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
@@ -21,10 +21,8 @@ public class UpdateOrgHandler implements CommandHandler<UpdateOrg, OrgUpdated> {
     @Inject
     private OrgsRepository repository;
 
-
     @Inject
-    EntityBanRepository entityBanRepository;
-
+    private CommandHandler<IsEntityBannedV2, EntityIsBannedV2> isBannedHandler;
 
     public Result<OrgUpdated> handle(UpdateOrg command) {
         Optional<Org> existingOrg = this.repository.findByIdOptional(new ObjectId(command.orgId));
@@ -32,7 +30,8 @@ public class UpdateOrgHandler implements CommandHandler<UpdateOrg, OrgUpdated> {
         if (existingOrg.isEmpty()) {
             return new Result<>(ErrorCode.EXCEPTION, "Org with given id not found");
         }
-        if (entityBanRepository.findForEntity(BannedEntityType.Organization, existingOrg.get().id).isPresent()) {
+        var isBanned = isBannedHandler.handle(new IsEntityBannedV2(existingOrg.get().id.toString(), IsEntityBannedV2.ORGANIZATION_BAN_ENTITY_TYPE));
+        if (isBanned.isSuccess() && isBanned.getValue().value()) {
             return new Result<>(ErrorCode.EXCEPTION, "Org is banned");
         }
 
