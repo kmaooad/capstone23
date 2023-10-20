@@ -19,10 +19,10 @@ import java.util.Optional;
 public class UpdateOrgHandler implements CommandHandler<UpdateOrg, OrgUpdated> {
 
     @Inject
-    private OrgsRepository repository;
+    OrgsRepository repository;
 
     @Inject
-    private CommandHandler<IsEntityBannedV2, EntityIsBannedV2> isBannedHandler;
+    CommandHandler<IsEntityBannedV2, EntityIsBannedV2> isBannedHandler;
 
     public Result<OrgUpdated> handle(UpdateOrg command) {
         Optional<Org> existingOrg = this.repository.findByIdOptional(new ObjectId(command.orgId));
