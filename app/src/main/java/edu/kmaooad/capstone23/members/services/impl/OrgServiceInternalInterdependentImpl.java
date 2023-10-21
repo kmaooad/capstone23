@@ -1,5 +1,6 @@
 package edu.kmaooad.capstone23.members.services.impl;
 
+import edu.kmaooad.capstone23.members.dto.OrgDTO;
 import edu.kmaooad.capstone23.members.services.OrgService;
 import edu.kmaooad.capstone23.orgs.dal.Org;
 import edu.kmaooad.capstone23.orgs.dal.OrgsRepository;
@@ -14,7 +15,7 @@ public class OrgServiceInternalInterdependentImpl implements OrgService {
     OrgsRepository orgsRepository;
 
     @Override
-    public Optional<Org> findByEmailDomainOptional(String emailDomain) {
-        return orgsRepository.findByEmailDomainOptional(emailDomain);
+    public Optional<OrgDTO> findByEmailDomainOptional(String emailDomain) {
+        return orgsRepository.findByEmailDomainOptional(emailDomain).map(value -> new OrgDTO(value.id, value.emailDomain));
     }
 }
