@@ -37,4 +37,8 @@ public class ExpertServiceImpl implements ExpertService {
     public Expert modify(Expert expert) throws IllegalArgumentException {
        return expertsRepository.modify(expert);
     }
+
+    public Expert findByMemberId(ObjectId memberId) {
+        return expertsRepository.find("memberId", memberId).firstResult();
+    }
 }

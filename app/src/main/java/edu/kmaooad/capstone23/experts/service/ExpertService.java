@@ -15,4 +15,5 @@ public interface ExpertService {
     Expert insert(Expert expert);
     void deleteExpert(Expert expert);
     Expert modify(Expert expert) throws IllegalArgumentException;
+    Expert findByMemberId(ObjectId memberId);
 }

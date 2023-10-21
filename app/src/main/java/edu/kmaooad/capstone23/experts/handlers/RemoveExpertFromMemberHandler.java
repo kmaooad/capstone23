@@ -6,6 +6,7 @@ import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.experts.commands.RemoveExpertFromMember;
 import edu.kmaooad.capstone23.experts.dal.ExpertsRepository;
 import edu.kmaooad.capstone23.experts.events.ExpertRemovedFromMember;
+import edu.kmaooad.capstone23.experts.service.ExpertService;
 import edu.kmaooad.capstone23.members.dal.Member;
 import edu.kmaooad.capstone23.members.dal.MembersRepository;
 import jakarta.enterprise.context.RequestScoped;
@@ -16,7 +17,7 @@ import org.bson.types.ObjectId;
 public class RemoveExpertFromMemberHandler
         implements CommandHandler<RemoveExpertFromMember, ExpertRemovedFromMember> {
     @Inject
-    ExpertsRepository expertsRepository;
+    ExpertService expertService;
     @Inject
     MembersRepository membersRepository;
 
@@ -30,7 +31,7 @@ public class RemoveExpertFromMemberHandler
             }
             member.isExpert = false;
             membersRepository.update(member);
-            expertsRepository.deleteExpert(expertsRepository.findByMemberId(member.id));
+            expertService.deleteExpert(expertService.findByMemberId(member.id));
 
             return new Result<>(new ExpertRemovedFromMember(member.id.toString()));
         }
