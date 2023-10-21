@@ -4,8 +4,11 @@ import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.students.commands.CreateStudent;
+import edu.kmaooad.capstone23.students.commands.notifications.NotifyStudent;
 import edu.kmaooad.capstone23.students.dal.Student;
 import edu.kmaooad.capstone23.students.dal.StudentRepository;
+import edu.kmaooad.capstone23.students.events.StudentCreated;
+import edu.kmaooad.capstone23.students.events.StudentNotified;
 import edu.kmaooad.capstone23.students.events.StudentsCreated;
 import edu.kmaooad.capstone23.students.parser.CSVStudent;
 import edu.kmaooad.capstone23.students.parser.CreateCSVStudentParser;
@@ -13,7 +16,6 @@ import edu.kmaooad.capstone23.students.parser.exceptions.IncorrectValuesAmount;
 import edu.kmaooad.capstone23.students.parser.exceptions.InvalidEmail;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
-import org.bson.types.ObjectId;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -28,6 +30,9 @@ public class CreateStudentHandler implements CommandHandler<CreateStudent, Stude
 
     @Inject
     CreateCSVStudentParser parser;
+
+    @Inject
+    NotifyStudentHandler notifyStudentHandler;
 
     @Override
     public Result<StudentsCreated> handle(CreateStudent command) {
@@ -49,12 +54,16 @@ public class CreateStudentHandler implements CommandHandler<CreateStudent, Stude
 
         List<Student> students = repository.insert(csvStudents);
 
-        List<ObjectId> studentIds = new ArrayList<>();
+        List<StudentCreated> studentsCreated = new ArrayList<>();
         for (Student student : students) {
-            studentIds.add(student.id);
+            NotifyStudent notifyStudent = new NotifyStudent.Create(student.id, student.email, student.firstName);
+            Result<StudentNotified> studentNotifiedResult = notifyStudentHandler.handle(notifyStudent);
+
+            StudentCreated studentCreated = new StudentCreated(student.id, studentNotifiedResult);
+            studentsCreated.add(studentCreated);
         }
 
-        StudentsCreated result = new StudentsCreated(studentIds);
+        StudentsCreated result = new StudentsCreated(studentsCreated);
         return new Result<>(result);
     }
 }
