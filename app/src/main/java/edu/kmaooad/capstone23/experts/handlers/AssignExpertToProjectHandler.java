@@ -9,6 +9,7 @@ import edu.kmaooad.capstone23.experts.commands.AssignExpertToProject;
 import edu.kmaooad.capstone23.experts.dal.Expert;
 import edu.kmaooad.capstone23.experts.dal.ExpertsRepository;
 import edu.kmaooad.capstone23.experts.events.ExpertAssignedToProject;
+import edu.kmaooad.capstone23.experts.service.ExpertService;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
@@ -21,13 +22,13 @@ public class AssignExpertToProjectHandler implements CommandHandler<AssignExpert
     @Inject
     private ProjsRepository projsRepository;
     @Inject
-    private ExpertsRepository expertsRepository;
+    ExpertService expertService;
 
     public Result<ExpertAssignedToProject> handle(AssignExpertToProject command) {
         ObjectId projId = command.getProjectId();
         ObjectId expertId = command.getExpertId();
         Project proj = projsRepository.findById(projId);
-        Expert expert = expertsRepository.findById(expertId);
+        Expert expert = expertService.findById(expertId);
 
         if (proj == null) {
             return new Result<>(ErrorCode.NOT_FOUND, "Project not found");
@@ -46,7 +47,7 @@ public class AssignExpertToProjectHandler implements CommandHandler<AssignExpert
             expert.projects = List.of(proj);
         }
 
-        expertsRepository.modify(expert);
+        expertService.modify(expert);
 
         return new Result<ExpertAssignedToProject>(new ExpertAssignedToProject(expert.id.toString()));
     }
