@@ -10,6 +10,7 @@ import edu.kmaooad.capstone23.members.dal.MembersRepository;
 import edu.kmaooad.capstone23.members.events.BasicMemberCreated;
 import edu.kmaooad.capstone23.orgs.commands.CreateOrg;
 import edu.kmaooad.capstone23.orgs.events.OrgCreated;
+import edu.kmaooad.capstone23.users.dal.repositories.UserRepository;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
@@ -28,6 +29,9 @@ public class RemoveExpertFromMemberHandlerTest {
     CommandHandler<CreateOrg, OrgCreated> orgHandler;
     @Inject
     MembersRepository membersRepository;
+
+    @Inject
+    UserRepository userRepository;
 
     @Test
     @DisplayName("Remove Expert From Member Handler: Basic")
@@ -69,6 +73,7 @@ public class RemoveExpertFromMemberHandlerTest {
         memberCommand.setLastName("Pupok");
         memberCommand.setOrgId(new ObjectId(orgResult.getValue().getOrgId()));
         memberCommand.setEmail("ultra.poshta@ukr.net");
+        userRepository.deleteByEmail(memberCommand.getEmail());
         memberCommand.setIsExpert("true");
 
         Result<BasicMemberCreated> result = memberHandler.handle(memberCommand);
@@ -88,6 +93,7 @@ public class RemoveExpertFromMemberHandlerTest {
         memberCommand.setLastName("Pupochello");
         memberCommand.setOrgId(new ObjectId(orgResult.getValue().getOrgId()));
         memberCommand.setEmail("ultra.poshta.proksima@ukr.net");
+        userRepository.deleteByEmail(memberCommand.getEmail());
         memberCommand.setIsExpert("false");
 
         Result<BasicMemberCreated> result = memberHandler.handle(memberCommand);

@@ -51,4 +51,48 @@ public class CreateJobPrefHandlerTest {
         Assertions.assertNotNull(result.getValue());
     }
 
+    @Test
+    @DisplayName("Create job preferences: location null")
+    void testLocationNullHandling() {
+        ObjectId cvId = getCreateCvId();
+        CreateJobPref command = new CreateJobPref();
+        command.setCvId(cvId);
+        command.setIndustry("IT");
+        command.setCategory(JobPreference.Category.PART_TIME);
+
+        Result<JobPrefCreated> result = createJobPrefHandler.handle(command);
+
+        Assertions.assertFalse(result.isSuccess());
+    }
+
+    @Test
+    @DisplayName("Create job preferences: location blank")
+    void testLocationBlankHandling() {
+        ObjectId cvId = getCreateCvId();
+        CreateJobPref command = new CreateJobPref();
+        command.setCvId(cvId);
+        command.setLocation(" ");
+        command.setIndustry("IT");
+        command.setCategory(JobPreference.Category.PART_TIME);
+
+        Result<JobPrefCreated> result = createJobPrefHandler.handle(command);
+
+        Assertions.assertFalse(result.isSuccess());
+    }
+
+    @Test
+    @DisplayName("Create job preferences: location too big name")
+    void testLocationBigNameHandling() {
+        ObjectId cvId = getCreateCvId();
+        CreateJobPref command = new CreateJobPref();
+        command.setCvId(cvId);
+        command.setLocation("fwefeewgwegegrekgwgjreiiiiiiiiiiioooooooooooooooooooojwwwwwwwwwwwwwwwwwwwwwwqqqqqqqqqqqqqqqqqqqqqqqqqqqqwce");
+        command.setIndustry("IT");
+        command.setCategory(JobPreference.Category.PART_TIME);
+
+        Result<JobPrefCreated> result = createJobPrefHandler.handle(command);
+
+        Assertions.assertFalse(result.isSuccess());
+    }
+
 }
