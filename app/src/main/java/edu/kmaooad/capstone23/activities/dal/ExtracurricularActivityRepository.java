@@ -25,4 +25,8 @@ public class ExtracurricularActivityRepository implements PanacheMongoRepository
         delete(extracurricularActivity);
     }
 
+    public ExtracurricularActivity updateActivity(ExtracurricularActivity extracurricularActivity) {
+        persistOrUpdate(extracurricularActivity);
+        return  extracurricularActivity;
+    }
 }
