@@ -14,6 +14,7 @@ public class NotificationBuilder {
 
     public static class CreateStudent {
         public static final String SUBJECT = "Welcome to Capstone23";
+
         public static Notification build(NotifyStudent.Create student) {
             String body = String.format(
                     "Welcome %s, student with id: '%s' added to Capstone23",
