@@ -3,16 +3,14 @@ package edu.kmaooad.capstone23.members.handlers;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
-import edu.kmaooad.capstone23.experts.dal.Expert;
-import edu.kmaooad.capstone23.experts.dal.ExpertsRepository;
 import edu.kmaooad.capstone23.members.commands.CreateBasicMember;
 import edu.kmaooad.capstone23.members.dal.Member;
 import edu.kmaooad.capstone23.members.dal.MembersRepository;
 import edu.kmaooad.capstone23.members.dto.OrgDTO;
 import edu.kmaooad.capstone23.members.events.BasicMemberCreated;
 import edu.kmaooad.capstone23.members.exceptions.UniquenessViolationException;
+import edu.kmaooad.capstone23.members.services.ExpertsService;
 import edu.kmaooad.capstone23.members.services.OrgService;
-import edu.kmaooad.capstone23.orgs.dal.Org;
 import edu.kmaooad.capstone23.users.commands.CreateUser;
 import edu.kmaooad.capstone23.users.dal.entities.User;
 import edu.kmaooad.capstone23.users.dal.repositories.UserRepository;
@@ -28,7 +26,7 @@ public class CreateMemberHandler implements CommandHandler<CreateBasicMember, Ba
     @Inject
     MembersRepository membersRepository;
     @Inject
-    ExpertsRepository expertsRepository;
+    ExpertsService expertsService;
     @Inject
     OrgService orgService;
     @Inject
@@ -58,13 +56,7 @@ public class CreateMemberHandler implements CommandHandler<CreateBasicMember, Ba
                 return new Result<>(ErrorCode.VALIDATION_FAILED, "Organisation not found");
             membersRepository.insert(member);
             if (member.isExpert) {
-                Expert expert = new Expert();
-                expert.memberId = member.id;
-                expert.name = command.getFirstName() + " " + command.getLastName();
-                var org = new Org();
-                org.id = memberOrg.get().getId();
-                expert.org = org;
-                expertsRepository.insert(expert);
+                expertsService.createExpertFromMember(command, member, memberOrg);
             }
             BasicMemberCreated result = new BasicMemberCreated(member.id.toString());
             return new Result<>(result);
