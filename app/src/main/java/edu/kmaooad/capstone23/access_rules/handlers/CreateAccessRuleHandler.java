@@ -40,6 +40,12 @@ public class CreateAccessRuleHandler implements CommandHandler<CreateAccessRule,
     private GroupsRepository groupsRepository;
 
     public Result<AccessRuleCreated> handle(CreateAccessRule command) {
+        if(!ObjectId.isValid(command.getFromEntityId())) {
+            return new Result<>(ErrorCode.VALIDATION_FAILED, "Invalid From entity ID");
+        }
+        if(!ObjectId.isValid(command.getToEntityId())) {
+            return new Result<>(ErrorCode.VALIDATION_FAILED, "Invalid To entity ID");
+        }
         if(!fromEntityExists(command.getFromEntityType(), new ObjectId(command.getFromEntityId()))){
             return new Result<>(ErrorCode.VALIDATION_FAILED, "From entity doesn't exist");
         }
