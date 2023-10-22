@@ -14,6 +14,7 @@ import edu.kmaooad.capstone23.jobs.dal.JobRepository;
 import edu.kmaooad.capstone23.jobs.events.ActivityRelated;
 import edu.kmaooad.capstone23.jobs.events.JobCreated;
 import edu.kmaooad.capstone23.jobs.events.JobDeleted;
+import edu.kmaooad.capstone23.jobs.service.JobService;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 
@@ -23,7 +24,7 @@ import java.util.Optional;
 public class RelateJobToActivitiesHandler  implements CommandHandler<RelateJobToActivities, ActivityRelated> {
 
     @Inject
-    private JobRepository repository;
+    private JobService jobService;
     @Inject
     private ExtracurricularActivityRepository extracurricularRepository;
     @Inject
@@ -33,7 +34,7 @@ public class RelateJobToActivitiesHandler  implements CommandHandler<RelateJobTo
     @Override
     public Result<ActivityRelated> handle(RelateJobToActivities command) {
 
-        Optional<Job> job = repository.findByIdOptional(command.getJobId());
+        Optional<Job> job = jobService.findJobById(command.getJobId());
         if(job.isEmpty())
             return new Result<>(ErrorCode.VALIDATION_FAILED, "This job was previously deleted or never existed");
 
@@ -48,9 +49,7 @@ public class RelateJobToActivitiesHandler  implements CommandHandler<RelateJobTo
         if(j.activitiesId.contains(command.getActivityId()))
             return new Result<>(ErrorCode.VALIDATION_FAILED, "This activity is already related to this job");
         j.activitiesId.add(command.getActivityId());
-
-        // Save the updated job back to the repository
-        repository.update(j);
+        jobService.update(j);
 
         return new Result<ActivityRelated>(result);
     }
