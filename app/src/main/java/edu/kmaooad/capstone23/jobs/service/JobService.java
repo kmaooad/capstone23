@@ -9,4 +9,5 @@ public interface JobService {
     Optional<Job> findJobById(ObjectId id);
     Job insert(Job job);
     void delete(Job job);
+    void update(Job job);
 }

@@ -17,12 +17,12 @@ import java.util.Optional;
 @RequestScoped
 public class DeleteRelationJobToActivitiesHandler  implements CommandHandler<DeleteRelateJobToActivities, ActivityUnrelated> {
     @Inject
-    private JobService jobService;
+    private JobRepository repository;
 
     @Override
     public Result<ActivityUnrelated> handle(DeleteRelateJobToActivities command) {
 
-        Optional<Job> job = jobService.findJobById(command.getJobId());
+        Optional<Job> job = repository.findByIdOptional(command.getJobId());
         if(job.isEmpty())
             return new Result<>(ErrorCode.VALIDATION_FAILED, "This job was previously deleted or never existed");
 
@@ -32,7 +32,7 @@ public class DeleteRelationJobToActivitiesHandler  implements CommandHandler<Del
         if (!j.activitiesId.contains(command.getActivityId()))
             return new Result<>(ErrorCode.VALIDATION_FAILED, "This job doesn't contain this activity");
         j.activitiesId.remove(command.getActivityId());
-        //jobService.update(j);
+        repository.update(j);
 
         return new Result<ActivityUnrelated>(result);
     }

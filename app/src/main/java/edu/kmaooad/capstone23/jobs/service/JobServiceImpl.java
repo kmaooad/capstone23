@@ -24,4 +24,9 @@ public class JobServiceImpl implements JobService{
     public void delete(Job job) {
         jobRepository.delete(job);
     }
+
+    @Override
+    public void update(Job job) {
+        jobRepository.update(job);
+    }
 }
