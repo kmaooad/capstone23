@@ -40,11 +40,11 @@ public class CreateAccessRuleHandler implements CommandHandler<CreateAccessRule,
     private GroupsRepository groupsRepository;
 
     public Result<AccessRuleCreated> handle(CreateAccessRule command) {
-        if(!fromEntityExists(command.getFromEntityType(), command.getFromEntityId())){
+        if(!fromEntityExists(command.getFromEntityType(), new ObjectId(command.getFromEntityId()))){
             return new Result<>(ErrorCode.VALIDATION_FAILED, "From entity doesn't exist");
         }
 
-        if(!toEntityExists(command.getToEntityType(), command.getToEntityId())){
+        if(!toEntityExists(command.getToEntityType(), new ObjectId(command.getToEntityId()))){
             return new Result<>(ErrorCode.VALIDATION_FAILED, "To entity doesn't exist");
         }
 
@@ -52,8 +52,8 @@ public class CreateAccessRuleHandler implements CommandHandler<CreateAccessRule,
         accessRule.ruleType = command.getRuleType();
         accessRule.fromEntityType = command.getFromEntityType();
         accessRule.toEntityType = command.getToEntityType();
-        accessRule.fromEntityId = command.getFromEntityId();
-        accessRule.toEntityId = command.getToEntityId();
+        accessRule.fromEntityId = new ObjectId(command.getFromEntityId());
+        accessRule.toEntityId = new ObjectId(command.getToEntityId());
 
         accessRuleRepository.insert(accessRule);
 
