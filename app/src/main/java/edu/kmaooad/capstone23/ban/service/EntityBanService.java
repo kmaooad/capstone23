@@ -9,6 +9,8 @@ import java.util.Optional;
 public interface EntityBanService {
     EntityBan insert(EntityBan ban);
     Optional<EntityBan> findForEntity(BannedEntityType type, ObjectId entityId);
+
+    boolean deleteById(ObjectId id);
 }
 
 

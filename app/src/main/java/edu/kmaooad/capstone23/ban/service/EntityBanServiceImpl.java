@@ -24,4 +24,9 @@ public class EntityBanServiceImpl implements EntityBanService {
     public Optional<EntityBan> findForEntity(BannedEntityType type, ObjectId entityId) {
         return repository.findForEntity(type, entityId);
     }
+
+    @Override
+    public boolean deleteById(ObjectId id) {
+        return repository.deleteById(id);
+    }
 }
