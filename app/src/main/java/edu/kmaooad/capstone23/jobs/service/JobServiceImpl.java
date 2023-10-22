@@ -11,4 +11,6 @@ public class JobServiceImpl implements JobService{
     public Job insert(Job job) {
         return jobRepository.insert(job);
     }
+    @Override
+    public void delete(Job job) { }
 }

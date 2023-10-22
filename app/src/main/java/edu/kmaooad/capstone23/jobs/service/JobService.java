@@ -5,4 +5,5 @@ import org.bson.types.ObjectId;
 
 public interface JobService {
     Job insert(Job job);
+    void delete(Job job);
 }
