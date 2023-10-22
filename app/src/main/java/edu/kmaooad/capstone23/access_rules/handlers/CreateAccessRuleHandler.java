@@ -57,7 +57,7 @@ public class CreateAccessRuleHandler implements CommandHandler<CreateAccessRule,
 
         accessRuleRepository.insert(accessRule);
 
-        return new Result<>(new AccessRuleCreated(accessRule.id, accessRule.fromEntityType, accessRule.toEntityType));
+        return new Result<>(new AccessRuleCreated(accessRule.id.toString(), accessRule.fromEntityType, accessRule.toEntityType));
     }
 
     boolean fromEntityExists(AccessRuleFromEntityType type, ObjectId entityId) {
