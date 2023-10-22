@@ -19,4 +19,10 @@ public class SkillSetServiceImpl implements SkillSetService {
     public SkillSet insert(SkillSet skillSet) {
         return skillSetRepository.insert(skillSet);
     }
+
+    @Override
+    public void update(SkillSet skillSet) {
+        skillSetRepository.update(skillSet);
+    }
+
 }

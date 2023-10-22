@@ -8,4 +8,6 @@ public interface SkillSetService {
     public Optional<SkillSet> findById(String id);
 
     public SkillSet insert(SkillSet skillSet);
+
+    public void update (SkillSet skillSet);
 }
