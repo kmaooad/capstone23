@@ -6,6 +6,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import edu.kmaooad.capstone23.communication.dal.entities.Chat;
 import org.bson.types.ObjectId;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -27,5 +28,22 @@ public class ChatRepository implements PanacheMongoRepository<Chat> {
     persist(chat);
 
     return chat;
+  }
+
+  public List<Chat> bulkInsert(List<Chat> chats) {
+    persist(chats);
+
+    return chats;
+  }
+
+  public Boolean bulkDelete(List<Chat> chats) {
+    List<Boolean> results = chats.stream().map(chat -> deleteById(chat.id)).toList();
+    for (Boolean result:
+         results) {
+      if (!result) {
+        return false;
+      }
+    }
+    return true;
   }
 }
