@@ -7,7 +7,6 @@ import edu.kmaooad.capstone23.competences.dal.MongoProjectRepository;
 import edu.kmaooad.capstone23.competences.events.ProjDeleted;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
-import org.bson.types.ObjectId;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -29,7 +28,7 @@ class DeleteProjectHandlerTest {
         repository.insert(project);
 
         DeleteProj command = new DeleteProj();
-        command.setId(project.id);
+        command.setId(project.id.toHexString());
 
         ProjDeleted projDeleted = handler.handle(command).getValue();
         assertNotNull(projDeleted);
@@ -43,7 +42,7 @@ class DeleteProjectHandlerTest {
     @DisplayName("Delete Non-Existent Project")
     void testDeleteNonExistentProject() {
         DeleteProj command = new DeleteProj();
-        command.setId(new ObjectId("5f7e4afc8e1f7112d73c92a1")); // Using a random ObjectId
+        command.setId("5f7e4afc8e1f7112d73c92a1"); // Using a random ObjectId
 
         Result<?> projDeleted = handler.handle(command);
         assertFalse(projDeleted.isSuccess());

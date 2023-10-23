@@ -4,11 +4,11 @@ import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.competences.commands.DeleteProj;
-import edu.kmaooad.capstone23.competences.dal.MongoProjectRepository;
 import edu.kmaooad.capstone23.competences.dal.ProjectsRepository;
 import edu.kmaooad.capstone23.competences.events.ProjDeleted;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
+import org.bson.types.ObjectId;
 
 @RequestScoped
 public class DeleteProjectHandler implements CommandHandler<DeleteProj, ProjDeleted> {
@@ -21,7 +21,7 @@ public class DeleteProjectHandler implements CommandHandler<DeleteProj, ProjDele
         var foundProj = repository.findProjectById(String.valueOf(projId));
         if(foundProj != null) {
             repository.deleteProject(foundProj);
-            var result = new ProjDeleted(projId);
+            var result = new ProjDeleted(new ObjectId(projId));
             return new Result<>(result);
         } else {
             return new Result<>(ErrorCode.EXCEPTION,
