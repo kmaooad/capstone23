@@ -27,7 +27,9 @@ public class BulkDeleteChatsHandler implements CommandHandler<BulkDeleteChats, C
 
         var chats = bulkMapDeleteChat(command);
 
-        chatService.bulkDelete(chats);
+        if (!chatService.bulkDelete(chats)) {
+          return new Result<ChatsBulkDeleted>(ErrorCode.EXCEPTION, "Failed to delete chats");
+        }
 
         var deletedChats = mapDeletedChatResponse(chats);
 
