@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 @QuarkusTest
 public class CreateExtracurricularActivityHandlerTest {
     @Inject
-    CommandHandler<CreateExtracurricularActivity, ExtracurricularActivityCreated> handler;
+    CreateExtracurricularActivityHandler handler;
 
     @Test
     @DisplayName("Handle Create Extracurricular Activity command")

@@ -14,7 +14,7 @@ public class Org {
     public String website;
     public String description;
     public String emailDomain;
-    public String hiringStatus;
+    public HiringStatus hiringStatus;
     public ArrayList<String> jobs;
     public Boolean isActive;
 }
