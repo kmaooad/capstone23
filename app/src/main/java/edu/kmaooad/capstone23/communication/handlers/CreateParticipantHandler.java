@@ -16,8 +16,6 @@ public class CreateParticipantHandler implements CommandHandler<CreateParticipan
   @Inject
   ParticipantService participantService;
 
-  private Participant participant;
-
   @Override
   public Result<ParticipantCreated> handle(CreateParticipant command) {
     String chatId = command.getChatId();
@@ -28,20 +26,21 @@ public class CreateParticipantHandler implements CommandHandler<CreateParticipan
     if (!canCreateParticipant) {
       return new Result<ParticipantCreated>(ErrorCode.EXCEPTION, "Chat or user do not exist");
     }
+    var mappedParticipant = mapParticipant(chatId, userId);
 
-    initParticipant(chatId, userId);
-
-    this.participantService.insert(participant);
+    var participant = this.participantService.insert(mappedParticipant);
 
     ParticipantCreated createdParticipant = new ParticipantCreated(participant.id.toHexString());
 
     return new Result<ParticipantCreated>(createdParticipant);
   }
 
-  private void initParticipant(String chatId, String userId) {
-    participant = new Participant();
+  private Participant mapParticipant(String chatId, String userId) {
+    var participant = new Participant();
 
     participant.chatId = new ObjectId(chatId);
     participant.userId = new ObjectId(userId);
+
+    return participant;
   }
 }
