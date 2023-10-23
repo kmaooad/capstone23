@@ -3,7 +3,7 @@ package edu.kmaooad.capstone23.search.courses.by.project.controllers;
 import edu.kmaooad.capstone23.activities.dal.Course;
 import edu.kmaooad.capstone23.activities.dal.CourseRepository;
 import edu.kmaooad.capstone23.competences.dal.Project;
-import edu.kmaooad.capstone23.competences.dal.ProjsRepository;
+import edu.kmaooad.capstone23.competences.dal.MongoProjectRepository;
 import edu.kmaooad.capstone23.relations.dal.Relation;
 import edu.kmaooad.capstone23.relations.dal.RelationRepository;
 import io.quarkus.test.junit.QuarkusTest;
@@ -28,7 +28,7 @@ class QueryCourseByProjectControllerTests {
     CourseRepository courseRepository;
 
     @Inject
-    ProjsRepository projsRepository;
+    MongoProjectRepository projsRepository;
 
     @Inject
     RelationRepository relationRepository;

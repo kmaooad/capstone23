@@ -3,7 +3,7 @@ package edu.kmaooad.capstone23.competences.handlers;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.competences.commands.UpdateProj;
 import edu.kmaooad.capstone23.competences.dal.Project;
-import edu.kmaooad.capstone23.competences.dal.ProjsRepository;
+import edu.kmaooad.capstone23.competences.dal.MongoProjectRepository;
 import edu.kmaooad.capstone23.competences.events.ProjUpdated;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
@@ -19,7 +19,7 @@ class UpdateProjectHandlerTest {
     @Inject
     CommandHandler<UpdateProj, ProjUpdated> handler;
     @Inject
-    ProjsRepository repository;
+    MongoProjectRepository repository;
 
     @Test
     @DisplayName("Basic Updating")
