@@ -4,7 +4,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
 import edu.kmaooad.capstone23.cvs.dal.CV;
+
 import java.time.LocalDateTime;
+
 import edu.kmaooad.capstone23.common.*;
 import edu.kmaooad.capstone23.cvs.commands.CreateCV;
 import edu.kmaooad.capstone23.cvs.events.CVCreated;
@@ -15,6 +17,7 @@ import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 
 import org.bson.types.ObjectId;
+
 @QuarkusTest
 public class CreateJobPrefHandlerTest {
 
@@ -24,7 +27,7 @@ public class CreateJobPrefHandlerTest {
     @Inject
     CommandHandler<CreateJobPref, JobPrefCreated> createJobPrefHandler;
 
-    ObjectId getCreateCvId(){
+    ObjectId getCreateCvId() {
         CreateCV command = new CreateCV();
         command.setDateTimeCreated(LocalDateTime.now());
         command.setTextInfo("some info about a student");
@@ -96,16 +99,14 @@ public class CreateJobPrefHandlerTest {
     }
 
     @Test
-    @DisplayName("Create job preferences: industry null")
-    void testIndustryNullHandling() {
+    @DisplayName("Create job preferences: category null")
+    void testCategoryNullHandling() {
         ObjectId cvId = getCreateCvId();
         CreateJobPref command = new CreateJobPref();
         command.setCvId(cvId);
         command.setLocation("Kyiv");
-        command.setCategory(JobPreference.Category.PART_TIME);
-
+        command.setIndustry("IT");
         Result<JobPrefCreated> result = createJobPrefHandler.handle(command);
-
         Assertions.assertFalse(result.isSuccess());
     }
 
@@ -133,7 +134,6 @@ public class CreateJobPrefHandlerTest {
         command.setLocation("Kyiv");
         command.setIndustry("fwefeewgwegegrekgwgjreiiiiiiiiiiioooooooooooooooooooojwwwwwwwwwwwwwwwwwwwwwwqqqqqqqqqqqqqqqqqqqqqqqqqqqqwce");
         command.setCategory(JobPreference.Category.PART_TIME);
-
         Result<JobPrefCreated> result = createJobPrefHandler.handle(command);
 
         Assertions.assertFalse(result.isSuccess());
