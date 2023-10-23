@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @QuarkusTest
 class DeleteProjectHandlerTest {
     @Inject
-    DeleteProjHandler handler;
+    DeleteProjectHandler handler;
     @Inject
     MongoProjectRepository repository;
 
