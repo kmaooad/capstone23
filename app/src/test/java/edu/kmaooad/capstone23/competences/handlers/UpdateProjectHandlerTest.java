@@ -30,15 +30,15 @@ class UpdateProjectHandlerTest {
         Project updatedProject = new Project();
         updatedProject.name = "Updated Project";
         updatedProject.description = "Updated Description";
-        updatedProject.skills = List.of(new ObjectId("1a4cd132b123a1aa3bc2d142"));
-        updatedProject.skillSets = List.of(new ObjectId("5f7e47fc8e1f7112d73c92a1"));
+        updatedProject.skills = List.of("1a4cd132b123a1aa3bc2d142");
+        updatedProject.skillSets = List.of("5f7e47fc8e1f7112d73c92a1");
 
         var command = new UpdateProj();
         command.setId(originalProj.id);
         command.setName(updatedProject.name);
         command.setDescription(updatedProject.description);
-        command.setSkills(updatedProject.skills);
-        command.setSkillSets(updatedProject.skillSets);
+        command.setSkills(updatedProject.skills.stream().map(ObjectId::new).toList());
+        command.setSkillSets(updatedProject.skillSets.stream().map(ObjectId::new).toList());
 
         var result = handler.handle(command);
         assertTrue(result.isSuccess());
@@ -62,8 +62,8 @@ class UpdateProjectHandlerTest {
         command.setId(originalProj.id);
         command.setName(projToInsert.name);
         command.setDescription(projToInsert.description);
-        command.setSkills(projToInsert.skills);
-        command.setSkillSets(projToInsert.skillSets);
+        command.setSkills(projToInsert.skills.stream().map(ObjectId::new).toList());
+        command.setSkillSets(projToInsert.skillSets.stream().map(ObjectId::new).toList());
 
         var result = handler.handle(command);
         assertFalse(result.isSuccess());
@@ -76,8 +76,8 @@ class UpdateProjectHandlerTest {
         Project project = new Project();
         project.name = "Test Project";
         project.description = "Test Description";
-        project.skills = List.of(new ObjectId("5f7e47fc8e1f7112d73c92a1"));
-        project.skillSets = List.of(new ObjectId("1a4cd132b123a1aa3bc2d142"));
+        project.skills = List.of("5f7e47fc8e1f7112d73c92a1");
+        project.skillSets = List.of("1a4cd132b123a1aa3bc2d142");
         return project;
     }
 }

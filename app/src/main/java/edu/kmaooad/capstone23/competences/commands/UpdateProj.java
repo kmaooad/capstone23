@@ -23,7 +23,7 @@ public class UpdateProj {
 
     private List<ObjectId> skillSets;
 
-    public String getId() {
+    public ObjectId getId() {
         return id;
     }
 
