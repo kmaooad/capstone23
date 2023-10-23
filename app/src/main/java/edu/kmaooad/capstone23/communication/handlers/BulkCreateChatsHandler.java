@@ -12,15 +12,12 @@ import edu.kmaooad.capstone23.communication.services.ChatService;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RequestScoped
 public class BulkCreateChatsHandler implements CommandHandler<BulkCreateChats, ChatsBulkCreated> {
   @Inject
   ChatService chatService;
-
-  private List<Chat> chats;
 
   private ChatsBulkCreated createdChats;
 
@@ -30,35 +27,33 @@ public class BulkCreateChatsHandler implements CommandHandler<BulkCreateChats, C
       return new Result<ChatsBulkCreated>(ErrorCode.VALIDATION_FAILED, "No chats to create");
     }
 
-    initChats(command);
+    var mappedChats = this.bulkMapChats(command);
 
-    chatService.bulkInsert(chats);
+    var chats = chatService.bulkInsert(mappedChats);
 
-    initResponse();
+    initResponse(chats);
 
     return new Result<ChatsBulkCreated>(createdChats);
   }
 
-  private void initChats(BulkCreateChats command) {
-    chats = new ArrayList<Chat>();
-
-    List<CreateChat> childCommands = command.getChats();
-
-    chats = childCommands
+  private List<Chat> bulkMapChats(BulkCreateChats bulkCommand) {
+    return bulkCommand.getChats()
         .stream()
-        .map((childCommand) -> {
-          Chat chat = new Chat();
-
-          chat.name = childCommand.getName();
-          chat.description = childCommand.getDescription();
-          chat.accessType = Chat.AccessType.valueOf(childCommand.getAccessType());
-
-          return chat;
-        })
+        .map((command) -> mapChat(command))
         .toList();
   }
 
-  private void initResponse() {
+  private Chat mapChat(CreateChat command) {
+    Chat chat = new Chat();
+
+    chat.name = command.getName();
+    chat.description = command.getDescription();
+    chat.accessType = Chat.AccessType.valueOf(command.getAccessType());
+
+    return chat;
+  }
+
+  private void initResponse(List<Chat> chats) {
     List<ChatCreated> chatsMappedToResult = chats
         .stream()
         .map((chat) -> new ChatCreated(chat.id.toHexString()))
