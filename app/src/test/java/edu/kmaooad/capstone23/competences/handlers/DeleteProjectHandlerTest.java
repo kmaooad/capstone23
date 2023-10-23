@@ -1,7 +1,7 @@
 package edu.kmaooad.capstone23.competences.handlers;
 
 import edu.kmaooad.capstone23.common.Result;
-import edu.kmaooad.capstone23.competences.commands.DeleteProj;
+import edu.kmaooad.capstone23.competences.commands.DeleteProject;
 import edu.kmaooad.capstone23.competences.dal.Project;
 import edu.kmaooad.capstone23.competences.dal.MongoProjectRepository;
 import edu.kmaooad.capstone23.competences.events.ProjDeleted;
@@ -27,7 +27,7 @@ class DeleteProjectHandlerTest {
         Project project = createDefaultProj();
         repository.insert(project);
 
-        DeleteProj command = new DeleteProj();
+        DeleteProject command = new DeleteProject();
         command.setId(project.id.toHexString());
 
         ProjDeleted projDeleted = handler.handle(command).getValue();
@@ -41,7 +41,7 @@ class DeleteProjectHandlerTest {
     @Test
     @DisplayName("Delete Non-Existent Project")
     void testDeleteNonExistentProject() {
-        DeleteProj command = new DeleteProj();
+        DeleteProject command = new DeleteProject();
         command.setId("5f7e4afc8e1f7112d73c92a1"); // Using a random ObjectId
 
         Result<?> projDeleted = handler.handle(command);

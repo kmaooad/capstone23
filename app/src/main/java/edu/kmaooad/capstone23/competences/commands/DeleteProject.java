@@ -1,7 +1,7 @@
 package edu.kmaooad.capstone23.competences.commands;
 import jakarta.validation.constraints.NotNull;
 
-public class DeleteProj {
+public class DeleteProject {
     @NotNull
     private String id;
 
