@@ -95,4 +95,18 @@ public class CreateJobPrefHandlerTest {
         Assertions.assertFalse(result.isSuccess());
     }
 
+    @Test
+    @DisplayName("Create job preferences: category null")
+    void testCategoryNullHandling() {
+        ObjectId cvId = getCreateCvId();
+        CreateJobPref command = new CreateJobPref();
+        command.setCvId(cvId);
+        command.setLocation("Kyiv");
+        command.setIndustry("IT");
+
+        Result<JobPrefCreated> result = createJobPrefHandler.handle(command);
+
+        Assertions.assertFalse(result.isSuccess());
+    }
+
 }
