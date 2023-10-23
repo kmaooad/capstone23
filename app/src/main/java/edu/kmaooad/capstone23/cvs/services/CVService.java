@@ -22,12 +22,16 @@ public class CVService {
         cvRepository.delete(cv);
     }
 
-    public CV findById(ObjectId id){
+    public CV findById(ObjectId id) {
         return cvRepository.findById(id);
     }
 
     public PanacheQuery<CV> find(String query, Object... params) {
         return cvRepository.find(query, params);
+    }
+
+    public void update(CV cv) {
+        cvRepository.update(cv);
     }
 
 
