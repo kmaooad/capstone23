@@ -26,7 +26,7 @@ public class BulkCreateChatsHandler implements CommandHandler<BulkCreateChats, C
 
   @Override
   public Result<ChatsBulkCreated> handle(BulkCreateChats command) {
-    if (!validateCommand(command)) {
+    if (!command.getChats().isEmpty()) {
       return new Result<ChatsBulkCreated>(ErrorCode.VALIDATION_FAILED, "No chats to create");
     }
 
@@ -37,10 +37,6 @@ public class BulkCreateChatsHandler implements CommandHandler<BulkCreateChats, C
     initResponse();
 
     return new Result<ChatsBulkCreated>(createdChats);
-  }
-
-  private boolean validateCommand(BulkCreateChats command) {
-    return !command.getChats().isEmpty();
   }
 
   private void initChats(BulkCreateChats command) {
