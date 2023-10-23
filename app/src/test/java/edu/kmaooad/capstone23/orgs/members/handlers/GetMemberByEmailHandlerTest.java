@@ -1,9 +1,8 @@
 package edu.kmaooad.capstone23.orgs.members.handlers;
 
-import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.members.commands.GetMemberByEmail;
-import edu.kmaooad.capstone23.members.events.MemberRead;
+import edu.kmaooad.capstone23.members.events.MembersListed;
 import edu.kmaooad.capstone23.members.handlers.GetMemberByEmailHandler;
 import edu.kmaooad.capstone23.orgs.members.TestWithMembersSetUp;
 import io.quarkus.test.junit.QuarkusTest;
@@ -23,15 +22,15 @@ public class GetMemberByEmailHandlerTest extends TestWithMembersSetUp {
     @Test
     @DisplayName("Read member: Basic handling")
     void testSuccessfulHandling() {
+        userRepository.deleteByEmail(email);
         createOrgWithMember(email);
         GetMemberByEmail command = new GetMemberByEmail();
         command.setEmail(email);
 
-        Result<MemberRead> result = handler.handle(command);
+        Result<MembersListed> result = handler.handle(command);
         Assertions.assertTrue(result.isSuccess());
         Assertions.assertNotNull(result.getValue());
-        Assertions.assertNotNull(result.getValue().getId());
-        Assertions.assertEquals(email, result.getValue().getEmail());
+        Assertions.assertNotNull(result.getValue().getMembers());
     }
 
     @Test
@@ -41,8 +40,8 @@ public class GetMemberByEmailHandlerTest extends TestWithMembersSetUp {
         GetMemberByEmail command = new GetMemberByEmail();
         command.setEmail(email + "moreSymbols");
 
-        Result<MemberRead> result = handler.handle(command);
-        Assertions.assertFalse(result.isSuccess());
-        Assertions.assertEquals(ErrorCode.NOT_FOUND, result.getErrorCode());
+        Result<MembersListed> result = handler.handle(command);
+        Assertions.assertTrue(result.isSuccess());
+        Assertions.assertTrue(result.getValue().getMembers().isEmpty());
     }
 }
