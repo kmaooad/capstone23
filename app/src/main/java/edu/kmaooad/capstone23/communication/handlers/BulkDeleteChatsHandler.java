@@ -22,7 +22,7 @@ public class BulkDeleteChatsHandler implements CommandHandler<BulkDeleteChats, C
     @Override
     public Result<ChatsBulkDeleted> handle(BulkDeleteChats command) {
         if (!command.getChats().isEmpty()) {
-            return new Result<ChatsBulkDeleted>(ErrorCode.VALIDATION_FAILED, "No chats to create");
+            return new Result<ChatsBulkDeleted>(ErrorCode.VALIDATION_FAILED, "No chats to delete");
         }
 
         var chats = bulkMapDeleteChat(command);
