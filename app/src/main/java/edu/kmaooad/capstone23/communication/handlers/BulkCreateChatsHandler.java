@@ -26,9 +26,7 @@ public class BulkCreateChatsHandler implements CommandHandler<BulkCreateChats, C
 
   @Override
   public Result<ChatsBulkCreated> handle(BulkCreateChats command) {
-    boolean isCommandValid = validateCommand(command);
-
-    if (!isCommandValid) {
+    if (!validateCommand(command)) {
       return new Result<ChatsBulkCreated>(ErrorCode.VALIDATION_FAILED, "No chats to create");
     }
 
