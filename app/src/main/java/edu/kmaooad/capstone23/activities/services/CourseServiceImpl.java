@@ -41,4 +41,19 @@ public class CourseServiceImpl implements CourseService {
     public void bulkInsert(List<Course> courses) {
         courseRepository.bulkInsert(courses);
     }
+
+    @Override
+    public void bulkDelete(List<Course> courses) {
+        courseRepository.bulkDelete(courses);
+    }
+
+    @Override
+    public void findCoursesCountByIds(List<String> courseIds) {
+        courseRepository.findCoursesCountByIds(courseIds);
+    }
+
+    @Override
+    public void bulkUpdate(List<Course> courses) {
+        courseRepository.bulkUpdate(courses);
+    }
 }
