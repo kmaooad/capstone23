@@ -6,9 +6,9 @@ import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.communication.commands.BulkCreateChats;
 import edu.kmaooad.capstone23.communication.commands.CreateChat;
 import edu.kmaooad.capstone23.communication.dal.entities.Chat;
-import edu.kmaooad.capstone23.communication.dal.repositories.ChatRepository;
 import edu.kmaooad.capstone23.communication.events.ChatCreated;
 import edu.kmaooad.capstone23.communication.events.ChatsBulkCreated;
+import edu.kmaooad.capstone23.communication.services.ChatService;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 
@@ -18,7 +18,7 @@ import java.util.List;
 @RequestScoped
 public class BulkCreateChatsHandler implements CommandHandler<BulkCreateChats, ChatsBulkCreated> {
   @Inject
-  ChatRepository chatRepository;
+  ChatService chatService;
 
   private List<Chat> chats;
 
@@ -34,7 +34,7 @@ public class BulkCreateChatsHandler implements CommandHandler<BulkCreateChats, C
 
     initChats(command);
 
-    chatRepository.bulkInsert(chats);
+    chatService.bulkInsert(chats);
 
     initResponse();
 
