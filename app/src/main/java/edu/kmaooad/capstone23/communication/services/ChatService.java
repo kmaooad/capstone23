@@ -17,4 +17,8 @@ public class ChatService {
 
     return chat.isPresent();
   }
+
+  public Chat insert(Chat chat)  {
+    return chatRepository.insert(chat);
+  }
 }
