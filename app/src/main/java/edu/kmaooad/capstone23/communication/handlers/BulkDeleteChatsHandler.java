@@ -6,9 +6,9 @@ import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.communication.commands.BulkDeleteChats;
 import edu.kmaooad.capstone23.communication.commands.DeleteChat;
 import edu.kmaooad.capstone23.communication.dal.entities.Chat;
-import edu.kmaooad.capstone23.communication.dal.repositories.ChatRepository;
 import edu.kmaooad.capstone23.communication.events.ChatDeleted;
 import edu.kmaooad.capstone23.communication.events.ChatsBulkDeleted;
+import edu.kmaooad.capstone23.communication.services.ChatService;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 
@@ -17,7 +17,7 @@ import java.util.List;
 @RequestScoped
 public class BulkDeleteChatsHandler implements CommandHandler<BulkDeleteChats, ChatsBulkDeleted> {
     @Inject
-    ChatRepository chatRepository;
+    ChatService chatService;
 
     private List<Chat> chats;
 
@@ -33,7 +33,7 @@ public class BulkDeleteChatsHandler implements CommandHandler<BulkDeleteChats, C
 
         initChats(command);
 
-        chatRepository.bulkDelete(chats);
+        chatService.bulkDelete(chats);
 
         initResponse();
 
