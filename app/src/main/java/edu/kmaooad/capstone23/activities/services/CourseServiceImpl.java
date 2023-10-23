@@ -5,6 +5,7 @@ import edu.kmaooad.capstone23.activities.dal.CourseRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
+import java.util.List;
 import java.util.Optional;
 
 @ApplicationScoped
@@ -34,5 +35,10 @@ public class CourseServiceImpl implements CourseService {
         }
 
         courseRepository.delete(course.get());
+    }
+
+    @Override
+    public void bulkInsert(List<Course> courses) {
+        courseRepository.bulkInsert(courses);
     }
 }
