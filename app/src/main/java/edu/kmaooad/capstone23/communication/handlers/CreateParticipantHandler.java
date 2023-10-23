@@ -5,7 +5,6 @@ import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.communication.commands.CreateParticipant;
 import edu.kmaooad.capstone23.communication.dal.entities.Participant;
-import edu.kmaooad.capstone23.communication.dal.repositories.ParticipantRepository;
 import edu.kmaooad.capstone23.communication.events.ParticipantCreated;
 import edu.kmaooad.capstone23.communication.services.ParticipantService;
 import jakarta.enterprise.context.RequestScoped;
@@ -16,9 +15,6 @@ import org.bson.types.ObjectId;
 public class CreateParticipantHandler implements CommandHandler<CreateParticipant, ParticipantCreated> {
   @Inject
   ParticipantService participantService;
-
-  @Inject
-  ParticipantRepository participantRepository;
 
   private Participant participant;
 
@@ -35,7 +31,7 @@ public class CreateParticipantHandler implements CommandHandler<CreateParticipan
 
     initParticipant(chatId, userId);
 
-    participantRepository.insert(participant);
+    this.participantService.insert(participant);
 
     ParticipantCreated createdParticipant = new ParticipantCreated(participant.id.toHexString());
 
