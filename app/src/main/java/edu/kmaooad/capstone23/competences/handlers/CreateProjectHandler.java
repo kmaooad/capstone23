@@ -9,7 +9,6 @@ import edu.kmaooad.capstone23.competences.dal.ProjectsRepository;
 import edu.kmaooad.capstone23.competences.events.ProjCreated;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
-import org.bson.types.ObjectId;
 
 @RequestScoped
 public class CreateProjectHandler implements CommandHandler<CreateProj, ProjCreated> {
@@ -21,8 +20,8 @@ public class CreateProjectHandler implements CommandHandler<CreateProj, ProjCrea
         var proj = new Project();
         proj.name = command.getName();
         proj.description = command.getDescription();
-        proj.skills = command.getSkills().stream().map(ObjectId::toString).toList();
-        proj.skillSets = command.getSkillSets().stream().map(ObjectId::toString).toList();
+        proj.skills = command.getSkills();
+        proj.skillSets = command.getSkillSets();
 
         var insertedProj = repository.insertProject(proj);
 
