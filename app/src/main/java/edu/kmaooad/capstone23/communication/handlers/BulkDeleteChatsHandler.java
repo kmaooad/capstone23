@@ -19,8 +19,6 @@ public class BulkDeleteChatsHandler implements CommandHandler<BulkDeleteChats, C
     @Inject
     ChatService chatService;
 
-    private List<Chat> chats;
-
     private ChatsBulkDeleted deletedChats;
 
     @Override
@@ -29,31 +27,29 @@ public class BulkDeleteChatsHandler implements CommandHandler<BulkDeleteChats, C
             return new Result<ChatsBulkDeleted>(ErrorCode.VALIDATION_FAILED, "No chats to create");
         }
 
-        initChats(command);
+        var chats = bulkMapDeleteChat(command);
 
         chatService.bulkDelete(chats);
 
-        initResponse();
+        initResponse(chats);
 
         return new Result<ChatsBulkDeleted>(deletedChats);
     }
 
-    private void initChats(BulkDeleteChats command) {
-        chats = new ArrayList<>();
-
-        List<DeleteChat> childCommands = command.getChats();
-
-        chats = childCommands
+    private List<Chat> bulkMapDeleteChat(BulkDeleteChats bulkCommand) {
+        return bulkCommand.getChats()
                 .stream()
-                .map((childCommand) -> {
-                    Chat chat = new Chat();
-                    chat.id = childCommand.getChatId();
-                    return chat;
-                })
+                .map((childCommand) -> mapDeleteChat(childCommand))
                 .toList();
     }
 
-    private void initResponse() {
+    private Chat mapDeleteChat(DeleteChat command) {
+        Chat chat = new Chat();
+        chat.id = command.getChatId();
+        return chat;
+    }
+
+    private void initResponse(List<Chat> chats) {
         List<ChatDeleted> chatsMappedToResult = chats
                 .stream()
                 .map((chat) -> new ChatDeleted(chat.id.toHexString()))
