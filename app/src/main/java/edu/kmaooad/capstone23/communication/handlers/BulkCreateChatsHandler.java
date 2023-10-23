@@ -19,8 +19,6 @@ public class BulkCreateChatsHandler implements CommandHandler<BulkCreateChats, C
   @Inject
   ChatService chatService;
 
-  private ChatsBulkCreated createdChats;
-
   @Override
   public Result<ChatsBulkCreated> handle(BulkCreateChats command) {
     if (!command.getChats().isEmpty()) {
@@ -31,9 +29,16 @@ public class BulkCreateChatsHandler implements CommandHandler<BulkCreateChats, C
 
     var chats = chatService.bulkInsert(mappedChats);
 
-    initResponse(chats);
+    var createdChats = new ChatsBulkCreated(mapChatsForResponce(chats));
 
     return new Result<ChatsBulkCreated>(createdChats);
+  }
+
+  private List<ChatCreated> mapChatsForResponce(List<Chat> chats) {
+    return chats
+        .stream()
+        .map((chat) -> new ChatCreated(chat.id.toHexString()))
+        .toList();
   }
 
   private List<Chat> bulkMapChats(BulkCreateChats bulkCommand) {
@@ -51,14 +56,5 @@ public class BulkCreateChatsHandler implements CommandHandler<BulkCreateChats, C
     chat.accessType = Chat.AccessType.valueOf(command.getAccessType());
 
     return chat;
-  }
-
-  private void initResponse(List<Chat> chats) {
-    List<ChatCreated> chatsMappedToResult = chats
-        .stream()
-        .map((chat) -> new ChatCreated(chat.id.toHexString()))
-        .toList();
-
-    createdChats = new ChatsBulkCreated(chatsMappedToResult);
   }
 }
