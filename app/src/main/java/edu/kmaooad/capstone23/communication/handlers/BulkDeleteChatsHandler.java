@@ -12,14 +12,12 @@ import edu.kmaooad.capstone23.communication.services.ChatService;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 
-import java.util.ArrayList;
 import java.util.List;
+
 @RequestScoped
 public class BulkDeleteChatsHandler implements CommandHandler<BulkDeleteChats, ChatsBulkDeleted> {
     @Inject
     ChatService chatService;
-
-    private ChatsBulkDeleted deletedChats;
 
     @Override
     public Result<ChatsBulkDeleted> handle(BulkDeleteChats command) {
@@ -31,7 +29,7 @@ public class BulkDeleteChatsHandler implements CommandHandler<BulkDeleteChats, C
 
         chatService.bulkDelete(chats);
 
-        initResponse(chats);
+        var deletedChats = mapDeletedChatResponse(chats);
 
         return new Result<ChatsBulkDeleted>(deletedChats);
     }
@@ -49,12 +47,12 @@ public class BulkDeleteChatsHandler implements CommandHandler<BulkDeleteChats, C
         return chat;
     }
 
-    private void initResponse(List<Chat> chats) {
+    private ChatsBulkDeleted mapDeletedChatResponse(List<Chat> chats) {
         List<ChatDeleted> chatsMappedToResult = chats
                 .stream()
                 .map((chat) -> new ChatDeleted(chat.id.toHexString()))
                 .toList();
 
-        deletedChats = new ChatsBulkDeleted(chatsMappedToResult);
+        return new ChatsBulkDeleted(chatsMappedToResult);
     }
 }
