@@ -14,11 +14,9 @@ public class CreateChatHandler implements CommandHandler<CreateChat, ChatCreated
   @Inject
   ChatService chatService;
 
-  private Chat chat;
-
   @Override
   public Result<ChatCreated> handle(CreateChat command) {
-    initChat(command);
+    var chat = mapChat(command);
 
     var insertedChat = chatService.insert(chat);
 
@@ -27,11 +25,13 @@ public class CreateChatHandler implements CommandHandler<CreateChat, ChatCreated
     return new Result<ChatCreated>(createdChat);
   }
 
-  private void initChat(CreateChat command) {
-    chat = new Chat();
+  private Chat mapChat(CreateChat command) {
+    var chat = new Chat();
 
     chat.name = command.getName();
     chat.description = command.getDescription();
     chat.accessType = Chat.AccessType.valueOf(command.getAccessType());
+
+    return chat;
   }
 }
