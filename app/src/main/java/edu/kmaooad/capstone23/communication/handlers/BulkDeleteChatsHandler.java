@@ -25,9 +25,7 @@ public class BulkDeleteChatsHandler implements CommandHandler<BulkDeleteChats, C
 
     @Override
     public Result<ChatsBulkDeleted> handle(BulkDeleteChats command) {
-        boolean isCommandValid = validateCommand(command);
-
-        if (!isCommandValid) {
+        if (!command.getChats().isEmpty()) {
             return new Result<ChatsBulkDeleted>(ErrorCode.VALIDATION_FAILED, "No chats to create");
         }
 
@@ -38,10 +36,6 @@ public class BulkDeleteChatsHandler implements CommandHandler<BulkDeleteChats, C
         initResponse();
 
         return new Result<ChatsBulkDeleted>(deletedChats);
-    }
-
-    private boolean validateCommand(BulkDeleteChats command) {
-        return !command.getChats().isEmpty();
     }
 
     private void initChats(BulkDeleteChats command) {
