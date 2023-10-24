@@ -16,7 +16,7 @@ public class CreateChatHandler implements CommandHandler<CreateChat, ChatCreated
 
   @Override
   public Result<ChatCreated> handle(CreateChat command) {
-    var chat = mapChat(command);
+    var chat = mapChatCommand(command);
 
     var insertedChat = chatService.insert(chat);
 
@@ -25,7 +25,7 @@ public class CreateChatHandler implements CommandHandler<CreateChat, ChatCreated
     return new Result<ChatCreated>(createdChat);
   }
 
-  private Chat mapChat(CreateChat command) {
+  private Chat mapChatCommand(CreateChat command) {
     var chat = new Chat();
 
     chat.name = command.getName();

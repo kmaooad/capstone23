@@ -14,6 +14,7 @@ import edu.kmaooad.capstone23.jobs.dal.Job;
 import edu.kmaooad.capstone23.jobs.dal.JobRepository;
 import edu.kmaooad.capstone23.jobs.events.ActivityRelated;
 import edu.kmaooad.capstone23.jobs.events.CompetenceRelated;
+import edu.kmaooad.capstone23.jobs.service.JobService;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 
@@ -22,7 +23,7 @@ import java.util.Optional;
 @RequestScoped
 public class RelateJobToCompetencesHandler implements CommandHandler<RelateJobToCompetences, CompetenceRelated> {
     @Inject
-    private JobRepository repository;
+    private JobService jobService;
 
     @Inject
     private ProjsRepository projsRepository;
@@ -34,7 +35,7 @@ public class RelateJobToCompetencesHandler implements CommandHandler<RelateJobTo
     @Override
     public Result<CompetenceRelated> handle(RelateJobToCompetences command) {
 
-        Optional<Job> job = repository.findByIdOptional(command.getJobId());
+        Optional<Job> job = jobService.findJobById(command.getJobId());
         if(job.isEmpty())
             return new Result<>(ErrorCode.VALIDATION_FAILED, "This job was previously deleted or never existed");
 
@@ -49,7 +50,7 @@ public class RelateJobToCompetencesHandler implements CommandHandler<RelateJobTo
         Job j = job.get();
         j.competencesId.add(command.getCompetenceId());
 
-        repository.update(j);
+        jobService.update(j);
 
         return new Result<CompetenceRelated>(result);
     }
