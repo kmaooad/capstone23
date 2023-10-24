@@ -25,7 +25,7 @@ public class ChatService {
   public List<Chat> bulkInsert(List<Chat> chats) {
     return chatRepository.bulkInsert(chats);
   }
-
+  
   public Boolean bulkDelete(List<Chat> chats) {
     return chatRepository.bulkDelete(chats);
   }
