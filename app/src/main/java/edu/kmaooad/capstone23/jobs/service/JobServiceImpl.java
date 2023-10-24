@@ -2,11 +2,13 @@ package edu.kmaooad.capstone23.jobs.service;
 
 import edu.kmaooad.capstone23.jobs.dal.Job;
 import edu.kmaooad.capstone23.jobs.dal.JobRepository;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
 
 import java.util.Optional;
 
+@ApplicationScoped
 public class JobServiceImpl implements JobService{
     @Inject
     private JobRepository jobRepository;

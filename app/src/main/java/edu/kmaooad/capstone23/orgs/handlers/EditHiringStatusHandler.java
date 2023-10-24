@@ -4,6 +4,7 @@ import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.orgs.commands.SetHiringStatus;
+import edu.kmaooad.capstone23.orgs.dal.HiringStatus;
 import edu.kmaooad.capstone23.orgs.dal.Job;
 import edu.kmaooad.capstone23.orgs.dal.JobsRepository;
 import edu.kmaooad.capstone23.orgs.dal.Org;
