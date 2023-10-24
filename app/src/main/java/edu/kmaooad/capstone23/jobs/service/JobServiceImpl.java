@@ -6,8 +6,6 @@ import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
 
 import java.util.Optional;
-
-
 public class JobServiceImpl implements JobService{
     @Inject
     private JobRepository jobRepository;
@@ -24,5 +22,10 @@ public class JobServiceImpl implements JobService{
     @Override
     public void delete(Job job) {
         jobRepository.delete(job);
+    }
+
+    @Override
+    public void update(Job job) {
+        jobRepository.update(job);
     }
 }

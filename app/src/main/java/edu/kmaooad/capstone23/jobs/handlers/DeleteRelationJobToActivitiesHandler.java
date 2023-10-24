@@ -9,6 +9,7 @@ import edu.kmaooad.capstone23.jobs.dal.Job;
 import edu.kmaooad.capstone23.jobs.dal.JobRepository;
 import edu.kmaooad.capstone23.jobs.events.ActivityRelated;
 import edu.kmaooad.capstone23.jobs.events.ActivityUnrelated;
+import edu.kmaooad.capstone23.jobs.service.JobService;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 
