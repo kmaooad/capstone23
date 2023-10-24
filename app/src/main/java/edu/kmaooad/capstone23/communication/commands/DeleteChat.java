@@ -1,8 +1,6 @@
 package edu.kmaooad.capstone23.communication.commands;
 
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import org.bson.types.ObjectId;
 
 public class DeleteChat {
