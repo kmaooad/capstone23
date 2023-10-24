@@ -4,6 +4,7 @@ import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.orgs.commands.SetHiringStatus;
+import edu.kmaooad.capstone23.orgs.dal.HiringStatus;
 import edu.kmaooad.capstone23.orgs.dal.Job;
 import edu.kmaooad.capstone23.orgs.dal.JobsRepository;
 import edu.kmaooad.capstone23.orgs.dal.Org;
@@ -32,7 +33,7 @@ public class EditHiringStatusHandler implements CommandHandler<SetHiringStatus, 
             return new Result<>(ErrorCode.ENTITY_NOT_FOUND, "Organization not found");
         }
 
-        org.hiringStatus = command.getHiringStatus();
+        org.hiringStatus = command.getHiringStatus().toString();
         orgsRepository.update(org);
 
         List<Job> jobs = jobsRepository.findByOrgId(command.getOrgId());
@@ -42,10 +43,7 @@ public class EditHiringStatusHandler implements CommandHandler<SetHiringStatus, 
             jobsRepository.update(job);
         }
 
-        HiringStatusChanged result = new HiringStatusChanged(
-                org.hiringStatus,
-                org.id.toString()
-        );
+        HiringStatusChanged result = new HiringStatusChanged(command.getHiringStatus(), org.id.toString());
 
         return new Result<>(result);
     }
