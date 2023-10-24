@@ -9,6 +9,7 @@ import edu.kmaooad.capstone23.experts.commands.AssignDepartmentToExpert;
 import edu.kmaooad.capstone23.experts.dal.Expert;
 import edu.kmaooad.capstone23.experts.dal.ExpertsRepository;
 import edu.kmaooad.capstone23.experts.events.DepartmentAssignedToExpert;
+import edu.kmaooad.capstone23.experts.service.ExpertService;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import java.util.ArrayList;
@@ -17,14 +18,16 @@ import org.bson.types.ObjectId;
 @RequestScoped
 public class AssignDepartmentToExpertHandler
         implements CommandHandler<AssignDepartmentToExpert, DepartmentAssignedToExpert> {
+
     @Inject
-    ExpertsRepository expertsRepository;
+    ExpertService expertService;
     @Inject
     DepartmentsRepository departmentsRepository;
 
+
     @Override
     public Result<DepartmentAssignedToExpert> handle(AssignDepartmentToExpert command) {
-        Expert expert = expertsRepository.findById(new ObjectId(command.getExpertId()));
+        Expert expert = expertService.findById(new ObjectId(command.getExpertId()));
         Department department = departmentsRepository.findById(command.getDepartmentId());
 
         if (expert == null) {
@@ -42,7 +45,7 @@ public class AssignDepartmentToExpertHandler
         }
 
         expert.departments.add(department);
-        expertsRepository.modify(expert);
+        expertService.modify(expert);
 
         return new Result<>(new DepartmentAssignedToExpert(expert));
     }
