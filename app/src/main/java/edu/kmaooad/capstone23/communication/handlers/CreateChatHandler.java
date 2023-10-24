@@ -12,13 +12,13 @@ import jakarta.inject.Inject;
 @RequestScoped
 public class CreateChatHandler implements CommandHandler<CreateChat, ChatCreated> {
   @Inject
-  ChatService service;
+  ChatService chatService;
 
   @Override
   public Result<ChatCreated> handle(CreateChat command) {
     var chat = mapChatCommand(command);
 
-    var insertedChat = service.insert(chat);
+    var insertedChat = chatService.insert(chat);
 
     ChatCreated createdChat = new ChatCreated(insertedChat.id.toHexString());
 
