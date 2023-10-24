@@ -42,10 +42,7 @@ public class EditHiringStatusHandler implements CommandHandler<SetHiringStatus, 
             jobsRepository.update(job);
         }
 
-        HiringStatusChanged result = new HiringStatusChanged(
-                command.getHiringStatus(),
-                org.id.toString()
-        );
+        HiringStatusChanged result = new HiringStatusChanged(command.getHiringStatus(), org.id.toString());
 
         return new Result<>(result);
     }

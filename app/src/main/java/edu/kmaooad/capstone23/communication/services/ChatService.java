@@ -18,6 +18,10 @@ public class ChatService {
     return chat.isPresent();
   }
 
+  public Chat insert(Chat chat)  {
+    return chatRepository.insert(chat);
+  }
+
   public List<Chat> bulkInsert(List<Chat> chats) {
     return chatRepository.bulkInsert(chats);
   }
