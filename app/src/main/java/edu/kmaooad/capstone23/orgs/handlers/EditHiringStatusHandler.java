@@ -32,7 +32,7 @@ public class EditHiringStatusHandler implements CommandHandler<SetHiringStatus, 
             return new Result<>(ErrorCode.ENTITY_NOT_FOUND, "Organization not found");
         }
 
-        org.hiringStatus = command.getHiringStatus();
+        org.hiringStatus = command.getHiringStatus().toString();
         orgsRepository.update(org);
 
         List<Job> jobs = jobsRepository.findByOrgId(command.getOrgId());
@@ -43,7 +43,7 @@ public class EditHiringStatusHandler implements CommandHandler<SetHiringStatus, 
         }
 
         HiringStatusChanged result = new HiringStatusChanged(
-                org.hiringStatus,
+                command.getHiringStatus(),
                 org.id.toString()
         );
 
