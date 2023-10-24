@@ -7,6 +7,7 @@ import edu.kmaooad.capstone23.experts.commands.AssignExpertToMember;
 import edu.kmaooad.capstone23.experts.dal.Expert;
 import edu.kmaooad.capstone23.experts.dal.ExpertsRepository;
 import edu.kmaooad.capstone23.experts.events.ExpertAssigned;
+import edu.kmaooad.capstone23.experts.service.ExpertService;
 import edu.kmaooad.capstone23.members.dal.Member;
 import edu.kmaooad.capstone23.members.dal.MembersRepository;
 import edu.kmaooad.capstone23.orgs.dal.Org;
@@ -22,7 +23,7 @@ public class AssignExpertToMemberHandler implements CommandHandler<AssignExpertT
     @Inject
     private MembersRepository membersRepository;
     @Inject
-    private ExpertsRepository expertsRepository;
+    ExpertService expertService;
     @Inject
     private OrgsRepository orgsRepository;
     @Inject
@@ -49,7 +50,7 @@ public class AssignExpertToMemberHandler implements CommandHandler<AssignExpertT
         expert.name = user.firstName + user.lastName;
         expert.org = org;
 
-        expertsRepository.insert(expert);
+        expertService.insert(expert);
 
         return new Result<>(new ExpertAssigned(member.id.toString()));
     }
