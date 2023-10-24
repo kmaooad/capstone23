@@ -7,7 +7,6 @@ import edu.kmaooad.capstone23.competences.commands.UpdateProj;
 import edu.kmaooad.capstone23.competences.dal.Project;
 import edu.kmaooad.capstone23.competences.dal.ProjectsRepository;
 import edu.kmaooad.capstone23.competences.events.ProjUpdated;
-import edu.kmaooad.capstone23.competences.dal.MongoProjectRepository;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 

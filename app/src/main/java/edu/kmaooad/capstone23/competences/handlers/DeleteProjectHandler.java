@@ -4,14 +4,7 @@ import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.competences.commands.DeleteProj;
-<<<<<<< HEAD:app/src/main/java/edu/kmaooad/capstone23/competences/handlers/DeleteProjectHandler.java
-import edu.kmaooad.capstone23.competences.dal.MongoProjectRepository;
 import edu.kmaooad.capstone23.competences.dal.ProjectsRepository;
-||||||| 3b6644e:app/src/main/java/edu/kmaooad/capstone23/competences/handlers/DeleteProjHandler.java
-import edu.kmaooad.capstone23.competences.dal.ProjsRepository;
-=======
-import edu.kmaooad.capstone23.competences.dal.MongoProjectRepository;
->>>>>>> main:app/src/main/java/edu/kmaooad/capstone23/competences/handlers/DeleteProjHandler.java
 import edu.kmaooad.capstone23.competences.events.ProjDeleted;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
