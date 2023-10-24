@@ -8,6 +8,7 @@ import edu.kmaooad.capstone23.experts.dal.Expert;
 import edu.kmaooad.capstone23.experts.dal.ExpertInvitationRepository;
 import edu.kmaooad.capstone23.experts.dal.ExpertsRepository;
 import edu.kmaooad.capstone23.experts.events.ExpertCreated;
+import edu.kmaooad.capstone23.experts.service.ExpertService;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 
@@ -19,7 +20,7 @@ public class AcceptInvitationLinkHandler implements CommandHandler<AcceptInvitat
     @Inject
     ExpertInvitationRepository invitationRepository;
     @Inject
-    ExpertsRepository expertsRepository;
+    ExpertService expertService;
 
     @Override
     public Result<ExpertCreated> handle(AcceptInvitationLink command) {
@@ -30,7 +31,7 @@ public class AcceptInvitationLinkHandler implements CommandHandler<AcceptInvitat
         var expert = new Expert();
         expert.name = invitationObject.expertName;
         expert.org = invitationObject.org;
-        expertsRepository.insert(expert);
+        expertService.insert(expert);
         return new Result<>(new ExpertCreated(expert.id.toString(), expert.org));
     }
 }
