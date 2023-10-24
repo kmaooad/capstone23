@@ -5,6 +5,7 @@ import edu.kmaooad.capstone23.communication.dal.repositories.ChatRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
+import java.util.List;
 import java.util.Optional;
 
 @ApplicationScoped
@@ -20,5 +21,9 @@ public class ChatService {
 
   public Chat insert(Chat chat)  {
     return chatRepository.insert(chat);
+  }
+
+  public Boolean bulkDelete(List<Chat> chats) {
+    return chatRepository.bulkDelete(chats);
   }
 }
