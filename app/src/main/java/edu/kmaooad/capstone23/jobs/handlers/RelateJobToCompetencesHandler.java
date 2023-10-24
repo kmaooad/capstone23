@@ -1,18 +1,12 @@
 package edu.kmaooad.capstone23.jobs.handlers;
 
-import edu.kmaooad.capstone23.activities.dal.Course;
-import edu.kmaooad.capstone23.activities.dal.CourseRepository;
-import edu.kmaooad.capstone23.activities.dal.ExtracurricularActivity;
-import edu.kmaooad.capstone23.activities.dal.ExtracurricularActivityRepository;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.competences.dal.*;
-import edu.kmaooad.capstone23.jobs.commands.RelateJobToActivities;
 import edu.kmaooad.capstone23.jobs.commands.RelateJobToCompetences;
 import edu.kmaooad.capstone23.jobs.dal.Job;
 import edu.kmaooad.capstone23.jobs.dal.JobRepository;
-import edu.kmaooad.capstone23.jobs.events.ActivityRelated;
 import edu.kmaooad.capstone23.jobs.events.CompetenceRelated;
 import edu.kmaooad.capstone23.jobs.service.JobService;
 import jakarta.enterprise.context.RequestScoped;
