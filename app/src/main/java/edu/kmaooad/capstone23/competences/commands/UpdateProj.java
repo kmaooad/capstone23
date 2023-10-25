@@ -24,7 +24,7 @@ public class UpdateProj {
     private List<ObjectId> skillSets;
 
     public String getId() {
-        return id;
+        return id.toString();
     }
 
     public void setId(ObjectId id) {
