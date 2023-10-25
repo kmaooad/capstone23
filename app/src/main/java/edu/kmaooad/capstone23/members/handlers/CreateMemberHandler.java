@@ -8,10 +8,11 @@ import edu.kmaooad.capstone23.experts.dal.ExpertsRepository;
 import edu.kmaooad.capstone23.members.commands.CreateBasicMember;
 import edu.kmaooad.capstone23.members.dal.Member;
 import edu.kmaooad.capstone23.members.dal.MembersRepository;
+import edu.kmaooad.capstone23.members.dto.OrgDTO;
 import edu.kmaooad.capstone23.members.events.BasicMemberCreated;
 import edu.kmaooad.capstone23.members.exceptions.UniquenessViolationException;
+import edu.kmaooad.capstone23.members.services.OrgService;
 import edu.kmaooad.capstone23.orgs.dal.Org;
-import edu.kmaooad.capstone23.orgs.dal.OrgsRepository;
 import edu.kmaooad.capstone23.users.commands.CreateUser;
 import edu.kmaooad.capstone23.users.dal.entities.User;
 import edu.kmaooad.capstone23.users.dal.repositories.UserRepository;
@@ -29,10 +30,9 @@ public class CreateMemberHandler implements CommandHandler<CreateBasicMember, Ba
     @Inject
     ExpertsRepository expertsRepository;
     @Inject
-    OrgsRepository orgsRepository;
+    OrgService orgService;
     @Inject
     CreateUserHandler createUserHandler;
-
     @Inject
     UserRepository userRepository;
 
@@ -53,7 +53,7 @@ public class CreateMemberHandler implements CommandHandler<CreateBasicMember, Ba
             member.orgId = command.getOrgId();
             member.userId = resultOfUserCreation.id;
             member.isExpert = Boolean.parseBoolean(command.getIsExpert());
-            Optional<Org> memberOrg = orgsRepository.findByIdOptional(command.getOrgId());
+            Optional<OrgDTO> memberOrg = orgService.findByIdOptional(command.getOrgId());
             if (memberOrg.isEmpty())
                 return new Result<>(ErrorCode.VALIDATION_FAILED, "Organisation not found");
             membersRepository.insert(member);
@@ -61,7 +61,9 @@ public class CreateMemberHandler implements CommandHandler<CreateBasicMember, Ba
                 Expert expert = new Expert();
                 expert.memberId = member.id;
                 expert.name = command.getFirstName() + " " + command.getLastName();
-                expert.org = memberOrg.get();
+                var org = new Org();
+                org.id = memberOrg.get().getId();
+                expert.org = org;
                 expertsRepository.insert(expert);
             }
             BasicMemberCreated result = new BasicMemberCreated(member.id.toString());
