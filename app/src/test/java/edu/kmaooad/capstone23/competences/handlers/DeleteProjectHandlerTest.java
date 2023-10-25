@@ -3,7 +3,7 @@ package edu.kmaooad.capstone23.competences.handlers;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.competences.commands.DeleteProj;
 import edu.kmaooad.capstone23.competences.dal.Project;
-import edu.kmaooad.capstone23.competences.dal.ProjsRepository;
+import edu.kmaooad.capstone23.competences.dal.MongoProjectRepository;
 import edu.kmaooad.capstone23.competences.events.ProjDeleted;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
@@ -18,9 +18,9 @@ import static org.junit.jupiter.api.Assertions.*;
 @QuarkusTest
 class DeleteProjectHandlerTest {
     @Inject
-    DeleteProjHandler handler;
+    DeleteProjectHandler handler;
     @Inject
-    ProjsRepository repository;
+    MongoProjectRepository repository;
 
     @Test
     @DisplayName("Basic Handling")
