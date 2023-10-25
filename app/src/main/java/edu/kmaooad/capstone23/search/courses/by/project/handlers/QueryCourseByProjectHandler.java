@@ -7,6 +7,7 @@ import edu.kmaooad.capstone23.competences.dal.MongoProjectRepository;
 import edu.kmaooad.capstone23.search.QueryEssenceHandler;
 import edu.kmaooad.capstone23.search.courses.by.project.events.CourseQueriedByProject;
 import jakarta.enterprise.context.ApplicationScoped;
+import org.bson.types.ObjectId;
 
 @ApplicationScoped
 public class QueryCourseByProjectHandler extends QueryEssenceHandler<
@@ -18,6 +19,6 @@ public class QueryCourseByProjectHandler extends QueryEssenceHandler<
         >
 {
     public QueryCourseByProjectHandler() {
-        super(course -> course.id, project -> project.id, CourseQueriedByProject::new);
+        super(course -> course.id, project -> new ObjectId(project.id), CourseQueriedByProject::new);
     }
 }
