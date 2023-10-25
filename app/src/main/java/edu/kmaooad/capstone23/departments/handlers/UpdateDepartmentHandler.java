@@ -1,7 +1,7 @@
 package edu.kmaooad.capstone23.departments.handlers;
 
-import edu.kmaooad.capstone23.ban.dal.BannedEntityType;
-import edu.kmaooad.capstone23.ban.dal.EntityBanRepository;
+import edu.kmaooad.capstone23.ban.commands.IsEntityBannedV2;
+import edu.kmaooad.capstone23.ban.events.EntityIsBannedV2;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
@@ -24,7 +24,7 @@ public class UpdateDepartmentHandler implements CommandHandler<UpdateDepartment,
     private OrgsRepository orgsRepository;
 
     @Inject
-    private EntityBanRepository banRepository;
+    CommandHandler<IsEntityBannedV2, EntityIsBannedV2> isBannedHandler;
 
     public Result<DepartmentUpdated> handle(UpdateDepartment command) {
 
@@ -32,7 +32,9 @@ public class UpdateDepartmentHandler implements CommandHandler<UpdateDepartment,
         if (department == null) {
             return new Result<>(ErrorCode.EXCEPTION, "Department not found");
         }
-        if (banRepository.findForEntity(BannedEntityType.Department, department.id).isPresent()) {
+
+        var isBanned = isBannedHandler.handle(new IsEntityBannedV2(department.id.toString(), IsEntityBannedV2.DEPARTMENT_BAN_ENTITY_TYPE));
+        if(isBanned.isSuccess() && isBanned.getValue().value()) {
             return new Result<>(ErrorCode.EXCEPTION, "Department is banned");
         }
 
