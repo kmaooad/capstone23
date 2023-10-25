@@ -1,7 +1,6 @@
 package edu.kmaooad.capstone23.orgs.handlers;
 
 import edu.kmaooad.capstone23.ban.commands.IsEntityBannedV2;
-import edu.kmaooad.capstone23.ban.dal.EntityBanRepository;
 import edu.kmaooad.capstone23.ban.events.EntityIsBannedV2;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
@@ -24,9 +23,6 @@ public class ApproveOrgHandler implements CommandHandler<ApproveOrg, OrgApproved
 
     @Inject
     private MailService mailService;
-
-    @Inject
-    EntityBanRepository banRepository;
 
     @Inject
     CommandHandler<IsEntityBannedV2, EntityIsBannedV2> isEntityBannedHandler;
