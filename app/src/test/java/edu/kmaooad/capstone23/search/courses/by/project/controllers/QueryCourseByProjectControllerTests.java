@@ -8,6 +8,7 @@ import edu.kmaooad.capstone23.relations.dal.Relation;
 import edu.kmaooad.capstone23.relations.dal.RelationRepository;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
+import org.bson.types.ObjectId;
 import org.junit.jupiter.api.*;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -43,7 +44,7 @@ class QueryCourseByProjectControllerTests {
         var idOfProjectToFindBy = defaultProjects.get(projectToFindIndex).id;
 
         Map<String, Object> jsonAsMap = new HashMap<>();
-        jsonAsMap.put("id", idOfProjectToFindBy.toHexString());
+        jsonAsMap.put("id", idOfProjectToFindBy);
 
         var response = given()
                 .contentType("application/json")
@@ -189,7 +190,7 @@ class QueryCourseByProjectControllerTests {
             public Relation apply(Integer courseIndex, Integer projectIndex) {
                 var courseId = defaultCourses.get(courseIndex).id;
                 var projectId = defaultProjects.get(projectIndex).id;
-                var relation = new Relation(courseId, projectId);
+                var relation = new Relation(courseId, new ObjectId(projectId));
 
                 var optCreatedRelation = relationRepository.createRelation("courses", "projects", relation);
                 assertTrue(optCreatedRelation.isPresent());
