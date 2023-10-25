@@ -22,7 +22,7 @@ public class RemoveSkillFromActivityControllerTest {
 
     @Inject
     private ExtracurricularActivityRepository activityRepository;
-
+  
     private ExtracurricularActivity activity;
 
     private ObjectId activityId;

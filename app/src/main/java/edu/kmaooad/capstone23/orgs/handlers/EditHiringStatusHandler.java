@@ -4,11 +4,7 @@ import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.orgs.commands.SetHiringStatus;
-import edu.kmaooad.capstone23.orgs.dal.HiringStatus;
-import edu.kmaooad.capstone23.orgs.dal.Job;
-import edu.kmaooad.capstone23.orgs.dal.JobsRepository;
-import edu.kmaooad.capstone23.orgs.dal.Org;
-import edu.kmaooad.capstone23.orgs.dal.OrgsRepository;
+import edu.kmaooad.capstone23.orgs.dal.*;
 import edu.kmaooad.capstone23.orgs.events.HiringStatusChanged;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
@@ -42,7 +38,7 @@ public class EditHiringStatusHandler implements CommandHandler<SetHiringStatus, 
             job.isActive = false;
             jobsRepository.update(job);
         }
-
+      
         HiringStatusChanged result = new HiringStatusChanged(command.getHiringStatus(), org.id.toString());
 
         return new Result<>(result);
