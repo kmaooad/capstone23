@@ -11,4 +11,5 @@ public class AccessRule {
     public AccessRuleFromEntityType fromEntityType;
     public ObjectId toEntityId;
     public AccessRuleToEntityType toEntityType;
+    public boolean banned = false;
 }

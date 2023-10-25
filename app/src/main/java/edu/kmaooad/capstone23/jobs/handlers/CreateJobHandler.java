@@ -6,6 +6,7 @@ import edu.kmaooad.capstone23.jobs.commands.CreateJob;
 import edu.kmaooad.capstone23.jobs.dal.Job;
 import edu.kmaooad.capstone23.jobs.dal.JobRepository;
 import edu.kmaooad.capstone23.jobs.events.JobCreated;
+import edu.kmaooad.capstone23.jobs.service.JobService;
 import edu.kmaooad.capstone23.orgs.commands.CreateOrg;
 import edu.kmaooad.capstone23.orgs.dal.Org;
 import edu.kmaooad.capstone23.orgs.dal.OrgsRepository;
@@ -17,7 +18,7 @@ import jakarta.inject.Inject;
 public class CreateJobHandler implements CommandHandler<CreateJob, JobCreated> {
 
     @Inject
-    private JobRepository repository;
+    private JobService jobService;
 
     public Result<JobCreated> handle(CreateJob command) {
 
@@ -28,7 +29,7 @@ public class CreateJobHandler implements CommandHandler<CreateJob, JobCreated> {
         job.activitiesId = command.getActivitiesId();
         job.competencesId = command.getCompetencesId();
 
-        repository.insert(job);
+        jobService.insert(job);
 
         JobCreated result = new JobCreated(job.id);
 

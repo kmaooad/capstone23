@@ -4,16 +4,18 @@ import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.students.commands.UpdateStudent;
+import edu.kmaooad.capstone23.students.commands.notifications.NotifyStudent;
 import edu.kmaooad.capstone23.students.dal.Student;
 import edu.kmaooad.capstone23.students.dal.StudentRepository;
+import edu.kmaooad.capstone23.students.events.StudentNotified;
 import edu.kmaooad.capstone23.students.events.StudentUpdated;
+import edu.kmaooad.capstone23.students.events.StudentsUpdated;
 import edu.kmaooad.capstone23.students.parser.UpdateCSVStudent;
 import edu.kmaooad.capstone23.students.parser.UpdateCSVStudentParser;
 import edu.kmaooad.capstone23.students.parser.exceptions.IncorrectValuesAmount;
 import edu.kmaooad.capstone23.students.parser.exceptions.InvalidEmail;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
-import org.bson.types.ObjectId;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -22,15 +24,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RequestScoped
-public class UpdateStudentHandler implements CommandHandler<UpdateStudent, StudentUpdated> {
+public class UpdateStudentHandler implements CommandHandler<UpdateStudent, StudentsUpdated> {
     @Inject
     StudentRepository repository;
 
     @Inject
     UpdateCSVStudentParser parser;
 
+    @Inject
+    NotifyStudentHandler notifyStudentHandler;
+
     @Override
-    public Result<StudentUpdated> handle(UpdateStudent command) {
+    public Result<StudentsUpdated> handle(UpdateStudent command) {
         if (!command.csvFile.contentType().equals("text/csv"))
             return new Result<>(ErrorCode.EXCEPTION, "Incorrect file type");
 
@@ -71,9 +76,16 @@ public class UpdateStudentHandler implements CommandHandler<UpdateStudent, Stude
         }
 
         repository.update(studentsToUpdate);
-        List<ObjectId> studentsIds = studentsToUpdate.stream().map(student -> student.id).toList();
 
-        StudentUpdated result = new StudentUpdated(studentsIds);
+        List<StudentUpdated> studentsUpdated = new ArrayList<>();
+        for (Student student : studentsToUpdate) {
+            NotifyStudent notifyStudent = new NotifyStudent.Update(student);
+            Result<StudentNotified> studentNotifiedResult = notifyStudentHandler.handle(notifyStudent);
+            StudentUpdated studentUpdated = new StudentUpdated(student.id, studentNotifiedResult);
+            studentsUpdated.add(studentUpdated);
+        }
+
+        StudentsUpdated result = new StudentsUpdated(studentsUpdated);
         return new Result<>(result);
     }
 }
