@@ -4,6 +4,7 @@ import edu.kmaooad.capstone23.activities.commands.CreateCourse;
 import edu.kmaooad.capstone23.activities.dal.Course;
 import edu.kmaooad.capstone23.activities.dal.CourseRepository;
 import edu.kmaooad.capstone23.activities.events.CourseCreated;
+import edu.kmaooad.capstone23.activities.services.CourseService;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.Result;
 import jakarta.enterprise.context.RequestScoped;
@@ -14,7 +15,7 @@ import java.util.ArrayList;
 @RequestScoped
 public class CreateCourseHandler implements CommandHandler<CreateCourse, CourseCreated> {
     @Inject
-    CourseRepository courseRepository;
+    CourseService courseService;
 
     @Override
     public Result<CourseCreated> handle(CreateCourse command) {
@@ -22,7 +23,7 @@ public class CreateCourseHandler implements CommandHandler<CreateCourse, CourseC
         course.name = command.getName();
         course.tags = new ArrayList<>();
 
-        courseRepository.insert(course);
+        courseService.insert(course);
 
         var result = new CourseCreated(course.id.toHexString());
         return new Result<>(result);

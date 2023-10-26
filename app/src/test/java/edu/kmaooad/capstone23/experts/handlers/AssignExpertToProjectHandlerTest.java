@@ -4,7 +4,7 @@ import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.competences.commands.CreateProj;
-import edu.kmaooad.capstone23.competences.dal.ProjsRepository;
+import edu.kmaooad.capstone23.competences.dal.MongoProjectRepository;
 import edu.kmaooad.capstone23.competences.events.ProjCreated;
 import edu.kmaooad.capstone23.experts.commands.AssignExpertToProject;
 import edu.kmaooad.capstone23.experts.commands.CreateExpert;
@@ -33,7 +33,7 @@ public class AssignExpertToProjectHandlerTest {
     @Inject
     OrgsRepository orgsRepository;
     @Inject
-    ProjsRepository projsRepository;
+    MongoProjectRepository projsRepository;
     @Inject
     ExpertsRepository expertsRepository;
 
