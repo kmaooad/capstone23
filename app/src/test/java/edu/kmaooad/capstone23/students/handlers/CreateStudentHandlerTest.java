@@ -121,7 +121,7 @@ public class CreateStudentHandlerTest {
         Assertions.assertEquals(studentsCreated.size(), 1);
         for (StudentCreated studentCreated : studentsCreated) {
             Assertions.assertTrue(studentCreated.isNotified());
-            Assertions.assertNull(studentCreated.getNotificationError());
+            Assertions.assertNull(studentCreated.notificationError());
         }
     }
 }
