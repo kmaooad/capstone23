@@ -126,4 +126,19 @@ public class FindStudentControllerTest {
                 .then()
                 .statusCode(200);
     }
+
+    @Test
+    @DisplayName("Find students by email")
+    public void testFindStudentsByEmail() {
+        Map<String, Object> jsonAsMap = new HashMap<>();
+        jsonAsMap.put("email", "ivan.do");
+
+        given()
+                .contentType("application/json")
+                .body(jsonAsMap)
+                .when()
+                .post("/search/students")
+                .then()
+                .statusCode(200);
+    }
 }
