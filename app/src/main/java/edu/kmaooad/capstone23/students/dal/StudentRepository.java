@@ -1,5 +1,6 @@
 package edu.kmaooad.capstone23.students.dal;
 
+import edu.kmaooad.capstone23.search.builder.FullNameSearchParam;
 import edu.kmaooad.capstone23.search.builder.PrefixSearchParam;
 import edu.kmaooad.capstone23.search.builder.SearchBuilder;
 import edu.kmaooad.capstone23.students.commands.FindStudent;
@@ -31,6 +32,8 @@ public class StudentRepository implements PanacheMongoRepository<Student> {
             builder.and(new PrefixSearchParam("middleName", query.getMiddleName()));
         if (query.getLastName() != null)
             builder.and(new PrefixSearchParam("lastName", query.getLastName()));
+        if (query.getFullName() != null)
+            builder.and(new FullNameSearchParam(query.getFullName()));
         var searchPair = builder.build();
 
         return find(searchPair.a, searchPair.b)

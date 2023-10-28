@@ -82,4 +82,48 @@ public class FindStudentControllerTest {
                 .statusCode(200);
     }
 
+    @Test
+    @DisplayName("Find students by full name: First name")
+    public void testFindStudentsByFullNameFirstName() {
+        Map<String, Object> jsonAsMap = new HashMap<>();
+        jsonAsMap.put("fullName", "Iva");
+
+        given()
+                .contentType("application/json")
+                .body(jsonAsMap)
+                .when()
+                .post("/search/students")
+                .then()
+                .statusCode(200);
+    }
+
+    @Test
+    @DisplayName("Find students by full name: Middle name")
+    public void testFindStudentsByFullNameMiddleName() {
+        Map<String, Object> jsonAsMap = new HashMap<>();
+        jsonAsMap.put("fullName", "Oleksandrovy");
+
+        given()
+                .contentType("application/json")
+                .body(jsonAsMap)
+                .when()
+                .post("/search/students")
+                .then()
+                .statusCode(200);
+    }
+
+    @Test
+    @DisplayName("Find students by full name: Last name")
+    public void testFindStudentsByFullNameLastName() {
+        Map<String, Object> jsonAsMap = new HashMap<>();
+        jsonAsMap.put("fullName", "Dobrovolskyiii");
+
+        given()
+                .contentType("application/json")
+                .body(jsonAsMap)
+                .when()
+                .post("/search/students")
+                .then()
+                .statusCode(200);
+    }
 }
