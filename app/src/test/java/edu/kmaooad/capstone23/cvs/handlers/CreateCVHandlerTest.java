@@ -73,4 +73,29 @@ public class CreateCVHandlerTest {
 
         Assertions.assertFalse(result.isSuccess());
     }
+
+    @Test
+    @DisplayName("Create Cvs: status is null")
+    void testStatusIsNullHandling() {
+        CreateCV command = new CreateCV();
+        command.setDateTimeCreated(LocalDateTime.now());
+        command.setTextInfo("some info about a student");
+        command.setVisibility(CV.Visibility.VISIBLE);
+        Result<CVCreated> result = handler.handle(command);
+
+        Assertions.assertFalse(result.isSuccess());
+    }
+
+    @DisplayName("Create Cvs: visibility is null")
+    void testVisibilityIsNullHandling() {
+        CreateCV command = new CreateCV();
+        command.setDateTimeCreated(LocalDateTime.now());
+        command.setTextInfo("some info about a student");
+        command.setStatus(CV.Status.OPEN);
+
+
+        Result<CVCreated> result = handler.handle(command);
+
+        Assertions.assertFalse(result.isSuccess());
+    }
 }

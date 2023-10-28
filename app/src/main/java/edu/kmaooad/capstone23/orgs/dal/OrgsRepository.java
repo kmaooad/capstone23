@@ -3,10 +3,9 @@ package edu.kmaooad.capstone23.orgs.dal;
 import io.quarkus.mongodb.panache.PanacheMongoRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import org.bson.types.ObjectId;
-
 import java.util.Optional;
-
 import java.util.List;
+
 
 @ApplicationScoped
 public class OrgsRepository implements PanacheMongoRepository<Org> {

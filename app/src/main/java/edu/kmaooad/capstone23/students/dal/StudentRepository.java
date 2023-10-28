@@ -6,9 +6,11 @@ import edu.kmaooad.capstone23.students.commands.FindStudent;
 import edu.kmaooad.capstone23.students.parser.CSVStudent;
 import io.quarkus.mongodb.panache.PanacheMongoRepository;
 import jakarta.enterprise.context.ApplicationScoped;
+import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @ApplicationScoped
 public class StudentRepository implements PanacheMongoRepository<Student> {
@@ -34,6 +36,15 @@ public class StudentRepository implements PanacheMongoRepository<Student> {
         return find(searchPair.a, searchPair.b)
                 .page(query.getPage(), query.getSize())
                 .list();
+    }
+
+    public Optional<Student> findById(String id) {
+        try {
+            ObjectId objectId = new ObjectId(id);
+            return findByIdOptional(objectId);
+        } catch (Exception e) {
+            return Optional.empty();
+        }
     }
 
     private Student map(CSVStudent student){
