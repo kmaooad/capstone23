@@ -26,4 +26,9 @@ public class CourseServiceImpl implements CourseService {
         courseRepository.update(course);
         return course;
     }
+
+    @Override
+    public Course find(String field, String value) {
+        return courseRepository.find(field , value).firstResult();
+    }
 }
