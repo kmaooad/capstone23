@@ -12,7 +12,7 @@ import java.util.List;
 public class StudentService {
 
     @Inject
-    StudentsRepository repository;
+    StudentMongoRepository repository;
 
     public List<Student> insert(List<CSVStudent> students) { return repository.insert(students); }
     public void update(Iterable<Student> students) { repository.update(students); }

@@ -5,7 +5,7 @@ import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.students.MockFileUpload;
 import edu.kmaooad.capstone23.students.commands.UpdateStudent;
 import edu.kmaooad.capstone23.students.dal.Student;
-import edu.kmaooad.capstone23.students.dal.StudentRepository;
+import edu.kmaooad.capstone23.students.dal.StudentService;
 import edu.kmaooad.capstone23.students.events.StudentsUpdated;
 import edu.kmaooad.capstone23.students.parser.CSVStudent;
 import edu.kmaooad.capstone23.students.parser.CreateCSVStudentParser;
@@ -29,7 +29,7 @@ public class UpdateStudentHandlerTest {
     UpdateStudentHandler handler;
 
     @Inject
-    StudentRepository repository;
+    StudentService repository;
     @Inject
     CreateCSVStudentParser createCSVStudentParser;
 

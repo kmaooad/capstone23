@@ -2,7 +2,7 @@ package edu.kmaooad.capstone23.students.handlers;
 
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.students.commands.FindStudent;
-import edu.kmaooad.capstone23.students.dal.StudentRepository;
+import edu.kmaooad.capstone23.students.dal.StudentService;
 import edu.kmaooad.capstone23.students.events.StudentsFound;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
@@ -21,7 +21,7 @@ public class FindStudentHandlerTest {
     FindStudentHandler handler;
 
     @Inject
-    StudentRepository repository;
+    StudentService repository;
 
     @BeforeEach
     public void setup() {

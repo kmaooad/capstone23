@@ -1,7 +1,7 @@
 package edu.kmaooad.capstone23.students.controllers;
 
 import edu.kmaooad.capstone23.students.dal.Student;
-import edu.kmaooad.capstone23.students.dal.StudentRepository;
+import edu.kmaooad.capstone23.students.dal.StudentService;
 import edu.kmaooad.capstone23.students.parser.CSVStudent;
 import edu.kmaooad.capstone23.students.parser.CreateCSVStudentParser;
 import io.quarkus.test.junit.QuarkusTest;
@@ -23,7 +23,7 @@ import static org.hamcrest.Matchers.hasSize;
 @QuarkusTest
 public class FindStudentByIdControllerTest {
     @Inject
-    StudentRepository studentRepository;
+    StudentService studentService;
     @Inject
     CreateCSVStudentParser createCSVStudentParser;
 
@@ -31,10 +31,10 @@ public class FindStudentByIdControllerTest {
 
     @BeforeEach
     public void setup() {
-        studentRepository.deleteAll();
+        studentService.deleteAll();
         try {
             List<CSVStudent> csvStudents = createCSVStudentParser.parse(new File("src/test/resources/students/success.csv"));
-            List<Student> students = studentRepository.insert(csvStudents);
+            List<Student> students = studentService.insert(csvStudents);
             studentId = students.get(0).id;
         } catch (Exception ignored) {
 
@@ -43,7 +43,7 @@ public class FindStudentByIdControllerTest {
 
     @AfterEach
     public void clear() {
-        studentRepository.deleteAll();
+        studentService.deleteAll();
     }
 
     @Test

@@ -6,7 +6,7 @@ import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.students.commands.CreateStudent;
 import edu.kmaooad.capstone23.students.commands.notifications.NotifyStudent;
 import edu.kmaooad.capstone23.students.dal.Student;
-import edu.kmaooad.capstone23.students.dal.StudentRepository;
+import edu.kmaooad.capstone23.students.dal.StudentService;
 import edu.kmaooad.capstone23.students.events.StudentCreated;
 import edu.kmaooad.capstone23.students.events.StudentNotified;
 import edu.kmaooad.capstone23.students.events.StudentsCreated;
@@ -26,7 +26,7 @@ import java.util.List;
 @RequestScoped
 public class CreateStudentHandler implements CommandHandler<CreateStudent, StudentsCreated> {
     @Inject
-    StudentRepository repository;
+    StudentService repository;
 
     @Inject
     CreateCSVStudentParser parser;

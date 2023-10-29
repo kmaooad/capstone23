@@ -3,7 +3,7 @@ package edu.kmaooad.capstone23.students.handlers;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.students.commands.ReadStudent;
 import edu.kmaooad.capstone23.students.dal.Student;
-import edu.kmaooad.capstone23.students.dal.StudentRepository;
+import edu.kmaooad.capstone23.students.dal.StudentService;
 import edu.kmaooad.capstone23.students.events.StudentRead;
 import edu.kmaooad.capstone23.students.parser.CSVStudent;
 import edu.kmaooad.capstone23.students.parser.CreateCSVStudentParser;
@@ -18,7 +18,7 @@ import java.util.List;
 @QuarkusTest
 public class FindStudentByIdHandlerTest {
     @Inject
-    StudentRepository studentRepository;
+    StudentService studentService;
     @Inject
     CreateCSVStudentParser createCSVStudentParser;
     private ObjectId studentId;
@@ -28,10 +28,10 @@ public class FindStudentByIdHandlerTest {
 
     @BeforeEach
     public void setup() {
-        studentRepository.deleteAll();
+        studentService.deleteAll();
         try {
             List<CSVStudent> csvStudents = createCSVStudentParser.parse(new File("src/test/resources/students/success.csv"));
-            List<Student> students = studentRepository.insert(csvStudents);
+            List<Student> students = studentService.insert(csvStudents);
             studentId = students.get(0).id;
         } catch (Exception ignored) {
 
@@ -40,7 +40,7 @@ public class FindStudentByIdHandlerTest {
 
     @AfterEach
     public void clean() {
-        studentRepository.deleteAll();
+        studentService.deleteAll();
     }
 
     @Test

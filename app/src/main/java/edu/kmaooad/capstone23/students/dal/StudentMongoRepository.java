@@ -11,10 +11,9 @@ import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @ApplicationScoped
-public class StudentRepository implements PanacheMongoRepository<Student> {
+class StudentMongoRepository implements PanacheMongoRepository<Student> {
     public List<Student> insert(List<CSVStudent> students){
         List<Student> result = new ArrayList<>();
         for (CSVStudent student : students) {
@@ -43,12 +42,12 @@ public class StudentRepository implements PanacheMongoRepository<Student> {
                 .list();
     }
 
-    public Optional<Student> findById(String id) {
+    public Student findById(String id) {
         try {
             ObjectId objectId = new ObjectId(id);
-            return findByIdOptional(objectId);
+            return findById(objectId);
         } catch (Exception e) {
-            return Optional.empty();
+            return null;
         }
     }
 
