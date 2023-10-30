@@ -5,6 +5,7 @@ import edu.kmaooad.capstone23.activities.dal.Course;
 import edu.kmaooad.capstone23.activities.dal.CourseRepository;
 import edu.kmaooad.capstone23.activities.events.BulkCoursesDeleted;
 import edu.kmaooad.capstone23.activities.events.CourseDeleted;
+import edu.kmaooad.capstone23.activities.services.CourseService;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.Result;
 import jakarta.enterprise.context.RequestScoped;
@@ -15,7 +16,7 @@ import java.util.List;
 @RequestScoped
 public class BulkDeleteCoursesHandler implements CommandHandler<BulkDeleteCourses, BulkCoursesDeleted> {
     @Inject
-    private CourseRepository repository;
+    private CourseService courseService;
 
     @Override
     public Result<BulkCoursesDeleted> handle(BulkDeleteCourses command) {
@@ -25,7 +26,7 @@ public class BulkDeleteCoursesHandler implements CommandHandler<BulkDeleteCourse
             return course;
         }).toList();
 
-        repository.bulkDelete(courses);
+        courseService.bulkDelete(courses);
 
         List<CourseDeleted> coursesDeleted = courses.stream()
                 .map(course -> new CourseDeleted(course.id)).toList();
