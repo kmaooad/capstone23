@@ -124,6 +124,8 @@ public class BanServiceTests {
         Assertions.assertEquals(ErrorCode.VALIDATION_FAILED, result.getErrorCode());
     }
 
+   
+
     @Test
     @DisplayName("Ban Non-existing Organisation")
     public void banNonExistingOrganisation() {
@@ -133,6 +135,7 @@ public class BanServiceTests {
         Assertions.assertFalse(result.isSuccess());
         Assertions.assertEquals(ErrorCode.VALIDATION_FAILED, result.getErrorCode());
     }
+
 
     private ObjectId createMember(){
         CreateBasicMember command = new CreateBasicMember();
