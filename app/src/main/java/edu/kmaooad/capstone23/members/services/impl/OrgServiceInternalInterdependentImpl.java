@@ -20,7 +20,7 @@ public class OrgServiceInternalInterdependentImpl implements OrgService {
     }
 
     @Override
-    public Optional<OrgDTO> findByIdOptional(ObjectId id) {
-        return orgsRepository.findByIdOptional(id).map(value -> new OrgDTO(value.id, value.emailDomain));
+    public Optional<OrgDTO> findByIdOptional(String id) {
+        return orgsRepository.findByIdOptional(new ObjectId(id)).map(value -> new OrgDTO(value.id, value.emailDomain));
     }
 }

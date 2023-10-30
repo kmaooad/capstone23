@@ -47,7 +47,7 @@ public class CreateMemberHandler implements CommandHandler<CreateBasicMember, Ba
             member.orgId = command.getOrgId();
             member.userId = foundOrCreatedUser.getId();
             member.isExpert = Boolean.parseBoolean(command.getIsExpert());
-            Optional<OrgDTO> memberOrg = orgService.findByIdOptional(command.getOrgId());
+            Optional<OrgDTO> memberOrg = orgService.findByIdOptional(command.getOrgId().toString());
             if (memberOrg.isEmpty())
                 return new Result<>(ErrorCode.VALIDATION_FAILED, "Organisation not found");
             membersRepository.insert(member);
