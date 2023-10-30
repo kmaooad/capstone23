@@ -7,16 +7,19 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
 
+
 @ApplicationScoped
 public class CVService {
 
     @Inject
     CVRepository cvRepository;
 
+
     public CV create(CV cv) {
         cvRepository.persist(cv);
         return cv;
     }
+
 
     public void delete(CV cv) {
         cvRepository.delete(cv);
@@ -26,9 +29,9 @@ public class CVService {
         return cvRepository.findById(id);
     }
 
+
     public PanacheQuery<CV> find(String query, Object... params) {
         return cvRepository.find(query, params);
     }
-
 
 }
