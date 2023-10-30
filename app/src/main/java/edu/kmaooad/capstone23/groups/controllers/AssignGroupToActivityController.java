@@ -3,8 +3,6 @@ package edu.kmaooad.capstone23.groups.controllers;
 import edu.kmaooad.capstone23.common.TypicalController;
 import edu.kmaooad.capstone23.groups.commands.AssignGroupToActivity;
 import edu.kmaooad.capstone23.groups.events.ActivityAssigned;
-import edu.kmaooad.capstone23.jobs.commands.RelateJobToActivities;
-import edu.kmaooad.capstone23.jobs.events.ActivityRelated;
 import jakarta.ws.rs.Path;
 import org.eclipse.microprofile.openapi.annotations.media.Content;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;

@@ -16,6 +16,8 @@ import jakarta.inject.Inject;
 
 import java.util.Optional;
 
+import org.bson.types.ObjectId;
+
 @RequestScoped
 public class AssignGroupToActivitiesHandler implements CommandHandler<AssignGroupToActivity, ActivityAssigned> {
 
@@ -30,23 +32,25 @@ public class AssignGroupToActivitiesHandler implements CommandHandler<AssignGrou
 
     @Override
     public Result<ActivityAssigned> handle(AssignGroupToActivity command) {
+        final ObjectId groupID = new ObjectId(command.getGroupId());
+        final ObjectId activityID = new ObjectId(command.getActivityId());
 
-        Optional<Group> group = repository.findByIdOptional(command.getGroupId());
+        Optional<Group> group = repository.findByIdOptional(groupID);
         if (group.isEmpty())
             return new Result<>(ErrorCode.VALIDATION_FAILED, "This group was previously deleted or never existed");
 
         ActivityAssigned result = new ActivityAssigned(command.getGroupId(), command.getActivityId());
 
-        Optional<Course> course = courseRepository.findByIdOptional(command.getActivityId());
+        Optional<Course> course = courseRepository.findByIdOptional(activityID);
         Optional<ExtracurricularActivity> extActivity = extracurricularRepository
-                .findByIdOptional(command.getActivityId());
+                .findByIdOptional(activityID);
         if (course.isEmpty() && extActivity.isEmpty())
             return new Result<>(ErrorCode.VALIDATION_FAILED, "This activity was previously deleted or never existed");
 
         Group g = group.get();
         if (g.activitiesId.contains(command.getActivityId()))
             return new Result<>(ErrorCode.VALIDATION_FAILED, "This activity is already assigned to this group");
-        g.activitiesId.add(command.getActivityId());
+        g.activitiesId.add(activityID);
 
         repository.update(g);
 

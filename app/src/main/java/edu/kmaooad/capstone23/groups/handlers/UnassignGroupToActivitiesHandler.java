@@ -14,21 +14,17 @@ import jakarta.inject.Inject;
 
 import java.util.Optional;
 
+import org.bson.types.ObjectId;
+
 @RequestScoped
 public class UnassignGroupToActivitiesHandler  implements CommandHandler<UnassignGroupToActivity, ActivityUnassigned> {
     @Inject
     private GroupsRepository repository;
 
-    @Inject
-    private CourseRepository courseRepository;
-
-    @Inject
-    private ExtracurricularActivityRepository extracurricularRepository;
-
     @Override
     public Result<ActivityUnassigned> handle(UnassignGroupToActivity command) {
-
-        Optional<Group> group = repository.findByIdOptional(command.getGroupId());
+        final ObjectId objID = new ObjectId(command.getGroupId());
+        Optional<Group> group = repository.findByIdOptional(objID);
         if(group.isEmpty())
             return new Result<>(ErrorCode.VALIDATION_FAILED, "This group was previously deleted or never existed");
         ActivityUnassigned result = new ActivityUnassigned(command.getGroupId(), command.getActivityId());

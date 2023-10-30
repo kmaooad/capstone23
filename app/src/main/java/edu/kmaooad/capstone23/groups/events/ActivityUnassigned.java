@@ -1,21 +1,19 @@
 package edu.kmaooad.capstone23.groups.events;
 
-import org.bson.types.ObjectId;
-
 public class ActivityUnassigned {
-    private final ObjectId groupId;
-    private final ObjectId activityId;
+    private final String groupId;
+    private final String activityId;
 
-    public ActivityUnassigned(ObjectId groupId, ObjectId activityId) {
+    public ActivityUnassigned(String groupId, String activityId) {
         this.groupId = groupId;
         this.activityId = activityId;
     }
 
-    public ObjectId getGroupId() {
+    public String getGroupId() {
         return groupId;
     }
 
-    public ObjectId getActivitiesId() {
+    public String getActivitiesId() {
         return activityId;
     }
 }

@@ -1,9 +1,7 @@
 package edu.kmaooad.capstone23.groups.controllers;
 
 import edu.kmaooad.capstone23.common.TypicalController;
-import edu.kmaooad.capstone23.groups.commands.AssignGroupToActivity;
 import edu.kmaooad.capstone23.groups.commands.UnassignGroupToActivity;
-import edu.kmaooad.capstone23.groups.events.ActivityAssigned;
 import edu.kmaooad.capstone23.groups.events.ActivityUnassigned;
 import jakarta.ws.rs.Path;
 import org.eclipse.microprofile.openapi.annotations.media.Content;
