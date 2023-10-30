@@ -1,27 +1,25 @@
 package edu.kmaooad.capstone23.groups.commands;
 
-import org.bson.types.ObjectId;
-
 public class UnassignGroupToActivity {
-    private ObjectId groupId;
-    private ObjectId activityId;
+    private String groupId;
+    private String activityId;
 
     public UnassignGroupToActivity() {
     }
 
-    public ObjectId getGroupId() {
+    public String getGroupId() {
         return groupId;
     }
 
-    public void setGroupId(ObjectId groupId) {
+    public void setGroupId(String groupId) {
         this.groupId = groupId;
     }
 
-    public ObjectId getActivityId() {
+    public String getActivityId() {
         return activityId;
     }
 
-    public void setActivityId(ObjectId activityId) {
+    public void setActivityId(String activityId) {
         this.activityId = activityId;
     }
 }
