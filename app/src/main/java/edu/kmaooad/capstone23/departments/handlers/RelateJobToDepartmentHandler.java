@@ -1,7 +1,7 @@
 package edu.kmaooad.capstone23.departments.handlers;
 
 import edu.kmaooad.capstone23.ban.dal.BannedEntityType;
-import edu.kmaooad.capstone23.ban.dal.EntityBanRepository;
+import edu.kmaooad.capstone23.ban.service.EntityBanService;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
@@ -26,7 +26,7 @@ public class RelateJobToDepartmentHandler implements CommandHandler<RelateJobToD
     private JobRepository jobRepository;
 
     @Inject
-    private EntityBanRepository banRepository;
+    private EntityBanService banService;
 
     public Result<JobToDepartmentRelated> handle(RelateJobToDepartment command) {
         String departmentId = command.getDepartmentId();
@@ -36,7 +36,7 @@ public class RelateJobToDepartmentHandler implements CommandHandler<RelateJobToD
         if (department == null) {
             return new Result<>(ErrorCode.EXCEPTION, "Department not found");
         }
-        if (banRepository.findForEntity(BannedEntityType.Department, department.id).isPresent()) {
+        if (banService.findForEntity(BannedEntityType.Department, department.id).isPresent()) {
             return new Result<>(ErrorCode.EXCEPTION, "Department is banned");
         }
 
