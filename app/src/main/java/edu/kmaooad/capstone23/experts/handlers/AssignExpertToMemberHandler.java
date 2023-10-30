@@ -4,9 +4,9 @@ import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.experts.commands.AssignExpertToMember;
-import edu.kmaooad.capstone23.experts.dal.Expert;
-import edu.kmaooad.capstone23.experts.dal.ExpertsRepository;
+import edu.kmaooad.capstone23.experts.dal.dto.ExpertRequestDto;
 import edu.kmaooad.capstone23.experts.events.ExpertAssigned;
+import edu.kmaooad.capstone23.experts.service.ExpertMapper;
 import edu.kmaooad.capstone23.experts.service.ExpertService;
 import edu.kmaooad.capstone23.members.dal.Member;
 import edu.kmaooad.capstone23.members.dal.MembersRepository;
@@ -28,8 +28,11 @@ public class AssignExpertToMemberHandler implements CommandHandler<AssignExpertT
     private OrgsRepository orgsRepository;
     @Inject
     private UserRepository userRepository;
+    ExpertMapper expertMapper;
 
     public Result<ExpertAssigned> handle(AssignExpertToMember command) {
+        expertMapper = new ExpertMapper();
+
         ObjectId id = command.getMemberId();
         Member member = membersRepository.findById(id);
 
@@ -45,12 +48,12 @@ public class AssignExpertToMemberHandler implements CommandHandler<AssignExpertT
         membersRepository.updateEntry(member);
 
         Org org = orgsRepository.findById(member.orgId);
-        Expert expert = new Expert();
+        ExpertRequestDto expertRequestDto = new ExpertRequestDto();
         var user = userRepository.findById(member.userId);
-        expert.name = user.firstName + user.lastName;
-        expert.org = org;
+        expertRequestDto.setName(user.firstName + user.lastName);
+        expertRequestDto.setOrgId(org.id.toHexString());
 
-        expertService.insert(expert);
+        expertService.insert(expertMapper.toModel(expertRequestDto));
 
         return new Result<>(new ExpertAssigned(member.id.toString()));
     }
