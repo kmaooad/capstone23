@@ -4,7 +4,7 @@ import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.competences.dal.Project;
-import edu.kmaooad.capstone23.competences.dal.ProjsRepository;
+import edu.kmaooad.capstone23.competences.dal.MongoProjectRepository;
 import edu.kmaooad.capstone23.experts.commands.AssignExpertToProject;
 import edu.kmaooad.capstone23.experts.dal.Expert;
 import edu.kmaooad.capstone23.experts.dal.ExpertsRepository;
@@ -19,7 +19,7 @@ import java.util.List;
 public class AssignExpertToProjectHandler implements CommandHandler<AssignExpertToProject, ExpertAssignedToProject> {
 
     @Inject
-    private ProjsRepository projsRepository;
+    private MongoProjectRepository projsRepository;
     @Inject
     private ExpertsRepository expertsRepository;
 

@@ -5,8 +5,8 @@ import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.group_templates.commands.UpdateGroupTemplate;
 import edu.kmaooad.capstone23.group_templates.dal.GroupTemplate;
-import edu.kmaooad.capstone23.group_templates.dal.GroupTemplatesRepository;
 import edu.kmaooad.capstone23.group_templates.events.GroupTemplateUpdated;
+import edu.kmaooad.capstone23.group_templates.services.GroupTemplatesService;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
@@ -15,7 +15,7 @@ import org.bson.types.ObjectId;
 public class UpdateGroupTemplateHandler implements CommandHandler<UpdateGroupTemplate, GroupTemplateUpdated> {
 
     @Inject
-    private GroupTemplatesRepository repository;
+    private GroupTemplatesService repository;
 
     public Result<GroupTemplateUpdated> handle(UpdateGroupTemplate command) {
 
