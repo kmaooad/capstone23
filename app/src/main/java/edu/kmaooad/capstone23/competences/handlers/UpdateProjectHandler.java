@@ -18,8 +18,8 @@ public class UpdateProjectHandler implements CommandHandler<UpdateProj, ProjUpda
 
     @Override
     public Result<ProjUpdated> handle(UpdateProj command) {
+        var foundProj = repository.findProjectById(command.getId());
 
-        var foundProj = repository.findProjectById(command.getId().toString());
         if(foundProj == null)
             return new Result<>(ErrorCode.EXCEPTION, "Updated");
 
@@ -37,6 +37,7 @@ public class UpdateProjectHandler implements CommandHandler<UpdateProj, ProjUpda
                 newValues.skills.stream().map(ObjectId::new).toList(),
                 newValues.skillSets.stream().map(ObjectId::new).toList()
         );
+
         return new Result<>(result);
     }
 }

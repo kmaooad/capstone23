@@ -7,6 +7,7 @@ import edu.kmaooad.capstone23.competences.dal.MongoProjectRepository;
 import edu.kmaooad.capstone23.competences.events.ProjDeleted;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
+import org.bson.types.ObjectId;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -28,13 +29,13 @@ class DeleteProjectHandlerTest {
         repository.insert(project);
 
         DeleteProject command = new DeleteProject();
-        command.setId(project.id.toHexString());
+        command.setId(project.id);
 
         ProjDeleted projDeleted = handler.handle(command).getValue();
         assertNotNull(projDeleted);
         assertEquals(project.id, projDeleted.projId());
 
-        Project deletedProject = repository.findById(project.id);
+        Project deletedProject = repository.findById(new ObjectId(project.id));
         assertNull(deletedProject);
     }
 

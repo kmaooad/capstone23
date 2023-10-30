@@ -1,13 +1,14 @@
 package edu.kmaooad.capstone23.departments.controllers;
 
 import edu.kmaooad.capstone23.departments.dal.*;
+import edu.kmaooad.capstone23.departments.drivers.DepartmentDriver;
+import edu.kmaooad.capstone23.departments.services.DepartmentService;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,21 +20,20 @@ public class SetMemberRoleControllerTest {
 
     private String userName;
     @Inject
-    DepartmentsRepository departmentsRepository;
+    DepartmentService departmentService;
+
+    @Inject
+    DepartmentDriver departmentDriver;
 
     @BeforeEach
     void setUp() {
-        Department department = new Department();
-        department.name = "Initial Department";
-        department.description = "Initial Department Description";
-        department.parent = "NaUKMA";
-        department.members = new ArrayList<>();
+        Department department = departmentDriver.createDepartment();
 
         Member member = new Member();
         member.userName = "Initial Member";
         member.role = "Initial Role";
         department.members.add(member);
-        departmentsRepository.insert(department);
+        departmentService.updateDepartment(department);
 
         departmentId = department.id.toString();
         userName = member.userName;

@@ -21,7 +21,7 @@ public class DeleteProjectHandler implements CommandHandler<DeleteProject, ProjD
         var foundProj = repository.findProjectById(String.valueOf(projId));
         if(foundProj != null) {
             repository.deleteProject(foundProj);
-            var result = new ProjDeleted(new ObjectId(projId));
+            var result = new ProjDeleted(new ObjectId((projId)));
             return new Result<>(result);
         } else {
             return new Result<>(ErrorCode.EXCEPTION,
