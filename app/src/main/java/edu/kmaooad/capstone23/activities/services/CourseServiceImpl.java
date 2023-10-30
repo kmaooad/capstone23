@@ -30,7 +30,6 @@ public class CourseServiceImpl implements CourseService {
         return course;
     }
 
-
     @Override
     public void delete(Optional<Course> course) {
         if (course.isEmpty()){

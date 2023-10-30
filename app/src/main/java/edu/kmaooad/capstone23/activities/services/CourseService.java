@@ -13,5 +13,4 @@ public interface CourseService {
     public Course update(Course course);
     public void delete(Optional<Course> course);
     public void bulkInsert(List<Course> courses);
-
 }
