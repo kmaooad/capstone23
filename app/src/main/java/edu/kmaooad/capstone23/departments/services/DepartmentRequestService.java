@@ -1,10 +1,11 @@
 package edu.kmaooad.capstone23.departments.services;
 
 import edu.kmaooad.capstone23.departments.dal.*;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
 
-
+@ApplicationScoped
 public class DepartmentRequestService {
     @Inject
     private RequestsRepository requestsRepository;
