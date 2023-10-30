@@ -1,17 +1,15 @@
 package edu.kmaooad.capstone23.students.events;
 
-import org.bson.types.ObjectId;
-
 import java.util.List;
 
 public class StudentsCreated {
-    private List<ObjectId> students;
+    private List<StudentCreated> students;
 
-    public StudentsCreated(List<ObjectId> students) {
+    public StudentsCreated(List<StudentCreated> students) {
         this.students = students;
     }
 
-    public List<ObjectId> getStudents() {
+    public List<StudentCreated> getStudents() {
         return students;
     }
 

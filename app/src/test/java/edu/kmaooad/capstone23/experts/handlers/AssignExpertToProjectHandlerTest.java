@@ -4,15 +4,12 @@ import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.competences.commands.CreateProj;
-import edu.kmaooad.capstone23.competences.dal.Project;
-import edu.kmaooad.capstone23.competences.dal.ProjsRepository;
+import edu.kmaooad.capstone23.competences.dal.MongoProjectRepository;
 import edu.kmaooad.capstone23.competences.events.ProjCreated;
-import edu.kmaooad.capstone23.departments.dal.DepartmentsRepository;
 import edu.kmaooad.capstone23.experts.commands.AssignExpertToProject;
 import edu.kmaooad.capstone23.experts.commands.CreateExpert;
 import edu.kmaooad.capstone23.experts.dal.Expert;
 import edu.kmaooad.capstone23.experts.dal.ExpertsRepository;
-import edu.kmaooad.capstone23.experts.events.ExpertAssigned;
 import edu.kmaooad.capstone23.experts.events.ExpertAssignedToProject;
 import edu.kmaooad.capstone23.experts.events.ExpertCreated;
 import edu.kmaooad.capstone23.orgs.commands.CreateOrg;
@@ -36,7 +33,7 @@ public class AssignExpertToProjectHandlerTest {
     @Inject
     OrgsRepository orgsRepository;
     @Inject
-    ProjsRepository projsRepository;
+    MongoProjectRepository projsRepository;
     @Inject
     ExpertsRepository expertsRepository;
 
@@ -48,7 +45,7 @@ public class AssignExpertToProjectHandlerTest {
     CommandHandler<AssignExpertToProject, ExpertAssignedToProject> assignedExpertToProjectCommandHandler;
     @Inject
     CommandHandler<CreateExpert, ExpertCreated> expertCreatedCommandHandler;
-  
+
     @BeforeEach
     public void setUp() {
         org = createTestOrg();
@@ -60,8 +57,8 @@ public class AssignExpertToProjectHandlerTest {
         AssignExpertToProject assignExpertToProject = new AssignExpertToProject();
         assignExpertToProject.setExpertId(createTestExpertWithProj());
         assignExpertToProject.setProjectId(project);
-      
-         Result<ExpertAssignedToProject> result = assignedExpertToProjectCommandHandler.handle(assignExpertToProject);
+
+        Result<ExpertAssignedToProject> result = assignedExpertToProjectCommandHandler.handle(assignExpertToProject);
 
         Assertions.assertFalse(result.isSuccess());
         Assertions.assertNull(result.getValue());
@@ -80,7 +77,7 @@ public class AssignExpertToProjectHandlerTest {
         Assertions.assertNotNull(result.getValue());
         Assertions.assertFalse(result.getValue().getMemberId().isEmpty());
     }
-  
+
     @Test
     public void testEmptyExpert() {
         AssignExpertToProject assignExpertToProject = new AssignExpertToProject();
@@ -90,18 +87,18 @@ public class AssignExpertToProjectHandlerTest {
 
         Assertions.assertFalse(result.isSuccess());
         Assertions.assertNull(result.getValue());
-        Assertions.assertEquals(result.getErrorCode(), ErrorCode.NOT_FOUND);
+        Assertions.assertEquals(ErrorCode.VALIDATION_FAILED, result.getErrorCode());
     }
-  
+
     @Test
     public void testEmptyProject() {
-       AssignExpertToProject assignExpertToProject = new AssignExpertToProject();
-       assignExpertToProject.setExpertId(createTestExpert());
+        AssignExpertToProject assignExpertToProject = new AssignExpertToProject();
+        assignExpertToProject.setExpertId(createTestExpert());
 
-       Result<ExpertAssignedToProject> result = assignedExpertToProjectCommandHandler.handle(assignExpertToProject);
+        Result<ExpertAssignedToProject> result = assignedExpertToProjectCommandHandler.handle(assignExpertToProject);
 
-       Assertions.assertFalse(result.isSuccess());
-       Assertions.assertNull(result.getValue());
+        Assertions.assertFalse(result.isSuccess());
+        Assertions.assertNull(result.getValue());
     }
 
     private Org createTestOrg() {

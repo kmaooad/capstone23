@@ -1,6 +1,7 @@
 package edu.kmaooad.capstone23.orgs.members.controllers;
 
 import edu.kmaooad.capstone23.common.CommandHandler;
+import edu.kmaooad.capstone23.common.Mocks;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.members.commands.CreateBasicMember;
 import edu.kmaooad.capstone23.members.events.BasicMemberCreated;
@@ -29,7 +30,7 @@ public class DeleteMemberControllerTest extends TestWithOrgSetUp {
         command.setFirstName("firstName");
         command.setLastName("lastName");
         command.setOrgId(createdOrgId);
-        command.setEmail("email@email.com");
+        command.setEmail(Mocks.mockValidEmail());
         command.setIsExpert("false");
         Result<BasicMemberCreated> result = createHandler.handle(command);
 
