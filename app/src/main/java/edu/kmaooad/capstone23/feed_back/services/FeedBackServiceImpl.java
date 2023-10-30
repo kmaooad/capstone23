@@ -30,4 +30,9 @@ public class FeedBackServiceImpl implements FeedBackService {
     public FeedBack findById(ObjectId id) {
         return feedBackRepository.findById(id);
     }
+
+    @Override
+    public void update(FeedBack feedBack) {
+        feedBackRepository.update(feedBack);
+    }
 }
