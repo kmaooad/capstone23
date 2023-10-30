@@ -4,9 +4,10 @@ import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.experts.commands.DeleteExpert;
-import edu.kmaooad.capstone23.experts.dal.Expert;
-import edu.kmaooad.capstone23.experts.dal.ExpertsRepository;
+import edu.kmaooad.capstone23.experts.dal.dto.ExpertRequestDto;
+import edu.kmaooad.capstone23.experts.dal.dto.ExpertResponseDto;
 import edu.kmaooad.capstone23.experts.events.ExpertDeleted;
+import edu.kmaooad.capstone23.experts.service.ExpertMapper;
 import edu.kmaooad.capstone23.experts.service.ExpertService;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
@@ -17,17 +18,30 @@ public class DeleteExpertHandler implements CommandHandler<DeleteExpert, ExpertD
 
     @Inject
     private ExpertService expertService;
+    ExpertMapper expertMapper;
 
     public Result<ExpertDeleted> handle(DeleteExpert command) {
-        ObjectId id = command.getId();
-        Expert expert = expertService.findById(id);
+        expertMapper = new ExpertMapper();
 
-        if (expert == null) {
+        ObjectId id = command.getId();
+        ExpertResponseDto expertResponseDto = expertMapper.toDto(expertService.findById(id));
+
+        if (expertResponseDto == null) {
             return new Result<>(ErrorCode.NOT_FOUND, "Expert not found");
         }
 
-        expertService.deleteExpert(expert);
+        ExpertRequestDto expertRequestDto = new ExpertRequestDto();
+        expertRequestDto.setName(expertResponseDto.getName());
+        expertRequestDto.setOrgId(expertResponseDto.getOrg().id.toHexString());
+        expertRequestDto.setDepartmentIds(expertResponseDto.getDepartments().stream()
+                .map(d -> d.id.toHexString())
+                .toList());
+        expertRequestDto.setProjectsIds(expertResponseDto.getProjects().stream()
+                .map(p -> p.id.toHexString())
+                .toList());
 
-        return new Result<ExpertDeleted>(new ExpertDeleted(expert.id.toString()));
+        expertService.deleteExpert(expertMapper.toModel(expertRequestDto));
+
+        return new Result<ExpertDeleted>(new ExpertDeleted(expertResponseDto.getId().toString()));
     }
 }

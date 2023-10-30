@@ -3,50 +3,54 @@ package edu.kmaooad.capstone23.experts.handlers;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
-import edu.kmaooad.capstone23.departments.dal.Department;
-import edu.kmaooad.capstone23.departments.dal.DepartmentsRepository;
 import edu.kmaooad.capstone23.experts.commands.RemoveExpertFromDepartment;
-import edu.kmaooad.capstone23.experts.commands.RemoveExpertFromMember;
-import edu.kmaooad.capstone23.experts.dal.Expert;
-import edu.kmaooad.capstone23.experts.dal.ExpertsRepository;
+import edu.kmaooad.capstone23.experts.dal.dto.ExpertRequestDto;
+import edu.kmaooad.capstone23.experts.dal.dto.ExpertResponseDto;
 import edu.kmaooad.capstone23.experts.events.ExpertRemovedFromDepartment;
-import edu.kmaooad.capstone23.experts.events.ExpertRemovedFromMember;
+import edu.kmaooad.capstone23.experts.service.ExpertMapper;
 import edu.kmaooad.capstone23.experts.service.ExpertService;
-import edu.kmaooad.capstone23.members.dal.Member;
-import edu.kmaooad.capstone23.members.dal.MembersRepository;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
-
-import java.util.List;
 
 @RequestScoped
 public class RemoveExpertFromDepartmentHandler
         implements CommandHandler<RemoveExpertFromDepartment, ExpertRemovedFromDepartment> {
     @Inject
     ExpertService expertService;
-    @Inject
-    DepartmentsRepository departmentsRepository;
+    ExpertMapper expertMapper;
 
     @Override
     public Result<ExpertRemovedFromDepartment> handle(RemoveExpertFromDepartment command) {
+        expertMapper = new ExpertMapper();
         ObjectId expertId = command.getExpertId();
         ObjectId departmentId = command.getDepartmentId();
         if (expertId != null && departmentId != null) {
-            Expert expert = expertService.findById(expertId);
+            ExpertResponseDto expertResponseDto = expertMapper.toDto(expertService.findById(expertId));
 
-            if (expert.departments.isEmpty()) {
+            if (expertResponseDto.getDepartments().isEmpty()) {
                 return new Result<>(ErrorCode.NOT_FOUND, "Expert has no department");
             }
 
-            if (!expert.departments.stream().anyMatch(p -> p.id.equals(departmentId))) {
+            if (!expertResponseDto.getDepartments().stream().anyMatch(p -> p.id.equals(departmentId))) {
                 return new Result<>(ErrorCode.CONFLICT, "Expert is not in this department");
             }
 
-            expert.departments = expert.departments.stream().filter(p -> p.id == departmentId).toList();
-            expertService.modify(expert);
+            ExpertRequestDto expertRequestDto = new ExpertRequestDto();
+            expertRequestDto.setName(expertResponseDto.getName());
+            expertRequestDto.setOrgId(expertResponseDto.getOrg().id.toHexString());
+            expertRequestDto.setDepartmentIds(expertResponseDto.getDepartments().stream()
+                    .filter(p -> p.id == departmentId)
+                    .map(d -> d.id.toHexString())
+                    .toList());
+            expertRequestDto.setProjectsIds(expertResponseDto.getProjects().stream()
+                    .map(p -> p.id.toHexString())
+                    .toList());
 
-            return new Result<>(new ExpertRemovedFromDepartment(expert.id.toString()));
+
+            expertService.modify(expertMapper.toModel(expertRequestDto));
+
+            return new Result<>(new ExpertRemovedFromDepartment(expertResponseDto.getId().toString()));
         }
         return new Result<>(ErrorCode.NOT_FOUND, "Either expert or department null");
     }
