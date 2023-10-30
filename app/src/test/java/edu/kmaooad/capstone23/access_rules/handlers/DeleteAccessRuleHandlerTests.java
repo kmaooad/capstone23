@@ -11,6 +11,7 @@ import jakarta.inject.Inject;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
+
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.*;
 
@@ -44,6 +45,7 @@ public class DeleteAccessRuleHandlerTests {
         Assertions.assertTrue(result.isSuccess());
     }
 
+
     @Test
     @DisplayName("Delete Access Rule: non-existent ID")
     public void deleteRuleNonExistentId() {
@@ -53,5 +55,6 @@ public class DeleteAccessRuleHandlerTests {
         Result<AccessRuleDeleted> result = deleteRuleHandler.handle(command);
         assertFalse(result.isSuccess());
     }
+
 
 }
