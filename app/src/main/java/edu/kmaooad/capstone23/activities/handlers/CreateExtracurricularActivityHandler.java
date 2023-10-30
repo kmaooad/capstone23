@@ -15,14 +15,14 @@ public class CreateExtracurricularActivityHandler implements CommandHandler<Crea
 
 
     @Inject
-    private ExtracurricularCourseService repository;
+    private ExtracurricularCourseService extracurricularCourseService;
 
     public Result<ExtracurricularActivityCreated> handle(CreateExtracurricularActivity command) {
 
         ExtracurricularActivity extracurricularActivity = new ExtracurricularActivity();
         extracurricularActivity.extracurricularActivityName = command.getExtracurricularActivityName();
 
-        repository.insert(extracurricularActivity);
+        extracurricularCourseService.insert(extracurricularActivity);
 
         ExtracurricularActivityCreated result = new ExtracurricularActivityCreated(extracurricularActivity.id.toString());
 
