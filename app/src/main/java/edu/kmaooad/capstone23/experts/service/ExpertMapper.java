@@ -34,6 +34,7 @@ public class ExpertMapper {
     public Expert toModel(ExpertRequestDto expertRequestDto) {
         if (expertRequestDto != null) {
             Expert expert = new Expert();
+            expert.id = new ObjectId(expertRequestDto.getId());
             expert.memberId = new ObjectId(expertRequestDto.getMemberId());
             expert.name = expertRequestDto.getName();
             expert.org = orgsRepository.findById(expertRequestDto.getOrgId());

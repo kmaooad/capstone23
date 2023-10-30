@@ -31,6 +31,8 @@ public class DeleteExpertHandler implements CommandHandler<DeleteExpert, ExpertD
         }
 
         ExpertRequestDto expertRequestDto = new ExpertRequestDto();
+        expertRequestDto.setId(expertRequestDto.getId());
+        expertRequestDto.setMemberId(expertRequestDto.getMemberId());
         expertRequestDto.setName(expertResponseDto.getName());
         expertRequestDto.setOrgId(expertResponseDto.getOrg().id.toHexString());
         expertRequestDto.setDepartmentIds(expertResponseDto.getDepartments().stream()
