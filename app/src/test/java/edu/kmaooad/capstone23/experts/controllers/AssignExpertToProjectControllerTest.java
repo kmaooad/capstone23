@@ -1,13 +1,8 @@
 package edu.kmaooad.capstone23.experts.controllers;
 
-import edu.kmaooad.capstone23.competences.dal.ProjsRepository;
-import edu.kmaooad.capstone23.departments.dal.Department;
-import edu.kmaooad.capstone23.departments.dal.DepartmentsRepository;
+import edu.kmaooad.capstone23.competences.dal.MongoProjectRepository;
 import edu.kmaooad.capstone23.experts.dal.Expert;
 import edu.kmaooad.capstone23.experts.dal.ExpertsRepository;
-import edu.kmaooad.capstone23.members.dal.Member;
-import edu.kmaooad.capstone23.members.dal.MembersRepository;
-import edu.kmaooad.capstone23.orgs.dal.Org;
 import edu.kmaooad.capstone23.orgs.dal.OrgsRepository;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
@@ -25,7 +20,7 @@ public class AssignExpertToProjectControllerTest {
 
     private ObjectId project;
     @Inject
-    ProjsRepository projsRepository;
+    MongoProjectRepository projsRepository;
     @Inject
     OrgsRepository orgsRepository;
     @Inject
