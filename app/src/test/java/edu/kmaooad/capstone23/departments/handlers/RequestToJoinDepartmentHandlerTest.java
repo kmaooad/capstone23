@@ -8,9 +8,9 @@ import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.departments.commands.RequestToJoinDepartment;
 import edu.kmaooad.capstone23.departments.dal.Department;
-import edu.kmaooad.capstone23.departments.dal.DepartmentsRepository;
 import edu.kmaooad.capstone23.departments.dal.Request;
 import edu.kmaooad.capstone23.departments.dal.RequestsRepository;
+import edu.kmaooad.capstone23.departments.drivers.DepartmentDriver;
 import edu.kmaooad.capstone23.departments.events.RequestCreated;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
@@ -30,7 +30,7 @@ public class RequestToJoinDepartmentHandlerTest {
     CommandHandler<BanEntity, EntityBanned> banHandler;
 
     @Inject
-    DepartmentsRepository departmentsRepository;
+    DepartmentDriver departmentDriver;
 
     @Inject
     RequestsRepository requestsRepository;
@@ -39,12 +39,7 @@ public class RequestToJoinDepartmentHandlerTest {
 
     @BeforeEach
     void setUp() {
-        Department department = new Department();
-
-        department.name = "Initial Department";
-        department.description = "Initial Department Description";
-        department.parent = "NaUKMA";
-        departmentsRepository.insert(department);
+        Department department = departmentDriver.createDepartment();
 
         departmentId = department.id.toString();
     }

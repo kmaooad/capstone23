@@ -7,17 +7,15 @@ import edu.kmaooad.capstone23.members.commands.CreateBasicMember;
 import edu.kmaooad.capstone23.members.dal.Member;
 import edu.kmaooad.capstone23.members.dal.MembersRepository;
 import edu.kmaooad.capstone23.members.dto.OrgDTO;
+import edu.kmaooad.capstone23.members.dto.UserDTO;
 import edu.kmaooad.capstone23.members.events.BasicMemberCreated;
 import edu.kmaooad.capstone23.members.exceptions.UniquenessViolationException;
 import edu.kmaooad.capstone23.members.services.ExpertsService;
 import edu.kmaooad.capstone23.members.services.OrgService;
-import edu.kmaooad.capstone23.users.commands.CreateUser;
-import edu.kmaooad.capstone23.users.dal.entities.User;
-import edu.kmaooad.capstone23.users.dal.repositories.UserRepository;
-import edu.kmaooad.capstone23.users.handlers.CreateUserHandler;
+import edu.kmaooad.capstone23.members.services.UserService;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
-import org.bson.types.ObjectId;
+
 
 import java.util.Optional;
 
@@ -30,26 +28,24 @@ public class CreateMemberHandler implements CommandHandler<CreateBasicMember, Ba
     @Inject
     OrgService orgService;
     @Inject
-    CreateUserHandler createUserHandler;
-    @Inject
-    UserRepository userRepository;
+    UserService userService;
 
     @Override
     public Result<BasicMemberCreated> handle(CreateBasicMember command) {
         try {
             Member member = new Member();
-            var newCreateUserCommand = new CreateUser();
-            newCreateUserCommand.setEmail(command.getEmail());
-            newCreateUserCommand.setFirstName(command.getFirstName());
-            newCreateUserCommand.setLastName(command.getLastName());
-            var resultOfUserCreation = userRepository.findByEmail(command.getEmail())
-                    .orElseGet(() -> {
-                        var user = new User();
-                        user.id = new ObjectId(createUserHandler.handle(newCreateUserCommand).getValue().getId());
-                        return user;
-                    });
+
+            UserDTO foundOrCreatedUser = userService
+                    .findByEmail(command.getEmail())
+                    .orElseGet(() ->
+                            userService.createUser(
+                                    command.getFirstName(),
+                                    command.getLastName(),
+                                    command.getEmail()
+                            )
+                    );
             member.orgId = command.getOrgId();
-            member.userId = resultOfUserCreation.id;
+            member.userId = foundOrCreatedUser.getId();
             member.isExpert = Boolean.parseBoolean(command.getIsExpert());
             Optional<OrgDTO> memberOrg = orgService.findByIdOptional(command.getOrgId());
             if (memberOrg.isEmpty())

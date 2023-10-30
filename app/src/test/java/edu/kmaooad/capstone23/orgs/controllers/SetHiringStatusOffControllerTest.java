@@ -2,6 +2,7 @@ package edu.kmaooad.capstone23.orgs.controllers;
 
 import edu.kmaooad.capstone23.orgs.dal.Org;
 import edu.kmaooad.capstone23.orgs.dal.OrgsRepository;
+import edu.kmaooad.capstone23.orgs.drivers.OrgDriver;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,14 +21,12 @@ public class SetHiringStatusOffControllerTest {
     @Inject
     OrgsRepository orgsRepository;
 
+    @Inject
+    OrgDriver orgDriver;
+
     @BeforeEach
     void setUp() {
-        orgsRepository.deleteAll();
-        Org org = new Org();
-        org.name = "Initial Organization";
-        org.description = "Initial Organization Description";
-        orgsRepository.insert(org);
-
+        Org org = orgDriver.createOrg();
         idToUpdate = org.id.toString();
     }
 
