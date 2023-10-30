@@ -39,4 +39,9 @@ public class ExpertServiceImpl implements ExpertService {
     public void insertExpert(Expert expert) {
         expertsRepository.insert(expert);
     }
+
+    @Override
+    public Expert modifyExpert(Expert expert) {
+        return expertsRepository.modify(expert);
+    }
 }

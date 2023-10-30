@@ -13,4 +13,5 @@ public interface ExpertService {
     Optional<ExpertInvitation> findInvitationById(ObjectId id);
     void persist(ExpertInvitation expertInvitation);
     void insertExpert(Expert expert);
+    Expert modifyExpert(Expert expert);
 }
