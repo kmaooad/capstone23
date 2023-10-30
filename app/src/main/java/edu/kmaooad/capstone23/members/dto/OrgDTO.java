@@ -1,24 +1,22 @@
 package edu.kmaooad.capstone23.members.dto;
 
-import org.bson.types.ObjectId;
-
 public class OrgDTO {
-    private ObjectId id;
+    private String id;
     private String emailDomain;
 
     public OrgDTO() {
     }
 
-    public OrgDTO(ObjectId id, String emailDomain) {
+    public OrgDTO(String id, String emailDomain) {
         this.id = id;
         this.emailDomain = emailDomain;
     }
 
-    public ObjectId getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(ObjectId id) {
+    public void setId(String id) {
         this.id = id;
     }
 
