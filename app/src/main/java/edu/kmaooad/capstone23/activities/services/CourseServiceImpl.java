@@ -5,7 +5,9 @@ import edu.kmaooad.capstone23.activities.dal.CourseRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
+
 import java.util.List;
+
 import java.util.Optional;
 
 @ApplicationScoped
@@ -27,6 +29,7 @@ public class CourseServiceImpl implements CourseService {
         courseRepository.update(course);
         return course;
     }
+
 
     @Override
     public void delete(Optional<Course> course) {

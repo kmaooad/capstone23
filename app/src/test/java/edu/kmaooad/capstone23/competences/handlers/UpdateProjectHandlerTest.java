@@ -3,7 +3,7 @@ package edu.kmaooad.capstone23.competences.handlers;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.competences.commands.UpdateProj;
 import edu.kmaooad.capstone23.competences.dal.Project;
-import edu.kmaooad.capstone23.competences.dal.ProjsRepository;
+import edu.kmaooad.capstone23.competences.dal.MongoProjectRepository;
 import edu.kmaooad.capstone23.competences.events.ProjUpdated;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
@@ -19,7 +19,7 @@ class UpdateProjectHandlerTest {
     @Inject
     CommandHandler<UpdateProj, ProjUpdated> handler;
     @Inject
-    ProjsRepository repository;
+    MongoProjectRepository repository;
 
     @Test
     @DisplayName("Basic Updating")
@@ -34,7 +34,7 @@ class UpdateProjectHandlerTest {
         updatedProject.skillSets = List.of(new ObjectId("5f7e47fc8e1f7112d73c92a1"));
 
         var command = new UpdateProj();
-        command.setId(originalProj.id);
+        command.setId(new ObjectId(originalProj.id));
         command.setName(updatedProject.name);
         command.setDescription(updatedProject.description);
         command.setSkills(updatedProject.skills);
@@ -59,7 +59,7 @@ class UpdateProjectHandlerTest {
         projToInsert.name = updatedName;
 
         var command = new UpdateProj();
-        command.setId(originalProj.id);
+        command.setId(new ObjectId(originalProj.id));
         command.setName(projToInsert.name);
         command.setDescription(projToInsert.description);
         command.setSkills(projToInsert.skills);
@@ -68,7 +68,7 @@ class UpdateProjectHandlerTest {
         var result = handler.handle(command);
         assertFalse(result.isSuccess());
 
-        var originalAfterUpdating = repository.findById(originalProj.id);
+        var originalAfterUpdating = repository.findById(new ObjectId(originalProj.id));
         assertNotEquals(originalAfterUpdating.name, updatedName);
     }
 

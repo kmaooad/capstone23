@@ -11,7 +11,9 @@ import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.departments.commands.SetHiringStatusOn;
 import edu.kmaooad.capstone23.departments.dal.Department;
 import edu.kmaooad.capstone23.departments.dal.DepartmentsRepository;
+import edu.kmaooad.capstone23.departments.drivers.DepartmentDriver;
 import edu.kmaooad.capstone23.departments.events.HiringStatusSettedOn;
+import edu.kmaooad.capstone23.departments.services.DepartmentService;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
@@ -35,20 +37,18 @@ public class SetHiringStatusOnHandlerTest {
     EntityBanRepository entityBanRepository;
 
     @Inject
-    DepartmentsRepository departmentsRepository;
+    DepartmentService departmentService;
+
+    @Inject
+    DepartmentDriver departmentDriver;
+
     private String departmentId;
 
     @BeforeEach
     void setUp() {
-        departmentsRepository.deleteAll();
         entityBanRepository.deleteAll();
-        Department department = new Department();
 
-        department.name = "Initial Department";
-        department.description = "Initial Department Description";
-        department.parent = "NaUKMA";
-        department.members = new ArrayList<>();
-        departmentsRepository.insert(department);
+        Department department = departmentDriver.createDepartment();
 
         departmentId = department.id.toString();
     }
@@ -67,7 +67,7 @@ public class SetHiringStatusOnHandlerTest {
         Assertions.assertEquals(null, result.getErrorCode());
         Assertions.assertTrue(result.isSuccess());
 
-        Department department = departmentsRepository.findById(departmentId);
+        Department department = departmentService.getDepartmentById(departmentId);
 
         Assertions.assertEquals("We are hiring", department.hiringStatus);
     }
