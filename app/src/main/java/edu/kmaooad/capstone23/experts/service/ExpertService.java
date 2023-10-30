@@ -1,5 +1,6 @@
 package edu.kmaooad.capstone23.experts.service;
 
+import edu.kmaooad.capstone23.experts.dal.Expert;
 import edu.kmaooad.capstone23.experts.dal.ExpertInvitation;
 import org.bson.types.ObjectId;
 
@@ -11,5 +12,5 @@ public interface ExpertService {
     String createInvitationLink(ObjectId invitationId);
     Optional<ExpertInvitation> findInvitationById(ObjectId id);
     void persist(ExpertInvitation expertInvitation);
-
+    void insertExpert(Expert expert);
 }

@@ -1,5 +1,6 @@
 package edu.kmaooad.capstone23.experts.service;
 
+import edu.kmaooad.capstone23.experts.dal.Expert;
 import edu.kmaooad.capstone23.experts.dal.ExpertInvitation;
 import edu.kmaooad.capstone23.experts.dal.ExpertInvitationRepository;
 import edu.kmaooad.capstone23.experts.dal.ExpertsRepository;
@@ -16,6 +17,9 @@ public class ExpertServiceImpl implements ExpertService {
     @Inject
     ExpertInvitationRepository expertInvitationRepository;
 
+    @Inject
+    ExpertsRepository expertsRepository;
+
     public String createInvitationLink(ObjectId invitationId) {
         String host = System.getProperty("quarkus.http.host");
         var invitationLink = UriBuilder.fromUri(host);
@@ -30,5 +34,9 @@ public class ExpertServiceImpl implements ExpertService {
 
     public void persist(ExpertInvitation expertInvitation) {
         expertInvitationRepository.persist(expertInvitation);
+    }
+
+    public void insertExpert(Expert expert) {
+        expertsRepository.insert(expert);
     }
 }
