@@ -26,7 +26,6 @@ public class CourseServiceImpl implements CourseService {
         courseRepository.update(course);
         return course;
     }
-
     @Override
     public void delete(Optional<Course> course) {
         if (course.isEmpty()){
