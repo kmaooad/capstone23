@@ -37,6 +37,10 @@ public class CreateCVHandler implements CommandHandler<CreateCV, CVCreated> {
         }
 
 
+        if (command.getStatus() == null) {
+            return new Result<>(ErrorCode.VALIDATION_FAILED, "Status cannot be null");
+        }
+
         if (command.getVisibility() == null) {
             return new Result<>(ErrorCode.VALIDATION_FAILED, "Visibility cannot be null");
         }
@@ -47,6 +51,7 @@ public class CreateCVHandler implements CommandHandler<CreateCV, CVCreated> {
             Student st = studentRepository.findById(new ObjectId(command.getStudentId()));
             if (st == null)
                 return new Result<>(ErrorCode.NOT_FOUND, "student with id " + command.getStudentId() + " not found");
+
 
         }
 
