@@ -19,8 +19,6 @@ public class AcceptInvitationLinkHandler implements CommandHandler<AcceptInvitat
 
     @Inject
     ExpertService expertService;
-    @Inject
-    ExpertsRepository expertsRepository;
 
     @Override
     public Result<ExpertCreated> handle(AcceptInvitationLink command) {
@@ -32,7 +30,7 @@ public class AcceptInvitationLinkHandler implements CommandHandler<AcceptInvitat
         var expert = new Expert();
         expert.name = invitationObject.expertName;
         expert.org = invitationObject.org;
-        expertsRepository.insert(expert);
+        expertService.insertExpert(expert);
         return new Result<>(new ExpertCreated(expert.id.toString(), expert.org));
     }
 }
