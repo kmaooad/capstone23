@@ -155,17 +155,17 @@
 //        return new ObjectId(result.getValue().getId());
 //    }
 //
-//    private void addAccessRule(AccessRuleFromEntityType fromType, ObjectId fromId, AccessRuleToEntityType toType, ObjectId toId) {
-//        CreateAccessRule command = new CreateAccessRule();
-//        command.setFromEntityId(fromId);
-//        command.setFromEntityType(fromType.toString());
-//        command.setToEntityId(toId);
-//        command.setToEntityType(toType.toString());
-//        command.setRuleType("Allow");
-//
-//        ruleHandler.handle(command);
-//
-//    }
+////    private void addAccessRule(AccessRuleFromEntityType fromType, ObjectId fromId, AccessRuleToEntityType toType, ObjectId toId) {
+////        CreateAccessRule command = new CreateAccessRule();
+////        command.setFromEntityId(fromId);
+////        command.setFromEntityType(fromType.toString());
+////        command.setToEntityId(toId);
+////        command.setToEntityType(toType.toString());
+////        command.setRuleType("Allow");
+////
+////        ruleHandler.handle(command);
+////
+////    }
 //
 //
 //}
