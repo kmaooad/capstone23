@@ -7,6 +7,7 @@ import edu.kmaooad.capstone23.competences.commands.DeleteSkillSet;
 import edu.kmaooad.capstone23.competences.dal.SkillSet;
 import edu.kmaooad.capstone23.competences.dal.SkillSetRepository;
 import edu.kmaooad.capstone23.competences.events.SkillSetDeleted;
+import edu.kmaooad.capstone23.competences.services.SkillSetService;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
@@ -16,19 +17,19 @@ public class DeleteSkillSetHandler implements CommandHandler<DeleteSkillSet, Ski
 
 
     @Inject
-    private SkillSetRepository repository;
+    private SkillSetService service;
 
 
     @Override
     public Result<SkillSetDeleted> handle(DeleteSkillSet command) {
         ObjectId id = command.getId();
-        SkillSet skillSet = repository.findById(id);
+        SkillSet skillSet = service.findById(id);
 
         if (skillSet == null) {
             return new Result<>(ErrorCode.EXCEPTION, "Skill set not found");
         }
 
-        repository.delete(skillSet);
+        service.delete(skillSet);
 
         return new Result<>(new SkillSetDeleted(skillSet));
     }

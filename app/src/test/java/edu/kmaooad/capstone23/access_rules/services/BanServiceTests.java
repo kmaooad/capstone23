@@ -125,6 +125,18 @@ public class BanServiceTests {
     }
 
    
+
+    @Test
+    @DisplayName("Ban Non-existing Organisation")
+    public void banNonExistingOrganisation() {
+        ObjectId nonExistingOrgId = new ObjectId();
+        Result<EntityBanned> result = banService.banEntity(nonExistingOrgId, AccessRuleFromEntityType.Organisation);
+        
+        Assertions.assertFalse(result.isSuccess());
+        Assertions.assertEquals(ErrorCode.VALIDATION_FAILED, result.getErrorCode());
+    }
+
+
     private ObjectId createMember(){
         CreateBasicMember command = new CreateBasicMember();
         command.setOrgId(createOrg());
