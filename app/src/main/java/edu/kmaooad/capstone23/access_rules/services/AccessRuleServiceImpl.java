@@ -35,4 +35,9 @@ public class AccessRuleServiceImpl implements AccessRuleService {
   public void ban(ObjectId entityId, AccessRuleFromEntityType entityType) {
     this.accessRuleRepository.updateOnBan(entityId, entityType);
   }
+
+  @Override
+  public boolean existsById(ObjectId id) {
+    return this.accessRuleRepository.findByIdOptional(id).isPresent();
+  }
 }
