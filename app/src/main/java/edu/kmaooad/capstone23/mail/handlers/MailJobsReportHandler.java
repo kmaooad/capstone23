@@ -3,12 +3,12 @@ package edu.kmaooad.capstone23.mail.handlers;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
+import edu.kmaooad.capstone23.jobs.service.JobService;
 import edu.kmaooad.capstone23.mail.commands.MailJobsReport;
 import edu.kmaooad.capstone23.mail.events.JobsReportMailed;
 import edu.kmaooad.capstone23.mail.service.Notification;
 import edu.kmaooad.capstone23.mail.service.NotificationMailService;
 import edu.kmaooad.capstone23.jobs.dal.Job;
-import edu.kmaooad.capstone23.jobs.dal.JobRepository;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 
@@ -16,7 +16,7 @@ import jakarta.inject.Inject;
 public class MailJobsReportHandler implements CommandHandler<MailJobsReport, JobsReportMailed> {
 
     @Inject
-    private JobRepository jobsRepository;
+    private JobService jobService;
 
     @Inject
     private NotificationMailService service;
@@ -34,7 +34,7 @@ public class MailJobsReportHandler implements CommandHandler<MailJobsReport, Job
         finalBody += ("| ID     | NAME   | IS ACTIVE  |%n");
         finalBody += ("+--------+--------+------------+%n");
         for (int i = 0; i < count; i++) {
-            currentJob = jobsRepository.listAll().get(i);
+            currentJob = jobService.listAll().get(i);
             finalBody += "| " + currentJob.id.toString() + " | " + currentJob.name + " | " +
                     currentJob.active + " | ";
         }
@@ -45,17 +45,17 @@ public class MailJobsReportHandler implements CommandHandler<MailJobsReport, Job
     public Result<JobsReportMailed> handle(MailJobsReport command) {
         int countOfRecords = 0;
         int count = command.getRecordsCount();
-        if (jobsRepository != null) {
+        if (jobService != null) {
             if (count == 0) {
-                countOfRecords = Math.toIntExact(jobsRepository.count());
+                countOfRecords = Math.toIntExact(jobService.count());
             }
             if (count < 0) {
                 return new Result<>(ErrorCode.VALIDATION_FAILED, "Incorrect size of report!");
             }
-            if (count > jobsRepository.count()) {
-                countOfRecords = Math.toIntExact(jobsRepository.count());
+            if (count > jobService.count()) {
+                countOfRecords = Math.toIntExact(jobService.count());
             }
-            if (count < jobsRepository.count()) {
+            if (count < jobService.count()) {
                 countOfRecords = count;
             }
         }
