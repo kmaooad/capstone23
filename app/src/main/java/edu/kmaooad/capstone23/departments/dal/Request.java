@@ -7,5 +7,5 @@ public class Request {
     public ObjectId id;
     public String departmentId;
     public String userName;
-    public String status;
+    public RequestStatus status;
 }

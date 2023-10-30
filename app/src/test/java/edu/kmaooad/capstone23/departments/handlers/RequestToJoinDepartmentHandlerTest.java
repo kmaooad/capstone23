@@ -9,7 +9,6 @@ import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.departments.commands.RequestToJoinDepartment;
 import edu.kmaooad.capstone23.departments.dal.Department;
 import edu.kmaooad.capstone23.departments.dal.Request;
-import edu.kmaooad.capstone23.departments.dal.RequestsRepository;
 import edu.kmaooad.capstone23.departments.drivers.DepartmentDriver;
 import edu.kmaooad.capstone23.departments.events.RequestCreated;
 import io.quarkus.test.junit.QuarkusTest;
@@ -31,9 +30,6 @@ public class RequestToJoinDepartmentHandlerTest {
 
     @Inject
     DepartmentDriver departmentDriver;
-
-    @Inject
-    RequestsRepository requestsRepository;
 
     private String departmentId;
 
@@ -58,7 +54,7 @@ public class RequestToJoinDepartmentHandlerTest {
         Assertions.assertTrue(result.isSuccess());
         Assertions.assertNotNull(result.getValue());
 
-        Request resultRequest = requestsRepository.findById(result.getValue().getId());
+        Request resultRequest = departmentDriver.findRequestById(result.getValue().getId());
         Assertions.assertNotNull(resultRequest);
     }
 

@@ -1,8 +1,6 @@
 package edu.kmaooad.capstone23.departments.controllers;
 
-import edu.kmaooad.capstone23.departments.dal.Department;
 import edu.kmaooad.capstone23.departments.dal.Request;
-import edu.kmaooad.capstone23.departments.dal.RequestsRepository;
 import edu.kmaooad.capstone23.departments.drivers.DepartmentDriver;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
@@ -20,21 +18,11 @@ public class ApproveJoinRequestControllerTest {
     private String idToUpdate;
 
     @Inject
-    RequestsRepository requestsRepository;
-
-    @Inject
     DepartmentDriver departmentDriver;
 
     @BeforeEach
     void setUp() {
-        Department department = departmentDriver.createDepartment();
-
-        Request request = new Request();
-        request.userName = "user1@umkma.edu";
-        request.departmentId = department.id.toString();
-        request.status = "pending";
-        requestsRepository.insert(request);
-
+        Request request = departmentDriver.createRequest();
         idToUpdate = request.id.toString();
     }
 

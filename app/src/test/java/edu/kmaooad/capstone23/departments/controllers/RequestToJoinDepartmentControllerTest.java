@@ -3,7 +3,6 @@ package edu.kmaooad.capstone23.departments.controllers;
 import edu.kmaooad.capstone23.departments.dal.Department;
 
 import edu.kmaooad.capstone23.departments.drivers.DepartmentDriver;
-import edu.kmaooad.capstone23.departments.services.DepartmentService;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 import org.junit.jupiter.api.BeforeEach;
