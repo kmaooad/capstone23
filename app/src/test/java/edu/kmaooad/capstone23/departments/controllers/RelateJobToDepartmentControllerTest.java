@@ -1,7 +1,8 @@
 package edu.kmaooad.capstone23.departments.controllers;
 
 import edu.kmaooad.capstone23.departments.dal.Department;
-import edu.kmaooad.capstone23.departments.dal.DepartmentsRepository;
+import edu.kmaooad.capstone23.departments.drivers.DepartmentDriver;
+import edu.kmaooad.capstone23.departments.services.DepartmentService;
 import edu.kmaooad.capstone23.jobs.dal.Job;
 import edu.kmaooad.capstone23.jobs.dal.JobRepository;
 import io.quarkus.test.junit.QuarkusTest;
@@ -10,7 +11,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,7 +22,10 @@ public class RelateJobToDepartmentControllerTest {
 
     private String jobId;
     @Inject
-    DepartmentsRepository departmentsRepository;
+    DepartmentService departmentService;
+
+    @Inject
+    DepartmentDriver departmentDriver;
 
     @Inject
     JobRepository jobRepository;
@@ -30,14 +33,8 @@ public class RelateJobToDepartmentControllerTest {
     @BeforeEach
     void setUp() {
         jobRepository.deleteAll();
-        departmentsRepository.deleteAll();
-        Department department = new Department();
-        department.name = "Initial Department";
-        department.description = "Initial Department Description";
-        department.parent = "NaUKMA";
-        department.members = new ArrayList<>();
-        department.jobs = new ArrayList<>();
 
+        Department department = departmentDriver.createDepartment();
 
         Job job = new Job();
         job.name = "Initial Job";
@@ -45,12 +42,9 @@ public class RelateJobToDepartmentControllerTest {
         jobRepository.insert(job);
 
         department.jobs.add(job.id.toString());
-
-        departmentsRepository.insert(department);
-
+        departmentService.updateDepartment(department);
 
         departmentId = department.id.toString();
-
         jobId = job.id.toString();
     }
 
