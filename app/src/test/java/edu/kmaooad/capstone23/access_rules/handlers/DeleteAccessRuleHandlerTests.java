@@ -10,7 +10,6 @@ import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
-
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.*;
 

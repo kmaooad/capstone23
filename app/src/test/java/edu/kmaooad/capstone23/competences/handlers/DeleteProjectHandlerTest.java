@@ -29,13 +29,13 @@ class DeleteProjectHandlerTest {
         repository.insert(project);
 
         DeleteProj command = new DeleteProj();
-        command.setId(project.id);
+        command.setId(new ObjectId(project.id));
 
         ProjDeleted projDeleted = handler.handle(command).getValue();
         assertNotNull(projDeleted);
         assertEquals(project.id, projDeleted.projId());
 
-        Project deletedProject = repository.findById(project.id);
+        Project deletedProject = repository.findById(new ObjectId(project.id));
         assertNull(deletedProject);
     }
 

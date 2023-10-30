@@ -4,8 +4,8 @@ import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.group_templates.commands.CreateGroupTemplate;
 import edu.kmaooad.capstone23.group_templates.dal.GroupTemplate;
-import edu.kmaooad.capstone23.group_templates.dal.GroupTemplatesRepository;
 import edu.kmaooad.capstone23.group_templates.events.GroupTemplateCreated;
+import edu.kmaooad.capstone23.group_templates.services.GroupTemplatesService;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 
@@ -13,7 +13,7 @@ import jakarta.inject.Inject;
 public class CreateGroupTemplateHandler implements CommandHandler<CreateGroupTemplate, GroupTemplateCreated> {
 
     @Inject
-    private GroupTemplatesRepository repository;
+    private GroupTemplatesService repository;
 
     public Result<GroupTemplateCreated> handle(CreateGroupTemplate command) {
 
