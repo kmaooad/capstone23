@@ -9,6 +9,7 @@ import edu.kmaooad.capstone23.competences.dal.ProjectsRepository;
 import edu.kmaooad.capstone23.competences.events.ProjUpdated;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
+import org.bson.types.ObjectId;
 
 @RequestScoped
 public class UpdateProjectHandler implements CommandHandler<UpdateProj, ProjUpdated> {
@@ -17,8 +18,8 @@ public class UpdateProjectHandler implements CommandHandler<UpdateProj, ProjUpda
 
     @Override
     public Result<ProjUpdated> handle(UpdateProj command) {
-
         var foundProj = repository.findProjectById(command.getId());
+
         if(foundProj == null)
             return new Result<>(ErrorCode.EXCEPTION, "Updated");
 
@@ -26,10 +27,17 @@ public class UpdateProjectHandler implements CommandHandler<UpdateProj, ProjUpda
         newValues.id = command.getId();
         newValues.name = command.getName();
         newValues.description = command.getDescription();
-        newValues.skills = command.getSkills();
+        newValues.skills = command.getSkills().stream().map(ObjectId::toString).toList();
 
         repository.updateProject(newValues);
-        var result = new ProjUpdated(newValues.id, newValues.name, newValues.description, newValues.skills, newValues.skillSets);
+        var result = new ProjUpdated(
+                newValues.id.toString(),
+                newValues.name,
+                newValues.description,
+                newValues.skills.stream().map(ObjectId::new).toList(),
+                newValues.skillSets.stream().map(ObjectId::new).toList()
+        );
+
         return new Result<>(result);
     }
 }
