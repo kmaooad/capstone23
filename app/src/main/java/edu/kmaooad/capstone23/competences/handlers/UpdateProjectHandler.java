@@ -3,7 +3,7 @@ package edu.kmaooad.capstone23.competences.handlers;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
-import edu.kmaooad.capstone23.competences.commands.UpdateProj;
+import edu.kmaooad.capstone23.competences.commands.UpdateProject;
 import edu.kmaooad.capstone23.competences.dal.Project;
 import edu.kmaooad.capstone23.competences.dal.ProjectsRepository;
 import edu.kmaooad.capstone23.competences.events.ProjUpdated;
@@ -12,12 +12,12 @@ import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
 
 @RequestScoped
-public class UpdateProjectHandler implements CommandHandler<UpdateProj, ProjUpdated> {
+public class UpdateProjectHandler implements CommandHandler<UpdateProject, ProjUpdated> {
     @Inject
     ProjectsRepository repository; //intentionally left non-private: https://stackoverflow.com/questions/55101095/why-does-quarkus-warn-me-about-injection-in-private-fields
 
     @Override
-    public Result<ProjUpdated> handle(UpdateProj command) {
+    public Result<ProjUpdated> handle(UpdateProject command) {
         var foundProj = repository.findProjectById(command.getId());
 
         if(foundProj == null)
@@ -27,7 +27,7 @@ public class UpdateProjectHandler implements CommandHandler<UpdateProj, ProjUpda
         newValues.id = command.getId();
         newValues.name = command.getName();
         newValues.description = command.getDescription();
-        newValues.skills = command.getSkills().stream().map(ObjectId::toString).toList();
+        newValues.skills = command.getSkills();
 
         repository.updateProject(newValues);
         var result = new ProjUpdated(
