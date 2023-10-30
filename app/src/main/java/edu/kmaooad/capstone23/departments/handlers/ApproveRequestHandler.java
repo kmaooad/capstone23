@@ -1,5 +1,7 @@
 package edu.kmaooad.capstone23.departments.handlers;
 
+import edu.kmaooad.capstone23.ban.dal.BannedEntityType;
+import edu.kmaooad.capstone23.ban.service.EntityBanService;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
@@ -18,6 +20,9 @@ public class ApproveRequestHandler  implements CommandHandler<ApproveJoinRequest
     @Inject
     private RequestsRepository requestsRepository;
 
+    @Inject
+    private EntityBanService banService;
+
     private final String approvedStatus = "approved";
 
     private final String memberRole = "member";
@@ -30,14 +35,18 @@ public class ApproveRequestHandler  implements CommandHandler<ApproveJoinRequest
         String requestId = command.getRequestId();
         Request request = requestsRepository.findById(requestId);
         if (request == null) {
-            return new Result(ErrorCode.EXCEPTION, "Request not found");
+            return new Result<>(ErrorCode.EXCEPTION, "Request not found");
         }
         request.status = approvedStatus;
         requestsRepository.update(request);
 
         Department department = departmentsRepository.findById(request.departmentId);
         if (department == null) {
-            return new Result(ErrorCode.EXCEPTION, "Department not found");
+            return new Result<>(ErrorCode.EXCEPTION, "Department not found");
+        }
+
+        if (banService.findForEntity(BannedEntityType.Department, department.id).isPresent()) {
+            return new Result<>(ErrorCode.EXCEPTION, "Department is banned");
         }
 
         String userName = request.userName;
@@ -51,6 +60,6 @@ public class ApproveRequestHandler  implements CommandHandler<ApproveJoinRequest
 
         RequestApproved result = new RequestApproved(request.id.toString());
 
-        return new Result(result);
+        return new Result<>(result);
     }
 }

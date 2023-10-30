@@ -1,11 +1,22 @@
 package edu.kmaooad.capstone23.departments.handlers;
 
+import edu.kmaooad.capstone23.ban.commands.BanEntity;
+import edu.kmaooad.capstone23.ban.dal.BannedEntityType;
+import edu.kmaooad.capstone23.ban.dal.EntityBanRepository;
+import edu.kmaooad.capstone23.ban.events.EntityBanned;
+import edu.kmaooad.capstone23.ban.handlers.BanEntityHandler;
+import edu.kmaooad.capstone23.common.CommandHandler;
+import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.departments.commands.SetHiringStatusOn;
 import edu.kmaooad.capstone23.departments.dal.Department;
 import edu.kmaooad.capstone23.departments.dal.DepartmentsRepository;
+import edu.kmaooad.capstone23.departments.drivers.DepartmentDriver;
+import edu.kmaooad.capstone23.departments.events.HiringStatusSettedOn;
+import edu.kmaooad.capstone23.departments.services.DepartmentService;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
+import org.bson.types.ObjectId;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -20,19 +31,24 @@ public class SetHiringStatusOnHandlerTest {
     SetHiringStatusOnHandler handler;
 
     @Inject
-    DepartmentsRepository departmentsRepository;
+    CommandHandler<BanEntity, EntityBanned> banHandler;
+
+    @Inject
+    EntityBanRepository entityBanRepository;
+
+    @Inject
+    DepartmentService departmentService;
+
+    @Inject
+    DepartmentDriver departmentDriver;
+
     private String departmentId;
 
     @BeforeEach
     void setUp() {
-        departmentsRepository.deleteAll();
-        Department department = new Department();
+        entityBanRepository.deleteAll();
 
-        department.name = "Initial Department";
-        department.description = "Initial Department Description";
-        department.parent = "NaUKMA";
-        department.members = new ArrayList<>();
-        departmentsRepository.insert(department);
+        Department department = departmentDriver.createDepartment();
 
         departmentId = department.id.toString();
     }
@@ -45,14 +61,15 @@ public class SetHiringStatusOnHandlerTest {
 
         command.setDepartmentId(departmentId);
 
-        Result result = handler.handle(command);
+        Result<HiringStatusSettedOn> result = handler.handle(command);
 
-        Assertions.assertEquals(result.getErrorCode(), null);
+        Assertions.assertEquals(null, result.getMessage());
+        Assertions.assertEquals(null, result.getErrorCode());
         Assertions.assertTrue(result.isSuccess());
 
-        Department department = departmentsRepository.findById(departmentId);
+        Department department = departmentService.getDepartmentById(departmentId);
 
-        Assertions.assertEquals(department.hiringStatus, "We are hiring");
+        Assertions.assertEquals("We are hiring", department.hiringStatus);
     }
 
     @Test
@@ -61,9 +78,34 @@ public class SetHiringStatusOnHandlerTest {
         SetHiringStatusOn command = new SetHiringStatusOn();
         command.setDepartmentId("64fbb243275c1111167b87a3");
 
-        Result result = handler.handle(command);
+        Result<HiringStatusSettedOn> result = handler.handle(command);
 
         Assertions.assertFalse(result.isSuccess());
     }
 
+
+    @Test
+    @DisplayName("Set hiring on test: Department is banned")
+    void setHiringStatusWithBannedTest() {
+        var banRequest = new BanEntity();
+        banRequest.setEntityId(new ObjectId(departmentId));
+        banRequest.setEntityType(BannedEntityType.Department.name());
+        banRequest.setReason("Hello there");
+
+        var banResult = banHandler.handle(banRequest);
+
+        Assertions.assertTrue(banResult.isSuccess());
+        Assertions.assertNotNull(banResult.getValue());
+
+        SetHiringStatusOn command = new SetHiringStatusOn();
+
+        command.setDepartmentId(departmentId);
+
+        Result<HiringStatusSettedOn> result = handler.handle(command);
+
+        Assertions.assertFalse(result.isSuccess());
+        Assertions.assertEquals(result.getErrorCode(), ErrorCode.VALIDATION_FAILED);
+        Assertions.assertEquals(result.getMessage(), "Department is banned");
+
+    }
 }

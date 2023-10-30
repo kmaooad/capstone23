@@ -1,5 +1,6 @@
 package edu.kmaooad.capstone23.orgs.controllers;
 
+import edu.kmaooad.capstone23.orgs.drivers.OrgDriver;
 import io.quarkus.test.junit.QuarkusTest;
 
 import org.bson.types.ObjectId;
@@ -18,15 +19,13 @@ import java.util.Map;
 @QuarkusTest
 public class DeleteOrgControllerTests {
     @Inject
-    OrgsRepository repo;
+    OrgDriver orgDriver;
 
     private ObjectId createdOrgId;
     
     @BeforeEach
     void setUp() {
-        var org = new Org();
-        org.name = "NaUKMA";
-        repo.insert(org);
+        var org = orgDriver.createOrg();
         createdOrgId = org.id;
     }
     
