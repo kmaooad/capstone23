@@ -13,4 +13,7 @@ public interface CourseService {
     public Course update(Course course);
     public void delete(Optional<Course> course);
     public void bulkInsert(List<Course> courses);
+    void bulkDelete(List<Course> courses);
+    void findCoursesCountByIds(List<String> courseIds);
+    void bulkUpdate(List<Course> courses);
 }
