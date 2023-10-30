@@ -6,8 +6,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
 
-import static io.quarkus.mongodb.panache.PanacheMongoEntityBase.deleteById;
-import static io.quarkus.mongodb.panache.PanacheMongoEntityBase.persist;
+import static io.quarkus.mongodb.panache.PanacheMongoEntityBase.*;
 
 @ApplicationScoped
 public class ExtracurricularCourseServiceImpl implements ExtracurricularCourseService {
@@ -29,9 +28,15 @@ public class ExtracurricularCourseServiceImpl implements ExtracurricularCourseSe
     public void deleteExtracurricularActivity(ExtracurricularActivity extracurricularActivity) {
         delete(extracurricularActivity);
     }
+
+    @Override
+    public ExtracurricularActivity update(ExtracurricularActivity extracurricularActivity) {
+        persistOrUpdate(extracurricularActivity);
+        return  extracurricularActivity;
+    }
+
     public void delete(ExtracurricularActivity extracurricularActivity) {
         deleteById(extracurricularActivity.id);
     }
-
 
 }

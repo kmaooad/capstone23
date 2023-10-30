@@ -9,4 +9,6 @@ public interface ExtracurricularCourseService {
     ExtracurricularActivity findById(String id);
 
     void deleteExtracurricularActivity(ExtracurricularActivity extracurricularActivity);
+
+    ExtracurricularActivity update(ExtracurricularActivity extracurricularActivity);
 }
