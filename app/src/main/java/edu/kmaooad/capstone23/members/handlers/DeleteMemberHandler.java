@@ -19,8 +19,8 @@ public class DeleteMemberHandler implements CommandHandler<DeleteMember, MemberD
     @Override
     public Result<MemberDeleted> handle(DeleteMember command) {
         try {
-            ObjectId objectId = command.getMemberId();
-            Member entity = membersRepository.findById(objectId);
+            var objectId = command.getMemberId();
+            Member entity = membersRepository.findById(new ObjectId(objectId));
             var success = true;
             if (entity != null) {
                 membersRepository.delete(entity);
