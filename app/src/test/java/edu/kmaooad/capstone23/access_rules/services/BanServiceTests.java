@@ -134,7 +134,6 @@ public class BanServiceTests {
         Assertions.assertEquals(ErrorCode.VALIDATION_FAILED, result.getErrorCode());
     }
 
-   
     private ObjectId createMember(){
         CreateBasicMember command = new CreateBasicMember();
         command.setOrgId(createOrg());

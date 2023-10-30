@@ -2,6 +2,7 @@ package edu.kmaooad.capstone23.orgs.controllers;
 
 import edu.kmaooad.capstone23.orgs.dal.Org;
 import edu.kmaooad.capstone23.orgs.dal.OrgsRepository;
+import edu.kmaooad.capstone23.orgs.drivers.OrgDriver;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 
@@ -21,13 +22,12 @@ public class UpdateOrgControllerTests {
     @Inject
     OrgsRepository repo;
 
+    @Inject
+    OrgDriver orgDriver;
+
     @BeforeEach
     void setUp() {
-        var org = new Org();
-        org.name = "NaUKMA";
-        org.industry = "Education";
-        org.website = "https://www.ukma.edu.ua/eng/";
-        repo.insert(org);
+        Org org = orgDriver.createOrg();
         orgId = org.id;
     }
 

@@ -5,7 +5,9 @@ import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.departments.commands.DeleteDepartment;
 import edu.kmaooad.capstone23.departments.dal.Department;
 import edu.kmaooad.capstone23.departments.dal.DepartmentsRepository;
+import edu.kmaooad.capstone23.departments.drivers.DepartmentDriver;
 import edu.kmaooad.capstone23.departments.events.DepartmentDeleted;
+import edu.kmaooad.capstone23.departments.services.DepartmentService;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 import org.junit.jupiter.api.Assertions;
@@ -21,15 +23,14 @@ public class DeleteDepartmentHandlerTest {
     DeleteDepartmentHandler handler;
 
     @Inject
-    DepartmentsRepository departmentsRepository;
+    DepartmentService departmentService;
+
+    @Inject
+    DepartmentDriver departmentDriver;
 
     @BeforeEach
     void setUp() {
-        Department department = new Department();
-        department.name = "Department to Delete";
-        department.description = "This is a department to be deleted";
-        department.parent = "NaUKMA";
-        departmentsRepository.insert(department);
+        Department department = departmentDriver.createDepartment();
 
         departmentId = department.id.toString();
     }
@@ -45,7 +46,7 @@ public class DeleteDepartmentHandlerTest {
         Assertions.assertTrue(result.isSuccess());
         Assertions.assertEquals(departmentId, result.getValue().getId());
 
-        Department deletedDepartment = departmentsRepository.findById(departmentId);
+        Department deletedDepartment = departmentService.getDepartmentById(departmentId);
         Assertions.assertNull(deletedDepartment);
     }
 

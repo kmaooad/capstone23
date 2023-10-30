@@ -8,6 +8,7 @@ import edu.kmaooad.capstone23.activities.events.BulkCoursesCreated;
 import edu.kmaooad.capstone23.activities.events.BulkCoursesUpdated;
 import edu.kmaooad.capstone23.activities.events.CourseCreated;
 import edu.kmaooad.capstone23.activities.events.CourseUpdated;
+import edu.kmaooad.capstone23.activities.services.CourseService;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
@@ -20,7 +21,7 @@ import java.util.List;
 @RequestScoped
 public class BulkUpdateCourseHandler implements CommandHandler<BulkUpdateCourses, BulkCoursesUpdated> {
     @Inject
-    private CourseRepository repository;
+    private CourseRepository courseService;
 
     @Override
     public Result<BulkCoursesUpdated> handle(BulkUpdateCourses command) {
@@ -32,12 +33,12 @@ public class BulkUpdateCourseHandler implements CommandHandler<BulkUpdateCourses
         }).toList();
 
         var courseIds = courses.stream().map(course -> course.id.toHexString()).distinct().toList();
-        var coursesInDb = repository.findCoursesCountByIds(courseIds);
+        var coursesInDb = courseService.findCoursesCountByIds(courseIds);
         if (coursesInDb != courses.size()) {
             return new Result<>(ErrorCode.VALIDATION_FAILED, "Some courses have incorrect IDs");
         }
 
-        repository.bulkUpdate(courses);
+        courseService.bulkUpdate(courses);
 
         List<CourseUpdated> coursesUpdated = courses.stream().map(course -> new CourseUpdated(course.id.toHexString(), course.name)).toList();
 
