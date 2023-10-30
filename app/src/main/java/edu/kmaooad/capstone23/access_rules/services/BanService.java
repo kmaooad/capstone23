@@ -2,7 +2,6 @@ package edu.kmaooad.capstone23.access_rules.services;
 
 import edu.kmaooad.capstone23.access_rules.dal.AccessRuleFromEntityType;
 import edu.kmaooad.capstone23.access_rules.dal.AccessRuleRepository;
-import edu.kmaooad.capstone23.access_rules.dal.AccessRuleToEntityType;
 import edu.kmaooad.capstone23.access_rules.events.EntityBanned;
 import edu.kmaooad.capstone23.activities.dal.CourseRepository;
 import edu.kmaooad.capstone23.common.ErrorCode;
@@ -40,7 +39,7 @@ public class BanService {
         if (!entityExists(fromEntityType, entityId)) {
             return new Result<>(ErrorCode.VALIDATION_FAILED, "Entity doesn't exist");
         }
-        accessRuleRepository.ban(entityId, fromEntityType);
+        accessRuleRepository.updateOnBan(entityId, fromEntityType);
     
         EntityBanned bannedEvent = new EntityBanned(entityId, fromEntityType);
         return new Result<>(bannedEvent);

@@ -157,9 +157,9 @@ public class BanServiceTests {
 
     private void addAccessRule(AccessRuleFromEntityType fromType, ObjectId fromId, AccessRuleToEntityType toType, ObjectId toId) {
         CreateAccessRule command = new CreateAccessRule();
-        command.setFromEntityId(fromId);
+        command.setFromEntityId(fromId.toString());
         command.setFromEntityType(fromType.toString());
-        command.setToEntityId(toId);
+        command.setToEntityId(toId.toString());
         command.setToEntityType(toType.toString());
         command.setRuleType("Allow");
 
