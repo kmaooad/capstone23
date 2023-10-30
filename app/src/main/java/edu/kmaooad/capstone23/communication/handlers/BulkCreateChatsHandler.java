@@ -6,70 +6,55 @@ import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.communication.commands.BulkCreateChats;
 import edu.kmaooad.capstone23.communication.commands.CreateChat;
 import edu.kmaooad.capstone23.communication.dal.entities.Chat;
-import edu.kmaooad.capstone23.communication.dal.repositories.ChatRepository;
 import edu.kmaooad.capstone23.communication.events.ChatCreated;
 import edu.kmaooad.capstone23.communication.events.ChatsBulkCreated;
+import edu.kmaooad.capstone23.communication.services.ChatService;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RequestScoped
 public class BulkCreateChatsHandler implements CommandHandler<BulkCreateChats, ChatsBulkCreated> {
   @Inject
-  ChatRepository chatRepository;
-
-  private List<Chat> chats;
-
-  private ChatsBulkCreated createdChats;
+  ChatService chatService;
 
   @Override
   public Result<ChatsBulkCreated> handle(BulkCreateChats command) {
-    boolean isCommandValid = validateCommand(command);
-
-    if (!isCommandValid) {
+    if (!command.getChats().isEmpty()) {
       return new Result<ChatsBulkCreated>(ErrorCode.VALIDATION_FAILED, "No chats to create");
     }
 
-    initChats(command);
+    var mappedChats = this.bulkMapChats(command);
 
-    chatRepository.bulkInsert(chats);
+    var chats = chatService.bulkInsert(mappedChats);
 
-    initResponse();
+    var createdChats = new ChatsBulkCreated(mapChatsForResponce(chats));
 
     return new Result<ChatsBulkCreated>(createdChats);
   }
 
-  private boolean validateCommand(BulkCreateChats command) {
-    return !command.getChats().isEmpty();
-  }
-
-  private void initChats(BulkCreateChats command) {
-    chats = new ArrayList<Chat>();
-
-    List<CreateChat> childCommands = command.getChats();
-
-    chats = childCommands
-        .stream()
-        .map((childCommand) -> {
-          Chat chat = new Chat();
-
-          chat.name = childCommand.getName();
-          chat.description = childCommand.getDescription();
-          chat.accessType = Chat.AccessType.valueOf(childCommand.getAccessType());
-
-          return chat;
-        })
-        .toList();
-  }
-
-  private void initResponse() {
-    List<ChatCreated> chatsMappedToResult = chats
+  private List<ChatCreated> mapChatsForResponce(List<Chat> chats) {
+    return chats
         .stream()
         .map((chat) -> new ChatCreated(chat.id.toHexString()))
         .toList();
+  }
 
-    createdChats = new ChatsBulkCreated(chatsMappedToResult);
+  private List<Chat> bulkMapChats(BulkCreateChats bulkCommand) {
+    return bulkCommand.getChats()
+        .stream()
+        .map((command) -> mapChat(command))
+        .toList();
+  }
+
+  private Chat mapChat(CreateChat command) {
+    Chat chat = new Chat();
+
+    chat.name = command.getName();
+    chat.description = command.getDescription();
+    chat.accessType = Chat.AccessType.valueOf(command.getAccessType());
+
+    return chat;
   }
 }

@@ -5,7 +5,6 @@ import edu.kmaooad.capstone23.access_rules.dal.AccessRuleToEntityType;
 import edu.kmaooad.capstone23.access_rules.dal.AccessRuleType;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
-import org.bson.types.ObjectId;
 
 public class CreateAccessRule {
     @NotNull
@@ -13,13 +12,13 @@ public class CreateAccessRule {
     private String ruleType;
 
     @NotNull
-    private ObjectId fromEntityId;
+    private String fromEntityId;
     @NotNull
     @Pattern(regexp = "Organisation|Department|Member")
     private String fromEntityType;
 
     @NotNull
-    private ObjectId toEntityId;
+    private String toEntityId;
     @NotNull
     @Pattern(regexp = "Organisation|Department|Course|Group")
     private String toEntityType;
@@ -29,7 +28,7 @@ public class CreateAccessRule {
         this.ruleType = ruleType;
     }
 
-    public void setFromEntityId(ObjectId fromEntityId) {
+    public void setFromEntityId(String fromEntityId) {
         this.fromEntityId = fromEntityId;
     }
 
@@ -37,7 +36,7 @@ public class CreateAccessRule {
         this.fromEntityType = fromEntityType;
     }
 
-    public void setToEntityId(ObjectId toEntityId) {
+    public void setToEntityId(String toEntityId) {
         this.toEntityId = toEntityId;
     }
 
@@ -45,11 +44,11 @@ public class CreateAccessRule {
         this.toEntityType = toEntityType;
     }
 
-    public ObjectId getFromEntityId() {
+    public String getFromEntityId() {
         return fromEntityId;
     }
 
-    public ObjectId getToEntityId() {
+    public String getToEntityId() {
         return toEntityId;
     }
 
