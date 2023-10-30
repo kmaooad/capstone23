@@ -11,7 +11,7 @@ import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.departments.dal.DepartmentsRepository;
-import edu.kmaooad.capstone23.groups.dal.GroupsRepository;
+import edu.kmaooad.capstone23.groups.interfaces.GroupsRepositoryInterface;
 import edu.kmaooad.capstone23.members.dal.MembersRepository;
 import edu.kmaooad.capstone23.orgs.dal.OrgsRepository;
 import jakarta.enterprise.context.RequestScoped;
@@ -37,15 +37,15 @@ public class UpdateAccessRuleHandler implements CommandHandler<UpdateAccessRule,
     private CourseRepository courseRepository;
 
     @Inject
-    private GroupsRepository groupsRepository;
+    private GroupsRepositoryInterface groupsRepository;
 
     @Override
     public Result<AccessRuleUpdated> handle(UpdateAccessRule command) {
-        if(!ObjectId.isValid(command.getId()))
+        if (!ObjectId.isValid(command.getId()))
             return new Result<>(ErrorCode.VALIDATION_FAILED, "Object Id is invalid");
-        if(!ObjectId.isValid(command.getFromEntityId()))
+        if (!ObjectId.isValid(command.getFromEntityId()))
             return new Result<>(ErrorCode.VALIDATION_FAILED, "From entity Id is invalid");
-        if(!ObjectId.isValid(command.getToEntityId()))
+        if (!ObjectId.isValid(command.getToEntityId()))
             return new Result<>(ErrorCode.VALIDATION_FAILED, "To entity Id is invalid");
         AccessRule accessRule = accessRuleRepository.findById(new ObjectId(command.getId()));
 
@@ -53,11 +53,11 @@ public class UpdateAccessRuleHandler implements CommandHandler<UpdateAccessRule,
             return new Result<>(ErrorCode.VALIDATION_FAILED, "Access rule with such Id doesn't exist");
         }
 
-        if(!fromEntityExists(command.getFromEntityType(), new ObjectId(command.getFromEntityId()))){
+        if (!fromEntityExists(command.getFromEntityType(), new ObjectId(command.getFromEntityId()))) {
             return new Result<>(ErrorCode.VALIDATION_FAILED, "From entity doesn't exist");
         }
 
-        if(!toEntityExists(command.getToEntityType(), new ObjectId(command.getToEntityId()))){
+        if (!toEntityExists(command.getToEntityType(), new ObjectId(command.getToEntityId()))) {
             return new Result<>(ErrorCode.VALIDATION_FAILED, "To entity doesn't exist");
         }
 
@@ -68,8 +68,9 @@ public class UpdateAccessRuleHandler implements CommandHandler<UpdateAccessRule,
         accessRule.toEntityId = new ObjectId(command.getToEntityId());
 
         accessRuleRepository.update(accessRule);
-        return new Result<>(new AccessRuleUpdated(accessRule.id.toString(), accessRule.ruleType, accessRule.fromEntityType,
-                accessRule.fromEntityId.toString(), accessRule.toEntityType, accessRule.toEntityId.toString()));
+        return new Result<>(
+                new AccessRuleUpdated(accessRule.id.toString(), accessRule.ruleType, accessRule.fromEntityType,
+                        accessRule.fromEntityId.toString(), accessRule.toEntityType, accessRule.toEntityId.toString()));
     }
 
     private boolean fromEntityExists(AccessRuleFromEntityType type, ObjectId entityId) {
