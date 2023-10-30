@@ -14,17 +14,17 @@ import org.bson.types.ObjectId;
 @RequestScoped
 public class UpdateProjectHandler implements CommandHandler<UpdateProject, ProjUpdated> {
     @Inject
-    ProjectsRepository repository;
+    ProjectsRepository repository; //intentionally left non-private: https://stackoverflow.com/questions/55101095/why-does-quarkus-warn-me-about-injection-in-private-fields
 
     @Override
     public Result<ProjUpdated> handle(UpdateProject command) {
-
         var foundProj = repository.findProjectById(command.getId());
+
         if(foundProj == null)
             return new Result<>(ErrorCode.EXCEPTION, "Updated");
 
         var newValues = new Project();
-        newValues.id = new ObjectId(command.getId());
+        newValues.id = command.getId();
         newValues.name = command.getName();
         newValues.description = command.getDescription();
         newValues.skills = command.getSkills();
@@ -37,6 +37,7 @@ public class UpdateProjectHandler implements CommandHandler<UpdateProject, ProjU
                 newValues.skills.stream().map(ObjectId::new).toList(),
                 newValues.skillSets.stream().map(ObjectId::new).toList()
         );
+
         return new Result<>(result);
     }
 }

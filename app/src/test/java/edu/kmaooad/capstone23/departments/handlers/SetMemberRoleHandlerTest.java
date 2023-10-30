@@ -8,7 +8,9 @@ import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.departments.commands.SetMemberRole;
 import edu.kmaooad.capstone23.departments.dal.*;
+import edu.kmaooad.capstone23.departments.drivers.DepartmentDriver;
 import edu.kmaooad.capstone23.departments.events.MemberRoleSetted;
+import edu.kmaooad.capstone23.departments.services.DepartmentService;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 
@@ -30,25 +32,25 @@ public class SetMemberRoleHandlerTest {
     CommandHandler<BanEntity, EntityBanned> banHandler;
 
     @Inject
-    DepartmentsRepository departmentsRepository;
+    DepartmentService departmentService;
+
+    @Inject
+    DepartmentDriver departmentDriver;
+
     private String departmentId;
 
     private String userName;
 
     @BeforeEach
     void setUp() {
-        Department department = new Department();
-
-        department.name = "Initial Department";
-        department.description = "Initial Department Description";
-        department.parent = "NaUKMA";
-        department.members = new ArrayList<>();
+        Department department = departmentDriver.createDepartment();
 
         Member member = new Member();
         member.userName = "Initial Member";
         member.role = "Initial Role";
         department.members.add(member);
-        departmentsRepository.insert(department);
+
+        departmentService.updateDepartment(department);
 
         departmentId = department.id.toString();
         userName = member.userName;
@@ -75,7 +77,7 @@ public class SetMemberRoleHandlerTest {
         Assertions.assertEquals(userName, result.getValue().getUserName());
         Assertions.assertEquals(role, result.getValue().getRole());
 
-        Department department = departmentsRepository.findById(departmentId);
+        Department department = departmentService.getDepartmentById(departmentId);
         Assertions.assertNotNull(department);
 
         Member member = department.members.stream().filter(m -> m.userName.equals(userName)).findFirst().orElse(null);

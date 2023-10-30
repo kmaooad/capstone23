@@ -4,7 +4,6 @@ import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.competences.commands.DeleteProj;
-import edu.kmaooad.capstone23.competences.dal.MongoProjectRepository;
 import edu.kmaooad.capstone23.competences.dal.ProjectsRepository;
 import edu.kmaooad.capstone23.competences.events.ProjDeleted;
 import jakarta.enterprise.context.RequestScoped;

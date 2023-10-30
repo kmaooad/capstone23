@@ -9,6 +9,7 @@ import edu.kmaooad.capstone23.relations.dal.RelationRepository;
 import edu.kmaooad.capstone23.search.QueryByIdCommand;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
+import org.bson.types.ObjectId;
 import org.junit.jupiter.api.*;
 
 import java.util.ArrayList;
@@ -40,7 +41,7 @@ public class QueryCourseByProjectHandlerTest {
 
         var idOfProjectToFindBy = defaultProjects.get(projectToFindIndex).id;
         var command = new QueryByIdCommand();
-        command.id = idOfProjectToFindBy;
+        command.id = new ObjectId(idOfProjectToFindBy);
 
         var result = handler.handle(command);
         System.out.println(result.getMessage());
@@ -71,7 +72,7 @@ public class QueryCourseByProjectHandlerTest {
         BiFunction<Integer, Integer, Relation> addRevertedRelation = (courseIndex, projectIndex) -> {
             var courseId = defaultCourses.get(courseIndex).id;
             var projectId = defaultProjects.get(projectIndex).id;
-            var relation = new Relation(projectId, courseId);
+            var relation = new Relation(new ObjectId(projectId), courseId);
 
             var optCreatedRelation = relationRepository.createRelation("projects", "courses", relation);
             assertTrue(optCreatedRelation.isPresent());
@@ -88,7 +89,7 @@ public class QueryCourseByProjectHandlerTest {
 
         var idOfProjectToFindBy = defaultProjects.get(projectToFindByIndex).id;
         var command = new QueryByIdCommand();
-        command.id = idOfProjectToFindBy;
+        command.id = new ObjectId(idOfProjectToFindBy);
 
         var result = handler.handle(command);
         assertTrue(result.isSuccess());
@@ -201,7 +202,7 @@ public class QueryCourseByProjectHandlerTest {
             public Relation apply(Integer courseIndex, Integer projectIndex) {
                 var courseId = defaultCourses.get(courseIndex).id;
                 var projectId = defaultProjects.get(projectIndex).id;
-                var relation = new Relation(courseId, projectId);
+                var relation = new Relation(courseId, new ObjectId(projectId));
 
                 var optCreatedRelation = relationRepository.createRelation("courses", "projects", relation);
                 assertTrue(optCreatedRelation.isPresent());

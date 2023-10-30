@@ -33,7 +33,8 @@ class UpdateProjectHandlerTest {
         updatedProject.skillSets = List.of("5f7e47fc8e1f7112d73c92a1");
 
         var command = new UpdateProject();
-        command.setId(originalProj.id.toHexString());
+        command.setId(originalProj.id);
+
         command.setName(updatedProject.name);
         command.setDescription(updatedProject.description);
         command.setSkills(updatedProject.skills);
@@ -57,7 +58,8 @@ class UpdateProjectHandlerTest {
         projToInsert.name = updatedName;
 
         var command = new UpdateProject();
-        command.setId(originalProj.id.toHexString());
+        command.setId(originalProj.id);
+
         command.setName(projToInsert.name);
         command.setDescription(projToInsert.description);
         command.setSkills(projToInsert.skills);
@@ -66,7 +68,7 @@ class UpdateProjectHandlerTest {
         var result = handler.handle(command);
         assertFalse(result.isSuccess());
 
-        var originalAfterUpdating = repository.findById(originalProj.id);
+        var originalAfterUpdating = repository.findProjectById(originalProj.id);
         assertNotEquals(originalAfterUpdating.name, updatedName);
     }
 
