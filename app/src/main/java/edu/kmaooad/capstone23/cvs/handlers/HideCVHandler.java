@@ -7,32 +7,30 @@ import edu.kmaooad.capstone23.cvs.commands.HideCV;
 import edu.kmaooad.capstone23.cvs.dal.CV;
 
 import edu.kmaooad.capstone23.cvs.dal.CV.Visibility;
-import edu.kmaooad.capstone23.cvs.dal.CVRepository;
 import edu.kmaooad.capstone23.cvs.events.CVUpdated;
+import edu.kmaooad.capstone23.cvs.services.CVService;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
-
-import java.util.Optional;
 
 @RequestScoped
 public class HideCVHandler implements CommandHandler<HideCV, CVUpdated> {
 
     @Inject
-    CVRepository cvRepository;
+    CVService cvService;
 
     @Override
     public Result<CVUpdated> handle(HideCV command) {
-        Optional<CV> cv = cvRepository.findByIdOptional(command.getCvId());
+        CV cv = cvService.findById(command.getCvId());
 
-        if (cv.isEmpty()) {
+        if (cv == null) {
             return new Result<>(ErrorCode.VALIDATION_FAILED, "Illegal cv id");
         }
 
-        cv.get().visibility =Visibility.HIDDEN;
+        cv.visibility = Visibility.HIDDEN;
 
-        cvRepository.update(cv.get());
+        cvService.update(cv);
 
-        CVUpdated result = new CVUpdated(cv.get().id);
+        CVUpdated result = new CVUpdated(cv.id);
         return new Result<>(result);
     }
 }

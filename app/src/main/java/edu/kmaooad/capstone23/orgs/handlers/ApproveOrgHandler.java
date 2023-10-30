@@ -1,7 +1,7 @@
 package edu.kmaooad.capstone23.orgs.handlers;
 
 import edu.kmaooad.capstone23.ban.dal.BannedEntityType;
-import edu.kmaooad.capstone23.ban.dal.EntityBanRepository;
+import edu.kmaooad.capstone23.ban.service.EntityBanService;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
@@ -25,7 +25,7 @@ public class ApproveOrgHandler implements CommandHandler<ApproveOrg, OrgApproved
     private MailService mailService;
 
     @Inject
-    EntityBanRepository banRepository;
+    EntityBanService banService;
 
     private static final String defaultEmailText = "Your organizations`s submission has been approved";
 
@@ -34,7 +34,7 @@ public class ApproveOrgHandler implements CommandHandler<ApproveOrg, OrgApproved
         if (valid_org.isEmpty()) {
             return new Result<>(ErrorCode.VALIDATION_FAILED, "Org not found!");
         }
-        if (banRepository.findForEntity(BannedEntityType.Organization, valid_org.get().id).isPresent()) {
+        if (banService.findForEntity(BannedEntityType.Organization, valid_org.get().id).isPresent()) {
             return new Result<>(ErrorCode.EXCEPTION, "Org is banned");
         }
         final Org org = valid_org.get();
