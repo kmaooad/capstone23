@@ -11,7 +11,9 @@ public interface ExpertService {
 
     String createInvitationLink(ObjectId invitationId);
     Optional<ExpertInvitation> findInvitationById(ObjectId id);
-    void persist(ExpertInvitation expertInvitation);
+    Expert findExpertById(ObjectId id);
+    void insertInvitationLink(ExpertInvitation expertInvitation);
     void insertExpert(Expert expert);
     Expert modifyExpert(Expert expert);
+    void deleteExpert(Expert expert);
 }

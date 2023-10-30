@@ -32,7 +32,7 @@ public class ExpertServiceImpl implements ExpertService {
         return Optional.ofNullable(expertInvitationRepository.findById(id));
     }
 
-    public void persist(ExpertInvitation expertInvitation) {
+    public void insertInvitationLink(ExpertInvitation expertInvitation) {
         expertInvitationRepository.persist(expertInvitation);
     }
 
@@ -40,8 +40,15 @@ public class ExpertServiceImpl implements ExpertService {
         expertsRepository.insert(expert);
     }
 
-    @Override
     public Expert modifyExpert(Expert expert) {
         return expertsRepository.modify(expert);
+    }
+
+    public Expert findExpertById(ObjectId id) {
+        return expertsRepository.findById(id);
+    }
+
+    public void deleteExpert(Expert expert) {
+        expertsRepository.deleteExpert(expert);
     }
 }
