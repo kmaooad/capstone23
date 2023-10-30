@@ -8,4 +8,5 @@ public interface CourseService {
     public Course insert(Course course);
     public Optional<Course> findById(String id);
     public Course update(Course course);
+    public Course find(String field, String value);
 }
