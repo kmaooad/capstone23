@@ -3,18 +3,20 @@ package edu.kmaooad.capstone23.orgs.members.repositories;
 import com.mongodb.MongoException;
 import edu.kmaooad.capstone23.members.dal.Member;
 import edu.kmaooad.capstone23.members.dal.MembersRepository;
+import edu.kmaooad.capstone23.members.exceptions.MemberNotFoundException;
 import edu.kmaooad.capstone23.members.exceptions.UniquenessViolationException;
 import edu.kmaooad.capstone23.orgs.dal.Org;
 import edu.kmaooad.capstone23.orgs.dal.OrgsRepository;
 import edu.kmaooad.capstone23.orgs.members.TestWithDbClearance;
+import edu.kmaooad.capstone23.users.dal.repositories.UserRepository;
+import edu.kmaooad.capstone23.users.mocks.UserMocks;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
+import org.bson.types.ObjectId;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 @QuarkusTest
 public class MembersRepositoryTest extends TestWithDbClearance {
@@ -22,7 +24,12 @@ public class MembersRepositoryTest extends TestWithDbClearance {
     MembersRepository membersRepository;
 
     @Inject
+    UserRepository userRepository;
+
+    @Inject
     OrgsRepository orgsRepository;
+
+    protected Member setUpMember;
 
     @BeforeEach
     void setUp() {
@@ -30,30 +37,76 @@ public class MembersRepositoryTest extends TestWithDbClearance {
         var org = new Org();
         org.name = "NaUKMA";
         orgsRepository.insert(org);
-        member.orgId = List.of(org.id);
-        member.lastName = "last";
-        member.firstName = "first";
-        member.email = "email@email.com";
+        member.orgId = org.id;
+        var user = userRepository.insert(UserMocks.validUser());
+        member.userId = user.id;
         membersRepository.persist(member);
+        setUpMember = member;
     }
 
     @Test
-    public void testInsertDuplicateEmail() {
-        var email = "email@email.com";
-
+    public void testInsertDuplicateOrgAndUserId() {
         Member newMember = new Member();
-        newMember.email = email;
+        newMember.orgId = setUpMember.orgId;
+        newMember.userId = setUpMember.userId;
 
         assertThrows(UniquenessViolationException.class, () -> membersRepository.insert(newMember));
     }
 
     @Test
-    public void testInsertDuplicateEmailWithGeneratedMethodThrowsMongoException() {
-        var email = "email@email.com";
-
+    public void testUpdateToHaveWithDuplicatedUserAndOrgId() {
         Member newMember = new Member();
-        newMember.email = email;
+        newMember.orgId = setUpMember.orgId;
+        newMember.userId = new ObjectId();
+
+        assertDoesNotThrow(() -> {
+            membersRepository.insert(newMember);
+        });
+
+        newMember.userId = setUpMember.userId;
+
+        assertThrows(UniquenessViolationException.class, () -> membersRepository.updateEntry(newMember));
+    }
+
+    @Test
+    public void testInsertDuplicateOrgAndUserIdsGeneratedMethodThrowsMongoException() {
+        Member newMember = new Member();
+        newMember.orgId = setUpMember.orgId;
+        newMember.userId = setUpMember.userId;
 
         assertThrows(MongoException.class, () -> membersRepository.persist(newMember));
+    }
+
+    @Test
+    public void testUpdateIsExpertFieldInMember() {
+        var memberIsExpertBeforeUpdate = membersRepository.findById(setUpMember.id).isExpert;
+
+        setUpMember.isExpert = !memberIsExpertBeforeUpdate;
+        var updatedMember = membersRepository.updateEntry(setUpMember);
+
+        assertNotEquals(memberIsExpertBeforeUpdate, updatedMember.isExpert);
+    }
+
+
+    @Test
+    public void testUpdateNonExistentMember() {
+        var user = userRepository.insert(UserMocks.validUser());
+
+        Member member = new Member();
+        member.id = new ObjectId();
+        member.orgId = setUpMember.orgId;
+        member.userId = user.id;
+
+        assertThrows(MemberNotFoundException.class, () -> membersRepository.updateEntry(member));
+    }
+
+    @Test
+    public void testUpdateOnlyUser() {
+        var user = userRepository.insert(UserMocks.validUser());
+
+        setUpMember.userId = user.id;
+
+        membersRepository.updateEntry(setUpMember);
+        assertEquals(setUpMember.userId, membersRepository.findById(setUpMember.id).userId);
     }
 }

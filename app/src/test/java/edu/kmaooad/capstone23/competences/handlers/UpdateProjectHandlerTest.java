@@ -1,13 +1,12 @@
 package edu.kmaooad.capstone23.competences.handlers;
 
 import edu.kmaooad.capstone23.common.CommandHandler;
-import edu.kmaooad.capstone23.competences.commands.UpdateProj;
+import edu.kmaooad.capstone23.competences.commands.UpdateProject;
 import edu.kmaooad.capstone23.competences.dal.Project;
-import edu.kmaooad.capstone23.competences.dal.ProjsRepository;
+import edu.kmaooad.capstone23.competences.dal.MongoProjectRepository;
 import edu.kmaooad.capstone23.competences.events.ProjUpdated;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
-import org.bson.types.ObjectId;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -17,9 +16,9 @@ import static org.junit.jupiter.api.Assertions.*;
 @QuarkusTest
 class UpdateProjectHandlerTest {
     @Inject
-    CommandHandler<UpdateProj, ProjUpdated> handler;
+    CommandHandler<UpdateProject, ProjUpdated> handler;
     @Inject
-    ProjsRepository repository;
+    MongoProjectRepository repository;
 
     @Test
     @DisplayName("Basic Updating")
@@ -30,11 +29,12 @@ class UpdateProjectHandlerTest {
         Project updatedProject = new Project();
         updatedProject.name = "Updated Project";
         updatedProject.description = "Updated Description";
-        updatedProject.skills = List.of(new ObjectId("1a4cd132b123a1aa3bc2d142"));
-        updatedProject.skillSets = List.of(new ObjectId("5f7e47fc8e1f7112d73c92a1"));
+        updatedProject.skills = List.of("1a4cd132b123a1aa3bc2d142");
+        updatedProject.skillSets = List.of("5f7e47fc8e1f7112d73c92a1");
 
-        var command = new UpdateProj();
+        var command = new UpdateProject();
         command.setId(originalProj.id);
+
         command.setName(updatedProject.name);
         command.setDescription(updatedProject.description);
         command.setSkills(updatedProject.skills);
@@ -48,7 +48,6 @@ class UpdateProjectHandlerTest {
         assertEquals(updateEvent.description(), updatedProject.description);
     }
 
-
     @Test
     @DisplayName("Name Validation")
     public void validationTest() {
@@ -58,8 +57,9 @@ class UpdateProjectHandlerTest {
         var updatedName = "Updated_name";
         projToInsert.name = updatedName;
 
-        var command = new UpdateProj();
+        var command = new UpdateProject();
         command.setId(originalProj.id);
+
         command.setName(projToInsert.name);
         command.setDescription(projToInsert.description);
         command.setSkills(projToInsert.skills);
@@ -68,7 +68,7 @@ class UpdateProjectHandlerTest {
         var result = handler.handle(command);
         assertFalse(result.isSuccess());
 
-        var originalAfterUpdating = repository.findById(originalProj.id);
+        var originalAfterUpdating = repository.findProjectById(originalProj.id);
         assertNotEquals(originalAfterUpdating.name, updatedName);
     }
 
@@ -76,8 +76,8 @@ class UpdateProjectHandlerTest {
         Project project = new Project();
         project.name = "Test Project";
         project.description = "Test Description";
-        project.skills = List.of(new ObjectId("5f7e47fc8e1f7112d73c92a1"));
-        project.skillSets = List.of(new ObjectId("1a4cd132b123a1aa3bc2d142"));
+        project.skills = List.of("5f7e47fc8e1f7112d73c92a1");
+        project.skillSets = List.of("1a4cd132b123a1aa3bc2d142");
         return project;
     }
 }

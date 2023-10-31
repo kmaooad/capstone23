@@ -5,7 +5,6 @@ import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.communication.commands.CreateParticipant;
 import edu.kmaooad.capstone23.communication.dal.entities.Participant;
-import edu.kmaooad.capstone23.communication.dal.repositories.ParticipantRepository;
 import edu.kmaooad.capstone23.communication.events.ParticipantCreated;
 import edu.kmaooad.capstone23.communication.services.ParticipantService;
 import jakarta.enterprise.context.RequestScoped;
@@ -17,11 +16,6 @@ public class CreateParticipantHandler implements CommandHandler<CreateParticipan
   @Inject
   ParticipantService participantService;
 
-  @Inject
-  ParticipantRepository participantRepository;
-
-  private Participant participant;
-
   @Override
   public Result<ParticipantCreated> handle(CreateParticipant command) {
     String chatId = command.getChatId();
@@ -32,20 +26,21 @@ public class CreateParticipantHandler implements CommandHandler<CreateParticipan
     if (!canCreateParticipant) {
       return new Result<ParticipantCreated>(ErrorCode.EXCEPTION, "Chat or user do not exist");
     }
+    var mappedParticipant = mapParticipant(chatId, userId);
 
-    initParticipant(chatId, userId);
-
-    participantRepository.insert(participant);
+    var participant = this.participantService.insert(mappedParticipant);
 
     ParticipantCreated createdParticipant = new ParticipantCreated(participant.id.toHexString());
 
     return new Result<ParticipantCreated>(createdParticipant);
   }
 
-  private void initParticipant(String chatId, String userId) {
-    participant = new Participant();
+  private Participant mapParticipant(String chatId, String userId) {
+    var participant = new Participant();
 
     participant.chatId = new ObjectId(chatId);
     participant.userId = new ObjectId(userId);
+
+    return participant;
   }
 }

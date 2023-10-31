@@ -4,7 +4,7 @@ import edu.kmaooad.capstone23.access_rules.dal.AccessRule;
 import edu.kmaooad.capstone23.access_rules.dal.AccessRuleRepository;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
-
+import org.bson.types.ObjectId;
 import org.junit.jupiter.api.*;
 
 import static io.restassured.RestAssured.given;
@@ -39,6 +39,11 @@ public class DeleteAccessRuleControllerTests {
         deleteAccessRule("1234abc", 400);
     }
 
+        @Test
+    @DisplayName("Delete Access Rule: non-existent ID")
+    public void deleteRuleNonExistentId() {
+        deleteAccessRule(new ObjectId().toString(), 400);
+    }
 
     private void deleteAccessRule(String ruleId, int expectedResult){
         Map<String, Object> jsonAsMap = new HashMap<>();
