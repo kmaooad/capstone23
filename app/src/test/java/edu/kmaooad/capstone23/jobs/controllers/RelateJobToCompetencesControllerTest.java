@@ -65,4 +65,24 @@ public class RelateJobToCompetencesControllerTest {
                 .then()
                 .statusCode(400);
     }
+
+    @Test
+    @DisplayName("Relate Job To Competences: notExisted job")
+    public void testNotExistedCompetencesConnectionCreation() {
+        CreateJob command = new CreateJob("TeacherUnique", true);
+        Result<JobCreated> result = CreateJobHandler.handle(command);
+
+        Map<String, Object> jsonAsMap = new HashMap<>();
+        ObjectId id = new ObjectId("aaaaaaaaaaaaaaaaaaaaaaaa");
+        jsonAsMap.put("jobId", result.getValue().getJobId().toHexString());
+        jsonAsMap.put("skillName", id);
+
+        given()
+                .contentType("application/json")
+                .body(jsonAsMap)
+                .when()
+                .post("/jobs/relate_to_competences")
+                .then()
+                .statusCode(400);
+    }
 }

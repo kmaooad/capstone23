@@ -2,6 +2,8 @@ package edu.kmaooad.capstone23.common;
 
 import org.bson.types.ObjectId;
 
+import java.util.UUID;
+
 public class Mocks {
   public static ObjectId mockObjectId() {
     return new ObjectId();
@@ -16,6 +18,6 @@ public class Mocks {
   }
 
   public static String mockValidEmail() {
-    return "john.doe@mail.com";
+    return UUID.randomUUID().toString().concat("@mail.com");
   }
 }

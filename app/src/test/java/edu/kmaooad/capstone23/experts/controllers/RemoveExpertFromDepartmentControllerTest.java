@@ -8,6 +8,7 @@ import edu.kmaooad.capstone23.members.dal.Member;
 import edu.kmaooad.capstone23.members.dal.MembersRepository;
 import edu.kmaooad.capstone23.orgs.dal.Org;
 import edu.kmaooad.capstone23.orgs.dal.OrgsRepository;
+import edu.kmaooad.capstone23.users.mocks.UserMocks;
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.RestAssured;
 import jakarta.inject.Inject;
@@ -18,6 +19,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.*;
+
 @QuarkusTest
 public class RemoveExpertFromDepartmentControllerTest {
     private Org org;
@@ -92,10 +94,8 @@ public class RemoveExpertFromDepartmentControllerTest {
 
     private ObjectId createTestMember() {
         Member member = new Member();
-        member.firstName = "Test";
-        member.lastName = "Member";
-        member.email = randomEmail();
-        member.orgId = List.of(org.id);
+        member.userId = UserMocks.validUser().id;
+        member.orgId = org.id;
         membersRepository.insert(member);
 
         return member.id;
