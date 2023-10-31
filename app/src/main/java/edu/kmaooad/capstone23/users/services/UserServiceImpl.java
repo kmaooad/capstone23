@@ -1,14 +1,15 @@
 package edu.kmaooad.capstone23.users.services;
 
 import edu.kmaooad.capstone23.users.dal.entities.User;
-import edu.kmaooad.capstone23.users.interfaces.UserRepository;
+import edu.kmaooad.capstone23.users.interfaces.repositories.UserRepository;
+import edu.kmaooad.capstone23.users.interfaces.services.UserService;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
 import java.util.Optional;
 
 @ApplicationScoped
-public class UserService {
+public class UserServiceImpl implements UserService {
   @Inject
   UserRepository userRepository;
 
