@@ -7,5 +7,5 @@ public interface AccessRuleService {
     public AccessRule insert(AccessRule accessRule);
     public AccessRule findById(ObjectId id);
     public AccessRule update(AccessRule accessRule);
-    public void deleteAccessRule(AccessRule accessRule);
+    public void deleteAccessRule(ObjectId accessRule);
 }

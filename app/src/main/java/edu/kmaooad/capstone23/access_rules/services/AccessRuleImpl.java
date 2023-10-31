@@ -27,7 +27,7 @@ public class AccessRuleImpl implements AccessRuleService {
     }
 
     @Override
-    public void deleteAccessRule(AccessRule accessRule) {
-        accessRuleRepository.delete(accessRule);
+    public void deleteAccessRule(ObjectId accessRule) {
+        accessRuleRepository.deleteRule(accessRule);
     }
 }
