@@ -3,12 +3,13 @@ package edu.kmaooad.capstone23.communication.services;
 import edu.kmaooad.capstone23.communication.dal.entities.Participant;
 import edu.kmaooad.capstone23.communication.interfaces.repositories.ParticipantRepository;
 import edu.kmaooad.capstone23.communication.interfaces.services.ChatService;
+import edu.kmaooad.capstone23.communication.interfaces.services.ParticipantService;
 import edu.kmaooad.capstone23.users.services.UserService;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
 @ApplicationScoped
-public class ParticipantService {
+public class ParticipantServiceImpl implements ParticipantService {
   @Inject
   ChatService chatService;
 
