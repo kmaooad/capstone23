@@ -21,9 +21,9 @@ public class UpdateSkillHandler implements CommandHandler<UpdateSkill, SkillUpda
     @Override
     public Result<SkillUpdated> handle(UpdateSkill command) {
         var skill = new Skill();
-        skill.id = command.getId();
+        skill.setId(command.getId());
         skill.name = command.getSkillName();
-        skill.parentSkill = command.getParentSkill();
+        skill.setParentSkill(command.getParentSkill());
         try {
             var updatedSkill = repository.modify(skill);
             return new Result<>(new SkillUpdated(updatedSkill));
