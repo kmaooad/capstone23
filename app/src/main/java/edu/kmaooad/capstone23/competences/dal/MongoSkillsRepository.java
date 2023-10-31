@@ -27,7 +27,7 @@ public class MongoSkillsRepository implements PanacheMongoRepository<Skill>, Ski
         return skill;
     }
 
-    public List<Skill> findChildRepositories(ObjectId parentSkill) {
+    public List<Skill> findChildRepositories(String parentSkill) {
         return list("parentSkill = ?1", parentSkill);
     }
 

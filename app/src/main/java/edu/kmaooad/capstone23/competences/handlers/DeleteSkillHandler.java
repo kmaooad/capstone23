@@ -23,8 +23,8 @@ public class DeleteSkillHandler implements CommandHandler<DeleteSkill, SkillDele
 
     @Override
     public Result<SkillDeleted> handle(DeleteSkill command) {
-        ObjectId id = command.getId();
-        Optional<Skill> skill = repository.findById(String.valueOf(id));
+        String id = command.getId();
+        Optional<Skill> skill = repository.findById(id);
 
         if (skill.isEmpty()) {
             return new Result<>(ErrorCode.EXCEPTION, "Skill not found");
@@ -38,6 +38,6 @@ public class DeleteSkillHandler implements CommandHandler<DeleteSkill, SkillDele
 
         repository.deleteSkill(skill.get());
 
-        return new Result<>(new SkillDeleted(skill));
+        return new Result<>(new SkillDeleted(skill.get()));
     }
 }

@@ -9,7 +9,7 @@ public interface SkillsRepository {
 
     Optional<Skill> findById(String id);
     Skill insert(Skill skill);
-    List<Skill> findChildRepositories(ObjectId parentSkill);
+    List<Skill> findChildRepositories(String parentSkill);
 
     Skill modify(Skill skill);
 

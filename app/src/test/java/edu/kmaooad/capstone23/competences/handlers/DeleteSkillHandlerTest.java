@@ -42,7 +42,7 @@ public class DeleteSkillHandlerTest {
         Assertions.assertNotNull(repository.findById(skillToDelete));
 
         var command = new DeleteSkill();
-        command.setId(skillToDelete);
+        command.setId(skillToDelete.toHexString());
 
         Result<SkillDeleted> result = deleteHandler.handle(command);
 
@@ -56,7 +56,7 @@ public class DeleteSkillHandlerTest {
     @Test
     void testDeletingNonExistingSkill() {
         var command = new DeleteSkill();
-        command.setId(new ObjectId());
+        command.setId("5faabb2e8d6c4b3f3e217465");
 
         Result<SkillDeleted> result = deleteHandler.handle(command);
 
@@ -78,7 +78,7 @@ public class DeleteSkillHandlerTest {
         Assertions.assertNotNull(result.getValue().getSkill());
 
         var command2 = new DeleteSkill();
-        command2.setId(skillToDelete);
+        command2.setId(skillToDelete.toHexString());
 
         Result<SkillDeleted> result2 = deleteHandler.handle(command2);
 
