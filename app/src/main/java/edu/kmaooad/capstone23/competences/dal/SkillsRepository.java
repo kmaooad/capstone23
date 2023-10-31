@@ -13,4 +13,8 @@ public interface SkillsRepository {
 
     Skill modify(Skill skill);
 
+    void deleteSkill(Optional<Skill> skillToDelete);
+
+
+
 }
