@@ -6,7 +6,6 @@ import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.competences.dal.*;
 import edu.kmaooad.capstone23.jobs.commands.RelateJobToCompetences;
 import edu.kmaooad.capstone23.jobs.dal.Job;
-import edu.kmaooad.capstone23.jobs.dal.JobRepository;
 import edu.kmaooad.capstone23.jobs.events.CompetenceRelated;
 import edu.kmaooad.capstone23.jobs.service.JobService;
 import jakarta.enterprise.context.RequestScoped;
@@ -23,7 +22,7 @@ public class RelateJobToCompetencesHandler implements CommandHandler<RelateJobTo
     private MongoProjectRepository projsRepository;
 
     @Inject
-    private SkillsRepository skillsRepository;
+    private MongoSkillsRepository skillsRepository;
     
     @Inject
     private TopicRepository topicRepository;

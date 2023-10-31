@@ -5,7 +5,7 @@ import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.competences.commands.DeleteSkill;
 import edu.kmaooad.capstone23.competences.dal.Skill;
-import edu.kmaooad.capstone23.competences.dal.SkillsRepository;
+import edu.kmaooad.capstone23.competences.dal.MongoSkillsRepository;
 import edu.kmaooad.capstone23.competences.events.SkillDeleted;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
@@ -16,7 +16,7 @@ public class DeleteSkillHandler implements CommandHandler<DeleteSkill, SkillDele
 
 
     @Inject
-    private SkillsRepository repository;
+    private MongoSkillsRepository repository;
 
 
     @Override

@@ -3,7 +3,7 @@ package edu.kmaooad.capstone23.competences.controllers;
 import edu.kmaooad.capstone23.competences.dal.Skill;
 import edu.kmaooad.capstone23.competences.dal.SkillSet;
 import edu.kmaooad.capstone23.competences.dal.SkillSetRepository;
-import edu.kmaooad.capstone23.competences.dal.SkillsRepository;
+import edu.kmaooad.capstone23.competences.dal.MongoSkillsRepository;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
@@ -22,7 +22,7 @@ public class AddSkillToSkillSetControllerTest {
     @Inject
     private SkillSetRepository skillSetRepository;
     @Inject
-    private SkillsRepository skillsRepository;
+    private MongoSkillsRepository skillsRepository;
 
     private ObjectId skillSetId;
     private ObjectId skillId;
