@@ -17,6 +17,7 @@ import edu.kmaooad.capstone23.orgs.commands.CreateOrg;
 import edu.kmaooad.capstone23.orgs.events.OrgCreated;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
+
 import edu.kmaooad.capstone23.common.Result;
 
 import io.quarkus.test.junit.QuarkusTest;
@@ -60,6 +61,7 @@ public class BanServiceTests {
     private ObjectId deptId2;
     private ObjectId orgId;
 
+
     @BeforeEach
     public void setup() {
        
@@ -72,6 +74,7 @@ public class BanServiceTests {
         addAccessRule(AccessRuleFromEntityType.Member, memberId, AccessRuleToEntityType.Department, deptId);
         addAccessRule(AccessRuleFromEntityType.Department, deptId2, AccessRuleToEntityType.Course, courseId);
         addAccessRule(AccessRuleFromEntityType.Organisation, orgId, AccessRuleToEntityType.Course, courseId);
+
     }
 
 
@@ -100,6 +103,7 @@ public class BanServiceTests {
             Assertions.assertTrue(rule.banned);
         }
     }
+
 
     @Test
     @DisplayName("Ban Existing Organisation")
@@ -140,6 +144,7 @@ public class BanServiceTests {
     private ObjectId createMember(){
         CreateBasicMember command = new CreateBasicMember();
         command.setOrgId(createOrg());
+
         command.setFirstName("John");
         command.setLastName("Doe");
         String id = new ObjectId().toString();
@@ -150,6 +155,7 @@ public class BanServiceTests {
         return new ObjectId(result.getValue().getMemberId());
     }
 
+
     private ObjectId createOrg(){
         CreateOrg command = new CreateOrg();
         command.setOrgName("NaUKMA");
@@ -157,6 +163,7 @@ public class BanServiceTests {
         command.website = "https://www.ukma.edu.ua/eng/";
         Result<OrgCreated> result = createOrgHandler.handle(command);
         return new ObjectId(result.getValue().getOrgId());
+
     }    
 
     private ObjectId createCourse(){
