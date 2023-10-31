@@ -1,8 +1,7 @@
 package edu.kmaooad.capstone23.access_rules.dal;
 
-
 import java.util.ArrayList;
-import java.util.List;
+
 import org.bson.types.ObjectId;
 
 import io.quarkus.mongodb.panache.PanacheMongoRepository;
@@ -32,4 +31,5 @@ public class AccessRuleRepository implements PanacheMongoRepository<AccessRule> 
         update("banned = ?1", true).where("fromEntityId = ?1 and fromEntityType = ?2", entityId, entityType);
         update("banned = ?1", true).where("toEntityId = ?1 and toEntityType = ?2", entityId, entityType);
     }
+
 }
