@@ -4,7 +4,7 @@ import edu.kmaooad.capstone23.common.Mocks;
 import edu.kmaooad.capstone23.members.dal.MembersRepository;
 import edu.kmaooad.capstone23.orgs.dal.Org;
 import edu.kmaooad.capstone23.orgs.dal.OrgsRepository;
-import edu.kmaooad.capstone23.users.dal.repositories.UserRepository;
+import edu.kmaooad.capstone23.users.interfaces.UserRepository;
 import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.BeforeEach;

@@ -1,7 +1,7 @@
 package edu.kmaooad.capstone23.users.services;
 
 import edu.kmaooad.capstone23.users.dal.entities.User;
-import edu.kmaooad.capstone23.users.dal.repositories.UserRepository;
+import edu.kmaooad.capstone23.users.interfaces.UserRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 

@@ -8,7 +8,7 @@ import edu.kmaooad.capstone23.members.exceptions.UniquenessViolationException;
 import edu.kmaooad.capstone23.orgs.dal.Org;
 import edu.kmaooad.capstone23.orgs.dal.OrgsRepository;
 import edu.kmaooad.capstone23.orgs.members.TestWithDbClearance;
-import edu.kmaooad.capstone23.users.dal.repositories.UserRepository;
+import edu.kmaooad.capstone23.users.interfaces.UserRepository;
 import edu.kmaooad.capstone23.users.mocks.UserMocks;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
