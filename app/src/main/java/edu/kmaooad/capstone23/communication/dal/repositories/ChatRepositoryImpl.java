@@ -1,6 +1,6 @@
 package edu.kmaooad.capstone23.communication.dal.repositories;
 
-import io.quarkus.mongodb.panache.PanacheMongoRepository;
+import edu.kmaooad.capstone23.communication.interfaces.ChatRepository;
 import io.quarkus.mongodb.panache.PanacheQuery;
 import jakarta.enterprise.context.ApplicationScoped;
 import edu.kmaooad.capstone23.communication.dal.entities.Chat;
@@ -11,35 +11,40 @@ import java.util.Optional;
 
 
 @ApplicationScoped
-public class ChatRepository implements PanacheMongoRepository<Chat> {
+public class ChatRepositoryImpl implements ChatRepository {
+  @Override
   public Optional<Chat> findById(String id) {
     ObjectId parsedId = new ObjectId(id);
 
     return findByIdOptional(parsedId);
   }
 
+  @Override
   public Optional<Chat> findByName(String name) {
     PanacheQuery<Chat> chat = find("name", name);
 
     return chat.firstResultOptional();
   }
 
+  @Override
   public Chat insert(Chat chat) {
     persist(chat);
 
     return chat;
   }
 
+  @Override
   public List<Chat> bulkInsert(List<Chat> chats) {
     persist(chats);
 
     return chats;
   }
 
+  @Override
   public Boolean bulkDelete(List<Chat> chats) {
     List<Boolean> results = chats.stream().map(chat -> deleteById(chat.id)).toList();
-    for (Boolean result:
-         results) {
+    for (Boolean result :
+        results) {
       if (!result) {
         return false;
       }
