@@ -1,5 +1,7 @@
 package edu.kmaooad.capstone23.departments.handlers;
 
+import edu.kmaooad.capstone23.ban.dal.BannedEntityType;
+import edu.kmaooad.capstone23.ban.service.EntityBanService;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
@@ -23,13 +25,19 @@ public class RelateJobToDepartmentHandler implements CommandHandler<RelateJobToD
     @Inject
     private JobRepository jobRepository;
 
+    @Inject
+    private EntityBanService banService;
+
     public Result<JobToDepartmentRelated> handle(RelateJobToDepartment command) {
         String departmentId = command.getDepartmentId();
 
         Department department = departmentsRepository.findById(departmentId);
 
         if (department == null) {
-            return new Result(ErrorCode.EXCEPTION, "Department not found");
+            return new Result<>(ErrorCode.EXCEPTION, "Department not found");
+        }
+        if (banService.findForEntity(BannedEntityType.Department, department.id).isPresent()) {
+            return new Result<>(ErrorCode.EXCEPTION, "Department is banned");
         }
 
         String jobId = command.getJobId();
@@ -37,7 +45,7 @@ public class RelateJobToDepartmentHandler implements CommandHandler<RelateJobToD
         Job job = jobRepository.findById(new ObjectId(jobId));
 
         if (job == null) {
-            return new Result(ErrorCode.EXCEPTION, "Job not found");
+            return new Result<>(ErrorCode.EXCEPTION, "Job not found");
         }
         if (department.jobs == null) {
             department.jobs = new ArrayList<String>();
@@ -49,6 +57,6 @@ public class RelateJobToDepartmentHandler implements CommandHandler<RelateJobToD
 
         JobToDepartmentRelated result = new JobToDepartmentRelated(departmentId, jobId);
 
-        return new Result(result);
+        return new Result<>(result);
     }
 }
