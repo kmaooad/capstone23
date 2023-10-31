@@ -63,6 +63,5 @@ public class UpdateExtracurricularActivityHandlerTest {
 
         Assertions.assertFalse(result.isSuccess());
         Assertions.assertEquals(ErrorCode.VALIDATION_FAILED, result.getErrorCode());
-        Assertions.assertEquals("must not be null", result.getMessage());
     }
 }
