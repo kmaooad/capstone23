@@ -1,7 +1,6 @@
 package edu.kmaooad.capstone23.access_rules.dal;
 
 import java.util.ArrayList;
-
 import org.bson.types.ObjectId;
 
 import io.quarkus.mongodb.panache.PanacheMongoRepository;
