@@ -9,5 +9,5 @@ public interface ExtracurricularActivityService {
     public ExtracurricularActivity insert(ExtracurricularActivity extracurricularActivity);
     public ExtracurricularActivity findById(String id);
     public ExtracurricularActivity update(ExtracurricularActivity extracurricularActivity);
-    public void delete(Optional<ExtracurricularActivity> course);
+    public void deleteExtracurricularActivity(ExtracurricularActivity extracurricularActivity);
 }

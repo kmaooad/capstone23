@@ -29,11 +29,7 @@ public class ExtracurricularActivityImpl implements ExtracurricularActivityServi
     }
 
     @Override
-    public void delete(Optional<ExtracurricularActivity> course) {
-        if (course.isEmpty()){
-            return;
-        }
-
-        extracurricularActivityRepository.delete(course.get());
+    public void deleteExtracurricularActivity(ExtracurricularActivity extracurricularActivity) {
+        extracurricularActivityRepository.delete(extracurricularActivity);
     }
 }
