@@ -43,12 +43,13 @@ public class ChatRepositoryImpl implements ChatRepository {
   @Override
   public Boolean bulkDelete(List<Chat> chats) {
     List<Boolean> results = chats.stream().map(chat -> deleteById(chat.id)).toList();
-    for (Boolean result :
-        results) {
+
+    for (Boolean result : results) {
       if (!result) {
         return false;
       }
     }
+
     return true;
   }
 }
