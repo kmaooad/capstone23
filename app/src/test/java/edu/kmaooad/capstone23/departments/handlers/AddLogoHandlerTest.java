@@ -3,8 +3,9 @@ package edu.kmaooad.capstone23.departments.handlers;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.departments.commands.AddLogo;
 import edu.kmaooad.capstone23.departments.dal.Department;
-import edu.kmaooad.capstone23.departments.dal.DepartmentsRepository;
+import edu.kmaooad.capstone23.departments.drivers.DepartmentDriver;
 import edu.kmaooad.capstone23.departments.events.LogoAdded;
+import edu.kmaooad.capstone23.departments.services.DepartmentService;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 import org.junit.jupiter.api.*;
@@ -15,20 +16,16 @@ public class AddLogoHandlerTest {
     AddLogoHandler handler;
 
     @Inject
-    DepartmentsRepository departmentsRepository;
+    DepartmentService departmentService;
+
+    @Inject
+    DepartmentDriver departmentDriver;
 
     private String idToUpdate;
 
     @BeforeEach
     void setUp() {
-        departmentsRepository.deleteAll();
-        Department department = new Department();
-
-        department.name = "Initial Department";
-        department.description = "Initial Department Description";
-        department.parent = "NaUKMA";
-        departmentsRepository.insert(department);
-
+        Department department = departmentDriver.createDepartment();
         idToUpdate = department.id.toString();
     }
 
@@ -49,7 +46,7 @@ public class AddLogoHandlerTest {
 
         Assertions.assertEquals(result.getErrorCode(), null);
 
-        Department department = departmentsRepository.findById(idToUpdate);
+        Department department = departmentService.getDepartmentById(idToUpdate);
 
         Assertions.assertEquals(department.logo.fileName, "img.png");
 

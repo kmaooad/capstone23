@@ -3,15 +3,11 @@ package edu.kmaooad.capstone23.members.dal;
 import io.quarkus.mongodb.panache.common.MongoEntity;
 import org.bson.types.ObjectId;
 
-import java.util.List;
-
 @MongoEntity(collection = "members")
 public class Member {
     public ObjectId id;
-    public List<ObjectId> orgId;
-    public String firstName;
-    public String lastName;
-    public String email;
+    public ObjectId orgId;
+    public ObjectId userId;
     public boolean isExpert;
     public boolean isAdmin;
 }
