@@ -6,6 +6,7 @@ import edu.kmaooad.capstone23.orgs.commands.CreateOrg;
 import edu.kmaooad.capstone23.orgs.dal.Org;
 import edu.kmaooad.capstone23.orgs.dal.OrgsRepository;
 import edu.kmaooad.capstone23.orgs.events.OrgCreated;
+import edu.kmaooad.capstone23.orgs.services.OrgService;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 
@@ -14,6 +15,7 @@ public class CreateOrgHandler implements CommandHandler<CreateOrg, OrgCreated> {
 
     @Inject
     private OrgsRepository repository;
+    private OrgService service;
 
     public Result<OrgCreated> handle(CreateOrg command) {
         Org org = this.mapCommandToEntity(command);
@@ -25,13 +27,7 @@ public class CreateOrgHandler implements CommandHandler<CreateOrg, OrgCreated> {
     }
 
     private Org mapCommandToEntity(CreateOrg command) {
-        Org org = new Org();
-        org.name = command.getOrgName();
-        org.description = command.description;
-        org.industry = command.industry;
-        org.website = command.website;
-        org.isActive = true;
 
-        return org;
+        return service.createOrg(command.getOrgName(), command.description, command.industry, command.website, command.emailDomain);
     }
 }

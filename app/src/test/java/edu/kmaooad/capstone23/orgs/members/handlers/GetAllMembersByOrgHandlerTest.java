@@ -52,7 +52,7 @@ public class GetAllMembersByOrgHandlerTest extends TestWithMembersSetUp {
     @DisplayName("Read all members by org: Small page handling")
     void testSmallPageHandling() {
         var objectsLeft = firstOrgMembers;
-        for(int i = 0; i < 3; i ++) {
+        for (int i = 0; i < 3; i++) {
             GetAllMembersByOrg command = new GetAllMembersByOrg();
             command.setOrgId(firstOrg);
             command.setPage(i);

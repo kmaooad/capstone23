@@ -4,15 +4,14 @@ import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.experts.commands.AssignExpertToMember;
-import edu.kmaooad.capstone23.experts.commands.DeleteExpert;
 import edu.kmaooad.capstone23.experts.dal.Expert;
 import edu.kmaooad.capstone23.experts.dal.ExpertsRepository;
 import edu.kmaooad.capstone23.experts.events.ExpertAssigned;
-import edu.kmaooad.capstone23.experts.events.ExpertDeleted;
 import edu.kmaooad.capstone23.members.dal.Member;
 import edu.kmaooad.capstone23.members.dal.MembersRepository;
 import edu.kmaooad.capstone23.orgs.dal.Org;
 import edu.kmaooad.capstone23.orgs.dal.OrgsRepository;
+import edu.kmaooad.capstone23.users.dal.repositories.UserRepository;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
@@ -26,6 +25,8 @@ public class AssignExpertToMemberHandler implements CommandHandler<AssignExpertT
     private ExpertsRepository expertsRepository;
     @Inject
     private OrgsRepository orgsRepository;
+    @Inject
+    private UserRepository userRepository;
 
     public Result<ExpertAssigned> handle(AssignExpertToMember command) {
         ObjectId id = command.getMemberId();
@@ -40,15 +41,16 @@ public class AssignExpertToMemberHandler implements CommandHandler<AssignExpertT
         }
 
         member.isExpert = true;
-        membersRepository.modify(member);
+        membersRepository.updateEntry(member);
 
         Org org = orgsRepository.findById(member.orgId);
         Expert expert = new Expert();
-        expert.name = member.firstName + member.lastName;
+        var user = userRepository.findById(member.userId);
+        expert.name = user.firstName + user.lastName;
         expert.org = org;
 
         expertsRepository.insert(expert);
 
-        return new Result<ExpertAssigned>(new ExpertAssigned(member.id.toString()));
+        return new Result<>(new ExpertAssigned(member.id.toString()));
     }
 }

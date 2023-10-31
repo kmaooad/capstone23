@@ -1,5 +1,7 @@
 package edu.kmaooad.capstone23.orgs.handlers;
 
+import edu.kmaooad.capstone23.ban.dal.BannedEntityType;
+import edu.kmaooad.capstone23.ban.service.EntityBanService;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
@@ -22,15 +24,20 @@ public class CreateRequestToJoinHandler implements CommandHandler<RequestToJoinO
     @Inject
     private RequestsRepository requestsRepository;
 
+    @Inject
+    EntityBanService banService;
+
     private final String defaultStatus = "pending";
 
     public Result<RequestCreated> handle(RequestToJoinOrg command) {
 
 
-        Org department = orgsRepository.findById(new ObjectId(command.getOrgId()));
-        if (department == null) {
-            return new Result(ErrorCode.EXCEPTION, "Org not found");
+        Org org = orgsRepository.findById(new ObjectId(command.getOrgId()));
+        if (org == null) {
+            return new Result<>(ErrorCode.EXCEPTION, "Org not found");
         }
+        if (banService.findForEntity(BannedEntityType.Organization, org.id).isPresent())
+            return new Result<>(ErrorCode.EXCEPTION, "Org is banned");
 
         Request request = new Request();
         // TODO: validate userName once we have a user service
@@ -42,6 +49,6 @@ public class CreateRequestToJoinHandler implements CommandHandler<RequestToJoinO
 
         RequestCreated result = new RequestCreated(request.id.toString());
 
-        return new Result(result);
+        return new Result<>(result);
     }
 }

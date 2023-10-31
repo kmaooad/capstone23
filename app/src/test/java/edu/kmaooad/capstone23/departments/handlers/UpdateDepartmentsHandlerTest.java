@@ -1,10 +1,13 @@
 package edu.kmaooad.capstone23.departments.handlers;
 
+import edu.kmaooad.capstone23.ban.commands.BanEntity;
+import edu.kmaooad.capstone23.ban.handlers.BanEntityHandler;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.departments.commands.UpdateDepartment;
 import edu.kmaooad.capstone23.departments.dal.Department;
-import edu.kmaooad.capstone23.departments.dal.DepartmentsRepository;
+import edu.kmaooad.capstone23.departments.drivers.DepartmentDriver;
 import edu.kmaooad.capstone23.departments.events.DepartmentUpdated;
+import edu.kmaooad.capstone23.departments.services.DepartmentService;
 import edu.kmaooad.capstone23.orgs.commands.CreateOrg;
 import edu.kmaooad.capstone23.orgs.dal.OrgsRepository;
 import edu.kmaooad.capstone23.orgs.handlers.CreateOrgHandler;
@@ -18,7 +21,10 @@ public class UpdateDepartmentsHandlerTest {
     UpdateDepartmentHandler handler;
 
     @Inject
-    DepartmentsRepository departmentsRepository;
+    DepartmentService departmentService;
+
+    @Inject
+    DepartmentDriver departmentDriver;
 
     private String idToUpdate;
 
@@ -27,6 +33,9 @@ public class UpdateDepartmentsHandlerTest {
 
     @Inject
     CreateOrgHandler orgHandler;
+
+    @Inject
+    BanEntityHandler banEntityHandler;
 
     private void createParentOrg() {
         CreateOrg orgCommand = new CreateOrg();
@@ -39,12 +48,7 @@ public class UpdateDepartmentsHandlerTest {
     @BeforeEach
     void setUp() {
         createParentOrg();
-        Department department = new Department();
-
-        department.name = "Initial Department";
-        department.description = "Initial Department Description";
-        department.parent = "NaUKMA";
-        departmentsRepository.insert(department);
+        Department department = departmentDriver.createDepartment();
 
         idToUpdate = department.id.toString();
     }
@@ -71,9 +75,36 @@ public class UpdateDepartmentsHandlerTest {
         Assertions.assertTrue(result.isSuccess());
         Assertions.assertNotNull(result.getValue());
 
-        Department createdDepartment = departmentsRepository.findByName(departmentName);
+        Department createdDepartment = departmentService.getDepartmentById(departmentName);
         Assertions.assertTrue(createdDepartment != null);
         Assertions.assertEquals(departmentName, createdDepartment.name);
     }
 
+    @Test
+    @DisplayName("Update Departments: unsuccessful handling when the department is banned")
+    void testUnsuccessfulHandlingWhenDepartmentIsBanned() {
+        String parentOrgName = "NaUKMA";
+        String departmentName = "FSNST";
+
+        Department department = departmentService.createDepartment(departmentName, "Initial Department Description", parentOrgName);
+        department.parent = parentOrgName;
+        departmentService.updateDepartment(department);
+
+        BanEntity banCommand = new BanEntity();
+        banCommand.setEntityId(department.id);
+        banCommand.setEntityType("Department");
+        banCommand.setReason("Hello there");
+
+        var banResult = banEntityHandler.handle(banCommand);
+        Assertions.assertTrue(banResult.isSuccess());
+
+        UpdateDepartment command = new UpdateDepartment();
+        command.setName(departmentName);
+        command.setParent(parentOrgName);
+        command.setId(department.id.toString());
+
+        Result<DepartmentUpdated> result = handler.handle(command);
+
+        Assertions.assertFalse(result.isSuccess());
+    }
 }

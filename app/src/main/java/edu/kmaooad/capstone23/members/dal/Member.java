@@ -7,9 +7,7 @@ import org.bson.types.ObjectId;
 public class Member {
     public ObjectId id;
     public ObjectId orgId;
-    public String firstName;
-    public String lastName;
-    public String email;
+    public ObjectId userId;
     public boolean isExpert;
     public boolean isAdmin;
 }
