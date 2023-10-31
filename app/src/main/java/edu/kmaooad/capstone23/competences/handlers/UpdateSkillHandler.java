@@ -5,7 +5,7 @@ import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.competences.commands.UpdateSkill;
 import edu.kmaooad.capstone23.competences.dal.Skill;
-import edu.kmaooad.capstone23.competences.dal.MongoSkillsRepository;
+import edu.kmaooad.capstone23.competences.dal.SkillsRepository;
 import edu.kmaooad.capstone23.competences.events.SkillUpdated;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
@@ -15,7 +15,7 @@ public class UpdateSkillHandler implements CommandHandler<UpdateSkill, SkillUpda
 
 
     @Inject
-    private MongoSkillsRepository repository;
+    SkillsRepository repository;
 
 
     @Override
