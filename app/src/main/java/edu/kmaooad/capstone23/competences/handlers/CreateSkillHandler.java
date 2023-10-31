@@ -22,7 +22,7 @@ public class CreateSkillHandler implements CommandHandler<CreateSkill, SkillCrea
     public Result<SkillCreated> handle(CreateSkill command) {
         var t = new Skill();
         t.name = command.getSkillName();
-        t.parentSkill = command.getParentSkill();
+        t.setId(command.getParentSkill());
         try {
             var result = repository.insert(t);
             return new Result<>(new SkillCreated(result.id));
