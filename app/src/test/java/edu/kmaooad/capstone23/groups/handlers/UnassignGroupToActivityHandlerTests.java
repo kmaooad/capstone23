@@ -31,14 +31,14 @@ public class UnassignGroupToActivityHandlerTests {
     CommandHandler<CreateGroupTemplate, GroupTemplateCreated> templateHandler;
     @Inject
     CourseRepository courseRepository;
-    private ObjectId courseId;
+    private String courseId;
     private Result<GroupCreated> result;
     @BeforeEach
     void setUp() {
         Course course = new Course();
         course.name = "Initial Course";
         courseRepository.insert(course);
-        courseId = course.id;
+        courseId = course.id.toString();
 
         CreateGroupTemplate templateCommand = new CreateGroupTemplate();
         templateCommand.setGroupTemplateName("template");
@@ -52,7 +52,7 @@ public class UnassignGroupToActivityHandlerTests {
     @Test
     void testSuccessfulHandling() {
         AssignGroupToActivity relateGroupToActivity = new AssignGroupToActivity();
-        relateGroupToActivity.setGroupId(new ObjectId(result.getValue().getGroupId()));
+        relateGroupToActivity.setGroupId(result.getValue().getGroupId());
         relateGroupToActivity.setActivityId(courseId);
         Result<ActivityAssigned> activityRelatedResult = relateHandler.handle(relateGroupToActivity);
 
@@ -62,7 +62,7 @@ public class UnassignGroupToActivityHandlerTests {
         Assertions.assertTrue(activityRelatedResult.getValue().getGroupId().equals(gr));
 
         UnassignGroupToActivity unassignGroupToActivity = new UnassignGroupToActivity();
-        unassignGroupToActivity.setGroupId(new ObjectId(result.getValue().getGroupId()));
+        unassignGroupToActivity.setGroupId(result.getValue().getGroupId());
         unassignGroupToActivity.setActivityId(courseId);
         Result<ActivityUnassigned> activityUnassignedResult = unassignHandler.handle(unassignGroupToActivity);
         Assertions.assertTrue(activityUnassignedResult.isSuccess());
@@ -73,7 +73,7 @@ public class UnassignGroupToActivityHandlerTests {
     @Test
     void testHandlingNotExistedGroup() {
         UnassignGroupToActivity unassignGroupToActivity = new UnassignGroupToActivity();
-        unassignGroupToActivity.setGroupId(new ObjectId("aaaaaaaaaaaaaaaaaaaaaaaa"));
+        unassignGroupToActivity.setGroupId("aaaaaaaaaaaaaaaaaaaaaaaa");
         unassignGroupToActivity.setActivityId(courseId);
         Result<ActivityUnassigned> activityUnassignedResult = unassignHandler.handle(unassignGroupToActivity);
         Assertions.assertFalse(activityUnassignedResult.isSuccess());
@@ -83,7 +83,7 @@ public class UnassignGroupToActivityHandlerTests {
     @Test
     void testHandlingNotAssignedActivity() {
         UnassignGroupToActivity unassignGroupToActivity = new UnassignGroupToActivity();
-        unassignGroupToActivity.setGroupId(new ObjectId(result.getValue().getGroupId()));
+        unassignGroupToActivity.setGroupId(result.getValue().getGroupId());
         unassignGroupToActivity.setActivityId(courseId);
         Result<ActivityUnassigned> activityUnassignedResult = unassignHandler.handle(unassignGroupToActivity);
         Assertions.assertFalse(activityUnassignedResult.isSuccess());

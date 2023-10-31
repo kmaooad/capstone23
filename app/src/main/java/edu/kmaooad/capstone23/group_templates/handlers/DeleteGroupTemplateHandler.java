@@ -5,7 +5,6 @@ import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.group_templates.commands.DeleteGroupTemplate;
 import edu.kmaooad.capstone23.group_templates.dal.GroupTemplate;
-import edu.kmaooad.capstone23.group_templates.dal.GroupTemplatesRepository;
 import edu.kmaooad.capstone23.group_templates.events.GroupTemplateDeleted;
 import edu.kmaooad.capstone23.group_templates.services.GroupTemplatesService;
 import edu.kmaooad.capstone23.groups.dal.Group;

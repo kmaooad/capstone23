@@ -26,14 +26,14 @@ public class AssignGroupToActivityHandlerTest {
     CommandHandler<CreateGroupTemplate, GroupTemplateCreated> templateHandler;
     @Inject
     CourseRepository courseRepository;
-    private ObjectId courseId;
+    private String courseId;
     private Result<GroupCreated> result;
     @BeforeEach
     void setUp() {
         Course course = new Course();
         course.name = "Initial Course";
         courseRepository.insert(course);
-        courseId = course.id;
+        courseId = course.id.toString();
 
         CreateGroupTemplate templateCommand = new CreateGroupTemplate();
         templateCommand.setGroupTemplateName("template");
@@ -47,7 +47,7 @@ public class AssignGroupToActivityHandlerTest {
     @Test
     void testSuccessfulHandling() {
         AssignGroupToActivity relateGroupToActivity = new AssignGroupToActivity();
-        relateGroupToActivity.setGroupId(new ObjectId(result.getValue().getGroupId()));
+        relateGroupToActivity.setGroupId(result.getValue().getGroupId());
         relateGroupToActivity.setActivityId(courseId);
         Result<ActivityAssigned> activityRelatedResult = relateHandler.handle(relateGroupToActivity);
 
@@ -60,7 +60,7 @@ public class AssignGroupToActivityHandlerTest {
     @Test
     void testDeclineADublicateRelationHandling() {
         AssignGroupToActivity relateGroupToActivity = new AssignGroupToActivity();
-        relateGroupToActivity.setGroupId(new ObjectId(result.getValue().getGroupId()));
+        relateGroupToActivity.setGroupId(result.getValue().getGroupId());
         relateGroupToActivity.setActivityId(courseId);
         Result<ActivityAssigned> activityRelatedResult = relateHandler.handle(relateGroupToActivity);
 
@@ -70,7 +70,7 @@ public class AssignGroupToActivityHandlerTest {
         Assertions.assertEquals(activityRelatedResult.getValue().getGroupId(), gr);
 
         AssignGroupToActivity relateGroupToActivityTwo = new AssignGroupToActivity();
-        relateGroupToActivityTwo.setGroupId(new ObjectId(result.getValue().getGroupId()));
+        relateGroupToActivityTwo.setGroupId(result.getValue().getGroupId());
         relateGroupToActivityTwo.setActivityId(courseId);
         Result<ActivityAssigned> activityRelatedResultTwo = relateHandler.handle(relateGroupToActivityTwo);
 
@@ -81,9 +81,9 @@ public class AssignGroupToActivityHandlerTest {
     @Test
     void testHandlingUnExistedCourse() {
         AssignGroupToActivity relateGroupToActivity = new AssignGroupToActivity();
-        relateGroupToActivity.setGroupId(new ObjectId(result.getValue().getGroupId()));
+        relateGroupToActivity.setGroupId(result.getValue().getGroupId());
 
-        ObjectId nonexistentCourseId = new ObjectId("aaaaaaaaaaaaaaaaaaaaaaaa");
+        String nonexistentCourseId = "aaaaaaaaaaaaaaaaaaaaaaaa";
         relateGroupToActivity.setActivityId(nonexistentCourseId);
 
         Result<ActivityAssigned> activityRelatedResult = relateHandler.handle(relateGroupToActivity);

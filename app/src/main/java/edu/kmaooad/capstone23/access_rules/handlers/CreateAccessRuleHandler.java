@@ -11,7 +11,7 @@ import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.departments.dal.DepartmentsRepository;
-import edu.kmaooad.capstone23.groups.dal.GroupsRepository;
+import edu.kmaooad.capstone23.groups.interfaces.GroupsRepositoryInterface;
 import edu.kmaooad.capstone23.members.dal.MembersRepository;
 import edu.kmaooad.capstone23.orgs.dal.OrgsRepository;
 import jakarta.enterprise.context.RequestScoped;
@@ -37,20 +37,20 @@ public class CreateAccessRuleHandler implements CommandHandler<CreateAccessRule,
     private CourseRepository courseRepository;
 
     @Inject
-    private GroupsRepository groupsRepository;
+    private GroupsRepositoryInterface groupsRepository;
 
     public Result<AccessRuleCreated> handle(CreateAccessRule command) {
-        if(!ObjectId.isValid(command.getFromEntityId())) {
+        if (!ObjectId.isValid(command.getFromEntityId())) {
             return new Result<>(ErrorCode.VALIDATION_FAILED, "Invalid From entity ID");
         }
-        if(!ObjectId.isValid(command.getToEntityId())) {
+        if (!ObjectId.isValid(command.getToEntityId())) {
             return new Result<>(ErrorCode.VALIDATION_FAILED, "Invalid To entity ID");
         }
-        if(!fromEntityExists(command.getFromEntityType(), new ObjectId(command.getFromEntityId()))){
+        if (!fromEntityExists(command.getFromEntityType(), new ObjectId(command.getFromEntityId()))) {
             return new Result<>(ErrorCode.VALIDATION_FAILED, "From entity doesn't exist");
         }
 
-        if(!toEntityExists(command.getToEntityType(), new ObjectId(command.getToEntityId()))){
+        if (!toEntityExists(command.getToEntityType(), new ObjectId(command.getToEntityId()))) {
             return new Result<>(ErrorCode.VALIDATION_FAILED, "To entity doesn't exist");
         }
 
@@ -63,7 +63,8 @@ public class CreateAccessRuleHandler implements CommandHandler<CreateAccessRule,
 
         accessRuleRepository.insert(accessRule);
 
-        return new Result<>(new AccessRuleCreated(accessRule.id.toString(), accessRule.fromEntityType, accessRule.toEntityType));
+        return new Result<>(
+                new AccessRuleCreated(accessRule.id.toString(), accessRule.fromEntityType, accessRule.toEntityType));
     }
 
     boolean fromEntityExists(AccessRuleFromEntityType type, ObjectId entityId) {

@@ -75,16 +75,16 @@ public class UnassignGroupToActivityControllerTests {
 
         AssignGroupToActivity commandAssignGroupToActivities = new AssignGroupToActivity();
 
-        ObjectId id = new ObjectId(result.getValue().getGroupId());
+        String id = result.getValue().getGroupId();
         commandAssignGroupToActivities.setGroupId(id);
-        ObjectId idCourse = new ObjectId(resultCourse.getValue().getId());
+        String idCourse = resultCourse.getValue().getId();
         commandAssignGroupToActivities.setActivityId(idCourse);
         Result<ActivityAssigned> resultAssignGroupToActivities = handlerForRelation.handle(commandAssignGroupToActivities);
 
         Map<String, Object> jsonAsMap = new HashMap<>();
 
-        jsonAsMap.put("groupId", resultAssignGroupToActivities.getValue().getGroupId().toHexString());
-        jsonAsMap.put("activityId", resultAssignGroupToActivities.getValue().getActivitiesId().toHexString());
+        jsonAsMap.put("groupId", resultAssignGroupToActivities.getValue().getGroupId());
+        jsonAsMap.put("activityId", resultAssignGroupToActivities.getValue().getActivitiesId());
 
         given()
                 .contentType("application/json")
