@@ -1,7 +1,7 @@
 package edu.kmaooad.capstone23.communication.dal.repositories;
 
 import edu.kmaooad.capstone23.communication.dal.entities.Participant;
-import io.quarkus.mongodb.panache.PanacheMongoRepository;
+import edu.kmaooad.capstone23.communication.interfaces.ParticipantRepository;
 import io.quarkus.panache.common.Parameters;
 import jakarta.enterprise.context.ApplicationScoped;
 import org.bson.types.ObjectId;
@@ -9,7 +9,7 @@ import org.bson.types.ObjectId;
 import java.util.List;
 
 @ApplicationScoped
-public class ParticipantRepository implements PanacheMongoRepository<Participant> {
+public class ParticipantRepositoryImpl implements ParticipantRepository {
   public List<Participant> findAllByChatId(String chatId) {
     ObjectId parsedChatId = new ObjectId(chatId);
 
