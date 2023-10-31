@@ -5,8 +5,8 @@ import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.competences.commands.UpdateProject;
 import edu.kmaooad.capstone23.competences.dal.Project;
-import edu.kmaooad.capstone23.competences.dal.ProjectsRepository;
 import edu.kmaooad.capstone23.competences.events.ProjUpdated;
+import edu.kmaooad.capstone23.competences.services.ProjectService;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
@@ -14,13 +14,13 @@ import org.bson.types.ObjectId;
 @RequestScoped
 public class UpdateProjectHandler implements CommandHandler<UpdateProject, ProjUpdated> {
     @Inject
-    ProjectsRepository repository; //intentionally left non-private: https://stackoverflow.com/questions/55101095/why-does-quarkus-warn-me-about-injection-in-private-fields
+    ProjectService service; //intentionally left non-private: https://stackoverflow.com/questions/55101095/why-does-quarkus-warn-me-about-injection-in-private-fields
 
     @Override
     public Result<ProjUpdated> handle(UpdateProject command) {
-        var foundProj = repository.findProjectById(command.getId());
+        var foundProj = service.findById(command.getId());
 
-        if(foundProj == null)
+        if (foundProj == null)
             return new Result<>(ErrorCode.EXCEPTION, "Updated");
 
         var newValues = new Project();
@@ -29,9 +29,9 @@ public class UpdateProjectHandler implements CommandHandler<UpdateProject, ProjU
         newValues.description = command.getDescription();
         newValues.skills = command.getSkills();
 
-        repository.updateProject(newValues);
+        service.update(newValues);
         var result = new ProjUpdated(
-                newValues.id.toString(),
+                newValues.id,
                 newValues.name,
                 newValues.description,
                 newValues.skills.stream().map(ObjectId::new).toList(),
