@@ -22,6 +22,10 @@ public class ExtracurricularActivityImpl implements ExtracurricularActivityServi
         return extracurricularActivityRepository.findById(id);
     }
 
+    public ExtracurricularActivity find(String extracurricularActivityName) {
+        return extracurricularActivityRepository.find("extracurricularActivityName", extracurricularActivityName).firstResult();
+    }
+
     @Override
     public ExtracurricularActivity update(ExtracurricularActivity extracurricularActivity) {
         extracurricularActivityRepository.update(extracurricularActivity);
