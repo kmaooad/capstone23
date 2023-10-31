@@ -2,7 +2,7 @@ package edu.kmaooad.capstone23.lifecycle;
 
 import com.mongodb.client.model.IndexOptions;
 import edu.kmaooad.capstone23.members.dal.MembersRepository;
-import edu.kmaooad.capstone23.users.interfaces.UserRepository;
+import edu.kmaooad.capstone23.users.interfaces.repositories.UserRepository;
 import io.quarkus.runtime.StartupEvent;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.event.Observes;

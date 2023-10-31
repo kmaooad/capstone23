@@ -1,7 +1,7 @@
 package edu.kmaooad.capstone23.users.dal.repositories;
 
 import edu.kmaooad.capstone23.users.dal.entities.User;
-import edu.kmaooad.capstone23.users.interfaces.UserRepository;
+import edu.kmaooad.capstone23.users.interfaces.repositories.UserRepository;
 import io.quarkus.mongodb.panache.PanacheQuery;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.validation.constraints.Email;

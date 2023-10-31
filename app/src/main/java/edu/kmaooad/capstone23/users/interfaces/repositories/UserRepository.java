@@ -1,4 +1,4 @@
-package edu.kmaooad.capstone23.users.interfaces;
+package edu.kmaooad.capstone23.users.interfaces.repositories;
 
 import edu.kmaooad.capstone23.users.dal.entities.User;
 import io.quarkus.mongodb.panache.PanacheMongoRepository;

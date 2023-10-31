@@ -11,7 +11,7 @@ import edu.kmaooad.capstone23.members.dal.Member;
 import edu.kmaooad.capstone23.members.dal.MembersRepository;
 import edu.kmaooad.capstone23.orgs.dal.Org;
 import edu.kmaooad.capstone23.orgs.dal.OrgsRepository;
-import edu.kmaooad.capstone23.users.interfaces.UserRepository;
+import edu.kmaooad.capstone23.users.interfaces.repositories.UserRepository;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import org.bson.types.ObjectId;

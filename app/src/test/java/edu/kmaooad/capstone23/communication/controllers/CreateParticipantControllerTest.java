@@ -7,7 +7,7 @@ import edu.kmaooad.capstone23.communication.interfaces.repositories.ChatReposito
 import edu.kmaooad.capstone23.communication.mocks.ChatMocks;
 import edu.kmaooad.capstone23.communication.mocks.ParticipantMocks;
 import edu.kmaooad.capstone23.users.dal.entities.User;
-import edu.kmaooad.capstone23.users.interfaces.UserRepository;
+import edu.kmaooad.capstone23.users.interfaces.repositories.UserRepository;
 import edu.kmaooad.capstone23.users.mocks.UserMocks;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
