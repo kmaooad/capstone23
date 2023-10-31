@@ -10,12 +10,14 @@ import java.util.List;
 
 @ApplicationScoped
 public class ParticipantRepositoryImpl implements ParticipantRepository {
+  @Override
   public List<Participant> findAllByChatId(String chatId) {
     ObjectId parsedChatId = new ObjectId(chatId);
 
     return list("chatId", parsedChatId);
   }
 
+  @Override
   public List<Participant> findByChatAndUserIds(String chatId, String userId) {
     ObjectId parsedChatId = new ObjectId(chatId);
     ObjectId parsedUserId = new ObjectId(userId);
@@ -27,6 +29,7 @@ public class ParticipantRepositoryImpl implements ParticipantRepository {
     return list("chatId = :chatId AND userId = :userId", parameters);
   }
 
+  @Override
   public Participant insert(Participant participant) {
     persist(participant);
 
