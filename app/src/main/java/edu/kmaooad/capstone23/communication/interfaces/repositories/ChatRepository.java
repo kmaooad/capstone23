@@ -1,4 +1,4 @@
-package edu.kmaooad.capstone23.communication.interfaces;
+package edu.kmaooad.capstone23.communication.interfaces.repositories;
 
 import edu.kmaooad.capstone23.communication.dal.entities.Chat;
 import io.quarkus.mongodb.panache.PanacheMongoRepository;

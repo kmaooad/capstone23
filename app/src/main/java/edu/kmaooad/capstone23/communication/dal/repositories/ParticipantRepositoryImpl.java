@@ -1,7 +1,7 @@
 package edu.kmaooad.capstone23.communication.dal.repositories;
 
 import edu.kmaooad.capstone23.communication.dal.entities.Participant;
-import edu.kmaooad.capstone23.communication.interfaces.ParticipantRepository;
+import edu.kmaooad.capstone23.communication.interfaces.repositories.ParticipantRepository;
 import io.quarkus.panache.common.Parameters;
 import jakarta.enterprise.context.ApplicationScoped;
 import org.bson.types.ObjectId;

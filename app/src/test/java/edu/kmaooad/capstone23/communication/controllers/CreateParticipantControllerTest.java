@@ -3,7 +3,7 @@ package edu.kmaooad.capstone23.communication.controllers;
 import edu.kmaooad.capstone23.common.ControllerTest;
 import edu.kmaooad.capstone23.communication.dal.entities.Chat;
 import edu.kmaooad.capstone23.communication.dal.entities.Participant;
-import edu.kmaooad.capstone23.communication.interfaces.ChatRepository;
+import edu.kmaooad.capstone23.communication.interfaces.repositories.ChatRepository;
 import edu.kmaooad.capstone23.communication.mocks.ChatMocks;
 import edu.kmaooad.capstone23.communication.mocks.ParticipantMocks;
 import edu.kmaooad.capstone23.users.dal.entities.User;
