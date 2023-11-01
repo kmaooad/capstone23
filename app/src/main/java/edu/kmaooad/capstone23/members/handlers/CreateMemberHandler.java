@@ -5,7 +5,7 @@ import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.members.commands.CreateBasicMember;
 import edu.kmaooad.capstone23.members.dal.Member;
-import edu.kmaooad.capstone23.members.dal.MembersRepository;
+import edu.kmaooad.capstone23.members.dal.abstractions.MembersRepository;
 import edu.kmaooad.capstone23.members.dto.OrgDTO;
 import edu.kmaooad.capstone23.members.dto.UserDTO;
 import edu.kmaooad.capstone23.members.events.BasicMemberCreated;
