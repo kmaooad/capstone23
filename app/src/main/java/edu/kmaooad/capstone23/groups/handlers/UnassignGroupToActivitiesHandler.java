@@ -1,6 +1,8 @@
 package edu.kmaooad.capstone23.groups.handlers;
 
+import edu.kmaooad.capstone23.activities.dal.Course;
 import edu.kmaooad.capstone23.activities.dal.CourseRepository;
+import edu.kmaooad.capstone23.activities.dal.ExtracurricularActivity;
 import edu.kmaooad.capstone23.activities.dal.ExtracurricularActivityRepository;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
@@ -20,7 +22,7 @@ public class UnassignGroupToActivitiesHandler  implements CommandHandler<Unassig
     private GroupsRepository repository;
 
     @Inject
-    private CourseRepository courseRepository;
+    private CourseRepository courseService;
 
     @Inject
     private ExtracurricularActivityRepository extracurricularRepository;
@@ -34,13 +36,11 @@ public class UnassignGroupToActivitiesHandler  implements CommandHandler<Unassig
         ActivityUnassigned result = new ActivityUnassigned(command.getGroupId(), command.getActivityId());
         Group g = group.get();
 
-        if(!g.activitiesId.contains(command.getActivityId()))
-            return new Result<>(ErrorCode.VALIDATION_FAILED, "This activity is not assigned to this group");
+        Optional<Course> course = courseService.findById(command.getActivityId().toHexString());
+        Optional<ExtracurricularActivity> extActivity = extracurricularRepository.findByIdOptional(command.getActivityId());
+        if(course.isEmpty() && extActivity.isEmpty())
+            return new Result<>(ErrorCode.VALIDATION_FAILED, "This activity was previously deleted or never existed");
 
-
-        if(!g.activitiesId.contains(command.getActivityId()))
-            return new Result<>(ErrorCode.VALIDATION_FAILED, "This activity is not assigned to this group");
-      
 
         g.activitiesId.remove(command.getActivityId());
         repository.update(g);
