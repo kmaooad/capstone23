@@ -7,6 +7,7 @@ import edu.kmaooad.capstone23.members.exceptions.UniquenessViolationException;
 import io.quarkus.mongodb.panache.PanacheMongoRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import org.bson.Document;
+import org.bson.types.ObjectId;
 
 import java.util.Optional;
 
@@ -40,5 +41,16 @@ public class MembersRepositoryMongoDBImpl implements MembersRepository, PanacheM
     public Optional<Member> findMemberByUserAndOrg(String orgId, String userId) {
         Document query = new Document("orgId", orgId).append("userId", userId);
         return find(query).firstResultOptional();
+    }
+
+    @Override
+    public Member findById(String objectId) {
+        return findById(new ObjectId(objectId));
+    }
+
+    @Override
+    public void delete(String id) {
+        Document query = new Document("_id", id);
+        delete(query);
     }
 }

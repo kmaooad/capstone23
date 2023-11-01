@@ -12,4 +12,8 @@ public interface MembersRepository {
     Member updateEntry(Member member) throws UniquenessViolationException, MemberNotFoundException;
 
     Optional<Member> findMemberByUserAndOrg(String orgId, String userId);
+
+    Member findById(String objectId);
+
+    void delete(String id);
 }
