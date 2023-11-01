@@ -101,6 +101,7 @@ public class BanServiceTests {
         }
     }
 
+
     @Test
     @DisplayName("Ban Existing Organisation")
     public void banExistingOrganisation() {
@@ -150,13 +151,17 @@ public class BanServiceTests {
         return new ObjectId(result.getValue().getMemberId());
     }
 
+    private String createOrg(){
+
     private ObjectId createOrg(){
+
         CreateOrg command = new CreateOrg();
         command.setOrgName("NaUKMA");
         command.industry = "Education";
         command.website = "https://www.ukma.edu.ua/eng/";
         Result<OrgCreated> result = createOrgHandler.handle(command);
         return new ObjectId(result.getValue().getOrgId());
+
     }    
 
     private ObjectId createCourse(){
