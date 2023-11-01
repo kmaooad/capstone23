@@ -1,7 +1,7 @@
 package edu.kmaooad.capstone23.departments.controllers;
 
 import edu.kmaooad.capstone23.departments.dal.Department;
-import edu.kmaooad.capstone23.departments.dal.DepartmentsRepository;
+import edu.kmaooad.capstone23.departments.drivers.DepartmentDriver;
 import edu.kmaooad.capstone23.orgs.dal.OrgsRepository;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
@@ -20,7 +20,7 @@ public class UpdateDepartmentControllerTests {
     private String idToUpdate;
 
     @Inject
-    DepartmentsRepository departmentsRepository;
+    DepartmentDriver departmentDriver;
 
     @Inject
     OrgsRepository orgsRepository;
@@ -28,12 +28,7 @@ public class UpdateDepartmentControllerTests {
     @BeforeEach
     void setUp() {
         createParentOrg();
-        Department department = new Department();
-
-        department.name = "Initial Department";
-        department.description = "Initial Department Description";
-        department.parent = "NaUKMA";
-        departmentsRepository.insert(department);
+        Department department = departmentDriver.createDepartment();
 
         idToUpdate = department.id.toString();
     }
