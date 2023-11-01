@@ -4,6 +4,7 @@ import edu.kmaooad.capstone23.activities.dal.Course;
 import edu.kmaooad.capstone23.activities.dal.CourseRepository;
 import edu.kmaooad.capstone23.activities.dal.ExtracurricularActivity;
 import edu.kmaooad.capstone23.activities.dal.ExtracurricularActivityRepository;
+import edu.kmaooad.capstone23.activities.services.CourseService;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
@@ -23,7 +24,7 @@ public class AssignGroupToActivitiesHandler  implements CommandHandler<AssignGro
     private GroupsRepository repository;
 
     @Inject
-    private CourseRepository courseRepository;
+    private CourseService courseService;
 
     @Inject
     private ExtracurricularActivityRepository extracurricularRepository;
@@ -36,7 +37,7 @@ public class AssignGroupToActivitiesHandler  implements CommandHandler<AssignGro
 
         ActivityAssigned result = new ActivityAssigned(command.getGroupId(), command.getActivityId());
 
-        Optional<Course> course = courseRepository.findByIdOptional(command.getActivityId());
+        Optional<Course> course = courseService.findById(command.getActivityId().toHexString());
         Optional<ExtracurricularActivity> extActivity = extracurricularRepository.findByIdOptional(command.getActivityId());
         if(course.isEmpty() && extActivity.isEmpty())
             return new Result<>(ErrorCode.VALIDATION_FAILED, "This activity was previously deleted or never existed");
