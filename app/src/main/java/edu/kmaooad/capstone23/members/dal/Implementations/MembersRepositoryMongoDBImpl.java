@@ -1,14 +1,17 @@
 package edu.kmaooad.capstone23.members.dal.Implementations;
 
+import edu.kmaooad.capstone23.members.commands.GetAllMembersByOrg;
 import edu.kmaooad.capstone23.members.dal.Member;
 import edu.kmaooad.capstone23.members.dal.abstractions.MembersRepository;
 import edu.kmaooad.capstone23.members.exceptions.MemberNotFoundException;
 import edu.kmaooad.capstone23.members.exceptions.UniquenessViolationException;
 import io.quarkus.mongodb.panache.PanacheMongoRepository;
+import io.quarkus.panache.common.Page;
 import jakarta.enterprise.context.ApplicationScoped;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
+import java.util.List;
 import java.util.Optional;
 
 @ApplicationScoped
@@ -52,5 +55,12 @@ public class MembersRepositoryMongoDBImpl implements MembersRepository, PanacheM
     public void delete(String id) {
         Document query = new Document("_id", id);
         delete(query);
+    }
+
+    @Override
+    public List<Member> getAllByOrg(GetAllMembersByOrg command) {
+        return find("orgId", command.getOrgId())
+                .page(Page.of(command.getPage(), command.getSize()))
+                .list();
     }
 }
