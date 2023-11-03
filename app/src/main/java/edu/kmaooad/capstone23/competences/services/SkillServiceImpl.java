@@ -5,6 +5,7 @@ import edu.kmaooad.capstone23.competences.dal.SkillsRepository;
 import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
 
+import java.util.List;
 import java.util.Optional;
 
 public class SkillServiceImpl implements SkillService{
@@ -24,5 +25,10 @@ public class SkillServiceImpl implements SkillService{
     @Override
     public void delete(Skill skill) {
         skillsRepository.delete(skill);
+    }
+
+    @Override
+    public List<Skill> findChildRepositories(ObjectId parentSkill) {
+        return skillsRepository.findChildRepositories(parentSkill);
     }
 }
