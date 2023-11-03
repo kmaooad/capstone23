@@ -15,6 +15,7 @@ import edu.kmaooad.capstone23.members.services.OrgService;
 import edu.kmaooad.capstone23.members.services.UserService;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
+import org.bson.types.ObjectId;
 
 
 import java.util.Optional;
@@ -44,10 +45,10 @@ public class CreateMemberHandler implements CommandHandler<CreateBasicMember, Ba
                                     command.getEmail()
                             )
                     );
-            member.orgId = command.getOrgId();
+            member.orgId = new ObjectId(command.getOrgId());
             member.userId = foundOrCreatedUser.getId();
             member.isExpert = Boolean.parseBoolean(command.getIsExpert());
-            Optional<OrgDTO> memberOrg = orgService.findByIdOptional(command.getOrgId());
+            Optional<OrgDTO> memberOrg = orgService.findByIdOptional(new ObjectId(command.getOrgId()));
             if (memberOrg.isEmpty())
                 return new Result<>(ErrorCode.VALIDATION_FAILED, "Organisation not found");
             membersRepository.insert(member);

@@ -27,7 +27,7 @@ public class CreateMemberHandlerTest extends TestWithOrgSetUp {
         CreateBasicMember command = new CreateBasicMember();
         command.setFirstName("firstName");
         command.setLastName("lastName");
-        command.setOrgId(createdOrgId);
+        command.setOrgId(createdOrgId.toString());
         command.setEmail("email@email.com");
         command.setIsExpert("false");
 
@@ -43,7 +43,7 @@ public class CreateMemberHandlerTest extends TestWithOrgSetUp {
         CreateBasicMember command = new CreateBasicMember();
         command.setFirstName("firstName");
         command.setLastName("lastName");
-        command.setOrgId(createdOrgId);
+        command.setOrgId(createdOrgId.toString());
         command.setEmail("email.com");
         command.setIsExpert("false");
 
@@ -58,7 +58,7 @@ public class CreateMemberHandlerTest extends TestWithOrgSetUp {
         CreateBasicMember command = new CreateBasicMember();
         command.setFirstName("firstName");
         command.setLastName("lastName");
-        command.setOrgId(createdOrgId);
+        command.setOrgId(createdOrgId.toString());
         command.setEmail("email@email.com");
 
         handler.handle(command);
@@ -66,7 +66,7 @@ public class CreateMemberHandlerTest extends TestWithOrgSetUp {
         command = new CreateBasicMember();
         command.setFirstName("firstName");
         command.setLastName("lastName");
-        command.setOrgId(createdOrgId);
+        command.setOrgId(createdOrgId.toString());
         command.setEmail("email@email.com");
 
         Result<BasicMemberCreated> result = handler.handle(command);
@@ -81,7 +81,7 @@ public class CreateMemberHandlerTest extends TestWithOrgSetUp {
         var command = new CreateBasicMember();
         command.setFirstName("firstName");
         command.setLastName("LastName");
-        command.setOrgId(createdOrgId);
+        command.setOrgId(createdOrgId.toString());
         command.setEmail("testCreateExpertAfterMemberCreated@gmail.com");
         command.setIsExpert("true");
 

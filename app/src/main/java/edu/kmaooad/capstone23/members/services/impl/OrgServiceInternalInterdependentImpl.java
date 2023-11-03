@@ -16,11 +16,11 @@ public class OrgServiceInternalInterdependentImpl implements OrgService {
 
     @Override
     public Optional<OrgDTO> findByEmailDomainOptional(String emailDomain) {
-        return orgsRepository.findByEmailDomainOptional(emailDomain).map(value -> new OrgDTO(value.id, value.emailDomain));
+        return orgsRepository.findByEmailDomainOptional(emailDomain).map(value -> new OrgDTO(value.id.toString(), value.emailDomain));
     }
 
     @Override
     public Optional<OrgDTO> findByIdOptional(ObjectId id) {
-        return orgsRepository.findByIdOptional(id).map(value -> new OrgDTO(value.id, value.emailDomain));
+        return orgsRepository.findByIdOptional(id).map(value -> new OrgDTO(value.id.toString(), value.emailDomain));
     }
 }
