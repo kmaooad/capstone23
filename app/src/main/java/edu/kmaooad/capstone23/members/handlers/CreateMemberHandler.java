@@ -11,7 +11,7 @@ import edu.kmaooad.capstone23.members.dto.UserDTO;
 import edu.kmaooad.capstone23.members.events.BasicMemberCreated;
 import edu.kmaooad.capstone23.members.exceptions.UniquenessViolationException;
 import edu.kmaooad.capstone23.members.services.ExpertsService;
-import edu.kmaooad.capstone23.members.services.OrgService;
+import edu.kmaooad.capstone23.members.services.OrgServiceInterface;
 import edu.kmaooad.capstone23.members.services.UserService;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
@@ -27,7 +27,7 @@ public class CreateMemberHandler implements CommandHandler<CreateBasicMember, Ba
     @Inject
     ExpertsService expertsService;
     @Inject
-    OrgService orgService;
+    OrgServiceInterface orgService;
     @Inject
     UserService userService;
 
