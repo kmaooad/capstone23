@@ -18,7 +18,10 @@ public class SkillServiceImpl implements SkillService{
     }
 
     @Override
-    public Skill insert(Skill skill) {
+    public Skill insert(Skill skill) throws IllegalArgumentException {
+        if(skill.parentSkill != null && skillsRepository.findByIdOptional(skill.parentSkill).isEmpty())
+            throw new IllegalArgumentException("Parent has unknown id");
+        skillsRepository.persist(skill);
         return skillsRepository.insert(skill);
     }
 
@@ -30,5 +33,10 @@ public class SkillServiceImpl implements SkillService{
     @Override
     public List<Skill> findChildRepositories(ObjectId parentSkill) {
         return skillsRepository.findChildRepositories(parentSkill);
+    }
+
+    @Override
+    public Skill update(Skill skill) {
+        return skill;
     }
 }
