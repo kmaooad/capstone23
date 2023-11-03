@@ -13,5 +13,5 @@ public interface SkillService {
     Skill insert(Skill skill);
     void delete(Skill skill);
     List<Skill> findChildRepositories(ObjectId parentSkill);
-    void update(Skill skill);
+    Skill update(Skill skill);
 }
