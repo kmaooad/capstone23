@@ -37,8 +37,8 @@ public class DeleteSkillHandler implements CommandHandler<DeleteSkill, SkillDele
             return new Result<>(ErrorCode.EXCEPTION, "Skill has children");
         }
 
-        skillService.delete(skill);
+        skillService.delete(skill.get());
 
-        return new Result<>(new SkillDeleted(skill));
+        return new Result<>(new SkillDeleted(skill.get()));
     }
 }
