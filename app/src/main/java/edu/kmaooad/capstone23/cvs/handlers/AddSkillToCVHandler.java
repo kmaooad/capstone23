@@ -5,8 +5,8 @@ import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.cvs.commands.AddSkillToCV;
 import edu.kmaooad.capstone23.cvs.dal.CV;
-import edu.kmaooad.capstone23.cvs.dal.CVRepository;
 import edu.kmaooad.capstone23.cvs.events.CVUpdated;
+import edu.kmaooad.capstone23.cvs.services.CVService;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 
@@ -14,18 +14,18 @@ import jakarta.inject.Inject;
 public class AddSkillToCVHandler implements CommandHandler<AddSkillToCV, CVUpdated> {
 
     @Inject
-    CVRepository cvRepository;
+    CVService cvService;
 
     @Override
     public Result<CVUpdated> handle(AddSkillToCV command) {
-        CV cv = cvRepository.findById(command.getCvId());
+        CV cv = cvService.findById(command.getCvId());
 
         if (cv == null) {
             return new Result<>(ErrorCode.NOT_FOUND, "This cv does not exist");
         }
 
         cv.addSkill(command.getSkillId());
-        cvRepository.update(cv);
+        cvService.update(cv);
 
         CVUpdated result = new CVUpdated(cv.id);
         return new Result<>(result);

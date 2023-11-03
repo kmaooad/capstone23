@@ -5,6 +5,7 @@ import edu.kmaooad.capstone23.activities.dal.Course;
 import edu.kmaooad.capstone23.activities.dal.CourseRepository;
 import edu.kmaooad.capstone23.activities.events.BulkCoursesCreated;
 import edu.kmaooad.capstone23.activities.events.CourseCreated;
+import edu.kmaooad.capstone23.activities.services.CourseService;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.Result;
 import jakarta.enterprise.context.RequestScoped;
@@ -14,8 +15,9 @@ import java.util.ArrayList;
 import java.util.List;
 @RequestScoped
 public class BulkCreateCoursesHandler implements CommandHandler<BulkCreateCourses, BulkCoursesCreated> {
+
     @Inject
-    CourseRepository repository;
+    private CourseService courseService;
 
     @Override
     public Result<BulkCoursesCreated> handle(BulkCreateCourses command) {
@@ -26,7 +28,7 @@ public class BulkCreateCoursesHandler implements CommandHandler<BulkCreateCourse
             return course;
         }).toList();
 
-        repository.bulkInsert(courses);
+        courseService.bulkInsert(courses);
 
         List<CourseCreated> coursesCreated = courses.stream().map(course -> new CourseCreated(course.id.toHexString())).toList();
 
