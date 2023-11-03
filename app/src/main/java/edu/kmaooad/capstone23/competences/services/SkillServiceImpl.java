@@ -36,7 +36,12 @@ public class SkillServiceImpl implements SkillService{
     }
 
     @Override
-    public Skill update(Skill skill) {
+    public Skill update(Skill skill) throws  IllegalArgumentException {
+        if(skill.parentSkill != null && skillsRepository.findByIdOptional(skill.parentSkill).isEmpty())
+            throw new IllegalArgumentException("Parent has unknown id");
+        if(skill.id.equals(skill.parentSkill))
+            throw new IllegalArgumentException("Parent id and id are equal");
+        skillsRepository.update(skill);
         return skill;
     }
 }
