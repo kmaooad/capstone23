@@ -10,4 +10,5 @@ import java.util.Optional;
 public interface SkillService {
     Optional<Skill> findById(ObjectId id);
     Skill insert(Skill skill);
+    void delete(Skill skill);
 }
