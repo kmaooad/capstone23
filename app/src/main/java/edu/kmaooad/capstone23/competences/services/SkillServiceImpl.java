@@ -20,4 +20,9 @@ public class SkillServiceImpl implements SkillService{
     public Skill insert(Skill skill) {
         return skillsRepository.insert(skill);
     }
+
+    @Override
+    public void delete(Skill skill) {
+        skillsRepository.delete(skill);
+    }
 }
