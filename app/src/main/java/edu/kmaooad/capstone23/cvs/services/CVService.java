@@ -30,7 +30,9 @@ public class CVService {
         return cvRepository.findById(id);
     }
 
-
+    public void deleteById(ObjectId id) {
+        cvRepository.deleteById(id);
+    }
     public PanacheQuery<CV> find(String query, Object... params) {
         return cvRepository.find(query, params);
     }
