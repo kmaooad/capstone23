@@ -16,18 +16,18 @@ import java.util.function.Predicate;
 public class QueryEssenceHandler <
         EntityToFind,
         EntityToFindBy,
-        EntityToFindRepository extends PanacheMongoRepository<EntityToFind>,
-        EntityToFindByRepository extends PanacheMongoRepository<EntityToFindBy>,
+        EntityToFindListable extends PanacheMongoRepository<EntityToFind>,
+        EntityToFindByListable extends PanacheMongoRepository<EntityToFindBy>,
         QueryEvent
         > implements CommandHandler<QueryByIdCommand, QueryEvent> {
     @Inject
     QueryableRelationRepository relationRepository;
 
     @Inject
-    EntityToFindRepository essenceToFindRepository;
+    EntityToFindListable essenceToFindListable;
 
     @Inject
-    EntityToFindByRepository essenceToFindByRepository;
+    EntityToFindByListable essenceToFindByListable;
 
     private final Function<List<EntityToFind>, QueryEvent> constructQueryEvent;
     private final Function<EntityToFind, ObjectId> getIdOfEssenceToFind;
@@ -53,12 +53,12 @@ public class QueryEssenceHandler <
         idsOfEssencesToFind.clear();
         idsOfEssencesToFindBy.clear();
 
-        essenceToFindByRepository.listAll()
+        essenceToFindByListable.listAll()
                 .stream()
                 .map(getIdOfEssenceToFindBy)
                 .forEach(idsOfEssencesToFindBy::add);
 
-        essenceToFindRepository.listAll()
+        essenceToFindListable.listAll()
                 .forEach(course -> idsOfEssencesToFind.put(getIdOfEssenceToFind.apply(course), course));
     }
 
