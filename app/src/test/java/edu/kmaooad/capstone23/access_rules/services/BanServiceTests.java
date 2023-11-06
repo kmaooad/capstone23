@@ -151,8 +151,6 @@ public class BanServiceTests {
         return new ObjectId(result.getValue().getMemberId());
     }
 
-    private String createOrg(){
-
     private ObjectId createOrg(){
 
         CreateOrg command = new CreateOrg();
