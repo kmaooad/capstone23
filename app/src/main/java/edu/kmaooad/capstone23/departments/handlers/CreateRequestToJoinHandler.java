@@ -7,10 +7,10 @@ import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.departments.commands.RequestToJoinDepartment;
 import edu.kmaooad.capstone23.departments.dal.Department;
-import edu.kmaooad.capstone23.departments.dal.DepartmentsRepository;
 import edu.kmaooad.capstone23.departments.dal.Request;
-import edu.kmaooad.capstone23.departments.dal.RequestsRepository;
 import edu.kmaooad.capstone23.departments.events.RequestCreated;
+import edu.kmaooad.capstone23.departments.services.DepartmentRequestService;
+import edu.kmaooad.capstone23.departments.services.DepartmentService;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 
@@ -18,20 +18,18 @@ import jakarta.inject.Inject;
 public class CreateRequestToJoinHandler implements CommandHandler<RequestToJoinDepartment, RequestCreated> {
 
     @Inject
-    private DepartmentsRepository departmentsRepository;
+    private DepartmentService departmentsService;
 
     @Inject
-    private RequestsRepository requestsRepository;
+    private DepartmentRequestService departmentRequestService;
 
     @Inject
     EntityBanService banService;
 
-    private final String defaultStatus = "pending";
-
     public Result<RequestCreated> handle(RequestToJoinDepartment command) {
 
 
-        Department department = departmentsRepository.findById(command.getDepartmentId());
+        Department department = departmentsService.getDepartmentById(command.getDepartmentId());
         if (department == null) {
             return new Result<>(ErrorCode.EXCEPTION, "Department not found");
         }
@@ -40,13 +38,7 @@ public class CreateRequestToJoinHandler implements CommandHandler<RequestToJoinD
             return new Result<>(ErrorCode.EXCEPTION, "Department is banned");
         }
 
-        Request request = new Request();
-        // TODO: validate userName once we have a user service
-        request.userName = command.getUserName();
-        request.departmentId = command.getDepartmentId();
-        request.status = defaultStatus;
-
-        requestsRepository.insert(request);
+        Request request = departmentRequestService.createRequest(command.getUserName(), command.getDepartmentId());
 
         RequestCreated result = new RequestCreated(request.id.toString());
 

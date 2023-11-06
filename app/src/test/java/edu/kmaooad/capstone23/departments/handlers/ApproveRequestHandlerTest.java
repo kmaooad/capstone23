@@ -6,22 +6,16 @@ import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.departments.commands.ApproveJoinRequest;
 import edu.kmaooad.capstone23.departments.dal.Department;
-import edu.kmaooad.capstone23.departments.dal.DepartmentsRepository;
 import edu.kmaooad.capstone23.departments.dal.Request;
-import edu.kmaooad.capstone23.departments.dal.RequestsRepository;
 import edu.kmaooad.capstone23.departments.drivers.DepartmentDriver;
 import edu.kmaooad.capstone23.departments.events.RequestApproved;
-import edu.kmaooad.capstone23.departments.services.DepartmentService;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
-import jakarta.validation.constraints.AssertTrue;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.util.ArrayList;
 
 @QuarkusTest
 public class ApproveRequestHandlerTest {
@@ -30,13 +24,7 @@ public class ApproveRequestHandlerTest {
     ApproveRequestHandler handler;
 
     @Inject
-    DepartmentService departmentService;
-
-    @Inject
     DepartmentDriver departmentDriver;
-
-    @Inject
-    RequestsRepository requestsRepository;
 
     @Inject
     BanEntityHandler banEntityHandler;
@@ -45,14 +33,7 @@ public class ApproveRequestHandlerTest {
 
     @BeforeEach
     void setUp() {
-        Department department = departmentDriver.createDepartment();
-
-        Request request = new Request();
-        request.userName = "user1@ukma.edu";
-        request.departmentId = department.id.toString();
-        request.status = "pending";
-        requestsRepository.insert(request);
-
+        Request request = departmentDriver.createRequest();
         requestId = request.id.toString();
     }
 
@@ -69,13 +50,13 @@ public class ApproveRequestHandlerTest {
 
         Assertions.assertTrue(result.isSuccess());
 
-        Request resultRequest = requestsRepository.findById(requestId);
+        Request resultRequest = departmentDriver.findRequestById(requestId);
 
         Assertions.assertNotNull(resultRequest);
 
         Assertions.assertEquals("approved", resultRequest.status);
 
-        Department department = departmentService.getDepartmentById(resultRequest.departmentId);
+        Department department = departmentDriver.findDepartmentById(resultRequest.departmentId);
 
         Assertions.assertNotNull(department);
 
@@ -101,8 +82,8 @@ public class ApproveRequestHandlerTest {
     @Test
     @DisplayName("Approve Join Request: Error handling when department is banned")
     public void testApproveJoinRequesForBannedDepartment() {
-        var request = requestsRepository.findById(requestId);
-        var department = departmentService.getDepartmentById(request.departmentId);
+        var request = departmentDriver.findRequestById(requestId);
+        var department = departmentDriver.findDepartmentById(request.departmentId);
 
         BanEntity banCommand = new BanEntity();
         banCommand.setEntityType("Department");
