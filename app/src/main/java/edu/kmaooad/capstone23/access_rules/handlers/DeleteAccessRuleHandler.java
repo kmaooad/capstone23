@@ -22,6 +22,6 @@ public class DeleteAccessRuleHandler implements CommandHandler<DeleteAccessRule,
         }
 
         accessRuleService.delete("id", command.getId());
-        return new Result<>(new AccessRuleDeleted(command.getId()));
+        return new Result<>(new AccessRuleDeleted(command.getId().toString()));
     }
 }
