@@ -16,6 +16,7 @@ import edu.kmaooad.capstone23.departments.events.DepartmentCreated;
 import edu.kmaooad.capstone23.orgs.commands.CreateOrg;
 import edu.kmaooad.capstone23.orgs.events.OrgCreated;
 import edu.kmaooad.capstone23.common.CommandHandler;
+import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 
 import io.quarkus.test.junit.QuarkusTest;
@@ -100,6 +101,7 @@ public class BanServiceTests {
         }
     }
 
+
     @Test
     @DisplayName("Ban Existing Organisation")
     public void banExistingOrganisation() {
@@ -113,7 +115,29 @@ public class BanServiceTests {
         }
     }
 
+    @Test
+    @DisplayName("Ban Non-existing Member")
+    public void banNonExistingMember() {
+        ObjectId nonExistingMemberId = new ObjectId();
+        Result<EntityBanned> result = banService.banEntity(nonExistingMemberId, AccessRuleFromEntityType.Member);
+        
+        Assertions.assertFalse(result.isSuccess());
+        Assertions.assertEquals(ErrorCode.VALIDATION_FAILED, result.getErrorCode());
+    }
+
    
+
+    @Test
+    @DisplayName("Ban Non-existing Organisation")
+    public void banNonExistingOrganisation() {
+        ObjectId nonExistingOrgId = new ObjectId();
+        Result<EntityBanned> result = banService.banEntity(nonExistingOrgId, AccessRuleFromEntityType.Organisation);
+        
+        Assertions.assertFalse(result.isSuccess());
+        Assertions.assertEquals(ErrorCode.VALIDATION_FAILED, result.getErrorCode());
+    }
+
+
     private ObjectId createMember(){
         CreateBasicMember command = new CreateBasicMember();
         command.setOrgId(createOrg());
@@ -127,13 +151,17 @@ public class BanServiceTests {
         return new ObjectId(result.getValue().getMemberId());
     }
 
+    private String createOrg(){
+
     private ObjectId createOrg(){
+
         CreateOrg command = new CreateOrg();
         command.setOrgName("NaUKMA");
         command.industry = "Education";
         command.website = "https://www.ukma.edu.ua/eng/";
         Result<OrgCreated> result = createOrgHandler.handle(command);
         return new ObjectId(result.getValue().getOrgId());
+
     }    
 
     private ObjectId createCourse(){
@@ -157,9 +185,9 @@ public class BanServiceTests {
 
     private void addAccessRule(AccessRuleFromEntityType fromType, ObjectId fromId, AccessRuleToEntityType toType, ObjectId toId) {
         CreateAccessRule command = new CreateAccessRule();
-        command.setFromEntityId(fromId);
+        command.setFromEntityId(fromId.toString());
         command.setFromEntityType(fromType.toString());
-        command.setToEntityId(toId);
+        command.setToEntityId(toId.toString());
         command.setToEntityType(toType.toString());
         command.setRuleType("Allow");
 
