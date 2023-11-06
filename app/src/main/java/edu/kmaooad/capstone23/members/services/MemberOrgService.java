@@ -5,7 +5,7 @@ import org.bson.types.ObjectId;
 
 import java.util.Optional;
 
-public interface OrgService {
+public interface MemberOrgService {
     Optional<OrgDTO> findByEmailDomainOptional(String emailDomain);
 
     Optional<OrgDTO> findByIdOptional(ObjectId id);

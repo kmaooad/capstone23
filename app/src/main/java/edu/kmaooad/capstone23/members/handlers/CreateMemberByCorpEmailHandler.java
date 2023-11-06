@@ -7,7 +7,7 @@ import edu.kmaooad.capstone23.members.commands.CreateBasicMember;
 import edu.kmaooad.capstone23.members.commands.CreateMemberByCorpEmail;
 import edu.kmaooad.capstone23.members.dto.OrgDTO;
 import edu.kmaooad.capstone23.members.events.BasicMemberCreated;
-import edu.kmaooad.capstone23.members.services.OrgService;
+import edu.kmaooad.capstone23.members.services.MemberOrgService;
 import edu.kmaooad.capstone23.members.utils.CorpEmailParser;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
@@ -19,7 +19,7 @@ public class CreateMemberByCorpEmailHandler implements CommandHandler<CreateMemb
     @Inject
     CommandHandler<CreateBasicMember, BasicMemberCreated> handler;
     @Inject
-    OrgService orgService;
+    MemberOrgService orgService;
     @Inject
     CorpEmailParser corpEmailParser;
 
