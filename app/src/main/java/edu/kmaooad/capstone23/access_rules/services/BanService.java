@@ -42,7 +42,7 @@ public class BanService {
         }
         accessRuleRepository.ban(entityId, fromEntityType);
     
-        EntityBanned bannedEvent = new EntityBanned(entityId, fromEntityType);
+        EntityBanned bannedEvent = new EntityBanned(entityId.toString(), fromEntityType);
         return new Result<>(bannedEvent);
     }
 
