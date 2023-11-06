@@ -6,33 +6,28 @@ import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.departments.events.RequestCreated;
+import edu.kmaooad.capstone23.orgs.services.OrgService;
 import edu.kmaooad.capstone23.orgs.commands.RequestToJoinOrg;
 import edu.kmaooad.capstone23.orgs.dal.Org;
-import edu.kmaooad.capstone23.orgs.dal.OrgsRepository;
 import edu.kmaooad.capstone23.orgs.dal.Request;
-import edu.kmaooad.capstone23.orgs.dal.RequestsRepository;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
-import org.bson.types.ObjectId;
 
 @RequestScoped
 public class CreateRequestToJoinHandler implements CommandHandler<RequestToJoinOrg, RequestCreated> {
 
     @Inject
-    private OrgsRepository orgsRepository;
+    private OrgService orgService;
 
     @Inject
-    private RequestsRepository requestsRepository;
-
-    @Inject
-    EntityBanService banService;
+    private EntityBanService banService;
 
     private final String defaultStatus = "pending";
 
     public Result<RequestCreated> handle(RequestToJoinOrg command) {
 
-
-        Org org = orgsRepository.findById(new ObjectId(command.getOrgId()));
+       
+        Org org = orgService.getOrgById(command.getOrgId());
         if (org == null) {
             return new Result<>(ErrorCode.EXCEPTION, "Org not found");
         }
@@ -45,7 +40,7 @@ public class CreateRequestToJoinHandler implements CommandHandler<RequestToJoinO
         request.orgId = command.getOrgId();
         request.status = defaultStatus;
 
-        requestsRepository.insert(request);
+        orgService.insertRequest(request);
 
         RequestCreated result = new RequestCreated(request.id.toString());
 
