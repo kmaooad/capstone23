@@ -9,7 +9,7 @@ import edu.kmaooad.capstone23.orgs.commands.ApproveOrg;
 import edu.kmaooad.capstone23.orgs.dal.Org;
 import edu.kmaooad.capstone23.orgs.dal.OrgsRepository;
 import edu.kmaooad.capstone23.orgs.events.OrgApproved;
-import edu.kmaooad.capstone23.orgs.services.MailService;
+import edu.kmaooad.capstone23.mail.service.MailService;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 
