@@ -1,5 +1,6 @@
 package edu.kmaooad.capstone23.experts.service;
 
+import edu.kmaooad.capstone23.competences.dal.ProjectMapper;
 import edu.kmaooad.capstone23.competences.dal.ProjsRepository;
 import edu.kmaooad.capstone23.departments.dal.DepartmentsRepository;
 import edu.kmaooad.capstone23.experts.dal.Expert;
@@ -16,6 +17,7 @@ public class ExpertMapper {
     DepartmentsRepository departmentsRepository;
     @Inject
     ProjsRepository projsRepository;
+    ProjectMapper projectMapper;
 
     public ExpertResponseDto toDto(Expert expert) {
         if (expert != null) {
@@ -25,7 +27,9 @@ public class ExpertMapper {
             expertResponseDto.setName(expert.name);
             expertResponseDto.setOrg(expert.org);
             expertResponseDto.setDepartments(expert.departments);
-            expertResponseDto.setProjects(expert.projects);
+            expertResponseDto.setProjects(expert.projects.stream()
+                    .map(project -> projectMapper.toDto(project))
+                    .toList());
             return expertResponseDto;
         }
         return null;

@@ -1,6 +1,6 @@
 package edu.kmaooad.capstone23.experts.dal.dto;
 
-import edu.kmaooad.capstone23.competences.dal.Project;
+import edu.kmaooad.capstone23.competences.dal.dto.ProjectResponseDto;
 import edu.kmaooad.capstone23.departments.dal.Department;
 import edu.kmaooad.capstone23.orgs.dal.Org;
 import java.util.List;
@@ -12,7 +12,7 @@ public class ExpertResponseDto {
     private String name;
     private Org org;
     private List<Department> departments;
-    private List<Project> projects;
+    private List<ProjectResponseDto> projects;
 
     public ObjectId getId() {
         return id;
@@ -54,11 +54,11 @@ public class ExpertResponseDto {
         this.departments = departments;
     }
 
-    public List<Project> getProjects() {
+    public List<ProjectResponseDto> getProjects() {
         return projects;
     }
 
-    public void setProjects(List<Project> projects) {
+    public void setProjects(List<ProjectResponseDto> projects) {
         this.projects = projects;
     }
 }
