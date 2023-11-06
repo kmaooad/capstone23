@@ -22,13 +22,13 @@ public class AccessRuleServiceImpl implements AccessRuleService {
   }
 
   @Override
-  public void deleteRule(ObjectId id) {
-    this.accessRuleRepository.deleteRule(id);
+  public void deleteRule(String id) {
+    this.accessRuleRepository.deleteRule(new ObjectId(id));
   }
 
   @Override
-  public List<AccessRule> findByEntityIdAndType(ObjectId entityId, AccessRuleFromEntityType entityType) {
-    return this.accessRuleRepository.findByEntityIdAndType(entityId, entityType);
+  public List<AccessRule> findByEntityIdAndType(String entityId, AccessRuleFromEntityType entityType) {
+    return this.accessRuleRepository.findByEntityIdAndType(new ObjectId(entityId), entityType);
   }
 
   @Override
@@ -47,7 +47,7 @@ public class AccessRuleServiceImpl implements AccessRuleService {
   }
 
   @Override
-  public boolean existsById(ObjectId id) {
-    return this.accessRuleRepository.findByIdOptional(id).isPresent();
+  public boolean existsById(String id) {
+    return this.accessRuleRepository.findByIdOptional(new ObjectId(id)).isPresent();
   }
 }

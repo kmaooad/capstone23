@@ -9,9 +9,9 @@ import java.util.List;
 public interface AccessRuleService {
   AccessRule insert(AccessRule accessRule);
 
-  void deleteRule(ObjectId id);
+  void deleteRule(String id);
 
-  List<AccessRule> findByEntityIdAndType(ObjectId entityId, AccessRuleFromEntityType entityType);
+  List<AccessRule> findByEntityIdAndType(String entityId, AccessRuleFromEntityType entityType);
 
   void ban(ObjectId entityId, AccessRuleFromEntityType entityType);
   
@@ -19,5 +19,5 @@ public interface AccessRuleService {
 
   AccessRule findRuleById(String id);
 
-  boolean existsById(ObjectId id);
+  boolean existsById(String id);
 }
