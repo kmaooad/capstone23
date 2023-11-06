@@ -16,7 +16,7 @@ public class IsBannedHandler implements CommandHandler<IsEntityBanned, EntityIsB
 
     @Override
     public Result<EntityIsBanned> handle(IsEntityBanned command) {
-        var isBanned = service.findForEntity(command.getEntityType(), command.getEntityId()).isPresent();
+        var isBanned = service.findForEntity(command.getEntityType().name(), command.getEntityId().toString()).isPresent();
         return new Result<>(new EntityIsBanned(isBanned));
     }
 }
