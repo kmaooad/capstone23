@@ -14,32 +14,32 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 
 public class QueryEssenceHandler <
-        EssenceToFind,
-        EssenceToFindBy,
-        EssenceToFindRepository extends PanacheMongoRepository<EssenceToFind>,
-        EssenceToFindByRepository extends PanacheMongoRepository<EssenceToFindBy>,
+        EntityToFind,
+        EntityToFindBy,
+        EntityToFindRepository extends PanacheMongoRepository<EntityToFind>,
+        EntityToFindByRepository extends PanacheMongoRepository<EntityToFindBy>,
         QueryEvent
         > implements CommandHandler<QueryByIdCommand, QueryEvent> {
     @Inject
     QueryableRelationRepository relationRepository;
 
     @Inject
-    EssenceToFindRepository essenceToFindRepository;
+    EntityToFindRepository essenceToFindRepository;
 
     @Inject
-    EssenceToFindByRepository essenceToFindByRepository;
+    EntityToFindByRepository essenceToFindByRepository;
 
-    private final Function<List<EssenceToFind>, QueryEvent> constructQueryEvent;
-    private final Function<EssenceToFind, ObjectId> getIdOfEssenceToFind;
-    private final Function<EssenceToFindBy, ObjectId> getIdOfEssenceToFindBy;
-    private final Map<ObjectId, EssenceToFind> idsOfEssencesToFind;
+    private final Function<List<EntityToFind>, QueryEvent> constructQueryEvent;
+    private final Function<EntityToFind, ObjectId> getIdOfEssenceToFind;
+    private final Function<EntityToFindBy, ObjectId> getIdOfEssenceToFindBy;
+    private final Map<ObjectId, EntityToFind> idsOfEssencesToFind;
     private final Set<ObjectId> idsOfEssencesToFindBy;
 
     public QueryEssenceHandler
     (
-            Function<EssenceToFind, ObjectId> getIdOfEssenceToFind,
-            Function<EssenceToFindBy, ObjectId> getIdOfEssenceToFindBy,
-            Function<List<EssenceToFind>, QueryEvent> constructQueryEvent
+            Function<EntityToFind, ObjectId> getIdOfEssenceToFind,
+            Function<EntityToFindBy, ObjectId> getIdOfEssenceToFindBy,
+            Function<List<EntityToFind>, QueryEvent> constructQueryEvent
     )
     {
         this.constructQueryEvent = constructQueryEvent;
