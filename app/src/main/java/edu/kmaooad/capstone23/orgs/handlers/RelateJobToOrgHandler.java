@@ -6,25 +6,23 @@ import edu.kmaooad.capstone23.ban.service.EntityBanService;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
-import edu.kmaooad.capstone23.jobs.dal.Job;
-import edu.kmaooad.capstone23.jobs.dal.JobRepository;
+import edu.kmaooad.capstone23.jobs.service.JobService;
 import edu.kmaooad.capstone23.orgs.commands.RelateJobToOrg;
 import edu.kmaooad.capstone23.orgs.dal.Org;
-import edu.kmaooad.capstone23.orgs.dal.OrgsRepository;
 import edu.kmaooad.capstone23.orgs.events.JobToOrgRelated;
+import edu.kmaooad.capstone23.orgs.services.OrgService;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
-import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
 
 @RequestScoped
 public class RelateJobToOrgHandler implements CommandHandler<RelateJobToOrg, JobToOrgRelated> {
     @Inject
-    private OrgsRepository orgsRepository;
+    private OrgService orgService;
 
     @Inject
-    private JobRepository jobRepository;
+    private JobService jobService;
 
     @Inject
     EntityBanService banService;
@@ -32,10 +30,10 @@ public class RelateJobToOrgHandler implements CommandHandler<RelateJobToOrg, Job
     public Result<JobToOrgRelated> handle(RelateJobToOrg command) {
         String orgId = command.getOrgId();
 
-        Org org = orgsRepository.findById(orgId);
+        Org org = orgService.getOrgById(orgId);
 
         if (org == null) {
-            return new Result(ErrorCode.EXCEPTION, "Org not found");
+            return new Result<>(ErrorCode.EXCEPTION, "Org not found");
         }
         if(banService.findForEntity(IsEntityBannedV2.ORGANIZATION_BAN_ENTITY_TYPE, org.id.toString()).isPresent()) {
             return new Result<>(ErrorCode.EXCEPTION, "Org is banned");
@@ -43,21 +41,21 @@ public class RelateJobToOrgHandler implements CommandHandler<RelateJobToOrg, Job
 
         String jobId = command.getJobId();
 
-        Job job = jobRepository.findById(new ObjectId(jobId));
+        var maybeJob = jobService.findJobById(jobId);
 
-        if (job == null) {
-            return new Result(ErrorCode.EXCEPTION, "Job not found");
+        if (maybeJob.isEmpty()) {
+            return new Result<>(ErrorCode.EXCEPTION, "Job not found");
         }
         if (org.jobs == null) {
-            org.jobs = new ArrayList<String>();
+            org.jobs = new ArrayList<>();
         }
 
         org.jobs.add(jobId);
 
-        orgsRepository.update(org);
+        orgService.updateOrg(org);
 
         JobToOrgRelated result = new JobToOrgRelated(orgId, jobId);
 
-        return new Result(result);
+        return new Result<>(result);
     }
 }
