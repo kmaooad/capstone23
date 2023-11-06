@@ -31,7 +31,7 @@ public class RelateJobToActivitiesHandler  implements CommandHandler<RelateJobTo
             return new Result<>(ErrorCode.VALIDATION_FAILED, "This activity was previously deleted or never existed");
         }
 
-        Optional<Job> job = jobService.findJobById(jobId);
+        Optional<Job> job = jobService.findJobById(jobId.toString());
         if (job.isEmpty()) {
             return new Result<>(ErrorCode.VALIDATION_FAILED, "This job was previously deleted or never existed");
         }
