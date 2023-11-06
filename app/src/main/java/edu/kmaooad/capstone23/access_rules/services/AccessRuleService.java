@@ -18,4 +18,6 @@ public interface AccessRuleService {
   void updateRule(AccessRule accessRule);
 
   AccessRule findRuleById(String id);
+
+  boolean existsById(ObjectId id);
 }

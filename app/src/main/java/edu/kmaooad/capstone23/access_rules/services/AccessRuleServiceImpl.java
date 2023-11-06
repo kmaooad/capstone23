@@ -45,4 +45,9 @@ public class AccessRuleServiceImpl implements AccessRuleService {
   public AccessRule findRuleById(String id) {
     return this.accessRuleRepository.findById(new ObjectId(id));
   }
+
+  @Override
+  public boolean existsById(ObjectId id) {
+    return this.accessRuleRepository.findByIdOptional(id).isPresent();
+  }
 }
