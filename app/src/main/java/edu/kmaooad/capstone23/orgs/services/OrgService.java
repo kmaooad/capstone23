@@ -1,11 +1,11 @@
 package edu.kmaooad.capstone23.orgs.services;
 
-import edu.kmaooad.capstone23.orgs.dal.Org;
-import edu.kmaooad.capstone23.orgs.dal.OrgsRepository;
+import edu.kmaooad.capstone23.orgs.dal.*;
 import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class OrgService {
     @Inject
@@ -46,5 +46,16 @@ public class OrgService {
 
     public void deleteAllOrgs() {
         orgsRepository.deleteAll();
+    }
+
+    @Inject
+    private JobsRepository jobsRepository;
+
+    public List<Job> findJobsByOrgId(String id) {
+        return jobsRepository.findByOrgId(id);
+    }
+
+    public void updateJob(Job job) {
+        jobsRepository.update(job);
     }
 }
