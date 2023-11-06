@@ -58,4 +58,9 @@ public class CourseServiceImpl implements CourseService {
     public void bulkUpdate(List<Course> courses) {
         courseRepository.bulkUpdate(courses);
     }
+
+    @Override
+    public List<Course> listAll() {
+        return courseRepository.listAll();
+    }
 }
