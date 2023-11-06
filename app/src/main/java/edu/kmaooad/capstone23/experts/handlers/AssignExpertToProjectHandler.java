@@ -4,7 +4,9 @@ import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.competences.dal.Project;
+import edu.kmaooad.capstone23.competences.dal.ProjectMapper;
 import edu.kmaooad.capstone23.competences.dal.ProjsRepository;
+import edu.kmaooad.capstone23.competences.dal.dto.ProjectResponseDto;
 import edu.kmaooad.capstone23.experts.commands.AssignExpertToProject;
 import edu.kmaooad.capstone23.experts.dal.dto.ExpertRequestDto;
 import edu.kmaooad.capstone23.experts.dal.dto.ExpertResponseDto;
@@ -24,17 +26,18 @@ public class AssignExpertToProjectHandler implements CommandHandler<AssignExpert
     @Inject
     ExpertService expertService;
     ExpertMapper expertMapper;
+    ProjectMapper projectMapper;
 
     public Result<ExpertAssignedToProject> handle(AssignExpertToProject command) {
         expertMapper = new ExpertMapper();
 
         ObjectId projId = command.getProjectId();
         ObjectId expertId = command.getExpertId();
-        Project proj = projsRepository.findById(projId);
+        ProjectResponseDto projectResponseDto = projectMapper.toDto(projsRepository.findById(projId));
         ExpertResponseDto expertResponseDto =
                 expertMapper.toDto(expertService.findById(expertId));
 
-        if (proj == null) {
+        if (projectResponseDto == null) {
             return new Result<>(ErrorCode.NOT_FOUND, "Project not found");
         }
 
@@ -58,9 +61,9 @@ public class AssignExpertToProjectHandler implements CommandHandler<AssignExpert
             if (expertResponseDto.getProjects().stream().anyMatch(p -> p.id.equals(projId))) {
                 return new Result<>(ErrorCode.CONFLICT, "Expert is already assigned to project");
             }
-            expertRequestDto.getProjectsIds().add(proj.id.toHexString());
+            expertRequestDto.getProjectsIds().add(projectResponseDto.id.toHexString());
         } else {
-            expertRequestDto.setProjectsIds(List.of(proj.id.toHexString()));
+            expertRequestDto.setProjectsIds(List.of(projectResponseDto.id.toHexString()));
         }
 
         expertService.modify(expertMapper.toModel(expertRequestDto));
