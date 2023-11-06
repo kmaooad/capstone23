@@ -8,8 +8,8 @@ import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.jobs.service.JobService;
 import edu.kmaooad.capstone23.orgs.commands.RelateJobToOrg;
 import edu.kmaooad.capstone23.orgs.dal.Org;
-import edu.kmaooad.capstone23.orgs.dal.OrgsRepository;
 import edu.kmaooad.capstone23.orgs.events.JobToOrgRelated;
+import edu.kmaooad.capstone23.orgs.services.OrgService;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 
@@ -18,7 +18,7 @@ import java.util.ArrayList;
 @RequestScoped
 public class RelateJobToOrgHandler implements CommandHandler<RelateJobToOrg, JobToOrgRelated> {
     @Inject
-    private OrgsRepository orgsRepository;
+    private OrgService orgService;
 
     @Inject
     private JobService jobService;
@@ -29,7 +29,7 @@ public class RelateJobToOrgHandler implements CommandHandler<RelateJobToOrg, Job
     public Result<JobToOrgRelated> handle(RelateJobToOrg command) {
         String orgId = command.getOrgId();
 
-        Org org = orgsRepository.findById(orgId);
+        Org org = orgService.getOrgById(orgId);
 
         if (org == null) {
             return new Result<>(ErrorCode.EXCEPTION, "Org not found");
@@ -51,10 +51,10 @@ public class RelateJobToOrgHandler implements CommandHandler<RelateJobToOrg, Job
 
         org.jobs.add(jobId);
 
-        orgsRepository.update(org);
+        orgService.updateOrg(org);
 
         JobToOrgRelated result = new JobToOrgRelated(orgId, jobId);
 
-        return new Result(result);
+        return new Result<>(result);
     }
 }
