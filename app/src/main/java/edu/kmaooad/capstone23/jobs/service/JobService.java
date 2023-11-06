@@ -6,7 +6,7 @@ import org.bson.types.ObjectId;
 import java.util.Optional;
 
 public interface JobService {
-    Optional<Job> findJobById(ObjectId id);
+    Optional<Job> findJobById(String id);
     Job insert(Job job);
     void delete(Job job);
     void update(Job job);
