@@ -6,8 +6,10 @@ import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 public class OrgService {
+
     @Inject
     private OrgsRepository orgsRepository;
 
@@ -31,6 +33,13 @@ public class OrgService {
         return orgsRepository.findById(id);
     }
 
+    public Optional<Org> getOrgByIdOptional(String id) {
+        if (!ObjectId.isValid(id)) {
+            return Optional.empty();
+        }
+        return orgsRepository.findByIdOptional(id);
+    }
+
     public void deleteOrg(Org department) {
         orgsRepository.delete(department);
     }
@@ -42,7 +51,6 @@ public class OrgService {
     public void updateOrg(Org department) {
         orgsRepository.update(department);
     }
-
 
     public void deleteAllOrgs() {
         orgsRepository.deleteAll();
