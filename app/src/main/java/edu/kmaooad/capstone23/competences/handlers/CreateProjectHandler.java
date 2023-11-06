@@ -5,15 +5,15 @@ import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.competences.commands.CreateProj;
 import edu.kmaooad.capstone23.competences.dal.Project;
-import edu.kmaooad.capstone23.competences.dal.ProjectsRepository;
 import edu.kmaooad.capstone23.competences.events.ProjCreated;
+import edu.kmaooad.capstone23.competences.services.ProjectService;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 
 @RequestScoped
 public class CreateProjectHandler implements CommandHandler<CreateProj, ProjCreated> {
     @Inject
-    ProjectsRepository repository; //intentionally left non-private: https://stackoverflow.com/questions/55101095/why-does-quarkus-warn-me-about-injection-in-private-fields
+    ProjectService service; //intentionally left non-private: https://stackoverflow.com/questions/55101095/why-does-quarkus-warn-me-about-injection-in-private-fields
 
     @Override
     public Result<ProjCreated> handle(CreateProj command) {
@@ -23,10 +23,10 @@ public class CreateProjectHandler implements CommandHandler<CreateProj, ProjCrea
         proj.skills = command.getSkills();
         proj.skillSets = command.getSkillSets();
 
-        var insertedProj = repository.insertProject(proj);
+        var insertedProj = service.insert(proj);
 
         if (insertedProj != null) {
-            var event = new ProjCreated(proj.id.toString());
+            var event = new ProjCreated(proj.id);
             return new Result<>(event);
         } else {
             return new Result<>(ErrorCode.EXCEPTION,

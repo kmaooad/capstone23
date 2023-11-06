@@ -4,22 +4,22 @@ import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.competences.commands.DeleteProj;
-import edu.kmaooad.capstone23.competences.dal.ProjectsRepository;
 import edu.kmaooad.capstone23.competences.events.ProjDeleted;
+import edu.kmaooad.capstone23.competences.services.ProjectService;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 
 @RequestScoped
 public class DeleteProjectHandler implements CommandHandler<DeleteProj, ProjDeleted> {
     @Inject
-    ProjectsRepository repository; //intentionally left non-private: https://stackoverflow.com/questions/55101095/why-does-quarkus-warn-me-about-injection-in-private-fields
+    ProjectService service; //intentionally left non-private: https://stackoverflow.com/questions/55101095/why-does-quarkus-warn-me-about-injection-in-private-fields
 
     @Override
     public Result<ProjDeleted> handle(DeleteProj command) {
         var projId = command.getId();
-        var foundProj = repository.findProjectById(String.valueOf(projId));
-        if(foundProj != null) {
-            repository.deleteProject(foundProj);
+        var foundProj = service.findById(String.valueOf(projId));
+        if (foundProj != null) {
+            service.delete(foundProj);
             var result = new ProjDeleted(projId);
             return new Result<>(result);
         } else {
