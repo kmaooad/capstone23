@@ -9,11 +9,10 @@ import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.departments.commands.RelateJobToDepartment;
 import edu.kmaooad.capstone23.departments.dal.*;
 import edu.kmaooad.capstone23.departments.events.JobToDepartmentRelated;
-import edu.kmaooad.capstone23.jobs.dal.Job;
-import edu.kmaooad.capstone23.jobs.dal.JobRepository;
+import edu.kmaooad.capstone23.departments.services.DepartmentService;
+import edu.kmaooad.capstone23.jobs.service.JobService;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
-import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
 
@@ -21,10 +20,10 @@ import java.util.ArrayList;
 @RequestScoped
 public class RelateJobToDepartmentHandler implements CommandHandler<RelateJobToDepartment, JobToDepartmentRelated> {
     @Inject
-    private DepartmentsRepository departmentsRepository;
+    private DepartmentService departmentsService;
 
     @Inject
-    private JobRepository jobRepository;
+    private JobService jobService;
 
     @Inject
     private EntityBanService banService;
@@ -32,7 +31,7 @@ public class RelateJobToDepartmentHandler implements CommandHandler<RelateJobToD
     public Result<JobToDepartmentRelated> handle(RelateJobToDepartment command) {
         String departmentId = command.getDepartmentId();
 
-        Department department = departmentsRepository.findById(departmentId);
+        Department department = departmentsService.getDepartmentById(departmentId);
 
         if (department == null) {
             return new Result<>(ErrorCode.EXCEPTION, "Department not found");
@@ -43,18 +42,18 @@ public class RelateJobToDepartmentHandler implements CommandHandler<RelateJobToD
 
         String jobId = command.getJobId();
 
-        Job job = jobRepository.findById(new ObjectId(jobId));
+        var maybeJob = jobService.findJobById(jobId);
 
-        if (job == null) {
+        if (maybeJob.isEmpty()) {
             return new Result<>(ErrorCode.EXCEPTION, "Job not found");
         }
         if (department.jobs == null) {
-            department.jobs = new ArrayList<String>();
+            department.jobs = new ArrayList<>();
         }
 
         department.jobs.add(jobId);
 
-        departmentsRepository.update(department);
+        departmentsService.updateDepartment(department);
 
         JobToDepartmentRelated result = new JobToDepartmentRelated(departmentId, jobId);
 

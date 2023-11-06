@@ -21,7 +21,7 @@ public class ActivateJobHandler implements CommandHandler<ActivateJob, JobActiva
     @Override
     public Result<JobActivated> handle(ActivateJob activateJobCommand) {
 
-        Optional<Job> job = jobService.findJobById(activateJobCommand.getJobId());
+        Optional<Job> job = jobService.findJobById(activateJobCommand.getJobId().toString());
         if (job.isEmpty()) {
             return new Result<>(ErrorCode.VALIDATION_FAILED, "This job does not exist");
         }
