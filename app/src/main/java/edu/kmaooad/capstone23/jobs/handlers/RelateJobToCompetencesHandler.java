@@ -4,9 +4,9 @@ import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.competences.dal.*;
+import edu.kmaooad.capstone23.competences.services.ProjectService;
 import edu.kmaooad.capstone23.jobs.commands.RelateJobToCompetences;
 import edu.kmaooad.capstone23.jobs.dal.Job;
-import edu.kmaooad.capstone23.jobs.dal.JobRepository;
 import edu.kmaooad.capstone23.jobs.events.CompetenceRelated;
 import edu.kmaooad.capstone23.jobs.service.JobService;
 import jakarta.enterprise.context.RequestScoped;
@@ -20,10 +20,10 @@ public class RelateJobToCompetencesHandler implements CommandHandler<RelateJobTo
     private JobService jobService;
 
     @Inject
-    private MongoProjectRepository projsRepository;
+    private SkillsRepository skillsRepository;
 
     @Inject
-    private SkillsRepository skillsRepository;
+    private ProjectService projectService;
     
     @Inject
     private TopicRepository topicRepository;
@@ -35,9 +35,10 @@ public class RelateJobToCompetencesHandler implements CommandHandler<RelateJobTo
         if(job.isEmpty())
             return new Result<>(ErrorCode.VALIDATION_FAILED, "This job was previously deleted or never existed");
 
-        Optional<Project> project = projsRepository.findByIdOptional(command.getCompetenceId());
+        Optional<Project> project = projectService.findByIdOptional(command.getCompetenceId());
         Optional<Skill> skill = skillsRepository.findByIdOptional(command.getCompetenceId());
         Optional<Topic> topic = topicRepository.findByIdOptional(command.getCompetenceId());
+
         if(project.isEmpty() && skill.isEmpty() && topic.isEmpty())
             return new Result<>(ErrorCode.VALIDATION_FAILED, "This competence was previously deleted or never existed");
 
