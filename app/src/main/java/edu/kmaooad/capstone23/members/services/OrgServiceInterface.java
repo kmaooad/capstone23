@@ -8,5 +8,5 @@ import java.util.Optional;
 public interface OrgServiceInterface {
     Optional<OrgDTO> findByEmailDomainOptional(String emailDomain);
 
-    Optional<OrgDTO> findByIdOptional(ObjectId id);
+    Optional<OrgDTO> findByIdOptional(String id);
 }

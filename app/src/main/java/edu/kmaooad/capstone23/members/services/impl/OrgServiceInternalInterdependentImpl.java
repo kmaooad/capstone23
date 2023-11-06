@@ -5,7 +5,6 @@ import edu.kmaooad.capstone23.members.services.OrgServiceInterface;
 import edu.kmaooad.capstone23.orgs.dal.OrgsRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import org.bson.types.ObjectId;
 
 import java.util.Optional;
 
@@ -20,7 +19,7 @@ public class OrgServiceInternalInterdependentImpl implements OrgServiceInterface
     }
 
     @Override
-    public Optional<OrgDTO> findByIdOptional(ObjectId id) {
+    public Optional<OrgDTO> findByIdOptional(String id) {
         return orgsRepository.findByIdOptional(id).map(value -> new OrgDTO(value.id.toString(), value.emailDomain));
     }
 }
