@@ -1,5 +1,11 @@
 package edu.kmaooad.capstone23.jobs.service;
 
+import edu.kmaooad.capstone23.competences.dal.Project;
+import edu.kmaooad.capstone23.competences.dal.Skill;
+import edu.kmaooad.capstone23.competences.dal.Topic;
+import edu.kmaooad.capstone23.competences.services.ProjectService;
+import edu.kmaooad.capstone23.competences.services.SkillService;
+import edu.kmaooad.capstone23.competences.services.TopicService;
 import edu.kmaooad.capstone23.jobs.dal.Job;
 import edu.kmaooad.capstone23.jobs.dal.JobRepository;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -12,6 +18,16 @@ import java.util.Optional;
 public class JobServiceImpl implements JobService{
     @Inject
     private JobRepository jobRepository;
+
+    @Inject
+    private SkillService skillService;
+
+    @Inject
+    private ProjectService projectService;
+
+    @Inject
+    private TopicService topicService;
+
 
     @Override
     public Optional<Job> findJobById(String id) {
@@ -30,5 +46,13 @@ public class JobServiceImpl implements JobService{
     @Override
     public void update(Job job) {
         jobRepository.update(job);
+    }
+
+    public Boolean isJobRelatedToCompetence(ObjectId competenceId) {
+        Optional<Project> project = projectService.findByIdOptional(competenceId);
+        Optional<Skill> skill = skillService.findByIdOptional(competenceId);
+        Optional<Topic> topic = topicService.findByIdOptional(competenceId);
+
+        return project.isEmpty() && skill.isEmpty() && topic.isEmpty();
     }
 }
