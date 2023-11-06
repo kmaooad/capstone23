@@ -1,8 +1,5 @@
 package edu.kmaooad.capstone23.jobs.handlers;
 
-import edu.kmaooad.capstone23.activities.dal.Course;
-import edu.kmaooad.capstone23.activities.dal.ExtracurricularActivity;
-import edu.kmaooad.capstone23.activities.services.CourseService;
 import edu.kmaooad.capstone23.activities.services.ExtracurricularActivityService;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
@@ -21,29 +18,28 @@ public class RelateJobToActivitiesHandler  implements CommandHandler<RelateJobTo
 
     @Inject
     private JobService jobService;
+
     @Inject
     private ExtracurricularActivityService extracurricularService;
-    @Inject
-    private CourseService courseService;
-
 
     @Override
     public Result<ActivityRelated> handle(RelateJobToActivities command) {
+        if (!extracurricularService.isExtracurricularActivityRelatedToCourse(command.getActivityId(), command.getActivityId())) {
+            return new Result<>(ErrorCode.VALIDATION_FAILED, "This activity was previously deleted or never existed");
+        }
 
         Optional<Job> job = jobService.findJobById(command.getJobId());
-        if(job.isEmpty())
+        if (job.isEmpty()) {
             return new Result<>(ErrorCode.VALIDATION_FAILED, "This job was previously deleted or never existed");
+        }
 
-        Optional<Course> course = courseService.findById(command.getActivityId().toHexString());
-        Optional<ExtracurricularActivity> extActivity = extracurricularService.findByIdOptional(command.getActivityId());
-        if(course.isEmpty() && extActivity.isEmpty())
-            return new Result<>(ErrorCode.VALIDATION_FAILED, "This activity was previously deleted or never existed");
 
         ActivityRelated result = new ActivityRelated(command.getJobId(), command.getActivityId());
 
         Job j = job.get();
-        if(j.activitiesId.contains(command.getActivityId()))
+        if(j.activitiesId.contains(command.getActivityId())) {
             return new Result<>(ErrorCode.VALIDATION_FAILED, "This activity is already related to this job");
+        }
         j.activitiesId.add(command.getActivityId());
         jobService.update(j);
 
