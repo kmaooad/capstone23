@@ -1,6 +1,8 @@
 package edu.kmaooad.capstone23.orgs.services;
 
+import edu.kmaooad.capstone23.orgs.dal.RequestsRepository;
 import edu.kmaooad.capstone23.orgs.dal.Org;
+import edu.kmaooad.capstone23.orgs.dal.Request;
 import edu.kmaooad.capstone23.orgs.dal.OrgsRepository;
 import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
@@ -46,5 +48,21 @@ public class OrgService {
 
     public void deleteAllOrgs() {
         orgsRepository.deleteAll();
+    }
+
+//Request repo interact block
+@Inject
+private RequestsRepository requestsRepository;
+
+    public Request findRequestById(String id) {
+        return requestsRepository.findById(id);
+    }
+
+    public Request insertRequest(Request request){
+        return requestsRepository.insert(request);
+    }
+
+    public void deleteRequest(Request request) {
+        requestsRepository.deleteById(request.id);
     }
 }
