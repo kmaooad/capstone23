@@ -2,8 +2,6 @@ package edu.kmaooad.capstone23.competences.dal;
 
 import edu.kmaooad.capstone23.competences.dal.dto.ProjectRequestDto;
 import edu.kmaooad.capstone23.competences.dal.dto.ProjectResponseDto;
-import java.util.List;
-import java.util.stream.Collectors;
 import org.bson.types.ObjectId;
 
 public class ProjectMapper {
@@ -27,16 +25,13 @@ public class ProjectMapper {
             project.id = new ObjectId(dto.getId());
             project.name = dto.getName();
             project.description = dto.getDescription();
-            project.skills = convertToObjectIdList(dto.getSkills());
-            project.skillSets = convertToObjectIdList(dto.getSkillSets());
+            project.skills = dto.getSkills().stream()
+                    .map(ObjectId::new)
+                    .toList();
+            project.skillSets = dto.getSkillSets().stream()
+                    .map(ObjectId::new)
+                    .toList();
             return project;
-        }
-        return null;
-    }
-
-    private List<ObjectId> convertToObjectIdList(List<String> stringIds) {
-        if (stringIds != null) {
-            return stringIds.stream().map(ObjectId::new).collect(Collectors.toList());
         }
         return null;
     }
