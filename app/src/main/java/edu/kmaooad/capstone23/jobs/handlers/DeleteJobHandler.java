@@ -15,9 +15,9 @@ import java.util.Optional;
 
 @RequestScoped
 public class DeleteJobHandler implements CommandHandler<DeleteJob, JobDeleted> {
+
     @Inject
     private JobService jobService;
-
     @Override
     public Result<JobDeleted> handle(DeleteJob commandDel) {
 
