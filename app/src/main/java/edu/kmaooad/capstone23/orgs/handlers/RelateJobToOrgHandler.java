@@ -5,15 +5,13 @@ import edu.kmaooad.capstone23.ban.service.EntityBanService;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
-import edu.kmaooad.capstone23.jobs.dal.Job;
-import edu.kmaooad.capstone23.jobs.dal.JobRepository;
+import edu.kmaooad.capstone23.jobs.service.JobService;
 import edu.kmaooad.capstone23.orgs.commands.RelateJobToOrg;
 import edu.kmaooad.capstone23.orgs.dal.Org;
 import edu.kmaooad.capstone23.orgs.dal.OrgsRepository;
 import edu.kmaooad.capstone23.orgs.events.JobToOrgRelated;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
-import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
 
@@ -23,7 +21,7 @@ public class RelateJobToOrgHandler implements CommandHandler<RelateJobToOrg, Job
     private OrgsRepository orgsRepository;
 
     @Inject
-    private JobRepository jobRepository;
+    private JobService jobService;
 
     @Inject
     EntityBanService banService;
@@ -34,7 +32,7 @@ public class RelateJobToOrgHandler implements CommandHandler<RelateJobToOrg, Job
         Org org = orgsRepository.findById(orgId);
 
         if (org == null) {
-            return new Result(ErrorCode.EXCEPTION, "Org not found");
+            return new Result<>(ErrorCode.EXCEPTION, "Org not found");
         }
         if(banService.findForEntity(BannedEntityType.Organization, org.id).isPresent()) {
             return new Result<>(ErrorCode.EXCEPTION, "Org is banned");
@@ -42,13 +40,13 @@ public class RelateJobToOrgHandler implements CommandHandler<RelateJobToOrg, Job
 
         String jobId = command.getJobId();
 
-        Job job = jobRepository.findById(new ObjectId(jobId));
+        var maybeJob = jobService.findJobById(jobId);
 
-        if (job == null) {
-            return new Result(ErrorCode.EXCEPTION, "Job not found");
+        if (maybeJob.isEmpty()) {
+            return new Result<>(ErrorCode.EXCEPTION, "Job not found");
         }
         if (org.jobs == null) {
-            org.jobs = new ArrayList<String>();
+            org.jobs = new ArrayList<>();
         }
 
         org.jobs.add(jobId);
