@@ -5,6 +5,7 @@ import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.competences.dal.*;
 import edu.kmaooad.capstone23.competences.services.ProjectService;
+import edu.kmaooad.capstone23.competences.services.TopicService;
 import edu.kmaooad.capstone23.jobs.commands.RelateJobToCompetences;
 import edu.kmaooad.capstone23.jobs.dal.Job;
 import edu.kmaooad.capstone23.jobs.events.CompetenceRelated;
@@ -24,9 +25,9 @@ public class RelateJobToCompetencesHandler implements CommandHandler<RelateJobTo
 
     @Inject
     private ProjectService projectService;
-    
+
     @Inject
-    private TopicRepository topicRepository;
+    private TopicService topicService;
 
     @Override
     public Result<CompetenceRelated> handle(RelateJobToCompetences command) {
@@ -37,7 +38,7 @@ public class RelateJobToCompetencesHandler implements CommandHandler<RelateJobTo
 
         Optional<Project> project = projectService.findByIdOptional(command.getCompetenceId());
         Optional<Skill> skill = skillsRepository.findByIdOptional(command.getCompetenceId());
-        Optional<Topic> topic = topicRepository.findByIdOptional(command.getCompetenceId());
+        Optional<Topic> topic = topicService.findByIdOptional(command.getCompetenceId());
 
         if(project.isEmpty() && skill.isEmpty() && topic.isEmpty())
             return new Result<>(ErrorCode.VALIDATION_FAILED, "This competence was previously deleted or never existed");
