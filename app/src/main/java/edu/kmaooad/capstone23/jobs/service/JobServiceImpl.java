@@ -14,8 +14,8 @@ public class JobServiceImpl implements JobService{
     private JobRepository jobRepository;
 
     @Override
-    public Optional<Job> findJobById(ObjectId id) {
-        return jobRepository.findByIdOptional(id);
+    public Optional<Job> findJobById(String id) {
+        return jobRepository.findByIdOptional(new ObjectId(id));
     }
 
     @Override
