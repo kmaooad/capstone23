@@ -24,22 +24,25 @@ public class RelateJobToActivitiesHandler  implements CommandHandler<RelateJobTo
 
     @Override
     public Result<ActivityRelated> handle(RelateJobToActivities command) {
-        if (!extracurricularService.isExtracurricularActivityRelatedToCourse(command.getActivityId(), command.getActivityId())) {
+        var activityId = command.getActivityId();
+        var jobId = command.getJobId();
+
+        if (!extracurricularService.isExtracurricularActivityRelatedToCourse(activityId, activityId)) {
             return new Result<>(ErrorCode.VALIDATION_FAILED, "This activity was previously deleted or never existed");
         }
 
-        Optional<Job> job = jobService.findJobById(command.getJobId());
+        Optional<Job> job = jobService.findJobById(jobId);
         if (job.isEmpty()) {
             return new Result<>(ErrorCode.VALIDATION_FAILED, "This job was previously deleted or never existed");
         }
 
         Job j = job.get();
-        if(j.activitiesId.contains(command.getActivityId())) {
+        if(j.activitiesId.contains(activityId)) {
             return new Result<>(ErrorCode.VALIDATION_FAILED, "This activity is already related to this job");
         }
 
-        ActivityRelated result = new ActivityRelated(command.getJobId(), command.getActivityId());
-        j.activitiesId.add(command.getActivityId());
+        ActivityRelated result = new ActivityRelated(jobId, activityId);
+        j.activitiesId.add(activityId);
         jobService.update(j);
 
         return new Result<ActivityRelated>(result);
