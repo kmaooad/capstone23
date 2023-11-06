@@ -139,11 +139,11 @@ public class AssignExpertToProjectHandlerTest {
         command.setName("SomeProject");
         command.setDescription("Some description of some project");
         command.setSkills(List.of(
-                new ObjectId("5f7e47fc8e1f7112d73c92a1")
+                "5f7e47fc8e1f7112d73c92a1"
         ));
 
         command.setSkillSets(List.of(
-                new ObjectId("1a4cd132b123a1aa3bc2d142")
+                "1a4cd132b123a1aa3bc2d142"
         ));
 
         return new ObjectId(projCreatedCommandHandler.handle(command).getValue().projId());
