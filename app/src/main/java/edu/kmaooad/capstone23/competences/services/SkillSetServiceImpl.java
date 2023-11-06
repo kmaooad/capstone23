@@ -4,6 +4,7 @@ import edu.kmaooad.capstone23.competences.dal.SkillSet;
 import edu.kmaooad.capstone23.competences.dal.SkillSetRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.enterprise.context.ApplicationScoped;
 import org.bson.types.ObjectId;
 
 import java.util.Optional;
