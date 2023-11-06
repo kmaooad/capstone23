@@ -5,8 +5,8 @@ import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.competences.commands.CreateTopic;
 import edu.kmaooad.capstone23.competences.dal.Topic;
-import edu.kmaooad.capstone23.competences.dal.TopicRepository;
 import edu.kmaooad.capstone23.competences.events.TopicCreated;
+import edu.kmaooad.capstone23.competences.services.TopicService;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 
@@ -14,7 +14,7 @@ import jakarta.inject.Inject;
 public class CreateTopicHandler implements CommandHandler<CreateTopic, TopicCreated> {
 
     @Inject
-    TopicRepository repository;
+    TopicService service;
 
     @Override
     public Result<TopicCreated> handle(CreateTopic command) {
@@ -23,7 +23,7 @@ public class CreateTopicHandler implements CommandHandler<CreateTopic, TopicCrea
 
         var parentTopic = command.parentId;
         if (parentTopic != null) {
-            var findParentTopicOptional = repository.findById(parentTopic);
+            var findParentTopicOptional = service.findById(parentTopic);
             if (findParentTopicOptional.isEmpty()) {
                 return new Result<>(ErrorCode.EXCEPTION, "Parent topic not found");
             } else {
@@ -31,7 +31,7 @@ public class CreateTopicHandler implements CommandHandler<CreateTopic, TopicCrea
             }
         }
 
-        repository.insert(topic);
+        service.insert(topic);
 
         TopicCreated result = new TopicCreated(topic.id.toHexString());
         return new Result<>(result);
