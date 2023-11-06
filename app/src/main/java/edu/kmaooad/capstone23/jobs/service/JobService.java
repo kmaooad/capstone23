@@ -9,5 +9,5 @@ public interface JobService {
     Job insert(Job job);
     void delete(Job job);
     void update(Job job);
-    Boolean isJobRelatedToCompetence(ObjectId competenceId);
+    Boolean isJobRelatedToCompetence(String competenceId);
 }

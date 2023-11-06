@@ -48,10 +48,12 @@ public class JobServiceImpl implements JobService{
         jobRepository.update(job);
     }
 
-    public Boolean isJobRelatedToCompetence(ObjectId competenceId) {
-        Optional<Project> project = projectService.findByIdOptional(competenceId);
-        Optional<Skill> skill = skillService.findByIdOptional(competenceId);
-        Optional<Topic> topic = topicService.findByIdOptional(competenceId);
+    public Boolean isJobRelatedToCompetence(String competenceId) {
+        var competenceObjId = new ObjectId(competenceId);
+
+        Optional<Project> project = projectService.findByIdOptional(competenceObjId);
+        Optional<Skill> skill = skillService.findByIdOptional(competenceObjId);
+        Optional<Topic> topic = topicService.findByIdOptional(competenceObjId);
 
         return project.isEmpty() && skill.isEmpty() && topic.isEmpty();
     }

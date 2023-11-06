@@ -20,12 +20,12 @@ public class RelateJobToCompetencesHandler implements CommandHandler<RelateJobTo
     @Override
     public Result<CompetenceRelated> handle(RelateJobToCompetences command) {
 
-        Optional<Job> job = jobService.findJobById(command.getJobId());
+        Optional<Job> job = jobService.findJobById(command.getJobId().toString());
         if(job.isEmpty()) {
             return new Result<>(ErrorCode.VALIDATION_FAILED, "This job was previously deleted or never existed");
         }
 
-        if(jobService.isJobRelatedToCompetence(command.getCompetenceId())) {
+        if(jobService.isJobRelatedToCompetence(command.getCompetenceId().toString())) {
             return new Result<>(ErrorCode.VALIDATION_FAILED, "This competence was previously deleted or never existed");
         }
 
