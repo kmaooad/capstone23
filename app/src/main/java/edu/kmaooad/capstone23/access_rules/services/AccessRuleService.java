@@ -14,4 +14,10 @@ public interface AccessRuleService {
   List<AccessRule> findByEntityIdAndType(ObjectId entityId, AccessRuleFromEntityType entityType);
 
   void ban(ObjectId entityId, AccessRuleFromEntityType entityType);
+  
+  void updateRule(AccessRule accessRule);
+
+  AccessRule findRuleById(String id);
+
+  boolean existsById(ObjectId id);
 }
