@@ -1,50 +1,19 @@
 package edu.kmaooad.capstone23.orgs.services;
 
 import edu.kmaooad.capstone23.orgs.dal.Org;
-import edu.kmaooad.capstone23.orgs.dal.OrgsRepository;
-import jakarta.inject.Inject;
-import org.bson.types.ObjectId;
 
-import java.util.ArrayList;
+ interface OrgService {
+     Org createOrg(String name, String description, String industry, String website, String emailDomain);
 
-public class OrgService {
-    @Inject
-    private OrgsRepository orgsRepository;
+     Org getOrgByName(String name);
 
-    public Org createOrg(String name, String description, String industry, String website, String emailDomain) {
-        Org org = new Org();
-        org.name = name;
-        org.description = description;
-        org.jobs = new ArrayList<>();
-        org.industry = industry;
-        org.website = website;
-        org.emailDomain = emailDomain;
-        org.isActive=true;
-        return orgsRepository.insert(org);
-    }
+     Org getOrgById(String id);
 
-    public Org getOrgByName(String name) {
-        return orgsRepository.findByName(name);
-    }
+     void deleteOrg(Org department);
 
-    public Org getOrgById(String id) {
-        return orgsRepository.findById(id);
-    }
+     void deleteOrgById(String id);
 
-    public void deleteOrg(Org department) {
-        orgsRepository.delete(department);
-    }
+     void updateOrg(Org department);
 
-    public void deleteOrgById(String id) {
-        orgsRepository.deleteById(new ObjectId(id));
-    }
-
-    public void updateOrg(Org department) {
-        orgsRepository.update(department);
-    }
-
-
-    public void deleteAllOrgs() {
-        orgsRepository.deleteAll();
-    }
+     void deleteAllOrgs();
 }
