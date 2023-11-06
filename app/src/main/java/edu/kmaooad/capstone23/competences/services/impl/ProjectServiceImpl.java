@@ -16,6 +16,6 @@ public class ProjectServiceImpl implements ProjectService {
 
   @Override
   public Optional<Project> findByIdOptional(ObjectId id) {
-    return repo.findByIdOptional(id);
+    return repo.findByIdMaybe(id);
   }
 }
