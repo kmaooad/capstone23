@@ -6,7 +6,7 @@ import edu.kmaooad.capstone23.competences.commands.AddSkillToSkillSet;
 import edu.kmaooad.capstone23.competences.dal.Skill;
 import edu.kmaooad.capstone23.competences.dal.SkillSet;
 import edu.kmaooad.capstone23.competences.dal.SkillSetRepository;
-import edu.kmaooad.capstone23.competences.dal.SkillsRepository;
+import edu.kmaooad.capstone23.competences.dal.MongoSkillsRepository;
 import edu.kmaooad.capstone23.competences.events.SkillToSkillSetAdded;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
@@ -25,7 +25,7 @@ public class AddSkillToSkillSetHandlerTest {
     @Inject
     private SkillSetRepository skillSetRepository;
     @Inject
-    private SkillsRepository skillsRepository;
+    private MongoSkillsRepository skillsRepository;
 
     private ObjectId skillSetId;
     private ObjectId skillId;
