@@ -13,4 +13,7 @@ public interface SkillService {
     Skill insert(Skill skill);
     void delete(Skill skill);
     List<Skill> findChildRepositories(ObjectId parentSkill);
+    public Optional<Skill> findByIdOptional(ObjectId id);
 }
+
+

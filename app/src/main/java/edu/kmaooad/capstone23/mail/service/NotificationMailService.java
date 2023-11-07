@@ -12,14 +12,17 @@ public class NotificationMailService {
 
     public void sendNotification(Notification notification) {
       if (notification == null) {
-            throw new IllegalArgumentException("Notification cannot be null");
-        }
-        Mail mail = new Mail()
-                .addTo(notification.getEmail())
-                .setText(notification.getBody());
+        throw new IllegalArgumentException("Notification cannot be null");
+      }
 
-        if (notification.getSubject() != null) mail = mail.setSubject(notification.getSubject());
+      Mail mail = new Mail()
+          .addTo(notification.getEmail())
+          .setText(notification.getBody());
 
-        mailer.send(mail);
+      if (notification.getSubject() != null) {
+        mail = mail.setSubject(notification.getSubject());
+      }
+
+      mailer.send(mail);
     }
 }

@@ -5,7 +5,7 @@ import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.competences.commands.DeleteSkill;
 import edu.kmaooad.capstone23.competences.dal.Skill;
-import edu.kmaooad.capstone23.competences.dal.SkillsRepository;
+import edu.kmaooad.capstone23.competences.dal.MongoSkillsRepository;
 import edu.kmaooad.capstone23.competences.events.SkillDeleted;
 import edu.kmaooad.capstone23.competences.services.SkillService;
 import jakarta.enterprise.context.RequestScoped;
@@ -22,10 +22,12 @@ public class DeleteSkillHandler implements CommandHandler<DeleteSkill, SkillDele
     private SkillService skillService;
 
 
+
     @Override
     public Result<SkillDeleted> handle(DeleteSkill command) {
         ObjectId id = command.getId();
         Optional<Skill> skill = skillService.findById(id);
+
 
         if (skill.isEmpty()) {
             return new Result<>(ErrorCode.EXCEPTION, "Skill not found");
