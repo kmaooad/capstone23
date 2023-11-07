@@ -10,7 +10,7 @@ import edu.kmaooad.capstone23.experts.events.ExpertAssigned;
 import edu.kmaooad.capstone23.members.dal.Member;
 import edu.kmaooad.capstone23.members.dal.MembersRepository;
 import edu.kmaooad.capstone23.orgs.dal.Org;
-import edu.kmaooad.capstone23.orgs.dal.OrgsRepository;
+import edu.kmaooad.capstone23.orgs.services.OrgsService;
 import edu.kmaooad.capstone23.users.dal.repositories.UserRepository;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
@@ -24,7 +24,7 @@ public class AssignExpertToMemberHandler implements CommandHandler<AssignExpertT
     @Inject
     private ExpertsRepository expertsRepository;
     @Inject
-    private OrgsRepository orgsRepository;
+    OrgsService orgsService;
     @Inject
     private UserRepository userRepository;
 
@@ -43,7 +43,7 @@ public class AssignExpertToMemberHandler implements CommandHandler<AssignExpertT
         member.isExpert = true;
         membersRepository.updateEntry(member);
 
-        Org org = orgsRepository.findById(member.orgId);
+        Org org = orgsService.findById(member.orgId.toString());
         Expert expert = new Expert();
         var user = userRepository.findById(member.userId);
         expert.name = user.firstName + user.lastName;
