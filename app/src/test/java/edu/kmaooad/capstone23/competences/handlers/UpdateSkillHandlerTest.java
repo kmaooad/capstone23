@@ -65,9 +65,9 @@ public class UpdateSkillHandlerTest {
     Result<SkillUpdated> changeSkill(ObjectId id, Optional<ObjectId> parent) {
         var command = new UpdateSkill();
         command.setSkillName("drink");
-        command.setId(id);
+        command.setId(id.toHexString());
         if (parent.isPresent())
-            command.setParentSkill(parent.get());
+            command.setParentSkill(parent.get().toHexString());
 
 
         return updateHandler.handle(command);
