@@ -37,7 +37,7 @@ public class DeleteAccessRuleHandlerTests {
     @DisplayName("Delete Access Rule: Valid ID")
     public void deleteRuleValidId() {
         DeleteAccessRule command = new DeleteAccessRule();
-        command.setId(new ObjectId(accessRuleId));
+        command.setId(accessRuleId);
 
         Result<AccessRuleDeleted> result = deleteRuleHandler.handle(command);
         Assertions.assertTrue(result.isSuccess());
@@ -47,7 +47,7 @@ public class DeleteAccessRuleHandlerTests {
     @DisplayName("Delete Access Rule: non-existent ID")
     public void deleteRuleNonExistentId() {
         DeleteAccessRule command = new DeleteAccessRule();
-        command.setId(new ObjectId());
+        command.setId(new ObjectId().toString());
 
         Result<AccessRuleDeleted> result = deleteRuleHandler.handle(command);
         assertFalse(result.isSuccess());
