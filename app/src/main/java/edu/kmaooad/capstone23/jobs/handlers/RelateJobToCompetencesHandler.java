@@ -17,6 +17,7 @@ public class RelateJobToCompetencesHandler implements CommandHandler<RelateJobTo
     @Inject
     private JobService jobService;
 
+
     @Override
     public Result<CompetenceRelated> handle(RelateJobToCompetences command) {
 

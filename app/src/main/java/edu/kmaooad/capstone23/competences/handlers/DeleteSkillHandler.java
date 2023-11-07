@@ -11,20 +11,22 @@ import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
 
+import java.util.Optional;
+
 @RequestScoped
 public class DeleteSkillHandler implements CommandHandler<DeleteSkill, SkillDeleted> {
 
 
     @Inject
-    private SkillsRepository repository;
+    SkillsRepository repository;
 
 
     @Override
     public Result<SkillDeleted> handle(DeleteSkill command) {
         ObjectId id = command.getId();
-        Skill skill = repository.findById(id);
+        Optional<Skill> skill = repository.findById(String.valueOf(id));
 
-        if (skill == null) {
+        if (skill.isEmpty()) {
             return new Result<>(ErrorCode.EXCEPTION, "Skill not found");
         }
 
@@ -34,7 +36,7 @@ public class DeleteSkillHandler implements CommandHandler<DeleteSkill, SkillDele
             return new Result<>(ErrorCode.EXCEPTION, "Skill has children");
         }
 
-        repository.delete(skill);
+        repository.deleteSkill(skill);
 
         return new Result<>(new SkillDeleted(skill));
     }

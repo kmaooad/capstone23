@@ -4,7 +4,7 @@ import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.competences.commands.CreateSkill;
 import edu.kmaooad.capstone23.competences.commands.DeleteSkill;
-import edu.kmaooad.capstone23.competences.dal.SkillsRepository;
+import edu.kmaooad.capstone23.competences.dal.MongoSkillsRepository;
 import edu.kmaooad.capstone23.competences.events.SkillCreated;
 import edu.kmaooad.capstone23.competences.events.SkillDeleted;
 import io.quarkus.test.junit.QuarkusTest;
@@ -24,7 +24,7 @@ public class DeleteSkillHandlerTest {
     CommandHandler<DeleteSkill, SkillDeleted> deleteHandler;
 
     @Inject
-    private SkillsRepository repository;
+    private MongoSkillsRepository repository;
 
     ObjectId createTestSkill() {
         var command = new CreateSkill();
