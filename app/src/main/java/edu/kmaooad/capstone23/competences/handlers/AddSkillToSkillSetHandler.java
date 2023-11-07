@@ -23,7 +23,6 @@ public class AddSkillToSkillSetHandler implements CommandHandler<AddSkillToSkill
     @Inject
     private SkillService skillService;
 
-
     @Override
     public Result<SkillToSkillSetAdded> handle(AddSkillToSkillSet command) {
 
