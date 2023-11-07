@@ -71,7 +71,7 @@ public class RemoveExpertFromMemberHandlerTest {
         CreateBasicMember memberCommand = new CreateBasicMember();
         memberCommand.setFirstName("Vasyl");
         memberCommand.setLastName("Pupok");
-        memberCommand.setOrgId(new ObjectId(orgResult.getValue().getOrgId()));
+        memberCommand.setOrgId(orgResult.getValue().getOrgId());
         memberCommand.setEmail("ultra.poshta@ukr.net");
         userRepository.deleteByEmail(memberCommand.getEmail());
         memberCommand.setIsExpert("true");
@@ -91,7 +91,7 @@ public class RemoveExpertFromMemberHandlerTest {
         CreateBasicMember memberCommand = new CreateBasicMember();
         memberCommand.setFirstName("Vasyleus");
         memberCommand.setLastName("Pupochello");
-        memberCommand.setOrgId(new ObjectId(orgResult.getValue().getOrgId()));
+        memberCommand.setOrgId(orgResult.getValue().getOrgId());
         memberCommand.setEmail("ultra.poshta.proksima@ukr.net");
         userRepository.deleteByEmail(memberCommand.getEmail());
         memberCommand.setIsExpert("false");
