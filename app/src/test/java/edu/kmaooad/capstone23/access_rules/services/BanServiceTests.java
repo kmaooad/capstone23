@@ -140,7 +140,7 @@ public class BanServiceTests {
 
     private ObjectId createMember(){
         CreateBasicMember command = new CreateBasicMember();
-        command.setOrgId(createOrg());
+        command.setOrgId(createOrg().toString());
         command.setFirstName("John");
         command.setLastName("Doe");
         String id = new ObjectId().toString();
@@ -150,8 +150,6 @@ public class BanServiceTests {
 
         return new ObjectId(result.getValue().getMemberId());
     }
-
-    private String createOrg(){
 
     private ObjectId createOrg(){
 
@@ -185,9 +183,9 @@ public class BanServiceTests {
 
     private void addAccessRule(AccessRuleFromEntityType fromType, ObjectId fromId, AccessRuleToEntityType toType, ObjectId toId) {
         CreateAccessRule command = new CreateAccessRule();
-        command.setFromEntityId(fromId);
+        command.setFromEntityId(fromId.toString());
         command.setFromEntityType(fromType.toString());
-        command.setToEntityId(toId);
+        command.setToEntityId(toId.toString());
         command.setToEntityType(toType.toString());
         command.setRuleType("Allow");
 

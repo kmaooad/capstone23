@@ -24,5 +24,6 @@ public interface MembersRepository {
     List<Member> getAllByOrg(GetAllMembersByOrg command);
 
     List<Member> getAll(GetAllMembers command);
+  
     List<Member> getByUser(UserDTO userDTO);
 }

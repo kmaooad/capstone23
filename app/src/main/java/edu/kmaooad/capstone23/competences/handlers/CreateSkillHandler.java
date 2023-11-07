@@ -5,7 +5,7 @@ import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.competences.commands.CreateSkill;
 import edu.kmaooad.capstone23.competences.dal.Skill;
-import edu.kmaooad.capstone23.competences.dal.SkillsRepository;
+import edu.kmaooad.capstone23.competences.dal.MongoSkillsRepository;
 import edu.kmaooad.capstone23.competences.events.SkillCreated;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
@@ -15,14 +15,14 @@ public class CreateSkillHandler implements CommandHandler<CreateSkill, SkillCrea
 
 
     @Inject
-    private SkillsRepository repository;
+    SkillsRepository repository;
 
 
     @Override
     public Result<SkillCreated> handle(CreateSkill command) {
         var t = new Skill();
         t.name = command.getSkillName();
-        t.parentSkill = command.getParentSkill();
+        t.setId(command.getParentSkill());
         try {
             var result = repository.insert(t);
             return new Result<>(new SkillCreated(result.id));

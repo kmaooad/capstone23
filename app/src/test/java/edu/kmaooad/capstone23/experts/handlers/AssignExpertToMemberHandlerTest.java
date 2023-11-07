@@ -72,7 +72,7 @@ public class AssignExpertToMemberHandlerTest {
         memberCommand.setLastName("Last");
         memberCommand.setEmail(randomEmail());
         memberCommand.setIsExpert("false");
-        memberCommand.setOrgId(new ObjectId(orgHandler.handle(orgCommand).getValue().getOrgId()));
+        memberCommand.setOrgId(orgHandler.handle(orgCommand).getValue().getOrgId());
 
         return new ObjectId(memberCreatedCommandHandler.handle(memberCommand).getValue().getMemberId());
     }
@@ -87,7 +87,7 @@ public class AssignExpertToMemberHandlerTest {
         memberCommand.setFirstName("First");
         memberCommand.setLastName("Last");
         memberCommand.setEmail(randomEmail());
-        memberCommand.setOrgId(new ObjectId(orgHandler.handle(orgCommand).getValue().getOrgId()));
+        memberCommand.setOrgId(orgHandler.handle(orgCommand).getValue().getOrgId());
         memberCommand.setIsExpert("true");
 
         return new ObjectId(memberCreatedCommandHandler.handle(memberCommand).getValue().getMemberId());
