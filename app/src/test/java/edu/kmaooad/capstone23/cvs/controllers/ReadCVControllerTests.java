@@ -1,7 +1,7 @@
 package edu.kmaooad.capstone23.cvs.controllers;
 
 import edu.kmaooad.capstone23.competences.dal.Skill;
-import edu.kmaooad.capstone23.competences.dal.SkillsRepository;
+import edu.kmaooad.capstone23.competences.dal.MongoSkillsRepository;
 import edu.kmaooad.capstone23.cvs.dal.CV;
 import edu.kmaooad.capstone23.cvs.dal.CVRepository;
 import edu.kmaooad.capstone23.cvs.dal.JobPreference;
@@ -29,7 +29,7 @@ public class ReadCVControllerTests {
     CVRepository cvRepository;
 
     @Inject
-    SkillsRepository skillsRepository;
+    MongoSkillsRepository skillsRepository;
 
     @BeforeEach
     public void setup() {
