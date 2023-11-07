@@ -20,7 +20,7 @@ public class ApplicationLifecycleObserver {
         // Ensure uniqueness of User email
         IndexOptions options = new IndexOptions().unique(true).sparse(true);
         Document indexUser = new Document("unique_email", 1);
-        userService.mongoCollection().createIndex(indexUser, options);
+        userService.createIndex(indexUser, options);
 
         // drop index on "deprecated" email field of members collection field
         membersRepository.mongoCollection().listIndexes().forEach(x -> {
