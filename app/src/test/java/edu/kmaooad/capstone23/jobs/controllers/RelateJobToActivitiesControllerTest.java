@@ -6,7 +6,6 @@ import edu.kmaooad.capstone23.activities.dal.CourseRepository;
 import edu.kmaooad.capstone23.activities.events.CourseCreated;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.Result;
-import edu.kmaooad.capstone23.competences.dal.SkillsRepository;
 import edu.kmaooad.capstone23.jobs.commands.CreateJob;
 import edu.kmaooad.capstone23.jobs.commands.RelateJobToActivities;
 import edu.kmaooad.capstone23.jobs.events.ActivityRelated;
