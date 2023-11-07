@@ -2,7 +2,7 @@ package edu.kmaooad.capstone23.users.repo;
 
 import com.mongodb.MongoException;
 import edu.kmaooad.capstone23.users.dal.entities.User;
-import edu.kmaooad.capstone23.users.interfaces.services.UserService;
+import edu.kmaooad.capstone23.users.interfaces.repositories.UserRepository;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 import org.junit.jupiter.api.AfterEach;
@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @QuarkusTest
 public class UserRepositoryTest {
     @Inject
-    UserService userService;
+    UserRepository userRepository;
 
     String email;
 
@@ -27,12 +27,12 @@ public class UserRepositoryTest {
         user.firstName = "first";
         user.email = (UUID.randomUUID()).toString().concat("@email.com");
         email = user.email;
-        userService.persist(user);
+        userRepository.persist(user);
     }
 
     @AfterEach
     void cleanUp() {
-        userService.findByEmail(email).ifPresent(value -> userService.deleteById(value.id));
+        userRepository.findByEmail(email).ifPresent(value -> userRepository.deleteById(value.id));
     }
 
     @Test
@@ -42,6 +42,6 @@ public class UserRepositoryTest {
         user.firstName = "first";
         user.email = email;
 
-        assertThrows(MongoException.class, () -> userService.persist(user));
+        assertThrows(MongoException.class, () -> userRepository.persist(user));
     }
 }
