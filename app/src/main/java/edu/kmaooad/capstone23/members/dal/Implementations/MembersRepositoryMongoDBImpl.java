@@ -1,5 +1,6 @@
 package edu.kmaooad.capstone23.members.dal.Implementations;
 
+import edu.kmaooad.capstone23.members.commands.GetAllMembers;
 import edu.kmaooad.capstone23.members.commands.GetAllMembersByOrg;
 import edu.kmaooad.capstone23.members.dal.Member;
 import edu.kmaooad.capstone23.members.dal.abstractions.MembersRepository;
@@ -63,5 +64,10 @@ public class MembersRepositoryMongoDBImpl implements MembersRepository, PanacheM
         return find("orgId", command.getOrgId())
                 .page(Page.of(command.getPage(), command.getSize()))
                 .list();
+    }
+
+    @Override
+    public List<Member> getAll(GetAllMembers command) {
+        return findAll().page(Page.of(command.getPage(), command.getSize())).list();
     }
 }
