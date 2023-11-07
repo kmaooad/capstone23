@@ -1,15 +1,11 @@
 package edu.kmaooad.capstone23.communication.events;
 
+import edu.kmaooad.capstone23.common.ManyEvents;
+
 import java.util.List;
 
-public class ChatsBulkCreated {
-  private final List<ChatCreated> createdChats;
-
+public class ChatsBulkCreated extends ManyEvents<ChatCreated> {
   public ChatsBulkCreated(List<ChatCreated> createdChats) {
-    this.createdChats = createdChats;
-  }
-
-  public List<ChatCreated> getChats() {
-    return createdChats;
+    super(createdChats);
   }
 }
