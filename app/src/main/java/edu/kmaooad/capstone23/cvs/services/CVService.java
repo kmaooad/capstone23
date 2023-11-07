@@ -40,5 +40,8 @@ public class CVService {
         cvRepository.update(cv);
     }
 
+    public void deleteById(ObjectId id){
+        cvRepository.deleteById(id);
+    }
 
 }
