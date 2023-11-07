@@ -7,7 +7,7 @@ import edu.kmaooad.capstone23.experts.commands.CreateExpert;
 import edu.kmaooad.capstone23.experts.dal.Expert;
 import edu.kmaooad.capstone23.experts.dal.ExpertsRepository;
 import edu.kmaooad.capstone23.experts.events.ExpertCreated;
-import edu.kmaooad.capstone23.orgs.dal.OrgsRepository;
+import edu.kmaooad.capstone23.orgs.services.OrgsService;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 
@@ -17,13 +17,13 @@ public class CreateExpertHandler implements CommandHandler<CreateExpert, ExpertC
     @Inject
     private ExpertsRepository expertsRepository;
     @Inject
-    private OrgsRepository orgsRepository;
+    OrgsService orgsService;
 
     public Result<ExpertCreated> handle(CreateExpert command) {
 
         Expert expert = new Expert();
         expert.name = command.getExpertName();
-        expert.org = orgsRepository.findByName(command.getOrgName());
+        expert.org = orgsService.findByName(command.getOrgName());
 
         if (expert.org == null) {
             return new Result<>(ErrorCode.NOT_FOUND, "Organisation not found");
@@ -33,6 +33,6 @@ public class CreateExpertHandler implements CommandHandler<CreateExpert, ExpertC
 
         ExpertCreated result = new ExpertCreated(expert.id.toString(), expert.org);
 
-        return new Result<ExpertCreated>(result);
+        return new Result<>(result);
     }
 }
