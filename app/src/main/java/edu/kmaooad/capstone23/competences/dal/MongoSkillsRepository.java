@@ -40,4 +40,8 @@ public class MongoSkillsRepository implements PanacheMongoRepository<Skill>, Ski
         return skill;
     }
 
+    public void deleteSkill(Optional<Skill> skillToDelete) {
+        delete(skillToDelete);
+    }
+
 }

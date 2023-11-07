@@ -3,9 +3,9 @@ package edu.kmaooad.capstone23.access_rules.handlers;
 import edu.kmaooad.capstone23.access_rules.commands.CreateAccessRule;
 import edu.kmaooad.capstone23.access_rules.dal.AccessRule;
 import edu.kmaooad.capstone23.access_rules.dal.AccessRuleFromEntityType;
-import edu.kmaooad.capstone23.access_rules.dal.AccessRuleRepository;
 import edu.kmaooad.capstone23.access_rules.dal.AccessRuleToEntityType;
 import edu.kmaooad.capstone23.access_rules.events.AccessRuleCreated;
+import edu.kmaooad.capstone23.access_rules.services.AccessRuleService;
 import edu.kmaooad.capstone23.activities.dal.CourseRepository;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
@@ -22,7 +22,7 @@ import org.bson.types.ObjectId;
 public class CreateAccessRuleHandler implements CommandHandler<CreateAccessRule, AccessRuleCreated> {
 
     @Inject
-    private AccessRuleRepository accessRuleRepository;
+    private AccessRuleService accessRuleService;
 
     @Inject
     private OrgsRepository orgsRepository;
@@ -61,7 +61,7 @@ public class CreateAccessRuleHandler implements CommandHandler<CreateAccessRule,
         accessRule.fromEntityId = new ObjectId(command.getFromEntityId());
         accessRule.toEntityId = new ObjectId(command.getToEntityId());
 
-        accessRuleRepository.insert(accessRule);
+        accessRuleService.insert(accessRule);
 
         return new Result<>(new AccessRuleCreated(accessRule.id.toString(), accessRule.fromEntityType, accessRule.toEntityType));
     }
