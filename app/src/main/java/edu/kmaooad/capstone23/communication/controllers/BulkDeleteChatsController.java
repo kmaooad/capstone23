@@ -11,10 +11,10 @@ import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 
 @Path("/chats/bulk-delete")
 @APIResponse(responseCode = "200", content = {
-        @Content(
-                mediaType = "application/json",
-                schema = @Schema(implementation = ChatsBulkDeleted.class)
-        )}
+    @Content(
+        mediaType = "application/json",
+        schema = @Schema(implementation = ChatsBulkDeleted.class)
+    )}
 )
 public class BulkDeleteChatsController extends TypicalController<BulkCreateChats, ChatsBulkCreated> {
 }

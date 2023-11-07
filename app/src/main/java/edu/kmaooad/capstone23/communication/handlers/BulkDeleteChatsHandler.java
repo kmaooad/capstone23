@@ -39,7 +39,7 @@ public class BulkDeleteChatsHandler implements CommandHandler<BulkDeleteChats, C
     private List<Chat> bulkMapDeleteChat(BulkDeleteChats bulkCommand) {
         return bulkCommand.getChats()
                 .stream()
-                .map((childCommand) -> mapDeleteChat(childCommand))
+                .map(this::mapDeleteChat)
                 .toList();
     }
 
