@@ -3,13 +3,12 @@ package edu.kmaooad.capstone23.competences.handlers;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
-import edu.kmaooad.capstone23.competences.dal.SkillsRepository;
+import edu.kmaooad.capstone23.competences.dal.MongoSkillsRepository;
 import edu.kmaooad.capstone23.competences.services.SkillSetService;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import edu.kmaooad.capstone23.competences.commands.CreateSkillSet;
 import edu.kmaooad.capstone23.competences.dal.SkillSet;
-import edu.kmaooad.capstone23.competences.dal.SkillSetRepository;
 import edu.kmaooad.capstone23.competences.events.SkillSetCreated;
 import org.bson.types.ObjectId;
 
@@ -22,7 +21,7 @@ public class CreateSkillSetHandler implements CommandHandler<CreateSkillSet, Ski
     private SkillSetService service;
 
     @Inject
-    private SkillsRepository skillsRepository;
+    private MongoSkillsRepository skillsRepository;
     public Result<SkillSetCreated> handle(CreateSkillSet command) {
 
         SkillSet skillSet = new SkillSet();
