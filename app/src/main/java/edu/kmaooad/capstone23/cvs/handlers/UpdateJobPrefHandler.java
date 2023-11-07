@@ -8,7 +8,6 @@ import edu.kmaooad.capstone23.cvs.services.CVService;
 import edu.kmaooad.capstone23.cvs.events.JobPrefUpdated;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
-import org.bson.types.ObjectId;
 
 @RequestScoped
 public class UpdateJobPrefHandler implements CommandHandler<UpdateJobPref, JobPrefUpdated> {
