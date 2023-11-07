@@ -13,9 +13,30 @@ public class UserServiceImpl implements UserService {
   @Inject
   UserRepository userRepository;
 
+  @Override
   public boolean isUserPresent(String id) {
     Optional<User> user = userRepository.findById(id);
 
     return user.isPresent();
+  }
+
+  @Override
+  public Optional<User> findById(String id) {
+    return userRepository.findById(id);
+  }
+
+  @Override
+  public Optional<User> findByEmail(String email) {
+    return userRepository.findByEmail(email);
+  }
+
+  @Override
+  public User insert(User user) {
+    return userRepository.insert(user);
+  }
+
+  @Override
+  public void deleteByEmail(String email) {
+    userRepository.deleteByEmail(email);
   }
 }
