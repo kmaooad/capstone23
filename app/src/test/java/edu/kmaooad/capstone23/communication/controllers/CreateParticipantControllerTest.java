@@ -7,7 +7,7 @@ import edu.kmaooad.capstone23.communication.interfaces.repositories.ChatReposito
 import edu.kmaooad.capstone23.communication.mocks.ChatMocks;
 import edu.kmaooad.capstone23.communication.mocks.ParticipantMocks;
 import edu.kmaooad.capstone23.users.dal.entities.User;
-import edu.kmaooad.capstone23.users.interfaces.repositories.UserRepository;
+import edu.kmaooad.capstone23.users.interfaces.services.UserService;
 import edu.kmaooad.capstone23.users.mocks.UserMocks;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
@@ -20,7 +20,7 @@ public class CreateParticipantControllerTest extends ControllerTest<Participant>
   ChatRepository chatRepository;
 
   @Inject
-  UserRepository userRepository;
+  UserService userService;
 
   CreateParticipantControllerTest() {
     super("/participants/create");
@@ -30,7 +30,7 @@ public class CreateParticipantControllerTest extends ControllerTest<Participant>
   @DisplayName("Should succeed if chat and user exist")
   public void shouldSucceedIfChatAndUserExist() {
     Chat chat = chatRepository.insert(ChatMocks.validChat());
-    User user = userRepository.insert(UserMocks.validUser());
+    User user = userService.insert(UserMocks.validUser());
 
     assertRequestSucceeds(
         ParticipantMocks.makeParticipant(chat.id, user.id)
