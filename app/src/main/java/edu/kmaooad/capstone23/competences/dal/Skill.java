@@ -14,7 +14,7 @@ public class Skill {
     {
         this.id = new ObjectId(id);
     }
-  
+
     public void setParentSkill(String id)
     {
         this.parentSkill = new ObjectId(id);

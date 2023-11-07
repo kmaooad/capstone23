@@ -6,15 +6,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface SkillsRepository {
-
     Optional<Skill> findById(String id);
     Skill insert(Skill skill);
-    List<Skill> findChildRepositories(ObjectId parentSkill);
-
+    List<Skill> findChildRepositories(String parentSkill);
     Skill modify(Skill skill);
-
-    void deleteSkill(Optional<Skill> skillToDelete);
-
-
-
+    void deleteSkill(Skill skillToDelete);
 }
