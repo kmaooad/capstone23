@@ -22,12 +22,10 @@ public class DeleteSkillHandler implements CommandHandler<DeleteSkill, SkillDele
     private SkillService skillService;
 
 
-
     @Override
     public Result<SkillDeleted> handle(DeleteSkill command) {
         ObjectId id = command.getId();
         Optional<Skill> skill = skillService.findById(id);
-
 
         if (skill.isEmpty()) {
             return new Result<>(ErrorCode.EXCEPTION, "Skill not found");
