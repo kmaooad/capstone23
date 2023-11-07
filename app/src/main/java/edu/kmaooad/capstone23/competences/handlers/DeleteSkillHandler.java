@@ -18,7 +18,7 @@ public class DeleteSkillHandler implements CommandHandler<DeleteSkill, SkillDele
 
 
     @Inject
-    private SkillsRepository repository;
+    SkillsRepository repository;
 
 
     @Override

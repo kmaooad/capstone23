@@ -69,7 +69,7 @@ public class DeleteSkillHandlerTest {
 
         var command = new CreateSkill();
         command.setSkillName("hustlin");
-        command.setParentSkill(skillToDelete);
+        command.setParentSkill(skillToDelete.toHexString());
 
         Result<SkillCreated> result = createHandler.handle(command);
 
