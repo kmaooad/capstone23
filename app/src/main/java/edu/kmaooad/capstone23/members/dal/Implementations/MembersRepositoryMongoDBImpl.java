@@ -4,6 +4,7 @@ import edu.kmaooad.capstone23.members.commands.GetAllMembers;
 import edu.kmaooad.capstone23.members.commands.GetAllMembersByOrg;
 import edu.kmaooad.capstone23.members.dal.Member;
 import edu.kmaooad.capstone23.members.dal.abstractions.MembersRepository;
+import edu.kmaooad.capstone23.members.dto.UserDTO;
 import edu.kmaooad.capstone23.members.exceptions.MemberNotFoundException;
 import edu.kmaooad.capstone23.members.exceptions.UniquenessViolationException;
 import io.quarkus.mongodb.panache.PanacheMongoRepository;
@@ -69,5 +70,10 @@ public class MembersRepositoryMongoDBImpl implements MembersRepository, PanacheM
     @Override
     public List<Member> getAll(GetAllMembers command) {
         return findAll().page(Page.of(command.getPage(), command.getSize())).list();
+    }
+
+    @Override
+    public List<Member> getByUser(UserDTO userDTO) {
+        return find("userId", userDTO.getId()).stream().toList();
     }
 }
