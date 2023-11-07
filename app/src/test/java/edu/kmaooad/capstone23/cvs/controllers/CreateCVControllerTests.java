@@ -2,7 +2,7 @@ package edu.kmaooad.capstone23.cvs.controllers;
 
 import edu.kmaooad.capstone23.cvs.dal.CV;
 import edu.kmaooad.capstone23.students.dal.Student;
-import edu.kmaooad.capstone23.students.dal.StudentRepository;
+import edu.kmaooad.capstone23.students.dal.StudentService;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
@@ -22,7 +22,7 @@ import static io.restassured.RestAssured.given;
 public class CreateCVControllerTests {
 
     @Inject
-    StudentRepository studentRepository;
+    StudentService studentService;
     private static final String id = "65242f15a322e97788871167";
 
     @BeforeEach
@@ -35,12 +35,12 @@ public class CreateCVControllerTests {
         student.DOBTimestamp = 1039132800000L;
         student.email = "email@mail.com";
 
-        studentRepository.persist(student);
+        studentService.persist(student);
     }
 
     @AfterEach
     void clear(){
-        studentRepository.deleteById(new ObjectId(id));
+        studentService.deleteById(new ObjectId(id));
     }
 
     @ParameterizedTest

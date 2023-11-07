@@ -6,7 +6,7 @@ import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.students.commands.UpdateStudent;
 import edu.kmaooad.capstone23.students.commands.notifications.NotifyStudent;
 import edu.kmaooad.capstone23.students.dal.Student;
-import edu.kmaooad.capstone23.students.dal.StudentRepository;
+import edu.kmaooad.capstone23.students.dal.StudentService;
 import edu.kmaooad.capstone23.students.events.StudentNotified;
 import edu.kmaooad.capstone23.students.events.StudentUpdated;
 import edu.kmaooad.capstone23.students.events.StudentsUpdated;
@@ -26,7 +26,7 @@ import java.util.List;
 @RequestScoped
 public class UpdateStudentHandler implements CommandHandler<UpdateStudent, StudentsUpdated> {
     @Inject
-    StudentRepository repository;
+    StudentService repository;
 
     @Inject
     UpdateCSVStudentParser parser;

@@ -1,7 +1,7 @@
 package edu.kmaooad.capstone23.students.controllers;
 
 import edu.kmaooad.capstone23.students.dal.Student;
-import edu.kmaooad.capstone23.students.dal.StudentRepository;
+import edu.kmaooad.capstone23.students.dal.StudentService;
 import edu.kmaooad.capstone23.students.parser.CSVStudent;
 import edu.kmaooad.capstone23.students.parser.CreateCSVStudentParser;
 import io.quarkus.test.junit.QuarkusTest;
@@ -22,7 +22,7 @@ import static io.restassured.RestAssured.given;
 public class UpdateStudentControllerTest {
 
     @Inject
-    StudentRepository repository;
+    StudentService repository;
     @Inject
     CreateCSVStudentParser createCSVStudentParser;
 
