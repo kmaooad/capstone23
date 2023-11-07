@@ -19,7 +19,6 @@ public class UpdateSkillHandler implements CommandHandler<UpdateSkill, SkillUpda
     private SkillService skillService;
 
 
-
     @Override
     public Result<SkillUpdated> handle(UpdateSkill command) {
         var skill = new Skill();

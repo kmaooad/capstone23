@@ -21,12 +21,13 @@ public class SkillServiceImpl implements SkillService{
         if(skill.parentSkill != null && skillsRepository.findByIdOptional(skill.parentSkill).isEmpty())
             throw new IllegalArgumentException("Parent has unknown id");
         skillsRepository.persist(skill);
+        return skillsRepository.insert(skill);
+    }
 
     @Override
     public Optional<Skill> findByIdOptional(ObjectId id) {
         return skillsRepository.findByIdOptional(id);
     }
-
 
     @Override
     public void delete(Skill skill) {
@@ -47,5 +48,4 @@ public class SkillServiceImpl implements SkillService{
         skillsRepository.update(skill);
         return skill;
     }
-
 }

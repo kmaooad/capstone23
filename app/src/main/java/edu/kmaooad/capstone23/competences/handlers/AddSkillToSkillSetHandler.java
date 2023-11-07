@@ -6,6 +6,7 @@ import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.competences.commands.AddSkillToSkillSet;
 import edu.kmaooad.capstone23.competences.dal.MongoSkillsRepository;
 import edu.kmaooad.capstone23.competences.events.SkillToSkillSetAdded;
+import edu.kmaooad.capstone23.competences.services.SkillService;
 import edu.kmaooad.capstone23.competences.services.SkillSetService;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
@@ -20,12 +21,13 @@ public class AddSkillToSkillSetHandler implements CommandHandler<AddSkillToSkill
     private SkillSetService service;
 
     @Inject
-    private MongoSkillsRepository skillsRepository;
+    private SkillService skillService;
+
 
     @Override
     public Result<SkillToSkillSetAdded> handle(AddSkillToSkillSet command) {
 
-        var skill = skillsRepository.findById(command.getSkillId().toString());
+        var skill = skillService.findById(command.getSkillId());
         var skillSet = service.findById(command.getSkillSetId().toString());
 
         if (skill.isEmpty())
