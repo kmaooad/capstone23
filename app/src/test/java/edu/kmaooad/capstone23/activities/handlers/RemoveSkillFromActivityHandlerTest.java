@@ -7,7 +7,7 @@ import edu.kmaooad.capstone23.activities.events.SkillFromActivityRemoved;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.competences.dal.Skill;
-import edu.kmaooad.capstone23.competences.dal.SkillsRepository;
+import edu.kmaooad.capstone23.competences.dal.MongoSkillsRepository;
 
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
@@ -28,7 +28,7 @@ public class RemoveSkillFromActivityHandlerTest {
     @Inject
     private ExtracurricularActivityRepository activityRepository;
     @Inject
-    private SkillsRepository skillsRepository;
+    private MongoSkillsRepository skillsRepository;
 
     private ObjectId activityId;
     private ObjectId skillId;

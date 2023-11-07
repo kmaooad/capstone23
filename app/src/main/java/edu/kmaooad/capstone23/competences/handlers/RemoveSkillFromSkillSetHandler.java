@@ -4,7 +4,7 @@ import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.competences.commands.RemoveSkillFromSkillSet;
-import edu.kmaooad.capstone23.competences.dal.SkillsRepository;
+import edu.kmaooad.capstone23.competences.dal.MongoSkillsRepository;
 import edu.kmaooad.capstone23.competences.events.SkillFromSkillSetRemoved;
 import edu.kmaooad.capstone23.competences.services.SkillSetService;
 import jakarta.enterprise.context.RequestScoped;
@@ -19,7 +19,7 @@ public class RemoveSkillFromSkillSetHandler implements CommandHandler<RemoveSkil
     private SkillSetService service;
 
     @Inject
-    private SkillsRepository skillsRepository;
+    private MongoSkillsRepository skillsRepository;
 
 
     @Override

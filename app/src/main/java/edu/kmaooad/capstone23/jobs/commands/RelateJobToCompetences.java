@@ -2,8 +2,6 @@ package edu.kmaooad.capstone23.jobs.commands;
 
 import org.bson.types.ObjectId;
 
-import java.util.ArrayList;
-
 public class RelateJobToCompetences {
     private ObjectId jobId;
     private ObjectId competenceId;
