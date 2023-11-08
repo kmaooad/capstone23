@@ -12,6 +12,7 @@ import edu.kmaooad.capstone23.groups.commands.AssignGroupToActivity;
 import edu.kmaooad.capstone23.groups.dal.Group;
 import edu.kmaooad.capstone23.groups.dal.GroupsRepository;
 import edu.kmaooad.capstone23.groups.events.ActivityAssigned;
+import edu.kmaooad.capstone23.groups.services.GroupService;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 
@@ -21,7 +22,7 @@ import java.util.Optional;
 public class AssignGroupToActivitiesHandler  implements CommandHandler<AssignGroupToActivity, ActivityAssigned> {
 
     @Inject
-    private GroupsRepository repository;
+    private GroupService repository;
 
     @Inject
     private CourseService courseService;
@@ -31,7 +32,7 @@ public class AssignGroupToActivitiesHandler  implements CommandHandler<AssignGro
     @Override
     public Result<ActivityAssigned> handle(AssignGroupToActivity command) {
 
-        Optional<Group> group = repository.findByIdOptional(command.getGroupId());
+        Optional<Group> group = repository.findByIdOptional(command.getGroupId().toString());
         if(group.isEmpty())
             return new Result<>(ErrorCode.VALIDATION_FAILED, "This group was previously deleted or never existed");
 
