@@ -35,4 +35,5 @@ public class FeedBackServiceImpl implements FeedBackService {
     public void update(FeedBack feedBack) {
         feedBackRepository.update(feedBack);
     }
+
 }

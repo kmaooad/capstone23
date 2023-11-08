@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.kmaooad.capstone23.activities.dal.Course;
 import edu.kmaooad.capstone23.activities.dal.CourseRepository;
 import edu.kmaooad.capstone23.competences.dal.Skill;
-import edu.kmaooad.capstone23.competences.dal.SkillsRepository;
+import edu.kmaooad.capstone23.competences.dal.MongoSkillsRepository;
 import edu.kmaooad.capstone23.relations.dal.Relation;
 import edu.kmaooad.capstone23.relations.dal.RelationRepository;
 import io.quarkus.test.junit.QuarkusTest;
@@ -31,7 +31,7 @@ class QueryCourseBySkillControllerTests {
     CourseRepository courseRepository;
 
     @Inject
-    SkillsRepository skillsRepository;
+    MongoSkillsRepository skillsRepository;
 
     @Inject
     RelationRepository relationRepository;
