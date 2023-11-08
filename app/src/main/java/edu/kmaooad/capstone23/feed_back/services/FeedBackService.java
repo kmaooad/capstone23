@@ -15,5 +15,7 @@ public interface FeedBackService {
 
     public FeedBack findById(ObjectId id);
 
+    public void update (FeedBack feedBack);
+
 }
 
