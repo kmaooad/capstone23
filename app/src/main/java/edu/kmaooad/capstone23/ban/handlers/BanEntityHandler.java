@@ -39,7 +39,7 @@ public class BanEntityHandler implements CommandHandler<BanEntity, EntityBanned>
             return new Result<>(ErrorCode.VALIDATION_FAILED, "Entity doesn't exist");
         }
 
-        var previousBan = entityBanService.findForEntity(entityType, command.getEntityId());
+        var previousBan = entityBanService.findForEntity(entityType.name(), command.getEntityId().toString());
         if (previousBan.isPresent()) {
             return new Result<>(new EntityBanned(previousBan.get().id, entityType));
         }

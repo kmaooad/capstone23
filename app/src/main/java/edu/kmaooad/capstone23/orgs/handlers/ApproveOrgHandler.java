@@ -1,5 +1,6 @@
 package edu.kmaooad.capstone23.orgs.handlers;
 
+import edu.kmaooad.capstone23.ban.commands.IsEntityBannedV2;
 import edu.kmaooad.capstone23.ban.dal.BannedEntityType;
 import edu.kmaooad.capstone23.ban.service.EntityBanService;
 import edu.kmaooad.capstone23.common.CommandHandler;
@@ -9,7 +10,7 @@ import edu.kmaooad.capstone23.orgs.services.OrgService;
 import edu.kmaooad.capstone23.orgs.commands.ApproveOrg;
 import edu.kmaooad.capstone23.orgs.dal.Org;
 import edu.kmaooad.capstone23.orgs.events.OrgApproved;
-import edu.kmaooad.capstone23.orgs.services.MailService;
+import edu.kmaooad.capstone23.mail.service.MailService;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 
@@ -34,7 +35,7 @@ public class ApproveOrgHandler implements CommandHandler<ApproveOrg, OrgApproved
         if (valid_org.isEmpty()) {
             return new Result<>(ErrorCode.VALIDATION_FAILED, "Org not found!");
         }
-        if (banService.findForEntity(BannedEntityType.Organization, valid_org.get().id).isPresent()) {
+        if (banService.findForEntity(IsEntityBannedV2.ORGANIZATION_BAN_ENTITY_TYPE, valid_org.get().id.toString()).isPresent()) {
             return new Result<>(ErrorCode.EXCEPTION, "Org is banned");
         }
         final Org org = valid_org.get();

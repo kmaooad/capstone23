@@ -9,6 +9,7 @@ import edu.kmaooad.capstone23.groups.commands.CreateGroup;
 import edu.kmaooad.capstone23.groups.dal.Group;
 import edu.kmaooad.capstone23.groups.dal.GroupsRepository;
 import edu.kmaooad.capstone23.groups.events.GroupCreated;
+import edu.kmaooad.capstone23.groups.services.GroupService;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
@@ -17,7 +18,7 @@ import org.bson.types.ObjectId;
 public class CreateGroupHandler implements CommandHandler<CreateGroup, GroupCreated> {
 
     @Inject
-    private GroupsRepository repository;
+    private GroupService repository;
     @Inject
     private GroupTemplatesRepository templatesRepository;
 
