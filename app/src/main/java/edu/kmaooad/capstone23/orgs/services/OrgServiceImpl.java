@@ -1,4 +1,4 @@
-package edu.kmaooad.capstone23.orgs.services.impl;
+package edu.kmaooad.capstone23.orgs.services;
 
 import edu.kmaooad.capstone23.orgs.dal.Job;
 import edu.kmaooad.capstone23.orgs.dal.Org;
@@ -12,10 +12,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @ApplicationScoped
-public class OrgServiceImpl extends OrgService {
+public class OrgServiceImpl implements OrgService {
   @Inject
   private OrgsRepository orgsRepository;
 
+  @Override
   public Org createOrg(String name, String description, String industry, String website, String emailDomain) {
     Org org = new Org();
     org.name = name;
@@ -28,38 +29,33 @@ public class OrgServiceImpl extends OrgService {
     return orgsRepository.insert(org);
   }
 
+  @Override
   public Org getOrgByName(String name) {
     return orgsRepository.findByName(name);
   }
 
+  @Override
   public Org getOrgById(String id) {
     return orgsRepository.findById(id);
   }
 
+  @Override
   public void deleteOrg(Org department) {
     orgsRepository.delete(department);
   }
 
+  @Override
   public void deleteOrgById(String id) {
     orgsRepository.deleteById(new ObjectId(id));
   }
 
+  @Override
   public void updateOrg(Org department) {
     orgsRepository.update(department);
   }
 
-
+  @Override
   public void deleteAllOrgs() {
     orgsRepository.deleteAll();
-  }
-
-  @Override
-  public List<Job> findJobsByOrgId(String id) {
-    return null;
-  }
-
-  @Override
-  public void updateJob(Job job) {
-
   }
 }
