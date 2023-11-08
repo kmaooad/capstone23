@@ -1,7 +1,9 @@
 package edu.kmaooad.capstone23.departments.handlers;
 
+import edu.kmaooad.capstone23.departments.services.DepartmentService;
 import edu.kmaooad.capstone23.orgs.commands.CreateOrg;
 import edu.kmaooad.capstone23.orgs.dal.OrgsRepository;
+import edu.kmaooad.capstone23.orgs.drivers.OrgDriver;
 import edu.kmaooad.capstone23.orgs.handlers.CreateOrgHandler;
 import jakarta.inject.Inject;
 import edu.kmaooad.capstone23.common.ErrorCode;
@@ -19,10 +21,10 @@ public class CreateDepartmentsHandlerTest {
     CreateDepartmentHandler handler;
 
     @Inject
-    CreateOrgHandler orgHandler;
+    DepartmentsRepository departmentsRepository;
 
     @Inject
-    DepartmentsRepository departmentsRepository;
+    OrgDriver orgDriver;
 
     @Inject
     OrgsRepository orgsRepository;
@@ -39,17 +41,13 @@ public class CreateDepartmentsHandlerTest {
 
 
     private void createParentOrg() {
-        CreateOrg orgCommand = new CreateOrg();
-        orgCommand.setOrgName("NaUKMA");
-        orgCommand.industry = "Education";
-        orgCommand.website = "https://www.ukma.edu.ua/eng/";
-        orgHandler.handle(orgCommand);
+        orgDriver.createOrg();
     }
 
     @Test
     @DisplayName("Create Departments: Basic successful handling when parent is set correctly")
     void testSuccessfulHandling() {
-        String parentOrgName = "NaUKMA";
+        String parentOrgName = "Org to Delete";
         String departmentName = "FSNST";
 
         CreateDepartment command = new CreateDepartment();
@@ -69,7 +67,7 @@ public class CreateDepartmentsHandlerTest {
     @Test
     @DisplayName("Create Departments: Basic error handling when parent is set incorrectly")
     void testCreateWithNonExistentParent() {
-        String parentOrgName = "NonExistentParent";
+        String parentOrgName = "Org to Delete";
         String departmentName = "NewDepartment";
 
         CreateDepartment command = new CreateDepartment();

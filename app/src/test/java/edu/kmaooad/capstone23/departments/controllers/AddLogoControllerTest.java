@@ -1,15 +1,13 @@
 package edu.kmaooad.capstone23.departments.controllers;
 
 import edu.kmaooad.capstone23.departments.dal.Department;
-import edu.kmaooad.capstone23.departments.dal.DepartmentsRepository;
+import edu.kmaooad.capstone23.departments.drivers.DepartmentDriver;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,18 +18,11 @@ public class AddLogoControllerTest {
     private String idToUpdate;
 
     @Inject
-    DepartmentsRepository departmentsRepository;
+    DepartmentDriver departmentDriver;
 
     @BeforeEach
     void setUp() {
-        departmentsRepository.deleteAll();
-        Department department = new Department();
-        department.name = "Initial Department";
-        department.description = "Initial Department Description";
-        department.parent = "NaUKMA";
-        department.members = new ArrayList<>();
-        departmentsRepository.insert(department);
-
+        Department department = departmentDriver.createDepartment();
         idToUpdate = department.id.toString();
     }
 

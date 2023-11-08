@@ -18,9 +18,9 @@ public class UnbanEntityHandler implements CommandHandler<UnbanEntity, EntityUnb
     public Result<EntityUnbanned> handle(UnbanEntity command) {
         var entityType = command.getEntityType();
 
-        var ban = entityBanService.findForEntity(entityType, command.getEntityId());
+        var ban = entityBanService.findForEntity(entityType.name(), command.getEntityId().toString());
         if (ban.isPresent()) {
-            entityBanService.deleteById(ban.get().id);
+            entityBanService.deleteById(ban.get().id.toString());
             return new Result<>(new EntityUnbanned(ban.get().id, entityType));
         } else {
             return new Result<>(new EntityUnbanned(null, entityType));
