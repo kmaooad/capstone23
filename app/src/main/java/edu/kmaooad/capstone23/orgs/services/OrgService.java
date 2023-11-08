@@ -3,17 +3,16 @@ package edu.kmaooad.capstone23.orgs.services;
 import edu.kmaooad.capstone23.orgs.dal.Org;
 
 public interface OrgService {
-     Org createOrg(String name, String description, String industry, String website, String emailDomain);
+    public Org createOrg(String name, String description, String industry, String website, String emailDomain);
 
-     Org getOrgByName(String name);
+    public Org getOrgByName(String name);
 
-     Org getOrgById(String id);
+    public Org getOrgById(String id);
 
-     void deleteOrg(Org department);
+    public void deleteOrg(Org department);
+    public void deleteOrgById(String id);
 
-     void deleteOrgById(String id);
+    public void updateOrg(Org department);
 
-     void updateOrg(Org department);
-
-     void deleteAllOrgs();
+    public void deleteAllOrgs();
 }
