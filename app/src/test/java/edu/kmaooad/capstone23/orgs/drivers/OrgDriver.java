@@ -3,7 +3,9 @@ package edu.kmaooad.capstone23.orgs.drivers;
 import edu.kmaooad.capstone23.orgs.dal.Org;
 import edu.kmaooad.capstone23.orgs.services.OrgService;
 import jakarta.inject.Inject;
+import jakarta.enterprise.context.ApplicationScoped;
 
+@ApplicationScoped
 public class OrgDriver {
 
     @Inject

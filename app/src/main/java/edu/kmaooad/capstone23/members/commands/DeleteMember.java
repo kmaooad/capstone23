@@ -1,23 +1,22 @@
 package edu.kmaooad.capstone23.members.commands;
 
 import jakarta.validation.constraints.NotNull;
-import org.bson.types.ObjectId;
 
 public class DeleteMember {
 
     @NotNull
-    private ObjectId memberId;
+    private String memberId;
 
-    public ObjectId getMemberId() {
+    public String getMemberId() {
         return memberId;
     }
 
-    public void setMemberId(ObjectId memberId) {
+    public void setMemberId(String memberId) {
         this.memberId = memberId;
     }
 
     public DeleteMember(String memberId) {
-        this.memberId = new ObjectId(memberId);
+        this.memberId = memberId;
     }
 
     public DeleteMember() {

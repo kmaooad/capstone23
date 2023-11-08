@@ -4,9 +4,8 @@ import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.members.commands.GetAllMembers;
 import edu.kmaooad.capstone23.members.dal.Member;
-import edu.kmaooad.capstone23.members.dal.MembersRepository;
+import edu.kmaooad.capstone23.members.dal.abstractions.MembersRepository;
 import edu.kmaooad.capstone23.members.events.MembersListed;
-import io.quarkus.panache.common.Page;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 
@@ -19,7 +18,7 @@ public class GetAllMembersHandler implements CommandHandler<GetAllMembers, Membe
 
     @Override
     public Result<MembersListed> handle(GetAllMembers command) {
-        List<Member> membersPage = membersRepository.findAll().page(Page.of(command.getPage(), command.getSize())).list();
+        List<Member> membersPage = membersRepository.getAll(command);
         MembersListed result = new MembersListed();
         result.setMembers(membersPage);
         return new Result<>(result);
