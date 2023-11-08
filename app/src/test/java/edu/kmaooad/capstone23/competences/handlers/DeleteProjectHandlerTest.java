@@ -53,8 +53,8 @@ class DeleteProjectHandlerTest {
         Project project = new Project();
         project.name = "Test Project";
         project.description = "Test Description";
-        project.skills = List.of(new ObjectId("5f7e47fc8e1f7112d73c92a1"));
-        project.skillSets = List.of(new ObjectId("1a4cd132b123a1aa3bc2d142"));
+        project.skills = List.of("5f7e47fc8e1f7112d73c92a1");
+        project.skillSets = List.of("1a4cd132b123a1aa3bc2d142");
         return project;
     }
 }

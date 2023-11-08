@@ -9,7 +9,9 @@ import edu.kmaooad.capstone23.departments.dal.Department;
 import edu.kmaooad.capstone23.departments.dal.DepartmentsRepository;
 import edu.kmaooad.capstone23.departments.dal.Request;
 import edu.kmaooad.capstone23.departments.dal.RequestsRepository;
+import edu.kmaooad.capstone23.departments.drivers.DepartmentDriver;
 import edu.kmaooad.capstone23.departments.events.RequestApproved;
+import edu.kmaooad.capstone23.departments.services.DepartmentService;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 import jakarta.validation.constraints.AssertTrue;
@@ -28,7 +30,10 @@ public class ApproveRequestHandlerTest {
     ApproveRequestHandler handler;
 
     @Inject
-    DepartmentsRepository departmentsRepository;
+    DepartmentService departmentService;
+
+    @Inject
+    DepartmentDriver departmentDriver;
 
     @Inject
     RequestsRepository requestsRepository;
@@ -40,13 +45,7 @@ public class ApproveRequestHandlerTest {
 
     @BeforeEach
     void setUp() {
-        Department department = new Department();
-
-        department.name = "Initial Department";
-        department.description = "Initial Department Description";
-        department.parent = "NaUKMA";
-        department.members = new ArrayList<>();
-        departmentsRepository.insert(department);
+        Department department = departmentDriver.createDepartment();
 
         Request request = new Request();
         request.userName = "user1@ukma.edu";
@@ -76,7 +75,7 @@ public class ApproveRequestHandlerTest {
 
         Assertions.assertEquals("approved", resultRequest.status);
 
-        Department department = departmentsRepository.findById(resultRequest.departmentId);
+        Department department = departmentService.getDepartmentById(resultRequest.departmentId);
 
         Assertions.assertNotNull(department);
 
@@ -103,7 +102,7 @@ public class ApproveRequestHandlerTest {
     @DisplayName("Approve Join Request: Error handling when department is banned")
     public void testApproveJoinRequesForBannedDepartment() {
         var request = requestsRepository.findById(requestId);
-        var department = departmentsRepository.findById(request.departmentId);
+        var department = departmentService.getDepartmentById(request.departmentId);
 
         BanEntity banCommand = new BanEntity();
         banCommand.setEntityType("Department");

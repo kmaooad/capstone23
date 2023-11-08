@@ -4,7 +4,7 @@ import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.competences.commands.CreateSkill;
 import edu.kmaooad.capstone23.competences.commands.DeleteSkill;
-import edu.kmaooad.capstone23.competences.dal.SkillsRepository;
+import edu.kmaooad.capstone23.competences.dal.MongoSkillsRepository;
 import edu.kmaooad.capstone23.competences.events.SkillCreated;
 import edu.kmaooad.capstone23.competences.events.SkillDeleted;
 import io.quarkus.test.junit.QuarkusTest;
@@ -24,7 +24,7 @@ public class DeleteSkillHandlerTest {
     CommandHandler<DeleteSkill, SkillDeleted> deleteHandler;
 
     @Inject
-    private SkillsRepository repository;
+    private MongoSkillsRepository repository;
 
     ObjectId createTestSkill() {
         var command = new CreateSkill();
@@ -42,7 +42,7 @@ public class DeleteSkillHandlerTest {
         Assertions.assertNotNull(repository.findById(skillToDelete));
 
         var command = new DeleteSkill();
-        command.setId(skillToDelete);
+        command.setId(skillToDelete.toHexString());
 
         Result<SkillDeleted> result = deleteHandler.handle(command);
 
@@ -56,7 +56,7 @@ public class DeleteSkillHandlerTest {
     @Test
     void testDeletingNonExistingSkill() {
         var command = new DeleteSkill();
-        command.setId(new ObjectId());
+        command.setId("5faabb2e8d6c4b3f3e217465");
 
         Result<SkillDeleted> result = deleteHandler.handle(command);
 
@@ -69,7 +69,7 @@ public class DeleteSkillHandlerTest {
 
         var command = new CreateSkill();
         command.setSkillName("hustlin");
-        command.setParentSkill(skillToDelete);
+        command.setParentSkill(skillToDelete.toHexString());
 
         Result<SkillCreated> result = createHandler.handle(command);
 
@@ -78,7 +78,7 @@ public class DeleteSkillHandlerTest {
         Assertions.assertNotNull(result.getValue().getSkill());
 
         var command2 = new DeleteSkill();
-        command2.setId(skillToDelete);
+        command2.setId(skillToDelete.toHexString());
 
         Result<SkillDeleted> result2 = deleteHandler.handle(command2);
 
