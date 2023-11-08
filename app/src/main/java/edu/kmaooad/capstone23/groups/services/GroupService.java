@@ -1,11 +1,12 @@
 package edu.kmaooad.capstone23.groups.services;
 
 import edu.kmaooad.capstone23.groups.dal.Group;
+import edu.kmaooad.capstone23.search.Listable;
 import org.bson.types.ObjectId;
 
 import java.util.Optional;
 
-public interface GroupService {
+public interface GroupService extends Listable<Group> {
 
     Group findByName(String name);
     Group insert(Group group);
