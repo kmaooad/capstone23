@@ -5,6 +5,7 @@ import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.group_templates.dal.GroupTemplate;
 import edu.kmaooad.capstone23.group_templates.dal.GroupTemplatesRepository;
+import edu.kmaooad.capstone23.group_templates.services.GroupTemplatesService;
 import edu.kmaooad.capstone23.groups.commands.UpdateGroup;
 import edu.kmaooad.capstone23.groups.dal.Group;
 import edu.kmaooad.capstone23.groups.events.GroupUpdated;
@@ -20,7 +21,7 @@ public class UpdateGroupHandler implements CommandHandler<UpdateGroup, GroupUpda
     private GroupService repository;
 
     @Inject
-    private GroupTemplatesRepository templatesRepository;
+    private GroupTemplatesService templatesService;
 
     public Result<GroupUpdated> handle(UpdateGroup command) {
         if(!ObjectId.isValid(command.getId()))
@@ -34,7 +35,7 @@ public class UpdateGroupHandler implements CommandHandler<UpdateGroup, GroupUpda
         if(!ObjectId.isValid(command.getTemplateId()))
             return new Result<>(ErrorCode.VALIDATION_FAILED, "Template object Id is invalid");
 
-        GroupTemplate template = templatesRepository.findById(new ObjectId(command.getTemplateId()));
+        GroupTemplate template = templatesService.findById(new ObjectId(command.getTemplateId()));
         if(template == null)
             return new Result<>(ErrorCode.VALIDATION_FAILED, "Template with such object Id doesn't exist");
 
