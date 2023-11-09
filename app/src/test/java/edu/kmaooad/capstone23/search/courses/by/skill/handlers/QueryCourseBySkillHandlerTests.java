@@ -4,13 +4,12 @@ package edu.kmaooad.capstone23.search.courses.by.skill.handlers;
 import edu.kmaooad.capstone23.activities.dal.Course;
 import edu.kmaooad.capstone23.activities.dal.CourseRepository;
 import edu.kmaooad.capstone23.competences.dal.Skill;
-import edu.kmaooad.capstone23.competences.dal.SkillsRepository;
+import edu.kmaooad.capstone23.competences.dal.MongoSkillsRepository;
 import edu.kmaooad.capstone23.relations.dal.Relation;
 import edu.kmaooad.capstone23.relations.dal.RelationRepository;
 import edu.kmaooad.capstone23.search.QueryByIdCommand;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
-import org.bson.types.ObjectId;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -32,7 +31,7 @@ public class QueryCourseBySkillHandlerTests {
     CourseRepository courseRepository;
 
     @Inject
-    SkillsRepository skillRepository;
+    MongoSkillsRepository skillRepository;
 
     @Inject
     RelationRepository relationRepository;

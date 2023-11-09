@@ -5,16 +5,17 @@ import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.members.commands.CreateBasicMember;
 import edu.kmaooad.capstone23.members.dal.Member;
-import edu.kmaooad.capstone23.members.dal.MembersRepository;
+import edu.kmaooad.capstone23.members.dal.abstractions.MembersRepository;
 import edu.kmaooad.capstone23.members.dto.OrgDTO;
 import edu.kmaooad.capstone23.members.dto.UserDTO;
 import edu.kmaooad.capstone23.members.events.BasicMemberCreated;
 import edu.kmaooad.capstone23.members.exceptions.UniquenessViolationException;
 import edu.kmaooad.capstone23.members.services.ExpertsService;
-import edu.kmaooad.capstone23.members.services.OrgService;
+import edu.kmaooad.capstone23.members.services.OrgServiceInterface;
 import edu.kmaooad.capstone23.members.services.UserService;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
+import org.bson.types.ObjectId;
 
 
 import java.util.Optional;
@@ -26,7 +27,7 @@ public class CreateMemberHandler implements CommandHandler<CreateBasicMember, Ba
     @Inject
     ExpertsService expertsService;
     @Inject
-    OrgService orgService;
+    OrgServiceInterface orgService;
     @Inject
     UserService userService;
 
@@ -44,10 +45,10 @@ public class CreateMemberHandler implements CommandHandler<CreateBasicMember, Ba
                                     command.getEmail()
                             )
                     );
-            member.orgId = command.getOrgId();
+            member.orgId = new ObjectId(command.getOrgId());
             member.userId = foundOrCreatedUser.getId();
             member.isExpert = Boolean.parseBoolean(command.getIsExpert());
-            Optional<OrgDTO> memberOrg = orgService.findByIdOptional(command.getOrgId());
+            Optional<OrgDTO> memberOrg = orgService.findByIdOptional(command.getOrgId().toString());
             if (memberOrg.isEmpty())
                 return new Result<>(ErrorCode.VALIDATION_FAILED, "Organisation not found");
             membersRepository.insert(member);

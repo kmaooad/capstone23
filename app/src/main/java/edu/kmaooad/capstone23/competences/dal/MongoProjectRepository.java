@@ -4,6 +4,8 @@ import io.quarkus.mongodb.panache.PanacheMongoRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import org.bson.types.ObjectId;
 
+import java.util.Optional;
+
 @ApplicationScoped
 public class MongoProjectRepository implements PanacheMongoRepository<Project>, ProjectsRepository {
     public Project findByName(String name) {
@@ -13,6 +15,11 @@ public class MongoProjectRepository implements PanacheMongoRepository<Project>, 
     public Project insert(Project project) {
         persist(project);
         return project;
+    }
+
+    @Override
+    public Optional<Project> findByIdMaybe(ObjectId id) {
+        return this.findByIdOptional(id);
     }
 
     @Override
