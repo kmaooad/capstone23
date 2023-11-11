@@ -8,41 +8,19 @@ import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
 
 import java.util.Optional;
-@ApplicationScoped
-public class CVService {
+public interface CVService {
 
-    @Inject
-    CVRepository cvRepository;
+    CV create(CV cv);
 
-
-    public CV create(CV cv) {
-        cvRepository.persist(cv);
-        return cv;
-    }
+    void delete(CV cv);
 
 
-    public void delete(CV cv) {
-        cvRepository.delete(cv);
-    }
+    CV findById(ObjectId id);
 
+    void deleteById(ObjectId id);
+    PanacheQuery<CV> find(String query, Object... params);
 
-    public CV findById(ObjectId id) {
-        return cvRepository.findById(id);
-    }
+    void update(CV cv);
 
-    public void deleteById(ObjectId id) {
-        cvRepository.deleteById(id);
-    }
-    public PanacheQuery<CV> find(String query, Object... params) {
-        return cvRepository.find(query, params);
-    }
-
-
-    public void update(CV cv) {
-        cvRepository.update(cv);
-    }
-
-    public Optional<CV> findByIdOptional(ObjectId id) {
-        return cvRepository.findByIdOptional(id);
-    }
+    Optional<CV> findByIdOptional(ObjectId id);
 }
