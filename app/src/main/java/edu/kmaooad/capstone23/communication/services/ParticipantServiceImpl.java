@@ -17,6 +17,7 @@ public class ParticipantServiceImpl implements ParticipantService {
   @Inject
   ParticipantRepository participantRepository;
 
+  @Override
   public boolean validateChatAndUser(String chatId, String userId) {
     boolean isChatValid = chatService.isChatPresent(chatId);
     boolean isUserValid = userService.isUserPresent(userId);
@@ -24,6 +25,7 @@ public class ParticipantServiceImpl implements ParticipantService {
     return isChatValid && isUserValid;
   }
 
+  @Override
   public Participant insert(Participant participant) {
     return this.participantRepository.insert(participant);
   }

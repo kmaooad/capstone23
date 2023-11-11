@@ -34,6 +34,7 @@ public class BanServiceImpl implements BanService {
     @Inject
     GroupsRepository groupsRepository;
 
+    @Override
     public Result<EntityBanned> banEntity(ObjectId entityId, AccessRuleFromEntityType fromEntityType) {
         if (!entityExists(fromEntityType, entityId)) {
             return new Result<>(ErrorCode.VALIDATION_FAILED, "Entity doesn't exist");
