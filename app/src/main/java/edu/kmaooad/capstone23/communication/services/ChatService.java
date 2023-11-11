@@ -7,26 +7,13 @@ import jakarta.inject.Inject;
 import java.util.List;
 import java.util.Optional;
 
-@ApplicationScoped
-public class ChatService {
-  @Inject
-  ChatRepository chatRepository;
+public interface ChatService {
 
-  public boolean isChatPresent(String id) {
-    Optional<Chat> chat = chatRepository.findById(id);
+  boolean isChatPresent(String id);
 
-    return chat.isPresent();
-  }
+  Chat insert(Chat chat);
 
-  public Chat insert(Chat chat) {
-    return chatRepository.insert(chat);
-  }
-
-  public List<Chat> bulkInsert(List<Chat> chats) {
-    return chatRepository.bulkInsert(chats);
-  }
+  List<Chat> bulkInsert(List<Chat> chats);
   
-  public Boolean bulkDelete(List<Chat> chats) {
-    return chatRepository.bulkDelete(chats);
-  }
+  Boolean bulkDelete(List<Chat> chats);
 }

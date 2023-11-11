@@ -6,25 +6,8 @@ import edu.kmaooad.capstone23.users.services.UserService;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
-@ApplicationScoped
-public class ParticipantService {
-  @Inject
-  ChatService chatService;
+public interface ParticipantService {
+  boolean validateChatAndUser(String chatId, String userId);
 
-  @Inject
-  UserService userService;
-
-  @Inject
-  ParticipantRepository participantRepository;
-
-  public boolean validateChatAndUser(String chatId, String userId) {
-    boolean isChatValid = chatService.isChatPresent(chatId);
-    boolean isUserValid = userService.isUserPresent(userId);
-
-    return isChatValid && isUserValid;
-  }
-
-  public Participant insert(Participant participant) {
-    return this.participantRepository.insert(participant);
-  }
+  Participant insert(Participant participant);
 }
