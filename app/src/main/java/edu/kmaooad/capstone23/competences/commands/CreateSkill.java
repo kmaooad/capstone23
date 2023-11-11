@@ -13,7 +13,7 @@ public class CreateSkill {
     private String skillName;
 
 
-    private ObjectId parentSkill;
+    private String parentSkill;
 
     public String getSkillName() {
         return skillName;
@@ -23,11 +23,11 @@ public class CreateSkill {
         this.skillName = skillName;
     }
 
-    public ObjectId getParentSkill() {
+    public String getParentSkill() {
         return parentSkill;
     }
 
-    public void setParentSkill(ObjectId parentSkill) {
+    public void setParentSkill(String parentSkill) {
         this.parentSkill = parentSkill;
     }
 }

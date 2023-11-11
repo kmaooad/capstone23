@@ -22,7 +22,7 @@ public class DeleteRelationJobToActivitiesHandler  implements CommandHandler<Del
     @Override
     public Result<ActivityUnrelated> handle(DeleteRelateJobToActivities command) {
 
-        Optional<Job> job = jobService.findJobById(command.getJobId());
+        Optional<Job> job = jobService.findJobById(command.getJobId().toString());
         if(job.isEmpty())
             return new Result<>(ErrorCode.VALIDATION_FAILED, "This job was previously deleted or never existed");
 

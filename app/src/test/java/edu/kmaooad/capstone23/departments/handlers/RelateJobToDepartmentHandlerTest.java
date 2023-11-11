@@ -9,8 +9,10 @@ import edu.kmaooad.capstone23.departments.dal.Department;
 import edu.kmaooad.capstone23.departments.dal.DepartmentsRepository;
 import edu.kmaooad.capstone23.departments.dal.Request;
 import edu.kmaooad.capstone23.departments.dal.RequestsRepository;
+import edu.kmaooad.capstone23.departments.drivers.DepartmentDriver;
 import edu.kmaooad.capstone23.departments.events.JobToDepartmentRelated;
 import edu.kmaooad.capstone23.departments.events.RequestApproved;
+import edu.kmaooad.capstone23.departments.services.DepartmentService;
 import edu.kmaooad.capstone23.jobs.dal.Job;
 import edu.kmaooad.capstone23.jobs.dal.JobRepository;
 import io.quarkus.test.junit.QuarkusTest;
@@ -36,7 +38,10 @@ public class RelateJobToDepartmentHandlerTest {
     BanEntityHandler banEntityHandler;
 
     @Inject
-    DepartmentsRepository departmentsRepository;
+    DepartmentService departmentService;
+
+    @Inject
+    DepartmentDriver departmentDriver;
 
     @Inject
     JobRepository jobRepository;
@@ -48,14 +53,9 @@ public class RelateJobToDepartmentHandlerTest {
     @BeforeEach
     void setUp() {
         jobRepository.deleteAll();
-        departmentsRepository.deleteAll();
-        Department department = new Department();
 
-        department.name = "Initial Department";
-        department.description = "Initial Department Description";
-        department.parent = "NaUKMA";
-        department.members = new ArrayList<>();
-        department.jobs = new ArrayList<>();
+        Department department = departmentDriver.createDepartment();
+
 
         Job job = new Job();
         job.name = "Initial Job";
@@ -63,7 +63,7 @@ public class RelateJobToDepartmentHandlerTest {
         jobRepository.insert(job);
 
         department.jobs.add(job.id.toString());
-        departmentsRepository.insert(department);
+        departmentService.updateDepartment(department);
 
         departmentId = department.id.toString();
         jobId = job.id.toString();
@@ -85,7 +85,7 @@ public class RelateJobToDepartmentHandlerTest {
         Assertions.assertEquals(result.getValue().getDepartmentId(), departmentId);
         Assertions.assertEquals(result.getValue().getJobId(), jobId);
 
-        Department department = departmentsRepository.findById(departmentId);
+        Department department = departmentService.getDepartmentById(departmentId);
 
         Assertions.assertNotNull(department);
 
@@ -108,7 +108,7 @@ public class RelateJobToDepartmentHandlerTest {
 
         Assertions.assertNull(result.getValue());
 
-        Department department = departmentsRepository.findById(departmentId);
+        Department department = departmentService.getDepartmentById(departmentId);
 
         Assertions.assertNotNull(department);
 
