@@ -9,8 +9,8 @@ import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.groups.commands.UnassignGroupToActivity;
 import edu.kmaooad.capstone23.groups.dal.Group;
-import edu.kmaooad.capstone23.groups.dal.GroupsRepository;
 import edu.kmaooad.capstone23.groups.events.ActivityUnassigned;
+import edu.kmaooad.capstone23.groups.services.GroupService;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 
@@ -19,7 +19,7 @@ import java.util.Optional;
 @RequestScoped
 public class UnassignGroupToActivitiesHandler  implements CommandHandler<UnassignGroupToActivity, ActivityUnassigned> {
     @Inject
-    private GroupsRepository repository;
+    private GroupService repository;
 
     @Inject
     private CourseRepository courseService;
@@ -30,7 +30,7 @@ public class UnassignGroupToActivitiesHandler  implements CommandHandler<Unassig
     @Override
     public Result<ActivityUnassigned> handle(UnassignGroupToActivity command) {
 
-        Optional<Group> group = repository.findByIdOptional(command.getGroupId());
+        Optional<Group> group = repository.findByIdOptional(command.getGroupId().toString());
         if(group.isEmpty())
             return new Result<>(ErrorCode.VALIDATION_FAILED, "This group was previously deleted or never existed");
         ActivityUnassigned result = new ActivityUnassigned(command.getGroupId(), command.getActivityId());

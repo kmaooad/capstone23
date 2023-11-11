@@ -22,22 +22,17 @@ public class CreateTagControllerTest {
     @DisplayName("Create Tag")
     public void testTagCreation() {
         var tagName = "OOAD";
-        Map<String, Object> jsonAsMap = new HashMap<>();
-        jsonAsMap.put("tagName", tagName);
-
-        given()
-                .contentType("application/json")
-                .body(jsonAsMap)
-                .when()
-                .post("/tags/create")
-                .then()
-                .statusCode(200);
+        createAndPostTag(tagName, 200);
     }
 
     @Test
     @DisplayName("Test invalid tagName")
     public void testInvalidTagName() {
         var tagName = "O";
+        createAndPostTag(tagName, 400);
+    }
+
+    private void createAndPostTag(String tagName, int expectedStatusCode) {
         Map<String, Object> jsonAsMap = new HashMap<>();
         jsonAsMap.put("tagName", tagName);
 
@@ -47,7 +42,7 @@ public class CreateTagControllerTest {
                 .when()
                 .post("/tags/create")
                 .then()
-                .statusCode(400);
+                .statusCode(expectedStatusCode);
     }
 
     @AfterEach
