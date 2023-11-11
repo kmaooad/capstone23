@@ -1,7 +1,7 @@
 package edu.kmaooad.capstone23.cvs.controllers;
 
 import edu.kmaooad.capstone23.competences.dal.Skill;
-import edu.kmaooad.capstone23.competences.dal.SkillsRepository;
+import edu.kmaooad.capstone23.competences.dal.MongoSkillsRepository;
 import edu.kmaooad.capstone23.cvs.dal.CV;
 import edu.kmaooad.capstone23.cvs.dal.CVRepository;
 import io.quarkus.test.junit.QuarkusTest;
@@ -19,7 +19,7 @@ class RemoveSkillFromCVControllerTest {
     @Inject
     CVRepository cvRepository;
     @Inject
-    SkillsRepository skillsRepository;
+    MongoSkillsRepository skillsRepository;
 
     Map<String, String> validValues;
     Map<String, String> invalidValues;
