@@ -4,6 +4,7 @@ import edu.kmaooad.capstone23.activities.commands.DeleteExtracurricularActivity;
 import edu.kmaooad.capstone23.activities.dal.ExtracurricularActivity;
 import edu.kmaooad.capstone23.activities.dal.ExtracurricularActivityRepository;
 import edu.kmaooad.capstone23.activities.events.ExtracurricularActivityDeleted;
+import edu.kmaooad.capstone23.activities.services.ExtracurricularCourseService;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
@@ -15,17 +16,17 @@ import org.bson.types.ObjectId;
 public class DeleteExtracurricularActivityHandler implements CommandHandler<DeleteExtracurricularActivity, ExtracurricularActivityDeleted> {
 
     @Inject
-    private ExtracurricularActivityRepository repository;
+    private ExtracurricularCourseService extracurricularCourseService;
 
     public Result<ExtracurricularActivityDeleted> handle(DeleteExtracurricularActivity command) {
         String id = command.getId();
-        ExtracurricularActivity extracurricularActivity = repository.findById(id);
+        ExtracurricularActivity extracurricularActivity = extracurricularCourseService.findById(id);
 
         if (extracurricularActivity == null) {
             return new Result<>(ErrorCode.EXCEPTION, "Extracurricular Activity not found");
         }
 
-        repository.deleteExtracurricularActivity(extracurricularActivity);
+        extracurricularCourseService.deleteExtracurricularActivity(extracurricularActivity);
 
         return new Result<>(new ExtracurricularActivityDeleted(extracurricularActivity.id.toString()));
     }

@@ -2,6 +2,7 @@ package edu.kmaooad.capstone23.activities.handlers;
 
 import edu.kmaooad.capstone23.activities.dal.ExtracurricularActivity;
 import edu.kmaooad.capstone23.activities.dal.ExtracurricularActivityRepository;
+import edu.kmaooad.capstone23.activities.services.ExtracurricularCourseService;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.activities.commands.CreateExtracurricularActivity;
@@ -14,14 +15,14 @@ public class CreateExtracurricularActivityHandler implements CommandHandler<Crea
 
 
     @Inject
-    private ExtracurricularActivityRepository repository;
+    private ExtracurricularCourseService extracurricularCourseService;
 
     public Result<ExtracurricularActivityCreated> handle(CreateExtracurricularActivity command) {
 
         ExtracurricularActivity extracurricularActivity = new ExtracurricularActivity();
         extracurricularActivity.extracurricularActivityName = command.getExtracurricularActivityName();
 
-        repository.insert(extracurricularActivity);
+        extracurricularCourseService.insert(extracurricularActivity);
 
         ExtracurricularActivityCreated result = new ExtracurricularActivityCreated(extracurricularActivity.id.toString());
 
