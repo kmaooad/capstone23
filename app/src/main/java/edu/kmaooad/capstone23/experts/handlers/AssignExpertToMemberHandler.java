@@ -45,7 +45,7 @@ public class AssignExpertToMemberHandler implements CommandHandler<AssignExpertT
 
         Org org = orgsRepository.findById(member.orgId);
         Expert expert = new Expert();
-        var user = userService.findById(member.userId);
+        var user = userService.getById(member.userId.toHexString());
         expert.name = user.firstName + user.lastName;
         expert.org = org;
 
