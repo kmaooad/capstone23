@@ -4,7 +4,7 @@ import edu.kmaooad.capstone23.members.dal.Member;
 import edu.kmaooad.capstone23.members.dal.MembersRepository;
 import edu.kmaooad.capstone23.orgs.dal.Org;
 import edu.kmaooad.capstone23.orgs.dal.OrgsRepository;
-import edu.kmaooad.capstone23.users.dal.repositories.UserRepository;
+import edu.kmaooad.capstone23.users.interfaces.services.UserService;
 import edu.kmaooad.capstone23.users.mocks.UserMocks;
 import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
@@ -27,7 +27,7 @@ public class TestWithMembersSetUp {
     protected OrgsRepository orgsRepository;
 
     @Inject
-    protected UserRepository userRepository;
+    protected UserService userService;
 
     @BeforeEach
     void setUp() {
@@ -38,10 +38,10 @@ public class TestWithMembersSetUp {
         orgsRepository.insert(fstOrg);
         firstOrg = fstOrg.id;
 
-        var user1 = userRepository.insert(UserMocks.validUser());
-        var user2 = userRepository.insert(UserMocks.validUser());
-        var user3 = userRepository.insert(UserMocks.validUser());
-        var user4 = userRepository.insert(UserMocks.validUser());
+        var user1 = userService.insert(UserMocks.validUser());
+        var user2 = userService.insert(UserMocks.validUser());
+        var user3 = userService.insert(UserMocks.validUser());
+        var user4 = userService.insert(UserMocks.validUser());
 
         firstOrgMembers = new ArrayList<>();
         Member member1 = new Member();
@@ -80,7 +80,7 @@ public class TestWithMembersSetUp {
         org.name = "Ubisoft";
         orgsRepository.insert(org);
 
-        var user1 = userRepository.insert(UserMocks.userWithGivenEmail(email));
+        var user1 = userService.insert(UserMocks.userWithGivenEmail(email));
 
         firstOrgMembers = new ArrayList<>();
         Member member = new Member();

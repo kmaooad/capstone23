@@ -1,6 +1,6 @@
 package edu.kmaooad.capstone23.communication.dal.repositories;
 
-import edu.kmaooad.capstone23.communication.interfaces.ChatRepository;
+import edu.kmaooad.capstone23.communication.interfaces.repositories.ChatRepository;
 import io.quarkus.mongodb.panache.PanacheQuery;
 import jakarta.enterprise.context.ApplicationScoped;
 import edu.kmaooad.capstone23.communication.dal.entities.Chat;

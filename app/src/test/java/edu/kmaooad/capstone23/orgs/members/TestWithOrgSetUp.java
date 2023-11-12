@@ -4,7 +4,7 @@ import edu.kmaooad.capstone23.common.Mocks;
 import edu.kmaooad.capstone23.members.dal.MembersRepository;
 import edu.kmaooad.capstone23.orgs.dal.Org;
 import edu.kmaooad.capstone23.orgs.dal.OrgsRepository;
-import edu.kmaooad.capstone23.users.dal.repositories.UserRepository;
+import edu.kmaooad.capstone23.users.interfaces.services.UserService;
 import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,13 +25,13 @@ public class TestWithOrgSetUp {
     protected OrgsRepository orgsRepository;
 
     @Inject
-    protected UserRepository userRepository;
+    protected UserService userService;
 
     @BeforeEach
     void setUp() {
         orgsRepository.deleteAll();
         membersRepository.deleteAll();
-        userRepository.deleteAll();
+        userService.deleteAll();
         var org = new Org();
         org.name = "NaUKMA";
         orgsRepository.insert(org);

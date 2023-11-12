@@ -2,7 +2,7 @@ package edu.kmaooad.capstone23.users.repo;
 
 import com.mongodb.MongoException;
 import edu.kmaooad.capstone23.users.dal.entities.User;
-import edu.kmaooad.capstone23.users.dal.repositories.UserRepository;
+import edu.kmaooad.capstone23.users.interfaces.repositories.UserRepository;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 import org.junit.jupiter.api.AfterEach;
