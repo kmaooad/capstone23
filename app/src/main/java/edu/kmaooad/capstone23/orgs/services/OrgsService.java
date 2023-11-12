@@ -16,6 +16,7 @@ public interface OrgsService {
 
     Optional<Org> findByEmailDomainOptional(String email);
     Optional<Org> findByIdOptional(String id);
+    Optional<Org> findByEmailOptional(String id);
 
     boolean deleteById(ObjectId id);
     boolean isNotNull();

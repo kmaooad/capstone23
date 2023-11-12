@@ -46,6 +46,11 @@ public class OrgsServiceImpl implements OrgsService {
     }
 
     @Override
+    public Optional<Org> findByEmailOptional(String email){
+        return repository.findByEmailOptional(email);
+    }
+
+    @Override
     public Optional<Org> findByIdOptional(String id){
         return repository.findByIdOptional(id);
     }
