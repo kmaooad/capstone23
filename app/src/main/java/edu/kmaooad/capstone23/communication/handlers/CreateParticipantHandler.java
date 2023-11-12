@@ -6,7 +6,7 @@ import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.communication.commands.CreateParticipant;
 import edu.kmaooad.capstone23.communication.dal.entities.Participant;
 import edu.kmaooad.capstone23.communication.events.ParticipantCreated;
-import edu.kmaooad.capstone23.communication.services.ParticipantService;
+import edu.kmaooad.capstone23.communication.interfaces.services.ParticipantService;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import org.bson.types.ObjectId;

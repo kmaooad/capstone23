@@ -4,7 +4,7 @@ import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.members.dto.UserDTO;
 import edu.kmaooad.capstone23.members.services.UserService;
 import edu.kmaooad.capstone23.users.commands.CreateUser;
-import edu.kmaooad.capstone23.users.interfaces.UserRepository;
+import edu.kmaooad.capstone23.users.interfaces.repositories.UserRepository;
 import edu.kmaooad.capstone23.users.events.UserCreated;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
