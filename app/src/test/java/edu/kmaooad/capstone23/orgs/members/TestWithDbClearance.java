@@ -3,7 +3,7 @@ package edu.kmaooad.capstone23.orgs.members;
 import edu.kmaooad.capstone23.experts.dal.ExpertsRepository;
 import edu.kmaooad.capstone23.members.dal.MembersRepository;
 import edu.kmaooad.capstone23.orgs.dal.OrgsRepository;
-import edu.kmaooad.capstone23.users.interfaces.UserRepository;
+import edu.kmaooad.capstone23.users.interfaces.services.UserService;
 import jakarta.inject.Inject;
 import org.junit.jupiter.api.AfterEach;
 
@@ -18,13 +18,13 @@ public class TestWithDbClearance {
     protected OrgsRepository orgsRepository;
 
     @Inject
-    UserRepository userRepository;
+    UserService userService;
 
     @AfterEach
     void clearMemberCollection() {
         expertsRepository.deleteAll();
         membersRepository.deleteAll();
         orgsRepository.deleteAll();
-        userRepository.deleteAll();
+        userService.deleteAll();
     }
 }

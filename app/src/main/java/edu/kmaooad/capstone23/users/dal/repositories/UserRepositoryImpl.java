@@ -1,10 +1,12 @@
 package edu.kmaooad.capstone23.users.dal.repositories;
 
+import com.mongodb.client.model.IndexOptions;
 import edu.kmaooad.capstone23.users.dal.entities.User;
-import edu.kmaooad.capstone23.users.interfaces.UserRepository;
+import edu.kmaooad.capstone23.users.interfaces.repositories.UserRepository;
 import io.quarkus.mongodb.panache.PanacheQuery;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.validation.constraints.Email;
+import org.bson.Document;
 import org.bson.types.ObjectId;
 
 import java.util.Optional;
@@ -33,7 +35,12 @@ public class UserRepositoryImpl implements UserRepository {
   }
 
   @Override
-  public void deleteByEmail (String email) {
+  public void deleteByEmail(String email) {
     delete("unique_email", email);
+  }
+
+  @Override
+  public void createIndex(Document index, IndexOptions options) {
+    mongoCollection().createIndex(index, options);
   }
 }

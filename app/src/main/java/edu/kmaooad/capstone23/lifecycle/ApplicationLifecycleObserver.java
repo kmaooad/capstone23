@@ -2,7 +2,7 @@ package edu.kmaooad.capstone23.lifecycle;
 
 import com.mongodb.client.model.IndexOptions;
 import edu.kmaooad.capstone23.members.dal.MembersRepository;
-import edu.kmaooad.capstone23.users.interfaces.UserRepository;
+import edu.kmaooad.capstone23.users.interfaces.services.UserService;
 import io.quarkus.runtime.StartupEvent;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.event.Observes;
@@ -14,13 +14,13 @@ public class ApplicationLifecycleObserver {
     @Inject
     MembersRepository membersRepository;
     @Inject
-    UserRepository usersRepository;
+    UserService userService;
 
     void onStart(@Observes StartupEvent ev) {
         // Ensure uniqueness of User email
         IndexOptions options = new IndexOptions().unique(true).sparse(true);
         Document indexUser = new Document("unique_email", 1);
-        usersRepository.mongoCollection().createIndex(indexUser, options);
+        userService.createIndex(indexUser, options);
 
         // drop index on "deprecated" email field of members collection field
         membersRepository.mongoCollection().listIndexes().forEach(x -> {
