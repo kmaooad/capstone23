@@ -22,7 +22,7 @@ public class GetMemberByEmailHandlerTest extends TestWithMembersSetUp {
     @Test
     @DisplayName("Read member: Basic handling")
     void testSuccessfulHandling() {
-        userRepository.deleteByEmail(email);
+        userService.deleteByEmail(email);
         createOrgWithMember(email);
         GetMemberByEmail command = new GetMemberByEmail();
         command.setEmail(email);

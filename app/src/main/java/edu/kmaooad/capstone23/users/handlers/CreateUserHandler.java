@@ -4,7 +4,7 @@ import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.users.commands.CreateUser;
 import edu.kmaooad.capstone23.users.dal.entities.User;
-import edu.kmaooad.capstone23.users.dal.repositories.UserRepository;
+import edu.kmaooad.capstone23.users.interfaces.services.UserService;
 import edu.kmaooad.capstone23.users.events.UserCreated;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
@@ -12,7 +12,7 @@ import jakarta.inject.Inject;
 @RequestScoped
 public class CreateUserHandler implements CommandHandler<CreateUser, UserCreated> {
   @Inject
-  UserRepository userRepository;
+  UserService userService;
 
   private User user;
 
@@ -20,7 +20,7 @@ public class CreateUserHandler implements CommandHandler<CreateUser, UserCreated
   public Result<UserCreated> handle(CreateUser command) {
     initUser(command);
 
-    userRepository.insert(user);
+    userService.insert(user);
 
     UserCreated createdUser = new UserCreated(user.id.toHexString());
 

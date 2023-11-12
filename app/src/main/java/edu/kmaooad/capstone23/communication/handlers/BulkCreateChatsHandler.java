@@ -8,7 +8,7 @@ import edu.kmaooad.capstone23.communication.commands.CreateChat;
 import edu.kmaooad.capstone23.communication.dal.entities.Chat;
 import edu.kmaooad.capstone23.communication.events.ChatCreated;
 import edu.kmaooad.capstone23.communication.events.ChatsBulkCreated;
-import edu.kmaooad.capstone23.communication.services.ChatService;
+import edu.kmaooad.capstone23.communication.interfaces.services.ChatService;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 
