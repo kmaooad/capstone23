@@ -81,5 +81,6 @@ public class CreateAccessRuleHandler implements CommandHandler<CreateAccessRule,
             case Department -> departmentsRepository.findByIdOptional(entityId).isPresent();
             case Organisation -> OrgsService.findByIdOptional(entityId).isPresent();
         };
+
     }
 }
