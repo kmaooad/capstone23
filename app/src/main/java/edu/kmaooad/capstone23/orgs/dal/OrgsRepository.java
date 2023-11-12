@@ -3,10 +3,9 @@ package edu.kmaooad.capstone23.orgs.dal;
 import io.quarkus.mongodb.panache.PanacheMongoRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import org.bson.types.ObjectId;
-
 import java.util.Optional;
-
 import java.util.List;
+
 
 @ApplicationScoped
 public class OrgsRepository implements PanacheMongoRepository<Org> {
@@ -14,8 +13,17 @@ public class OrgsRepository implements PanacheMongoRepository<Org> {
     public Org findByName(String name) {
         return find("name", name).firstResult();
     }
+
     public Org findById(String id) {
-        return find("id", id).firstResult();
+       try {
+              return findById(new ObjectId(id));
+         } catch (IllegalArgumentException e) {
+              return null;
+       }
+    }
+  
+    public Optional<Org> findByEmailDomainOptional(String email) {
+        return find("emailDomain", email).firstResultOptional();
     }
 
     public Optional<Org> findByIdOptional(String id) {
@@ -31,7 +39,7 @@ public class OrgsRepository implements PanacheMongoRepository<Org> {
     }
 
     public List<Org> bulkInsert(List<Org> ogrs) {
-      persist(ogrs.stream());
-      return ogrs;
+        persist(ogrs.stream());
+        return ogrs;
     }
 }

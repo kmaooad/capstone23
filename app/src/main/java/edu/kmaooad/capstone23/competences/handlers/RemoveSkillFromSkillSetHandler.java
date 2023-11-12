@@ -4,9 +4,10 @@ import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.competences.commands.RemoveSkillFromSkillSet;
-import edu.kmaooad.capstone23.competences.dal.SkillSetRepository;
-import edu.kmaooad.capstone23.competences.dal.SkillsRepository;
+import edu.kmaooad.capstone23.competences.dal.MongoSkillsRepository;
 import edu.kmaooad.capstone23.competences.events.SkillFromSkillSetRemoved;
+import edu.kmaooad.capstone23.competences.services.SkillService;
+import edu.kmaooad.capstone23.competences.services.SkillSetService;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 
@@ -16,17 +17,18 @@ import jakarta.inject.Inject;
 public class RemoveSkillFromSkillSetHandler implements CommandHandler<RemoveSkillFromSkillSet, SkillFromSkillSetRemoved> {
 
     @Inject
-    private SkillSetRepository skillSetRepository;
+    private SkillSetService service;
 
     @Inject
-    private SkillsRepository skillsRepository;
+    private SkillService skillService;
+
 
 
     @Override
     public Result<SkillFromSkillSetRemoved> handle(RemoveSkillFromSkillSet command) {
 
-        var skill = skillsRepository.findById(command.getSkillId().toString());
-        var skillSet = skillSetRepository.findById(command.getSkillSetId().toString());
+        var skill = skillService.findById(command.getSkillId());
+        var skillSet = service.findById(command.getSkillSetId().toString());
 
         if (skill.isEmpty())
             return new Result<>(ErrorCode.EXCEPTION, "Has not existing skill in db");
@@ -42,7 +44,7 @@ public class RemoveSkillFromSkillSetHandler implements CommandHandler<RemoveSkil
 
         var skillSetValue = skillSet.get();
         skillSetValue.skillIds.remove(command.getSkillId());
-        skillSetRepository.update(skillSetValue);
+        service.update(skillSetValue);
 
         SkillFromSkillSetRemoved result = new SkillFromSkillSetRemoved(skillSetValue);
 

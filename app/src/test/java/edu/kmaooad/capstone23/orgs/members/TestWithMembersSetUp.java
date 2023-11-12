@@ -4,6 +4,8 @@ import edu.kmaooad.capstone23.members.dal.Member;
 import edu.kmaooad.capstone23.members.dal.MembersRepository;
 import edu.kmaooad.capstone23.orgs.dal.Org;
 import edu.kmaooad.capstone23.orgs.dal.OrgsRepository;
+import edu.kmaooad.capstone23.users.dal.repositories.UserRepository;
+import edu.kmaooad.capstone23.users.mocks.UserMocks;
 import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,6 +26,9 @@ public class TestWithMembersSetUp {
     @Inject
     protected OrgsRepository orgsRepository;
 
+    @Inject
+    protected UserRepository userRepository;
+
     @BeforeEach
     void setUp() {
         orgsRepository.deleteAll();
@@ -33,28 +38,27 @@ public class TestWithMembersSetUp {
         orgsRepository.insert(fstOrg);
         firstOrg = fstOrg.id;
 
+        var user1 = userRepository.insert(UserMocks.validUser());
+        var user2 = userRepository.insert(UserMocks.validUser());
+        var user3 = userRepository.insert(UserMocks.validUser());
+        var user4 = userRepository.insert(UserMocks.validUser());
+
         firstOrgMembers = new ArrayList<>();
         Member member1 = new Member();
-        member1.firstName = "First";
-        member1.lastName = "Member";
         member1.orgId = firstOrg;
-        member1.email = "fstMember@email.com";
+        member1.userId = user1.id;
         membersRepository.insert(member1);
         firstOrgMembers.add(member1.id);
 
         Member member2 = new Member();
-        member2.firstName = "Second";
-        member2.lastName = "Member";
         member2.orgId = firstOrg;
-        member2.email = "sndMember@email.com";
+        member2.userId = user2.id;
         membersRepository.insert(member2);
         firstOrgMembers.add(member2.id);
 
         Member member3 = new Member();
-        member3.firstName = "Third";
-        member3.lastName = "Member";
         member3.orgId = firstOrg;
-        member3.email = "thrdMember@email.com";
+        member3.userId = user3.id;
         membersRepository.insert(member3);
         firstOrgMembers.add(member3.id);
 
@@ -65,25 +69,23 @@ public class TestWithMembersSetUp {
 
         secondOrgMembers = new ArrayList<>();
         Member member4 = new Member();
-        member4.firstName = "Fourth";
-        member4.lastName = "Member";
         member4.orgId = secondOrg;
-        member4.email = "frthMember@email.com";
+        member4.userId = user4.id;
         membersRepository.insert(member4);
         secondOrgMembers.add(member4.id);
     }
 
-    protected void createOrgWithMember(String memberEmail) {
+    protected void createOrgWithMember(String email) {
         var org = new Org();
         org.name = "Ubisoft";
         orgsRepository.insert(org);
 
+        var user1 = userRepository.insert(UserMocks.userWithGivenEmail(email));
+
         firstOrgMembers = new ArrayList<>();
         Member member = new Member();
-        member.firstName = "Another";
-        member.lastName = "Member";
         member.orgId = org.id;
-        member.email = memberEmail;
+        member.userId = user1.id;
         membersRepository.insert(member);
     }
 }
