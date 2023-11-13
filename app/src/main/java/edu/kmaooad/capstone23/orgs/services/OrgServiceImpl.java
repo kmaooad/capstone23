@@ -1,15 +1,14 @@
 package edu.kmaooad.capstone23.orgs.services;
 
-import edu.kmaooad.capstone23.orgs.dal.Job;
 import edu.kmaooad.capstone23.orgs.dal.Org;
 import edu.kmaooad.capstone23.orgs.dal.OrgsRepository;
-import edu.kmaooad.capstone23.orgs.services.OrgService;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @ApplicationScoped
 public class OrgServiceImpl implements OrgService {
@@ -40,6 +39,11 @@ public class OrgServiceImpl implements OrgService {
   }
 
   @Override
+  public Optional<Org> getOrgByIdOptional(String id) {
+    return orgsRepository.findByIdOptional(new ObjectId(id));
+  }
+
+  @Override
   public void deleteOrg(Org department) {
     orgsRepository.delete(department);
   }
@@ -57,5 +61,10 @@ public class OrgServiceImpl implements OrgService {
   @Override
   public void deleteAllOrgs() {
     orgsRepository.deleteAll();
+  }
+
+  @Override
+  public List<Org> listAll() {
+    return this.orgsRepository.listAll();
   }
 }

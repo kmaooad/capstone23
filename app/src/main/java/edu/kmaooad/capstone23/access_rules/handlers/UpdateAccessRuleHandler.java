@@ -18,8 +18,6 @@ import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
 
-import java.util.Optional;
-
 @RequestScoped
 public class UpdateAccessRuleHandler implements CommandHandler<UpdateAccessRule, AccessRuleUpdated> {
 
@@ -43,23 +41,23 @@ public class UpdateAccessRuleHandler implements CommandHandler<UpdateAccessRule,
 
     @Override
     public Result<AccessRuleUpdated> handle(UpdateAccessRule command) {
-        if(!ObjectId.isValid(command.getId()))
-            return new Result<>(ErrorCode.VALIDATION_FAILED, "Object Id is invalid");
-        if(!ObjectId.isValid(command.getFromEntityId()))
-            return new Result<>(ErrorCode.VALIDATION_FAILED, "From entity Id is invalid");
-        if(!ObjectId.isValid(command.getToEntityId()))
-            return new Result<>(ErrorCode.VALIDATION_FAILED, "To entity Id is invalid");
-        Optional<AccessRule> accessRuleOpt = accessRuleService.findByIdOptional(command.getId());
+        String validationErrorMessage = this.validateCommand(command);
 
-        if (!accessRuleOpt.isPresent()) {
+        if (validationErrorMessage != null) {
+            return new Result<>(ErrorCode.VALIDATION_FAILED, validationErrorMessage);
+        }
+
+        AccessRule accessRule = accessRuleService.findRuleById(command.getId());
+
+        if (accessRule == null) {
             return new Result<>(ErrorCode.VALIDATION_FAILED, "Access rule with such Id doesn't exist");
         }
-        AccessRule accessRule = accessRuleOpt.get();
-        if(!fromEntityExists(command.getFromEntityType(), new ObjectId(command.getFromEntityId()))){
+
+        if (!fromEntityExists(command.getFromEntityType(), command.getFromEntityId())) {
             return new Result<>(ErrorCode.VALIDATION_FAILED, "From entity doesn't exist");
         }
 
-        if(!toEntityExists(command.getToEntityType(), new ObjectId(command.getToEntityId()))){
+        if (!toEntityExists(command.getToEntityType(), command.getToEntityId())) {
             return new Result<>(ErrorCode.VALIDATION_FAILED, "To entity doesn't exist");
         }
 
@@ -68,13 +66,31 @@ public class UpdateAccessRuleHandler implements CommandHandler<UpdateAccessRule,
         accessRule.toEntityType = command.getToEntityType();
         accessRule.fromEntityId = new ObjectId(command.getFromEntityId());
         accessRule.toEntityId = new ObjectId(command.getToEntityId());
-      
-        accessRuleService.update(accessRule);
+
+        accessRuleService.updateRule(accessRule);
         return new Result<>(new AccessRuleUpdated(accessRule.id.toString(), accessRule.ruleType, accessRule.fromEntityType,
-                accessRule.fromEntityId.toString(), accessRule.toEntityType, accessRule.toEntityId.toString()));
+            accessRule.fromEntityId.toString(), accessRule.toEntityType, accessRule.toEntityId.toString()));
     }
 
-    private boolean fromEntityExists(AccessRuleFromEntityType type, ObjectId entityId) {
+    private String validateCommand(UpdateAccessRule command) {
+        if (!ObjectId.isValid(command.getId())) {
+            return "Object Id is invalid";
+        }
+
+        if (!ObjectId.isValid(command.getFromEntityId())) {
+            return "From entity Id is invalid";
+        }
+
+        if (!ObjectId.isValid(command.getToEntityId())) {
+            return "To entity Id is invalid";
+        }
+
+        return null;
+    }
+
+    private boolean fromEntityExists(AccessRuleFromEntityType type, String entityIdString) {
+        var entityId = new ObjectId(entityIdString);
+
         return switch (type) {
             case Member -> membersRepository.findByIdOptional(entityId).isPresent();
             case Department -> departmentsRepository.findByIdOptional(entityId).isPresent();
@@ -82,7 +98,9 @@ public class UpdateAccessRuleHandler implements CommandHandler<UpdateAccessRule,
         };
     }
 
-    private boolean toEntityExists(AccessRuleToEntityType type, ObjectId entityId) {
+    private boolean toEntityExists(AccessRuleToEntityType type, String entityIdString) {
+        var entityId = new ObjectId(entityIdString);
+
         return switch (type) {
             case Group -> groupService.findByIdOptional(entityId.toString()).isPresent();
             case Course -> courseRepository.findByIdOptional(entityId).isPresent();
