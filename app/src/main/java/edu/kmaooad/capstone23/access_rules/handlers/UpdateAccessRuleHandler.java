@@ -68,8 +68,7 @@ public class UpdateAccessRuleHandler implements CommandHandler<UpdateAccessRule,
         accessRule.toEntityType = command.getToEntityType();
         accessRule.fromEntityId = new ObjectId(command.getFromEntityId());
         accessRule.toEntityId = new ObjectId(command.getToEntityId());
-
-        accessRuleService.update(accessRule);
+        accessRuleService.updateRule(accessRule);
         return new Result<>(new AccessRuleUpdated(accessRule.id.toString(), accessRule.ruleType, accessRule.fromEntityType,
                 accessRule.fromEntityId.toString(), accessRule.toEntityType, accessRule.toEntityId.toString()));
     }
