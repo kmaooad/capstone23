@@ -15,17 +15,17 @@ import org.bson.types.ObjectId;
 public class DeleteExtracurricularActivityHandler implements CommandHandler<DeleteExtracurricularActivity, ExtracurricularActivityDeleted> {
 
     @Inject
-    private ExtracurricularActivityRepository repository;
+    private ExtracurricularActivityService activityService;
 
     public Result<ExtracurricularActivityDeleted> handle(DeleteExtracurricularActivity command) {
         String id = command.getId();
-        ExtracurricularActivity extracurricularActivity = repository.findById(id);
+        ExtracurricularActivity extracurricularActivity = activityService.findById(id);
 
         if (extracurricularActivity == null) {
             return new Result<>(ErrorCode.EXCEPTION, "Extracurricular Activity not found");
         }
 
-        repository.deleteExtracurricularActivity(extracurricularActivity);
+        activityService.deleteExtracurricularActivity(extracurricularActivity);
 
         return new Result<>(new ExtracurricularActivityDeleted(extracurricularActivity.id.toString()));
     }
