@@ -17,11 +17,11 @@ public class DeleteAccessRuleHandler implements CommandHandler<DeleteAccessRule,
     private AccessRuleService accessRuleService;
 
     public Result<AccessRuleDeleted> handle(DeleteAccessRule command) {
-        if(!this.accessRuleService.existsById(command.getId())) {
+        if(!accessRuleService.findByIdOptional(command.getId().toString()).isPresent()) {
             return new Result<>(ErrorCode.VALIDATION_FAILED, "Access rule doesn't exist");
         }
 
-        accessRuleService.deleteRule(command.getId());
-        return new Result<>(new AccessRuleDeleted(command.getId()));
+        accessRuleService.delete("id", command.getId());
+        return new Result<>(new AccessRuleDeleted(command.getId().toString()));
     }
 }
