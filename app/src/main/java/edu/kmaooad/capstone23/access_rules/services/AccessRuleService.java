@@ -20,4 +20,8 @@ public interface AccessRuleService {
   AccessRule findRuleById(String id);
 
   boolean existsById(String id);
+  
+  long delete(String query, Object... params);
+  
+  void update(AccessRule accessRule);
 }

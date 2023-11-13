@@ -50,4 +50,14 @@ public class AccessRuleServiceImpl implements AccessRuleService {
   public boolean existsById(String id) {
     return this.accessRuleRepository.findByIdOptional(new ObjectId(id)).isPresent();
   }
+  
+  @Override
+    public long delete(String query, Object... params) {
+        return accessRuleRepository.delete(query,params);
+    }
+
+    @Override
+    public void update(AccessRule accessRule) {
+        accessRuleRepository.update(accessRule);
+    }
 }
