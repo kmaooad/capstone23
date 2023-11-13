@@ -58,6 +58,11 @@ public class AccessRuleServiceImpl implements AccessRuleService {
 
     @Override
     public void update(AccessRule accessRule) {
-        accessRuleRepository.update(accessRule);
+        repository.update(accessRule);
+    }
+
+    @Override
+    public Optional<AccessRule> findByIdOptional(String id) {
+        return repository.findByIdOptional(new ObjectId(id));
     }
 }
