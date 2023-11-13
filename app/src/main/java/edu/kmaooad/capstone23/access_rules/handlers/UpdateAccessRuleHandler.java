@@ -13,7 +13,7 @@ import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.departments.dal.DepartmentsRepository;
 import edu.kmaooad.capstone23.groups.dal.GroupsRepository;
 import edu.kmaooad.capstone23.members.dal.MembersRepository;
-import edu.kmaooad.capstone23.orgs.dal.OrgsRepository;
+import edu.kmaooad.capstone23.orgs.services.OrgsService;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
@@ -25,7 +25,7 @@ public class UpdateAccessRuleHandler implements CommandHandler<UpdateAccessRule,
     private AccessRuleService accessRuleService;
 
     @Inject
-    private OrgsRepository orgsRepository;
+    private OrgsService orgsService;
 
     @Inject
     private MembersRepository membersRepository;
@@ -76,7 +76,7 @@ public class UpdateAccessRuleHandler implements CommandHandler<UpdateAccessRule,
         return switch (type) {
             case Member -> membersRepository.findByIdOptional(entityId).isPresent();
             case Department -> departmentsRepository.findByIdOptional(entityId).isPresent();
-            case Organisation -> orgsRepository.findByIdOptional(entityId).isPresent();
+            case Organisation -> OrgsService.findByIdOptional(entityId).isPresent();
         };
     }
 
@@ -85,7 +85,7 @@ public class UpdateAccessRuleHandler implements CommandHandler<UpdateAccessRule,
             case Group -> groupsRepository.findByIdOptional(entityId).isPresent();
             case Course -> courseRepository.findByIdOptional(entityId).isPresent();
             case Department -> departmentsRepository.findByIdOptional(entityId).isPresent();
-            case Organisation -> orgsRepository.findByIdOptional(entityId).isPresent();
+            case Organisation -> OrgsService.findByIdOptional(entityId).isPresent();
         };
     }
 }
