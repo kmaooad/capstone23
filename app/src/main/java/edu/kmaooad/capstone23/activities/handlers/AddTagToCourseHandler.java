@@ -1,7 +1,7 @@
 package edu.kmaooad.capstone23.activities.handlers;
 
 import edu.kmaooad.capstone23.activities.commands.AddTagToCourse;
-import edu.kmaooad.capstone23.activities.dal.CourseRepository;
+import edu.kmaooad.capstone23.activities.services.CourseService;
 import edu.kmaooad.capstone23.activities.events.TagAddedToCourse;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
@@ -18,11 +18,11 @@ public class AddTagToCourseHandler implements CommandHandler<AddTagToCourse, Tag
     @Inject
     TagRepository tagRepository;
     @Inject
-    CourseRepository courseRepository;
+    CourseService courseService;
 
     @Override
     public Result<TagAddedToCourse> handle(AddTagToCourse command) {
-        var course = courseRepository.find("name", command.getCourseName()).firstResult();
+        var course = courseService.find("name", command.getCourseName()).firstResult();
         var tag = tagRepository.find("tagName", command.getTagName()).firstResult();
 
         if (tag == null) {
@@ -33,7 +33,7 @@ public class AddTagToCourseHandler implements CommandHandler<AddTagToCourse, Tag
             return new Result<>(ErrorCode.NOT_FOUND, "Course not found");
         }
         course.tags.add(tag);
-        courseRepository.update(course);
+        courseService.update(course);
         var tagAddedToCourse = new TagAddedToCourse(course.name, tag.tagName);
         return new Result<>(tagAddedToCourse);
     }
