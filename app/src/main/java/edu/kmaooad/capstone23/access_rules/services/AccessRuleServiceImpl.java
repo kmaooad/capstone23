@@ -1,6 +1,7 @@
 package edu.kmaooad.capstone23.access_rules.services;
 
 import edu.kmaooad.capstone23.access_rules.dal.AccessRule;
+import java.util.Optional;
 import edu.kmaooad.capstone23.access_rules.dal.AccessRuleFromEntityType;
 import edu.kmaooad.capstone23.access_rules.dal.AccessRuleRepository;
 import jakarta.enterprise.context.RequestScoped;

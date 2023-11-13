@@ -24,4 +24,6 @@ public interface AccessRuleService {
   long delete(String query, Object... params);
   
   void update(AccessRule accessRule);
+  
+  Optional<AccessRule> findByIdOptional(String id);
 }
