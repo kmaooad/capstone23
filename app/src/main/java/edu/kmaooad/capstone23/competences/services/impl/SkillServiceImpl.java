@@ -21,23 +21,34 @@ public class SkillServiceImpl implements SkillService {
   }
 
   @Override
-  public Skill insert(Skill skill) {
-    return null;
+  public Skill insert(Skill skill) throws IllegalArgumentException {
+    if (skill.parentSkill != null && repo.findById(skill.parentSkill.toString()).isEmpty()) {
+      throw new IllegalArgumentException("Parent has unknown id");
+    }
+    repo.insert(skill);
+    return repo.insert(skill);
   }
 
   @Override
   public void delete(Skill skill) {
-
+    repo.deleteSkill(skill);
   }
 
   @Override
   public List<Skill> findChildRepositories(ObjectId parentSkill) {
-    return null;
+    return repo.findChildRepositories(parentSkill.toString());
   }
 
   @Override
-  public Skill update(Skill skill) {
-    return repo.modify(skill);
+  public Skill update(Skill skill) throws IllegalArgumentException {
+    if (skill.parentSkill != null && repo.findById(skill.parentSkill.toString()).isEmpty()) {
+      throw new IllegalArgumentException("Parent has unknown id");
+    }
+    if (skill.id.equals(skill.parentSkill)) {
+      throw new IllegalArgumentException("Parent id and id are equal");
+    }
+    repo.modify(skill);
+    return skill;
   }
 
   @Override
