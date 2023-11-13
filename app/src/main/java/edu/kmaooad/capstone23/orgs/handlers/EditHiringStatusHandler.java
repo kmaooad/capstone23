@@ -6,7 +6,7 @@ import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.orgs.commands.SetHiringStatus;
 import edu.kmaooad.capstone23.orgs.dal.*;
 import edu.kmaooad.capstone23.orgs.events.HiringStatusChanged;
-import edu.kmaooad.capstone23.orgs.services.OrgService;
+import edu.kmaooad.capstone23.orgs.services.OrgsServiceImpl;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 
@@ -16,11 +16,11 @@ import java.util.List;
 public class EditHiringStatusHandler implements CommandHandler<SetHiringStatus, HiringStatusChanged> {
 
     @Inject
-    private OrgService orgService;
+    private OrgsServiceImpl orgService;
 
     public Result<HiringStatusChanged> handle(SetHiringStatus command) {
 
-        Org org = orgService.getOrgById(command.getOrgId());
+        Org org = orgService.findById(command.getOrgId());
 
         // Check if org is null
         if (org == null) {
@@ -28,7 +28,7 @@ public class EditHiringStatusHandler implements CommandHandler<SetHiringStatus, 
         }
 
         org.hiringStatus = command.getHiringStatus().toString();
-        orgService.updateOrg(org);
+        orgService.update(org);
 
         List<Job> jobs = orgService.findJobsByOrgId(command.getOrgId());
 

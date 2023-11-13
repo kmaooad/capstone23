@@ -1,7 +1,6 @@
 package edu.kmaooad.capstone23.orgs.handlers;
 
 import edu.kmaooad.capstone23.ban.commands.IsEntityBannedV2;
-import edu.kmaooad.capstone23.ban.dal.BannedEntityType;
 import edu.kmaooad.capstone23.ban.service.EntityBanService;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
@@ -10,7 +9,7 @@ import edu.kmaooad.capstone23.jobs.service.JobService;
 import edu.kmaooad.capstone23.orgs.commands.RelateJobToOrg;
 import edu.kmaooad.capstone23.orgs.dal.Org;
 import edu.kmaooad.capstone23.orgs.events.JobToOrgRelated;
-import edu.kmaooad.capstone23.orgs.services.OrgService;
+import edu.kmaooad.capstone23.orgs.services.OrgsServiceImpl;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 
@@ -19,7 +18,7 @@ import java.util.ArrayList;
 @RequestScoped
 public class RelateJobToOrgHandler implements CommandHandler<RelateJobToOrg, JobToOrgRelated> {
     @Inject
-    private OrgService orgService;
+    private OrgsServiceImpl orgService;
 
     @Inject
     private JobService jobService;
@@ -30,7 +29,7 @@ public class RelateJobToOrgHandler implements CommandHandler<RelateJobToOrg, Job
     public Result<JobToOrgRelated> handle(RelateJobToOrg command) {
         String orgId = command.getOrgId();
 
-        Org org = orgService.getOrgById(orgId);
+        Org org = orgService.findById(orgId);
 
         if (org == null) {
             return new Result<>(ErrorCode.EXCEPTION, "Org not found");
@@ -52,7 +51,7 @@ public class RelateJobToOrgHandler implements CommandHandler<RelateJobToOrg, Job
 
         org.jobs.add(jobId);
 
-        orgService.updateOrg(org);
+        orgService.update(org);
 
         JobToOrgRelated result = new JobToOrgRelated(orgId, jobId);
 

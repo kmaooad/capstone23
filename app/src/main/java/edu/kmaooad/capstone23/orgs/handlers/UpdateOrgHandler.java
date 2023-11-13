@@ -1,18 +1,16 @@
 package edu.kmaooad.capstone23.orgs.handlers;
 
 import edu.kmaooad.capstone23.ban.commands.IsEntityBannedV2;
-import edu.kmaooad.capstone23.ban.dal.BannedEntityType;
 import edu.kmaooad.capstone23.ban.service.EntityBanService;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.orgs.commands.UpdateOrg;
 import edu.kmaooad.capstone23.orgs.dal.Org;
-import edu.kmaooad.capstone23.orgs.dal.OrgsRepository;
 import edu.kmaooad.capstone23.orgs.events.OrgUpdated;
+import edu.kmaooad.capstone23.orgs.services.OrgsServiceImpl;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
-import org.bson.types.ObjectId;
 
 import java.util.Optional;
 
@@ -20,15 +18,14 @@ import java.util.Optional;
 public class UpdateOrgHandler implements CommandHandler<UpdateOrg, OrgUpdated> {
 
     @Inject
-    private OrgsRepository repository;
-
+    private OrgsServiceImpl orgService;
 
     @Inject
-    EntityBanService entityBanService;
+    private EntityBanService entityBanService;
 
 
     public Result<OrgUpdated> handle(UpdateOrg command) {
-        Optional<Org> existingOrg = this.repository.findByIdOptional(new ObjectId(command.orgId));
+        Optional<Org> existingOrg = this.orgService.findByIdOptional(command.orgId);
 
         if (existingOrg.isEmpty()) {
             return new Result<>(ErrorCode.EXCEPTION, "Org with given id not found");
@@ -39,7 +36,7 @@ public class UpdateOrgHandler implements CommandHandler<UpdateOrg, OrgUpdated> {
 
         Org updatedOrg = this.updateEntity(existingOrg.get(), command);
 
-        this.repository.update(updatedOrg);
+        this.orgService.update(updatedOrg);
 
         OrgUpdated result = new OrgUpdated(true);
 
