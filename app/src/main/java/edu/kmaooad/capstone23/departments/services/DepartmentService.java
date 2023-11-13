@@ -9,4 +9,7 @@ public interface DepartmentService {
      void deleteDepartment(Department department);
      void updateDepartment(Department department);
      void deleteAllDepartments();
+
+     Optional<Department> findById(String id);
+
 }

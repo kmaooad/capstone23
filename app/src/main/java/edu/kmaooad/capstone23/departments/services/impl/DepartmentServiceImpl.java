@@ -47,4 +47,9 @@ public class DepartmentServiceImpl {
   public void deleteAllDepartments() {
     departmentsRepository.deleteAll();
   }
+
+  @Override
+  public Optional<Org> findByIdOptional(String id){
+    return departmentsRepository.findById(id);
+  }
 }

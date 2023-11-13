@@ -10,7 +10,7 @@ import edu.kmaooad.capstone23.activities.dal.CourseRepository;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
-import edu.kmaooad.capstone23.departments.dal.DepartmentsRepository;
+import edu.kmaooad.capstone23.departments.services.DepartmentService;
 import edu.kmaooad.capstone23.groups.dal.GroupsRepository;
 import edu.kmaooad.capstone23.members.dal.MembersRepository;
 import edu.kmaooad.capstone23.orgs.services.OrgsService;
@@ -31,7 +31,7 @@ public class CreateAccessRuleHandler implements CommandHandler<CreateAccessRule,
     private MembersRepository membersRepository;
 
     @Inject
-    private DepartmentsRepository departmentsRepository;
+    private DepartmentService departmentService;
 
     @Inject
     private CourseRepository courseRepository;
@@ -69,7 +69,7 @@ public class CreateAccessRuleHandler implements CommandHandler<CreateAccessRule,
     boolean fromEntityExists(AccessRuleFromEntityType type, ObjectId entityId) {
         return switch (type) {
             case Member -> membersRepository.findByIdOptional(entityId).isPresent();
-            case Department -> departmentsRepository.findByIdOptional(entityId).isPresent();
+            case Department -> departmentService.findByIdOptional(entityId).isPresent();
             case Organisation -> OrgsService.findByIdOptional(entityId).isPresent();
         };
     }
@@ -78,7 +78,7 @@ public class CreateAccessRuleHandler implements CommandHandler<CreateAccessRule,
         return switch (type) {
             case Group -> groupsRepository.findByIdOptional(entityId).isPresent();
             case Course -> courseRepository.findByIdOptional(entityId).isPresent();
-            case Department -> departmentsRepository.findByIdOptional(entityId).isPresent();
+            case Department -> departmentService.findByIdOptional(entityId).isPresent();
             case Organisation -> OrgsService.findByIdOptional(entityId).isPresent();
         };
 
