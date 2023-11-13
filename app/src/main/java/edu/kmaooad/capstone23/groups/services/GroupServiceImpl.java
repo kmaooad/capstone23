@@ -6,10 +6,16 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
 
+import java.util.List;
 import java.util.Optional;
 
 @ApplicationScoped
 public class GroupServiceImpl implements GroupService{
+
+    @Override
+    public List<Group> listAll() {
+        return repository.listAll();
+    }
 
     @Inject
     private GroupsRepository repository;
