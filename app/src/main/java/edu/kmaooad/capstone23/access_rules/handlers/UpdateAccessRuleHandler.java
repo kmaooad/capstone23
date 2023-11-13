@@ -6,7 +6,7 @@ import edu.kmaooad.capstone23.access_rules.dal.AccessRuleFromEntityType;
 import edu.kmaooad.capstone23.access_rules.dal.AccessRuleToEntityType;
 import edu.kmaooad.capstone23.access_rules.events.AccessRuleUpdated;
 import edu.kmaooad.capstone23.access_rules.services.AccessRuleService;
-import edu.kmaooad.capstone23.activities.dal.CourseRepository;
+import edu.kmaooad.capstone23.activities.services.CourseService;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
@@ -34,7 +34,7 @@ public class UpdateAccessRuleHandler implements CommandHandler<UpdateAccessRule,
     private DepartmentService departmentService;
 
     @Inject
-    private CourseRepository courseRepository;
+    private CourseService courseService;
 
     @Inject
     private GroupsRepository groupsRepository;
@@ -83,7 +83,7 @@ public class UpdateAccessRuleHandler implements CommandHandler<UpdateAccessRule,
     private boolean toEntityExists(AccessRuleToEntityType type, ObjectId entityId) {
         return switch (type) {
             case Group -> groupsRepository.findByIdOptional(entityId).isPresent();
-            case Course -> courseRepository.findByIdOptional(entityId).isPresent();
+            case Course -> courseService.findByIdOptional(entityId).isPresent();
             case Department -> departmentService.findByIdOptional(entityId).isPresent();
             case Organisation -> orgsService.findByIdOptional(entityId).isPresent();
         };
