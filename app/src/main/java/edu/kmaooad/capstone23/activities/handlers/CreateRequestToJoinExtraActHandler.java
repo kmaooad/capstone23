@@ -6,7 +6,7 @@ import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 
 import edu.kmaooad.capstone23.activities.commands.RequestToJoinExtraAct;
-import edu.kmaooad.capstone23.activities.dal.ExtracurricularActivityRepository;
+import edu.kmaooad.capstone23.activities.services.ExtracurricularActivityService;
 import edu.kmaooad.capstone23.activities.dal.Request;
 import edu.kmaooad.capstone23.activities.dal.RequestsRepository;
 import edu.kmaooad.capstone23.departments.events.RequestCreated;
@@ -20,14 +20,14 @@ import java.util.List;
 public class CreateRequestToJoinExtraActHandler implements CommandHandler<RequestToJoinExtraAct, RequestCreated> {
 
     @Inject
-    ExtracurricularActivityRepository extraActRepository;
+    ExtracurricularActivityService extraActService;
 
     @Inject
     RequestsRepository requestsRepository;
 
     public Result<RequestCreated> handle(RequestToJoinExtraAct command) {
 
-        ExtracurricularActivity act = extraActRepository.findById(new ObjectId(command.getExtraActId()));
+        ExtracurricularActivity act = extraActService.findById(new ObjectId(command.getExtraActId()));
         if (act == null) {
             return new Result<>(ErrorCode.EXCEPTION, "Activity not found");
         }
