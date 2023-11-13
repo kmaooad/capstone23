@@ -1,7 +1,6 @@
 package edu.kmaooad.capstone23.orgs.handlers;
 
 import edu.kmaooad.capstone23.ban.commands.IsEntityBannedV2;
-import edu.kmaooad.capstone23.ban.dal.BannedEntityType;
 import edu.kmaooad.capstone23.ban.service.EntityBanService;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;

@@ -3,18 +3,22 @@ package edu.kmaooad.capstone23.orgs.services;
 import edu.kmaooad.capstone23.orgs.dal.Org;
 import edu.kmaooad.capstone23.search.Listable;
 
-public interface OrgService extends Listable<Org> /*please implement this*/
-{
-     Org createOrg(String name, String description, String industry, String website, String emailDomain);
+import java.util.Optional;
 
-    public Org getOrgByName(String name);
+public interface OrgService extends Listable<Org> {
+    Org createOrg(String name, String description, String industry, String website, String emailDomain);
 
-    public Org getOrgById(String id);
+    Org getOrgByName(String name);
 
-    public void deleteOrg(Org department);
-    public void deleteOrgById(String id);
+    Org getOrgById(String id);
 
-    public void updateOrg(Org department);
+    Optional<Org> getOrgByIdOptional(String id);
 
-    public void deleteAllOrgs();
+    void deleteOrg(Org department);
+
+    void deleteOrgById(String id);
+
+    void updateOrg(Org department);
+
+    void deleteAllOrgs();
 }
