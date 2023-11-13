@@ -16,4 +16,6 @@ public interface CourseService {
     void bulkDelete(List<Course> courses);
     void findCoursesCountByIds(List<String> courseIds);
     void bulkUpdate(List<Course> courses);
+
+    Optional<Course> findById(String id);
 }

@@ -6,7 +6,7 @@ import edu.kmaooad.capstone23.access_rules.dal.AccessRuleFromEntityType;
 import edu.kmaooad.capstone23.access_rules.dal.AccessRuleToEntityType;
 import edu.kmaooad.capstone23.access_rules.events.AccessRuleCreated;
 import edu.kmaooad.capstone23.access_rules.services.AccessRuleService;
-import edu.kmaooad.capstone23.activities.dal.CourseRepository;
+import edu.kmaooad.capstone23.activities.services.CourseService;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
@@ -34,7 +34,7 @@ public class CreateAccessRuleHandler implements CommandHandler<CreateAccessRule,
     private DepartmentService departmentService;
 
     @Inject
-    private CourseRepository courseRepository;
+    private CourseService courseService;
 
     @Inject
     private GroupService groupService;
@@ -76,10 +76,10 @@ public class CreateAccessRuleHandler implements CommandHandler<CreateAccessRule,
 
     boolean toEntityExists(AccessRuleToEntityType type, ObjectId entityId) {
         return switch (type) {
-            case Group -> GroupService.findByIdOptional(entityId).isPresent();
-            case Course -> courseRepository.findByIdOptional(entityId).isPresent();
+            case Group -> groupService.findByIdOptional(entityId).isPresent();
+            case Course -> courseService.findByIdOptional(entityId).isPresent();
             case Department -> departmentService.findByIdOptional(entityId).isPresent();
-            case Organisation -> OrgsService.findByIdOptional(entityId).isPresent();
+            case Organisation -> orgsService.findByIdOptional(entityId).isPresent();
         };
 
     }

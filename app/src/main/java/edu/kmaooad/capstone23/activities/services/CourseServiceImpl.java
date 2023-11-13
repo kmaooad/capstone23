@@ -58,4 +58,9 @@ public class CourseServiceImpl implements CourseService {
     public void bulkUpdate(List<Course> courses) {
         courseRepository.bulkUpdate(courses);
     }
+
+    @Override
+    public Optional<Course> findByIdOptional(String id) {
+        return courseRepository.findById(new ObjectId(id));
+    }
 }
