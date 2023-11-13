@@ -11,7 +11,7 @@ import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.departments.services.DepartmentService;
-import edu.kmaooad.capstone23.groups.dal.GroupsRepository;
+import edu.kmaooad.capstone23.groups.services.GroupService;
 import edu.kmaooad.capstone23.members.dal.MembersRepository;
 import edu.kmaooad.capstone23.orgs.services.OrgsService;
 import jakarta.enterprise.context.RequestScoped;
@@ -37,7 +37,7 @@ public class CreateAccessRuleHandler implements CommandHandler<CreateAccessRule,
     private CourseRepository courseRepository;
 
     @Inject
-    private GroupsRepository groupsRepository;
+    private GroupService groupService;
 
     public Result<AccessRuleCreated> handle(CreateAccessRule command) {
         if(!ObjectId.isValid(command.getFromEntityId())) {
@@ -76,7 +76,7 @@ public class CreateAccessRuleHandler implements CommandHandler<CreateAccessRule,
 
     boolean toEntityExists(AccessRuleToEntityType type, ObjectId entityId) {
         return switch (type) {
-            case Group -> groupsRepository.findByIdOptional(entityId).isPresent();
+            case Group -> GroupService.findByIdOptional(entityId).isPresent();
             case Course -> courseRepository.findByIdOptional(entityId).isPresent();
             case Department -> departmentService.findByIdOptional(entityId).isPresent();
             case Organisation -> OrgsService.findByIdOptional(entityId).isPresent();
