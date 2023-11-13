@@ -3,7 +3,7 @@ package edu.kmaooad.capstone23.members.handlers;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.members.commands.GetMemberByEmail;
-import edu.kmaooad.capstone23.members.dal.MembersRepository;
+import edu.kmaooad.capstone23.members.dal.abstractions.MembersRepository;
 import edu.kmaooad.capstone23.members.events.MembersListed;
 import edu.kmaooad.capstone23.members.services.UserService;
 import jakarta.enterprise.context.RequestScoped;
@@ -27,7 +27,7 @@ public class GetMemberByEmailHandler implements CommandHandler<GetMemberByEmail,
             result.setMembers(new ArrayList<>());
             return new Result<>(result);
         }
-        var members = membersRepository.find("userId", user.get().getId()).stream().toList();
+        var members = membersRepository.getByUser(user.get());
         result.setMembers(members);
         return new Result<>(result);
     }

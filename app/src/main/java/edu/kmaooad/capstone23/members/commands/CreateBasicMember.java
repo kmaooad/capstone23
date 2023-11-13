@@ -5,7 +5,6 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
-import org.bson.types.ObjectId;
 
 public class CreateBasicMember {
     @NotBlank
@@ -15,7 +14,7 @@ public class CreateBasicMember {
     @Size(min = 1)
     private String lastName;
     @NotNull
-    private ObjectId orgId;
+    private String orgId;
     @NotBlank
     @Email
     private String email;
@@ -46,11 +45,11 @@ public class CreateBasicMember {
         this.email = email;
     }
 
-    public ObjectId getOrgId() {
+    public String getOrgId() {
         return orgId;
     }
 
-    public void setOrgId(ObjectId orgId) {
+    public void setOrgId(String orgId) {
         this.orgId = orgId;
     }
 
