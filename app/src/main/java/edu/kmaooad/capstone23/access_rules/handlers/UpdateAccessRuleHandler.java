@@ -52,12 +52,12 @@ public class UpdateAccessRuleHandler implements CommandHandler<UpdateAccessRule,
         if (accessRule == null) {
             return new Result<>(ErrorCode.VALIDATION_FAILED, "Access rule with such Id doesn't exist");
         }
-
-        if (!fromEntityExists(command.getFromEntityType(), new ObjectId(command.getFromEntityId()))) {
+s
+        if (!fromEntityExists(command.getFromEntityType(), command.getFromEntityId())) {
             return new Result<>(ErrorCode.VALIDATION_FAILED, "From entity doesn't exist");
         }
 
-        if (!toEntityExists(command.getToEntityType(), new ObjectId(command.getToEntityId()))) {
+        if (!toEntityExists(command.getToEntityType(), command.getToEntityId())) {
             return new Result<>(ErrorCode.VALIDATION_FAILED, "To entity doesn't exist");
         }
 
@@ -88,7 +88,9 @@ public class UpdateAccessRuleHandler implements CommandHandler<UpdateAccessRule,
         return null;
     }
 
-    private boolean fromEntityExists(AccessRuleFromEntityType type, ObjectId entityId) {
+    private boolean fromEntityExists(AccessRuleFromEntityType type, String entityIdString) {
+        var entityId = new ObjectId(entityIdString);
+
         return switch (type) {
             case Member -> membersRepository.findByIdOptional(entityId).isPresent();
             case Department -> departmentsRepository.findByIdOptional(entityId).isPresent();
@@ -96,7 +98,9 @@ public class UpdateAccessRuleHandler implements CommandHandler<UpdateAccessRule,
         };
     }
 
-    private boolean toEntityExists(AccessRuleToEntityType type, ObjectId entityId) {
+    private boolean toEntityExists(AccessRuleToEntityType type, String entityIdString) {
+        var entityId = new ObjectId(entityIdString);
+
         return switch (type) {
             case Group -> groupService.findByIdOptional(entityId.toString()).isPresent();
             case Course -> courseRepository.findByIdOptional(entityId).isPresent();
