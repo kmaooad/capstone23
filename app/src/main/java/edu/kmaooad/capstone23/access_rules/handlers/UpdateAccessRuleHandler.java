@@ -85,7 +85,7 @@ public class UpdateAccessRuleHandler implements CommandHandler<UpdateAccessRule,
             case Group -> groupsRepository.findByIdOptional(entityId).isPresent();
             case Course -> courseRepository.findByIdOptional(entityId).isPresent();
             case Department -> departmentsRepository.findByIdOptional(entityId).isPresent();
-            case Organisation -> OrgsService.findByIdOptional(entityId).isPresent();
+            case Organisation -> orgsService.findByIdOptional(entityId).isPresent();
         };
     }
 }
