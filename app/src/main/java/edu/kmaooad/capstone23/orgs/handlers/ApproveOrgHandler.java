@@ -1,16 +1,15 @@
 package edu.kmaooad.capstone23.orgs.handlers;
 
 import edu.kmaooad.capstone23.ban.commands.IsEntityBannedV2;
-import edu.kmaooad.capstone23.ban.dal.BannedEntityType;
 import edu.kmaooad.capstone23.ban.service.EntityBanService;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
-import edu.kmaooad.capstone23.orgs.services.OrgService;
 import edu.kmaooad.capstone23.orgs.commands.ApproveOrg;
 import edu.kmaooad.capstone23.orgs.dal.Org;
 import edu.kmaooad.capstone23.orgs.events.OrgApproved;
 import edu.kmaooad.capstone23.mail.service.MailService;
+import edu.kmaooad.capstone23.orgs.services.OrgService;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 
