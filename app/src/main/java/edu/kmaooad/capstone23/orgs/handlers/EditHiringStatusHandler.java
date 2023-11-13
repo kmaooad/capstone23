@@ -30,12 +30,12 @@ public class EditHiringStatusHandler implements CommandHandler<SetHiringStatus, 
         org.hiringStatus = command.getHiringStatus().toString();
         orgService.updateOrg(org);
 
-        List<Job> jobs = orgService.findJobsByOrgId(command.getOrgId());
-
-        for (Job job: jobs) {
-            job.isActive = false;
-            orgService.updateJob(job);
-        }
+//        List<Job> jobs = orgService.findJobsByOrgId(command.getOrgId());
+//
+//        for (Job job: jobs) {
+//            job.isActive = false;
+//            orgService.updateJob(job);
+//        }
       
         HiringStatusChanged result = new HiringStatusChanged(command.getHiringStatus(), org.id.toString());
 
