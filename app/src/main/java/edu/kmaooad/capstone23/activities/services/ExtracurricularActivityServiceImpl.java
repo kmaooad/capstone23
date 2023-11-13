@@ -27,4 +27,11 @@ public class ExtracurricularActivityServiceImpl implements ExtracurricularActivi
         return !(course.isEmpty() && extActivity.isEmpty());
     }
 
+    @Override
+    public ExtracurricularActivity update(ExtracurricularActivity activity) {
+        repo.updateActivity(activity);
+        return update();
+    }
+
+
 }

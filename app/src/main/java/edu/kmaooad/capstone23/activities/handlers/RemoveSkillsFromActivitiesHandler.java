@@ -1,7 +1,7 @@
 package edu.kmaooad.capstone23.activities.handlers;
 
 import edu.kmaooad.capstone23.activities.commands.RemoveSkillFromActivity;
-import edu.kmaooad.capstone23.activities.dal.ExtracurricularActivityRepository;
+import edu.kmaooad.capstone23.activities.services.ExtracurricularActivityService;
 import edu.kmaooad.capstone23.activities.events.SkillFromActivityRemoved;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.Result;
@@ -15,7 +15,7 @@ import jakarta.inject.Inject;
 public class RemoveSkillsFromActivitiesHandler implements CommandHandler<RemoveSkillFromActivity, SkillFromActivityRemoved> {
 
     @Inject
-    private ExtracurricularActivityRepository activityRepository;
+    private ExtracurricularActivityService activityservice;
 
     @Inject
     private MongoSkillsRepository skillsRepository;
@@ -25,12 +25,12 @@ public class RemoveSkillsFromActivitiesHandler implements CommandHandler<RemoveS
     public Result<SkillFromActivityRemoved> handle(RemoveSkillFromActivity command) {
 
         var skill = skillsRepository.findById(command.getSkillId().toString());
-        var activity = activityRepository.findById(command.getActivityId().toString());
+        var activity = activityservice.findByIdOptional(command.getActivityId().toString());
         
 
         var activityValue = activity;
         activityValue.skillIds.remove(command.getSkillId());
-        activityRepository.update(activityValue);
+        activityservice.update(activityValue);
 
         SkillFromActivityRemoved result = new SkillFromActivityRemoved(activityValue);
 
