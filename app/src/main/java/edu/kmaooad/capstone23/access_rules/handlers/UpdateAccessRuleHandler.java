@@ -52,7 +52,7 @@ public class UpdateAccessRuleHandler implements CommandHandler<UpdateAccessRule,
         if (accessRule == null) {
             return new Result<>(ErrorCode.VALIDATION_FAILED, "Access rule with such Id doesn't exist");
         }
-s
+
         if (!fromEntityExists(command.getFromEntityType(), command.getFromEntityId())) {
             return new Result<>(ErrorCode.VALIDATION_FAILED, "From entity doesn't exist");
         }
