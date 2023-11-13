@@ -6,6 +6,7 @@ import edu.kmaooad.capstone23.tag.commands.CreateTag;
 import edu.kmaooad.capstone23.tag.dal.Tag;
 import edu.kmaooad.capstone23.tag.dal.TagRepository;
 import edu.kmaooad.capstone23.tag.events.TagCreated;
+import edu.kmaooad.capstone23.tag.services.TagService;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
@@ -13,13 +14,13 @@ import jakarta.inject.Inject;
 public class CreateTagHandler implements CommandHandler<CreateTag, TagCreated> {
 
     @Inject
-    TagRepository tagsRepository;
+    TagService tagService;
 
     @Override
     public Result<TagCreated> handle(CreateTag command) {
         var tagEntity = new Tag();
         tagEntity.tagName = command.getTagName();
-        tagsRepository.persist(tagEntity);
+        tagService.persist(tagEntity);
         var tagCreated = new TagCreated(tagEntity.id, tagEntity.tagName);
         return new Result<>(tagCreated);
     }
