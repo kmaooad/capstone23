@@ -12,10 +12,10 @@ public class UpdateSkill {
     @Pattern(regexp = "^[a-zA-Z0-9\s]*$")
     private String skillName;
 
-    private ObjectId parentSkill;
+    private String parentSkill;
 
     @NotNull
-    private ObjectId id;
+    private String id;
 
     public String getSkillName() {
         return skillName;
@@ -25,19 +25,19 @@ public class UpdateSkill {
         this.skillName = skillName;
     }
 
-    public ObjectId getParentSkill() {
+    public String getParentSkill() {
         return parentSkill;
     }
 
-    public void setParentSkill(ObjectId parentSkill) {
+    public void setParentSkill(String parentSkill) {
         this.parentSkill = parentSkill;
     }
 
-    public ObjectId getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(ObjectId id) {
+    public void setId(String id) {
         this.id = id;
     }
 }

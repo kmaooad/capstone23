@@ -3,7 +3,7 @@ package edu.kmaooad.capstone23.access_rules.controllers;
 import edu.kmaooad.capstone23.access_rules.dal.AccessRule;
 import edu.kmaooad.capstone23.access_rules.dal.AccessRuleRepository;
 import io.quarkus.test.junit.QuarkusTest;
-import jakarta.inject.Inject
+import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
 
 import org.junit.jupiter.api.*;

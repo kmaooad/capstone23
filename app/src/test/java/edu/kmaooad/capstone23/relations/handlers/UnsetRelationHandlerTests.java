@@ -1,6 +1,7 @@
 package edu.kmaooad.capstone23.relations.handlers;
 
 import edu.kmaooad.capstone23.common.CommandHandler;
+import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.relations.commands.UnsetRelation;
 import edu.kmaooad.capstone23.relations.dal.Relation;
 import edu.kmaooad.capstone23.relations.dal.RelationRepository;
@@ -10,6 +11,8 @@ import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -25,36 +28,35 @@ class UnsetRelationHandlerTests {
     @Test
     @DisplayName("Successfully Unset Relation")
     void testSuccessfulRelationUnset() {
-        var relationToUnsetID = createDefaultRelation();
-        var command = new UnsetRelation(relationToUnsetID, "courses", "projects");
-        var result = handler.handle(command);
-        assertTrue(result.isSuccess());
-        assertNotNull(result.getValue());
-        assertNotNull(result.getValue().id());
+        ObjectId relationToUnsetID = createAndPersistDefaultRelation();
+        UnsetRelation command = new UnsetRelation(relationToUnsetID, "courses", "projects");
+
+        Result<RelationUnset> result = handler.handle(command);
+
+        assertAll("Valid Relation Unset",
+                () -> assertTrue(result.isSuccess(), "Result should be successful"),
+                () -> assertNotNull(result.getValue(), "Result value should not be null"),
+                () -> assertEquals(relationToUnsetID, result.getValue().id(), "Result value id should match the unset relation id")
+        );
     }
 
     @Test
     @DisplayName("Unsetting Non-existent Relation")
     void testNonexistentRelationUnset() {
-        var command = createDefaultCommand();
-        command = new UnsetRelation(new ObjectId("5f7e47fc8e1f7112d73c92a0"), "NonExistentCollection", "AnotherNonExistentCollection");
+        ObjectId fakeId = new ObjectId("5f7e47fc8e1f7112d73c92a0");
+        UnsetRelation command = new UnsetRelation(fakeId, "NonExistentCollection", "AnotherNonExistentCollection");
 
-        var result = handler.handle(command);
-        assertFalse(result.isSuccess());
+        Result<RelationUnset> result = handler.handle(command);
+
+        assertFalse(result.isSuccess(), "Result should not be successful for non-existent relation");
     }
 
-    private ObjectId createDefaultRelation() {
-        var relation = new Relation(new ObjectId("5f7e47fc8e1f7112d73c92a1"), new ObjectId("5f7e47fc8e1f7112d73c92a1"));
-        var created = repository.createRelation("courses", "projects", relation);
-        assertTrue(created.isPresent());
+    private ObjectId createAndPersistDefaultRelation() {
+        Relation relation = new Relation(new ObjectId(), new ObjectId());
+        Optional<Relation> created = repository.createRelation("courses", "projects", relation);
+
+        assertTrue(created.isPresent(), "Created relation should be present");
+
         return created.get().getId();
-    }
-
-    private UnsetRelation createDefaultCommand() {
-        return new UnsetRelation(
-                new ObjectId("5f7e47fc8e1f7112d73c92a1"),
-                "courses",
-                "projects"
-        );
     }
 }

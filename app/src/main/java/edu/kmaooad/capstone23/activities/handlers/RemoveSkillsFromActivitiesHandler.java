@@ -5,7 +5,7 @@ import edu.kmaooad.capstone23.activities.dal.ExtracurricularActivityRepository;
 import edu.kmaooad.capstone23.activities.events.SkillFromActivityRemoved;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.Result;
-import edu.kmaooad.capstone23.competences.dal.SkillsRepository;
+import edu.kmaooad.capstone23.competences.dal.MongoSkillsRepository;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 
@@ -18,7 +18,7 @@ public class RemoveSkillsFromActivitiesHandler implements CommandHandler<RemoveS
     private ExtracurricularActivityRepository activityRepository;
 
     @Inject
-    private SkillsRepository skillsRepository;
+    private MongoSkillsRepository skillsRepository;
 
 
     @Override
