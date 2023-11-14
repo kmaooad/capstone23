@@ -1,6 +1,6 @@
 package edu.kmaooad.capstone23.competences.controllers;
 
-import edu.kmaooad.capstone23.competences.dal.SkillsRepository;
+import edu.kmaooad.capstone23.competences.dal.MongoSkillsRepository;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 
@@ -16,7 +16,7 @@ import static io.restassured.RestAssured.given;
 @QuarkusTest
 public class DeleteSkillsControllerTests {
     @Inject
-    private SkillsRepository repository;
+    private MongoSkillsRepository repository;
 
     ObjectId createTestSkill(String name, ObjectId parent) {
         Map<String, Object> jsonAsMap = new HashMap<>();

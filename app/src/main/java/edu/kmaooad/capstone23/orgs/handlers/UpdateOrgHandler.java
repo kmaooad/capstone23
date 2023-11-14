@@ -1,5 +1,6 @@
 package edu.kmaooad.capstone23.orgs.handlers;
 
+import edu.kmaooad.capstone23.ban.commands.IsEntityBannedV2;
 import edu.kmaooad.capstone23.ban.dal.BannedEntityType;
 import edu.kmaooad.capstone23.ban.service.EntityBanService;
 import edu.kmaooad.capstone23.common.CommandHandler;
@@ -32,7 +33,7 @@ public class UpdateOrgHandler implements CommandHandler<UpdateOrg, OrgUpdated> {
         if (existingOrg.isEmpty()) {
             return new Result<>(ErrorCode.EXCEPTION, "Org with given id not found");
         }
-        if (entityBanService.findForEntity(BannedEntityType.Organization, existingOrg.get().id).isPresent()) {
+        if (entityBanService.findForEntity(IsEntityBannedV2.ORGANIZATION_BAN_ENTITY_TYPE, existingOrg.get().id.toString()).isPresent()) {
             return new Result<>(ErrorCode.EXCEPTION, "Org is banned");
         }
 
