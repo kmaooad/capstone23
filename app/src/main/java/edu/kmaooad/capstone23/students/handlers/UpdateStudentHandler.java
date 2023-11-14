@@ -14,6 +14,7 @@ import edu.kmaooad.capstone23.students.parser.UpdateCSVStudent;
 import edu.kmaooad.capstone23.students.parser.UpdateCSVStudentParser;
 import edu.kmaooad.capstone23.students.parser.exceptions.IncorrectValuesAmount;
 import edu.kmaooad.capstone23.students.parser.exceptions.InvalidEmail;
+import edu.kmaooad.capstone23.students.services.StudentService;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 
@@ -26,7 +27,7 @@ import java.util.List;
 @RequestScoped
 public class UpdateStudentHandler implements CommandHandler<UpdateStudent, StudentsUpdated> {
     @Inject
-    StudentRepository repository;
+    StudentService studentService;
 
     @Inject
     UpdateCSVStudentParser parser;
@@ -55,7 +56,7 @@ public class UpdateStudentHandler implements CommandHandler<UpdateStudent, Stude
         List<Student> studentsToUpdate = new ArrayList<>();
 
         for (UpdateCSVStudent parsedStudent : csvStudents) {
-            Student student = repository.findById(parsedStudent.getId());
+            Student student = studentService.findById(parsedStudent.getId());
 
             if (parsedStudent.getLastName() != null)
                 student.lastName = parsedStudent.getLastName();
@@ -75,7 +76,7 @@ public class UpdateStudentHandler implements CommandHandler<UpdateStudent, Stude
             studentsToUpdate.add(student);
         }
 
-        repository.update(studentsToUpdate);
+        studentService.update(studentsToUpdate);
 
         List<StudentUpdated> studentsUpdated = new ArrayList<>();
         for (Student student : studentsToUpdate) {
