@@ -14,6 +14,7 @@ import edu.kmaooad.capstone23.students.parser.CSVStudent;
 import edu.kmaooad.capstone23.students.parser.CreateCSVStudentParser;
 import edu.kmaooad.capstone23.students.parser.exceptions.IncorrectValuesAmount;
 import edu.kmaooad.capstone23.students.parser.exceptions.InvalidEmail;
+import edu.kmaooad.capstone23.students.services.StudentService;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 
@@ -26,7 +27,7 @@ import java.util.List;
 @RequestScoped
 public class CreateStudentHandler implements CommandHandler<CreateStudent, StudentsCreated> {
     @Inject
-    StudentRepository repository;
+    StudentService studentService;
 
     @Inject
     CreateCSVStudentParser parser;
@@ -52,7 +53,7 @@ public class CreateStudentHandler implements CommandHandler<CreateStudent, Stude
             return new Result<>(ErrorCode.EXCEPTION, e.getLocalizedMessage());
         }
 
-        List<Student> students = repository.insert(csvStudents);
+        List<Student> students = studentService.insert(csvStudents);
 
         List<StudentCreated> studentsCreated = new ArrayList<>();
         for (Student student : students) {

@@ -9,6 +9,7 @@ import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.tag.dal.Tag;
 import edu.kmaooad.capstone23.tag.dal.TagRepository;
+import edu.kmaooad.capstone23.tag.services.TagService;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
@@ -24,7 +25,7 @@ public class AddTagsToExtracurricularActivityHandler implements CommandHandler<A
     ExtracurricularActivityService activityService;
 
     @Inject
-    TagRepository tagRepository;
+    TagService tagService;
 
     public Result<TagsAddedToExtracurricularActivity> handle(AddTagsToExtracurricularActivity command) {
         String extracurricularActivityName = command.getExtracurricularActivityName();
@@ -40,7 +41,7 @@ public class AddTagsToExtracurricularActivityHandler implements CommandHandler<A
         }
 
         for (String tagId : command.getTagIds()) {
-            Tag tag = tagRepository.findById(new ObjectId(tagId));
+            Tag tag = tagService.findById(new ObjectId(tagId));
             if (tag != null && !tagsToAdd.contains(tag)) {
                 tagsToAdd.add(tag);
             }
