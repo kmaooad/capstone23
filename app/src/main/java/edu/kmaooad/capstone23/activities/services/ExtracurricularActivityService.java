@@ -8,6 +8,7 @@ import java.util.Optional;
 public interface ExtracurricularActivityService {
     public ExtracurricularActivity insert(ExtracurricularActivity extracurricularActivity);
     public ExtracurricularActivity findById(String id);
+    public ExtracurricularActivity find(String name);
     public ExtracurricularActivity update(ExtracurricularActivity extracurricularActivity);
     public void deleteExtracurricularActivity(ExtracurricularActivity extracurricularActivity);
 }
