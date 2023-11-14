@@ -7,6 +7,7 @@ import edu.kmaooad.capstone23.students.commands.ReadStudent;
 import edu.kmaooad.capstone23.students.dal.Student;
 import edu.kmaooad.capstone23.students.dal.StudentRepository;
 import edu.kmaooad.capstone23.students.events.StudentRead;
+import edu.kmaooad.capstone23.students.services.StudentService;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 
@@ -16,11 +17,11 @@ import java.util.Optional;
 @RequestScoped
 public class FindStudentByIdHandler implements CommandHandler<ReadStudent, StudentRead> {
     @Inject
-    StudentRepository studentRepository;
+    StudentService studentService;
 
     @Override
     public Result<StudentRead> handle(ReadStudent command) {
-        Optional<Student> student = studentRepository.findById(command.getId());
+        Optional<Student> student = studentService.findById(command.getId());
         if (student.isEmpty())
             return new Result<>(ErrorCode.VALIDATION_FAILED, "Student with this ID does not exist");
 

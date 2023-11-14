@@ -18,7 +18,7 @@ public class AssignSkillsToActivitiesHandler implements CommandHandler<AddSkillT
     private ExtracurricularActivityService extracurricularActivityService;
 
     @Inject
-    private SkillsRepository skillsRepository;
+    private MongoSkillsRepository skillsRepository;
 
 
     @Override
