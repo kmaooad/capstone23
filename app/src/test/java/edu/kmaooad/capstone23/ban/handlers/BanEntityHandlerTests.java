@@ -130,7 +130,7 @@ public class BanEntityHandlerTests {
 
     String createMember(ObjectId orgId) {
         var command = new CreateBasicMember();
-        command.setOrgId(orgId);
+        command.setOrgId(orgId.toString());
         command.setFirstName("John");
         command.setLastName("Doe");
         command.setEmail(randomEmail());

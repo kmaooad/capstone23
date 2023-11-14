@@ -6,12 +6,8 @@ import edu.kmaooad.capstone23.activities.dal.ExtracurricularActivityRepository;
 import edu.kmaooad.capstone23.activities.events.SkillToActivityAdded;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.Result;
-import edu.kmaooad.capstone23.competences.commands.AddSkillToSkillSet;
 import edu.kmaooad.capstone23.competences.dal.Skill;
-import edu.kmaooad.capstone23.competences.dal.SkillSet;
-import edu.kmaooad.capstone23.competences.dal.SkillSetRepository;
-import edu.kmaooad.capstone23.competences.dal.SkillsRepository;
-import edu.kmaooad.capstone23.competences.events.SkillToSkillSetAdded;
+import edu.kmaooad.capstone23.competences.dal.MongoSkillsRepository;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
@@ -27,7 +23,7 @@ public class AssignSkillsToActivitiesHandlerTest {
     @Inject
     private ExtracurricularActivityRepository activityRepository;
     @Inject
-    private SkillsRepository skillsRepository;
+    private MongoSkillsRepository skillsRepository;
 
     private ObjectId activityId;
     private ObjectId skillId;
