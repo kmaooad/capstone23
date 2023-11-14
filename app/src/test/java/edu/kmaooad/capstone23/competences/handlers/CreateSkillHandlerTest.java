@@ -3,7 +3,6 @@ package edu.kmaooad.capstone23.competences.handlers;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.competences.commands.CreateSkill;
-import edu.kmaooad.capstone23.competences.dal.SkillsRepository;
 import edu.kmaooad.capstone23.competences.events.SkillCreated;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
@@ -40,7 +39,7 @@ public class CreateSkillHandlerTest {
 
         var command2 = new CreateSkill();
         command2.setSkillName("fruit");
-        command2.setParentSkill(result.getValue().getSkill());
+        command2.setParentSkill(result.getValue().getSkill().toHexString());
 
         Result<SkillCreated> result2 = handler.handle(command2);
 
@@ -54,7 +53,7 @@ public class CreateSkillHandlerTest {
     void testUnsuccessfulRelationHandling() {
         var command2 = new CreateSkill();
         command2.setSkillName("fruit");
-        command2.setParentSkill(new ObjectId());
+        command2.setParentSkill("5faabb2e8d6c4b3f3e217465");
 
         Result<SkillCreated> result2 = handler.handle(command2);
 

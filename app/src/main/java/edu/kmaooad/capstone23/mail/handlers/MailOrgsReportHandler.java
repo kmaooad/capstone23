@@ -8,7 +8,7 @@ import edu.kmaooad.capstone23.mail.events.OrgsReportMailed;
 import edu.kmaooad.capstone23.mail.service.Notification;
 import edu.kmaooad.capstone23.mail.service.NotificationMailService;
 import edu.kmaooad.capstone23.orgs.dal.Org;
-import edu.kmaooad.capstone23.orgs.dal.OrgsRepository;
+import edu.kmaooad.capstone23.orgs.services.OrgsServiceImpl;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 
@@ -16,7 +16,7 @@ import jakarta.inject.Inject;
 public class MailOrgsReportHandler implements CommandHandler<MailOrgsReport, OrgsReportMailed> {
 
     @Inject
-    OrgsRepository orgsRepository;
+    OrgsServiceImpl orgsService;
 
     @Inject
     NotificationMailService service;
@@ -33,7 +33,7 @@ public class MailOrgsReportHandler implements CommandHandler<MailOrgsReport, Org
         finalBody += ("| ID     | NAME   | INDUSTRY   | IS ACTIVE |\n");
         finalBody += ("+--------+--------+------------+-----------+\n");
         for (int i = 0; i < count; i++) {
-            currentOrg = orgsRepository.listAll().get(i);
+            currentOrg = orgsService.getByPos(i);
             finalBody += "| " + currentOrg.id.toString() + " | " + currentOrg.name + " | " + currentOrg.industry + " | "
                     + currentOrg.isActive + "|\n";
         }
@@ -44,17 +44,17 @@ public class MailOrgsReportHandler implements CommandHandler<MailOrgsReport, Org
     public Result<OrgsReportMailed> handle(MailOrgsReport command) {
         int countOfRecords = 0;
         int count = command.getRecordsCount();
-        if (orgsRepository != null){
+        if (orgsService.isNotNull()){
             if (count == 0) {
-                countOfRecords = Math.toIntExact(orgsRepository.count());
+                countOfRecords = Math.toIntExact(orgsService.count());
             }
             if (count < 0) {
                 return new Result<>(ErrorCode.VALIDATION_FAILED, "Incorrect size of report!");
             }
-            if (count > orgsRepository.count()) {
-                countOfRecords = Math.toIntExact(orgsRepository.count());
+            if (count > orgsService.count()) {
+                countOfRecords = Math.toIntExact(orgsService.count());
             }
-            if (count < orgsRepository.count()){
+            if (count < orgsService.count()){
                 countOfRecords = count;
             }
         }
