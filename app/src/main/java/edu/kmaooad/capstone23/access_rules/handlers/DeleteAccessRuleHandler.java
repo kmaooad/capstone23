@@ -8,7 +8,6 @@ import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
-import org.bson.types.ObjectId;
 
 @RequestScoped
 public class DeleteAccessRuleHandler implements CommandHandler<DeleteAccessRule, AccessRuleDeleted> {
@@ -17,11 +16,11 @@ public class DeleteAccessRuleHandler implements CommandHandler<DeleteAccessRule,
     private AccessRuleService accessRuleService;
 
     public Result<AccessRuleDeleted> handle(DeleteAccessRule command) {
-        if(!accessRuleService.findByIdOptional(command.getId().toString()).isPresent()) {
+        if (accessRuleService == null) {
             return new Result<>(ErrorCode.VALIDATION_FAILED, "Access rule doesn't exist");
         }
 
-        accessRuleService.delete("id", command.getId());
-        return new Result<>(new AccessRuleDeleted(command.getId().toString()));
+        accessRuleService.deleteAccessRule(command.getId());
+        return new Result<>(new AccessRuleDeleted(command.getId()));
     }
 }
