@@ -6,6 +6,7 @@ import edu.kmaooad.capstone23.students.commands.FindStudent;
 import edu.kmaooad.capstone23.students.dal.Student;
 import edu.kmaooad.capstone23.students.dal.StudentRepository;
 import edu.kmaooad.capstone23.students.events.StudentsFound;
+import edu.kmaooad.capstone23.students.services.StudentService;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
@@ -17,11 +18,11 @@ import java.util.List;
 public class FindStudentHandler implements CommandHandler<FindStudent, StudentsFound> {
 
     @Inject
-    StudentRepository repository;
+    StudentService studentService;
 
     @Override
     public Result<StudentsFound> handle(FindStudent command) {
-        List<Student> students = repository.find(command);
+        List<Student> students = studentService.find(command);
 
         List<ObjectId> studentIds = new ArrayList<>();
         for (Student student : students) {

@@ -7,6 +7,7 @@ import edu.kmaooad.capstone23.tag.commands.UpdateTag;
 import edu.kmaooad.capstone23.tag.dal.Tag;
 import edu.kmaooad.capstone23.tag.dal.TagRepository;
 import edu.kmaooad.capstone23.tag.events.TagUpdated;
+import edu.kmaooad.capstone23.tag.services.TagService;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 
@@ -14,17 +15,17 @@ import jakarta.inject.Inject;
 public class UpdateTagHandler implements CommandHandler<UpdateTag, TagUpdated> {
 
     @Inject
-    TagRepository repository;
+    TagService tagService;
 
     public Result<TagUpdated> handle(UpdateTag command) {
-        Tag tag = repository.findById(command.id);
+        Tag tag = tagService.findById(command.id);
 
         if (tag == null) {
             return new Result<>(ErrorCode.VALIDATION_FAILED, "Tag with such id doesn't exist");
         }
 
         tag.tagName = command.tagName;
-        repository.update(tag);
+        tagService.update(tag);
         TagUpdated result = new TagUpdated(tag.id.toString(), tag.tagName);
         return new Result<>(result);
     }
