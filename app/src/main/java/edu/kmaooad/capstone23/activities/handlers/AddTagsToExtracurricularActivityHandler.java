@@ -2,8 +2,8 @@ package edu.kmaooad.capstone23.activities.handlers;
 
 import edu.kmaooad.capstone23.activities.commands.AddTagsToExtracurricularActivity;
 import edu.kmaooad.capstone23.activities.dal.ExtracurricularActivity;
-import edu.kmaooad.capstone23.activities.dal.ExtracurricularActivityRepository;
 import edu.kmaooad.capstone23.activities.events.TagsAddedToExtracurricularActivity;
+import edu.kmaooad.capstone23.activities.services.ExtracurricularActivityService;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
@@ -22,14 +22,14 @@ import java.util.stream.Collectors;
 public class AddTagsToExtracurricularActivityHandler implements CommandHandler<AddTagsToExtracurricularActivity, TagsAddedToExtracurricularActivity> {
 
     @Inject
-    ExtracurricularActivityRepository activityRepository;
+    ExtracurricularActivityService activityService;
 
     @Inject
     TagService tagService;
 
     public Result<TagsAddedToExtracurricularActivity> handle(AddTagsToExtracurricularActivity command) {
         String extracurricularActivityName = command.getExtracurricularActivityName();
-        ExtracurricularActivity activity = activityRepository.find("extracurricularActivityName", extracurricularActivityName).firstResult();
+        ExtracurricularActivity activity = activityService.find(extracurricularActivityName);
 
         if (activity == null) {
             return new Result<>(ErrorCode.EXCEPTION, "Extracurricular activity not found");
@@ -48,7 +48,7 @@ public class AddTagsToExtracurricularActivityHandler implements CommandHandler<A
         }
 
         activity.tags = tagsToAdd;
-        activityRepository.update(activity);
+        activityService.update(activity);
 
         TagsAddedToExtracurricularActivity result = new TagsAddedToExtracurricularActivity(
                 extracurricularActivityName,
