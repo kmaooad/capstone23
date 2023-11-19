@@ -5,7 +5,6 @@ import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.competences.commands.CreateSkill;
 import edu.kmaooad.capstone23.competences.dal.Skill;
-import edu.kmaooad.capstone23.competences.dal.MongoSkillsRepository;
 import edu.kmaooad.capstone23.competences.events.SkillCreated;
 import edu.kmaooad.capstone23.competences.services.SkillService;
 import jakarta.enterprise.context.RequestScoped;
@@ -14,10 +13,8 @@ import jakarta.inject.Inject;
 @RequestScoped
 public class CreateSkillHandler implements CommandHandler<CreateSkill, SkillCreated> {
 
-
     @Inject
     private SkillService skillService;
-
 
     @Override
     public Result<SkillCreated> handle(CreateSkill command) {

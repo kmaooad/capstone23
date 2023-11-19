@@ -4,7 +4,6 @@ import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.competences.commands.RemoveSkillFromSkillSet;
-import edu.kmaooad.capstone23.competences.dal.MongoSkillsRepository;
 import edu.kmaooad.capstone23.competences.events.SkillFromSkillSetRemoved;
 import edu.kmaooad.capstone23.competences.services.SkillService;
 import edu.kmaooad.capstone23.competences.services.SkillSetService;
@@ -22,12 +21,10 @@ public class RemoveSkillFromSkillSetHandler implements CommandHandler<RemoveSkil
     @Inject
     private SkillService skillService;
 
-
-
     @Override
     public Result<SkillFromSkillSetRemoved> handle(RemoveSkillFromSkillSet command) {
 
-        var skill = skillService.findById(command.getSkillId());
+        var skill = skillService.findByIdOptional(command.getSkillId().toString());
         var skillSet = service.findById(command.getSkillSetId().toString());
 
         if (skill.isEmpty())

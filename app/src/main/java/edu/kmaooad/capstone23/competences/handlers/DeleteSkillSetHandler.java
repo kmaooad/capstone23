@@ -5,7 +5,6 @@ import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.competences.commands.DeleteSkillSet;
 import edu.kmaooad.capstone23.competences.dal.SkillSet;
-import edu.kmaooad.capstone23.competences.dal.SkillSetRepository;
 import edu.kmaooad.capstone23.competences.events.SkillSetDeleted;
 import edu.kmaooad.capstone23.competences.services.SkillSetService;
 import jakarta.enterprise.context.RequestScoped;
