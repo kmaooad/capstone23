@@ -5,6 +5,7 @@ import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.competences.commands.UpdateSkillSet;
 import edu.kmaooad.capstone23.competences.dal.SkillSet;
+import edu.kmaooad.capstone23.competences.dal.SkillSetRepository;
 import edu.kmaooad.capstone23.competences.events.SkillSetUpdated;
 import edu.kmaooad.capstone23.competences.services.SkillSetService;
 import jakarta.enterprise.context.RequestScoped;
@@ -15,7 +16,6 @@ import java.util.Optional;
 
 @RequestScoped
 public class UpdateSkillSetHandler implements CommandHandler<UpdateSkillSet, SkillSetUpdated> {
-    
     @Inject
     SkillSetService service;
 

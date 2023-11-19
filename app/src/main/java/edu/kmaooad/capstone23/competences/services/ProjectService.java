@@ -6,5 +6,5 @@ import java.util.Optional;
 
 public interface ProjectService {
   public Optional<Project> findByIdOptional(ObjectId id);
-  Project insertProject(Project project);
+
 }

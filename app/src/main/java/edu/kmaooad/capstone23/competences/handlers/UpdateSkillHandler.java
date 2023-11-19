@@ -5,6 +5,7 @@ import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.competences.commands.UpdateSkill;
 import edu.kmaooad.capstone23.competences.dal.Skill;
+import edu.kmaooad.capstone23.competences.dal.MongoSkillsRepository;
 import edu.kmaooad.capstone23.competences.events.SkillUpdated;
 import edu.kmaooad.capstone23.competences.services.SkillService;
 import jakarta.enterprise.context.RequestScoped;

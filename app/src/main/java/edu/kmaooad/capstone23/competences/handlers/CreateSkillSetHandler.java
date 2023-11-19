@@ -3,7 +3,7 @@ package edu.kmaooad.capstone23.competences.handlers;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
-import edu.kmaooad.capstone23.competences.services.SkillService;
+import edu.kmaooad.capstone23.competences.dal.MongoSkillsRepository;
 import edu.kmaooad.capstone23.competences.services.SkillSetService;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
@@ -21,8 +21,7 @@ public class CreateSkillSetHandler implements CommandHandler<CreateSkillSet, Ski
     private SkillSetService service;
 
     @Inject
-    SkillService skillService;
-
+    private MongoSkillsRepository skillsRepository;
     public Result<SkillSetCreated> handle(CreateSkillSet command) {
 
         SkillSet skillSet = new SkillSet();
@@ -31,7 +30,7 @@ public class CreateSkillSetHandler implements CommandHandler<CreateSkillSet, Ski
 
         if(skillSet.skillIds != null) {
             for ( ObjectId item : skillSet.skillIds) {
-                if(skillService.findById(item.toString()).equals(Optional.empty()))
+                if(skillsRepository.findById(item.toString()).equals(Optional.empty()))
                     return new Result<>(ErrorCode.EXCEPTION, "Has not existing skill");
             }
         }
