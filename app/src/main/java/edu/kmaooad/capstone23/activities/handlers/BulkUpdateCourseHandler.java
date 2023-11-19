@@ -1,14 +1,10 @@
 package edu.kmaooad.capstone23.activities.handlers;
 
-import edu.kmaooad.capstone23.activities.commands.BulkCreateCourses;
 import edu.kmaooad.capstone23.activities.commands.BulkUpdateCourses;
 import edu.kmaooad.capstone23.activities.dal.Course;
 import edu.kmaooad.capstone23.activities.dal.CourseRepository;
-import edu.kmaooad.capstone23.activities.events.BulkCoursesCreated;
 import edu.kmaooad.capstone23.activities.events.BulkCoursesUpdated;
-import edu.kmaooad.capstone23.activities.events.CourseCreated;
 import edu.kmaooad.capstone23.activities.events.CourseUpdated;
-import edu.kmaooad.capstone23.activities.services.CourseService;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;

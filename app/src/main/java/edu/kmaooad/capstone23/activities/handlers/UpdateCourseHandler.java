@@ -2,7 +2,6 @@ package edu.kmaooad.capstone23.activities.handlers;
 
 import edu.kmaooad.capstone23.activities.commands.UpdateCourse;
 import edu.kmaooad.capstone23.activities.dal.Course;
-import edu.kmaooad.capstone23.activities.dal.CourseRepository;
 import edu.kmaooad.capstone23.activities.events.CourseUpdated;
 import edu.kmaooad.capstone23.activities.services.CourseService;
 import edu.kmaooad.capstone23.common.CommandHandler;

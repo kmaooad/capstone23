@@ -23,10 +23,7 @@ public class RemoveSkillsFromActivitiesHandler implements CommandHandler<RemoveS
 
     @Override
     public Result<SkillFromActivityRemoved> handle(RemoveSkillFromActivity command) {
-
-        var skill = skillsRepository.findById(command.getSkillId().toString());
         var activity = activityRepository.findById(command.getActivityId().toString());
-        
 
         var activityValue = activity;
         activityValue.skillIds.remove(command.getSkillId());
