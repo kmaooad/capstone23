@@ -6,6 +6,9 @@ import edu.kmaooad.capstone23.proffesors.dal.Proffesor;
 import edu.kmaooad.capstone23.proffesors.dal.ProffesorsRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import org.bson.types.ObjectId;
+
+import java.util.Optional;
 
 @ApplicationScoped
 public class ProfessorsServiceImpl implements ProffesorsService{
@@ -15,4 +18,9 @@ public class ProfessorsServiceImpl implements ProffesorsService{
     public Proffesor insert(Proffesor professor) {
         return proffesorsRepository.insert(professor);
     }
+
+    public Optional<Proffesor> findByIdOptional(ObjectId id) {
+        return proffesorsRepository.findByIdOptional(id);
+    }
+
 }
