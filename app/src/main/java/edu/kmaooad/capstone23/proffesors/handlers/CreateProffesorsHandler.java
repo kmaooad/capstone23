@@ -7,6 +7,7 @@ import edu.kmaooad.capstone23.proffesors.commands.CreateProffesor;
 import edu.kmaooad.capstone23.proffesors.dal.Proffesor;
 import edu.kmaooad.capstone23.proffesors.dal.ProffesorsRepository;
 import edu.kmaooad.capstone23.proffesors.events.ProffesorCreated;
+import edu.kmaooad.capstone23.proffesors.services.ProffesorsService;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 
@@ -17,7 +18,7 @@ import java.time.LocalDateTime;
     public class CreateProffesorsHandler implements CommandHandler<CreateProffesor, ProffesorCreated> {
 
         @Inject
-        ProffesorsRepository cvRepository;
+        ProffesorsService proffesorsService;
 
         @Override
         public Result<ProffesorCreated> handle(CreateProffesor command) {
@@ -41,7 +42,7 @@ import java.time.LocalDateTime;
             cv.email = command.getEmail();
             cv.preference = command.getPreference();
 
-            cvRepository.insert(cv);
+            proffesorsService.insert(cv);
 
             ProffesorCreated result = new ProffesorCreated(cv.id);
             return new Result<>(result);

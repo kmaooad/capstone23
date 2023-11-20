@@ -5,5 +5,5 @@ import edu.kmaooad.capstone23.proffesors.dal.Proffesor;
 
 public interface ProffesorsService {
 
-    public Proffesor insert(ExtracurricularActivity extracurricularActivity);
+    public Proffesor insert(Proffesor proffesor);
 }
