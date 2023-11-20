@@ -23,4 +23,9 @@ public class ProfessorsServiceImpl implements ProffesorsService{
         return proffesorsRepository.findByIdOptional(id);
     }
 
+    @Override
+    public void update(Proffesor proffesor) {
+        proffesorsRepository.update(proffesor);
+    }
+
 }
