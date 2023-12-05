@@ -46,7 +46,7 @@ public class CreateCSVStudentParser {
                 if (values.length > STUDENT_FIELDS) throw new TooManyValues(line);
                 CSVStudent createdStudent = parse(values);
                 if (!validator.validate(createdStudent).isEmpty())
-                    throw new InvalidEmail("Invalid email provided: ", createdStudent.getEmail());
+                    throw new InvalidEmail("Invalid email provided: ", createdStudent.email());
                 result.add(parse(values));
             }
             return result;

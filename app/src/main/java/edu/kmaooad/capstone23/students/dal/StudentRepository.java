@@ -54,11 +54,11 @@ public class StudentRepository implements PanacheMongoRepository<Student> {
 
     private Student map(CSVStudent student){
         Student result = new Student();
-        result.firstName = student.getFirstName();
-        result.middleName = student.getMiddleName();
-        result.lastName = student.getLastName();
-        result.DOBTimestamp = student.getDOBTimestamp();
-        result.email = student.getEmail();
+        result.firstName = student.firstName() ;
+        result.middleName = student.middleName();
+        result.lastName = student.lastName();
+        result.DOBTimestamp = student.DOBTimestamp();
+        result.email = student.email();
         return result;
     }
 }
