@@ -1,7 +1,8 @@
 package edu.kmaooad.capstone23.departments.handlers;
 
+import edu.kmaooad.capstone23.ban.commands.IsEntityBannedV2;
 import edu.kmaooad.capstone23.ban.dal.BannedEntityType;
-import edu.kmaooad.capstone23.ban.dal.EntityBanRepository;
+import edu.kmaooad.capstone23.ban.service.EntityBanService;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
@@ -24,7 +25,7 @@ public class CreateRequestToJoinHandler implements CommandHandler<RequestToJoinD
     private RequestsRepository requestsRepository;
 
     @Inject
-    EntityBanRepository banRepository;
+    EntityBanService banService;
 
     private final String defaultStatus = "pending";
 
@@ -36,7 +37,7 @@ public class CreateRequestToJoinHandler implements CommandHandler<RequestToJoinD
             return new Result<>(ErrorCode.EXCEPTION, "Department not found");
         }
 
-        if (banRepository.findForEntity(BannedEntityType.Department, department.id).isPresent()) {
+        if (banService.findForEntity(IsEntityBannedV2.DEPARTMENT_BAN_ENTITY_TYPE, department.id.toString()).isPresent()) {
             return new Result<>(ErrorCode.EXCEPTION, "Department is banned");
         }
 

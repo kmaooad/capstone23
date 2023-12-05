@@ -162,7 +162,7 @@ public class CreateAccessRuleControllerTests {
 
     private String createMember(){
         CreateBasicMember command = new CreateBasicMember();
-        command.setOrgId(new ObjectId(createOrg()));
+        command.setOrgId(createOrg());
         command.setFirstName("John");
         command.setLastName("Doe");
         String id = new ObjectId().toString();

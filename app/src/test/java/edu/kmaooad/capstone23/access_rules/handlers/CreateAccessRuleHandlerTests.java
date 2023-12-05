@@ -153,9 +153,9 @@ public class CreateAccessRuleHandlerTests {
     }
     private Result<AccessRuleCreated> addAccessRule(String fromId, AccessRuleFromEntityType fromType, String toId, AccessRuleToEntityType toType){
         CreateAccessRule command = new CreateAccessRule();
-        command.setFromEntityId(new ObjectId(fromId));
+        command.setFromEntityId(fromId);
         command.setFromEntityType(fromType.toString());
-        command.setToEntityId(new ObjectId(toId));
+        command.setToEntityId(toId);
         command.setToEntityType(toType.toString());
         command.setRuleType("Allow");
 
@@ -166,7 +166,7 @@ public class CreateAccessRuleHandlerTests {
 
     private String createMember(){
         CreateBasicMember command = new CreateBasicMember();
-        command.setOrgId(new ObjectId(createOrg()));
+        command.setOrgId(createOrg());
         command.setFirstName("John");
         command.setLastName("Doe");
         String id = new ObjectId().toString();
