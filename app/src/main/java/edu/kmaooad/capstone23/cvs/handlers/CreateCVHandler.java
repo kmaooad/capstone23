@@ -7,8 +7,14 @@ import edu.kmaooad.capstone23.cvs.commands.CreateCV;
 import edu.kmaooad.capstone23.cvs.dal.CV;
 import edu.kmaooad.capstone23.cvs.events.CVCreated;
 import edu.kmaooad.capstone23.cvs.services.CVService;
+import edu.kmaooad.capstone23.notifications.dal.Notification;
+import edu.kmaooad.capstone23.notifications.dal.NotificationEvent;
+import edu.kmaooad.capstone23.notifications.dal.NotificationType;
+import edu.kmaooad.capstone23.notifications.services.NotificationService;
 import edu.kmaooad.capstone23.students.dal.Student;
 import edu.kmaooad.capstone23.students.dal.StudentRepository;
+import edu.kmaooad.capstone23.users.dal.entities.User;
+import edu.kmaooad.capstone23.users.dal.repositories.UserRepository;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
@@ -23,6 +29,11 @@ public class CreateCVHandler implements CommandHandler<CreateCV, CVCreated> {
 
     @Inject
     StudentRepository studentRepository;
+
+    @Inject
+    NotificationService notificationService;
+    @Inject
+    UserRepository userRepository;
 
     @Override
     public Result<CVCreated> handle(CreateCV command) {
@@ -63,6 +74,14 @@ public class CreateCVHandler implements CommandHandler<CreateCV, CVCreated> {
         cv.studentId = command.getStudentId();
 
         cvService.create(cv);
+
+        Notification notification = new Notification();
+        notification.notificationType = NotificationType.EMAIL;
+        notification.event = NotificationEvent.CV_CREATED;
+        notification.userId = new ObjectId(command.getStudentId());
+        notificationService.insert(notification);
+        User user = userRepository.findById(new ObjectId(command.getStudentId()));
+        notificationService.notify(user.email, notification.notificationType, "CV created");
 
         CVCreated result = new CVCreated(cv.id);
         return new Result<>(result);

@@ -6,5 +6,6 @@ public enum NotificationEvent {
     ORG_CREATED,
     ORG_DELETED,
     COURSE_UPDATED,
+    CV_CREATED,
     //todo: add more events
 }
