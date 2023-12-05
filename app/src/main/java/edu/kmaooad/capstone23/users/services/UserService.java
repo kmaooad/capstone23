@@ -1,5 +1,6 @@
 package edu.kmaooad.capstone23.users.services;
 
+import edu.kmaooad.capstone23.notifications.models.Event;
 import edu.kmaooad.capstone23.notifications.models.NotificationMethod;
 import edu.kmaooad.capstone23.users.dal.entities.User;
 import edu.kmaooad.capstone23.users.dal.repositories.UserRepository;
@@ -28,6 +29,14 @@ public class UserService {
     Optional<User> user = userRepository.findById(userId);
     if (user.isEmpty()) return null;
     user.get().notificationMethods = notificationMethods;
+    userRepository.update(user.get());
+    return user.get().id.toHexString();
+  }
+
+  public String setUserNotificationEvents(String userId, ArrayList<Event> notificationEvents) {
+    Optional<User> user = userRepository.findById(userId);
+    if (user.isEmpty()) return null;
+    user.get().notificationEvents = notificationEvents;
     userRepository.update(user.get());
     return user.get().id.toHexString();
   }
