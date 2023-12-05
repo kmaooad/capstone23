@@ -9,15 +9,16 @@ import edu.kmaooad.capstone23.notification.dal.NotificationPreferencesRepository
 import edu.kmaooad.capstone23.notification.events.UpdatedNotificationPreference;
 import edu.kmaooad.capstone23.users.dal.repositories.UserRepository;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
 
 @ApplicationScoped
 public class SetNotificationPreferenceHandler implements CommandHandler<SetNotificationPreferenceCommand, UpdatedNotificationPreference> {
 
-    @ApplicationScoped
+    @Inject
     private UserRepository userRepository;
 
-    @ApplicationScoped
+    @Inject
     private NotificationPreferencesRepository preferencesRepository;
 
 
