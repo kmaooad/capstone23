@@ -16,7 +16,8 @@ public class CreateSkillHandler implements CommandHandler<CreateSkill, SkillCrea
 
 
     @Inject
-    private SkillService skillService;
+    SkillsRepository repository;
+
 
 
     @Override

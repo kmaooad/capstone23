@@ -19,7 +19,10 @@ public class DeleteSkillHandler implements CommandHandler<DeleteSkill, SkillDele
 
 
     @Inject
+    private MongoSkillsRepository repository;
+
     private SkillService skillService;
+
 
 
     @Override

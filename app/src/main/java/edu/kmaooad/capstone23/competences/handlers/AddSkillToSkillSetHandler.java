@@ -21,7 +21,9 @@ public class AddSkillToSkillSetHandler implements CommandHandler<AddSkillToSkill
     private SkillSetService service;
 
     @Inject
-    private SkillService skillService;
+    private MongoSkillsRepository skillsRepository;
+
+
 
     @Override
     public Result<SkillToSkillSetAdded> handle(AddSkillToSkillSet command) {

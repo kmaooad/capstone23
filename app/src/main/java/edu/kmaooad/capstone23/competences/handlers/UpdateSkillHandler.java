@@ -16,7 +16,8 @@ public class UpdateSkillHandler implements CommandHandler<UpdateSkill, SkillUpda
 
 
     @Inject
-    private SkillService skillService;
+    private MongoSkillsRepository repository;
+
 
 
     @Override

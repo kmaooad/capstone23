@@ -20,7 +20,7 @@ public class RemoveSkillFromSkillSetHandler implements CommandHandler<RemoveSkil
     private SkillSetService service;
 
     @Inject
-    private SkillService skillService;
+    private MongoSkillsRepository skillsRepository;
 
 
 

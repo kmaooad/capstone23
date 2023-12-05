@@ -6,7 +6,6 @@ import edu.kmaooad.capstone23.activities.services.ExtracurricularActivityService
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
-import edu.kmaooad.capstone23.competences.dal.SkillsRepository;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 
@@ -18,7 +17,7 @@ public class AssignSkillsToActivitiesHandler implements CommandHandler<AddSkillT
     private ExtracurricularActivityService extracurricularActivityService;
 
     @Inject
-    private SkillsRepository skillsRepository;
+    private MongoSkillsRepository skillsRepository;
 
 
     @Override

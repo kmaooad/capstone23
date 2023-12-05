@@ -17,6 +17,16 @@ public class RelateJobToCompetencesHandler implements CommandHandler<RelateJobTo
     @Inject
     private JobService jobService;
 
+    @Inject
+    private MongoProjectRepository projsRepository;
+
+    @Inject
+    private MongoSkillsRepository skillsRepository;
+    
+    @Inject
+    private TopicRepository topicRepository;
+ 
+
     @Override
     public Result<CompetenceRelated> handle(RelateJobToCompetences command) {
 
