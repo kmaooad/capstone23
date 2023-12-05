@@ -8,6 +8,7 @@ import edu.kmaooad.capstone23.notifs.commands.NotifCommand;
 import edu.kmaooad.capstone23.notifs.dal.Notif;
 import edu.kmaooad.capstone23.notifs.events.NotifEvent;
 import edu.kmaooad.capstone23.notifs.service.NotifService;
+import edu.kmaooad.capstone23.users.dal.repositories.UserRepository;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
@@ -16,21 +17,19 @@ import org.bson.types.ObjectId;
 public class NotifHandler implements CommandHandler<NotifCommand, NotifEvent> {
 
     @Inject
-    private NotifService subscriptionService;
+    private NotifService notificationService;
     @Inject
-    private MembersRepository membersRepository;
+    private UserRepository userRepository;
 
     @Override
     public Result<NotifEvent> handle(NotifCommand command) {
-        if(membersRepository.findById(command.getUserId()) == null){
+        if(userRepository.findById(command.getUserId()).isEmpty())
             return new Result<>(ErrorCode.ENTITY_NOT_FOUND, "No user found");
-        }
         Notif notification = new Notif();
         notification.userId = new ObjectId(command.getUserId());
         notification.notificationType = command.getNotificationType();
         notification.notificationMethod = command.getNotificationMethod();
-
-        subscriptionService.insert(notification);
+        notificationService.insert(notification);
 
         return new Result<>(new NotifEvent(
                 notification.userId.toString(),

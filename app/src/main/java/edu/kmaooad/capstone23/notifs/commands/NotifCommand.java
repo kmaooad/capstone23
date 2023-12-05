@@ -9,7 +9,7 @@ public class NotifCommand {
     private String userId;
 
     @NotEmpty
-    @Pattern(regexp = "Subscribed_to_notifications|Unsubscribed_to_notifications")
+    @Pattern(regexp = "Subscribed_to_notifications|Unsubscribed_from_notifications")
     private String notificationType;
     @NotEmpty
     @Pattern(regexp = "email|sms|telegram")
