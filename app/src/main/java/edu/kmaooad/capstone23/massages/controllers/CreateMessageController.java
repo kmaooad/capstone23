@@ -8,7 +8,7 @@ import edu.kmaooad.capstone23.massages.events.MessageCreated;
 import jakarta.ws.rs.Path;
 
 
-    @Path("/massage/create")
+    @Path("/message/create")
     public class CreateMessageController extends TypicalController<CreateMessage, MessageCreated> {
 
     }
