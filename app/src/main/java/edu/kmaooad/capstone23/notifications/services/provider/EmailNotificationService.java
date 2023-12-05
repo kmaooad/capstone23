@@ -3,6 +3,7 @@ package edu.kmaooad.capstone23.notifications.services.provider;
 import edu.kmaooad.capstone23.notifications.models.NotificationType;
 import edu.kmaooad.capstone23.notifications.services.NotificationProvider;
 import edu.kmaooad.capstone23.users.services.UserService;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import java.util.Optional;
 import org.bson.types.ObjectId;
@@ -10,6 +11,7 @@ import org.bson.types.ObjectId;
 /**
  * EmailNotificationService
  */
+@ApplicationScoped
 public class EmailNotificationService implements NotificationProvider {
   @Inject
   private UserService userService;
