@@ -3,6 +3,8 @@ package edu.kmaooad.capstone23.proffesors.handlers;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
+import edu.kmaooad.capstone23.notification.commands.CreateNotification;
+import edu.kmaooad.capstone23.notification.handlers.CreateNotificationHandler;
 import edu.kmaooad.capstone23.proffesors.commands.CreateProffesor;
 import edu.kmaooad.capstone23.proffesors.dal.Proffesor;
 import edu.kmaooad.capstone23.proffesors.dal.ProffesorsRepository;
@@ -18,6 +20,9 @@ import java.time.LocalDateTime;
 
         @Inject
         ProffesorsRepository cvRepository;
+
+        @Inject
+        CreateNotificationHandler notificationHandler;
 
         @Override
         public Result<ProffesorCreated> handle(CreateProffesor command) {
@@ -44,6 +49,13 @@ import java.time.LocalDateTime;
             cvRepository.insert(cv);
 
             ProffesorCreated result = new ProffesorCreated(cv.id);
+
+            CreateNotification notification = new CreateNotification();
+            notification.setType("Professor created");
+            notification.setUserId(result.getId());
+            notification.setSendingMethod("SMS");
+            notificationHandler.handle(notification);
+
             return new Result<>(result);
         }
 
