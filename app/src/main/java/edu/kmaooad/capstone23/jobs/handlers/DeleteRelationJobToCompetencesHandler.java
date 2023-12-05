@@ -8,8 +8,12 @@ import edu.kmaooad.capstone23.jobs.dal.Job;
 import edu.kmaooad.capstone23.jobs.dal.JobRepository;
 import edu.kmaooad.capstone23.jobs.events.CompetenceUnrelated;
 import edu.kmaooad.capstone23.jobs.service.JobService;
+import edu.kmaooad.capstone23.notification.dal.Notification;
+import edu.kmaooad.capstone23.notification.event.NotificationCreated;
+import edu.kmaooad.capstone23.notification.services.NotificationService;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
+import org.bson.types.ObjectId;
 
 import java.util.Optional;
 @RequestScoped
@@ -17,6 +21,8 @@ public class DeleteRelationJobToCompetencesHandler  implements CommandHandler<De
 
     @Inject
     private JobService jobService;
+    @Inject
+    private NotificationService notificationService;
     @Override
     public Result<CompetenceUnrelated> handle(DeleteRelateJobToCompetences command) {
 
@@ -31,6 +37,16 @@ public class DeleteRelationJobToCompetencesHandler  implements CommandHandler<De
             return new Result<>(ErrorCode.VALIDATION_FAILED, "This job doesn't contain this competence");
         j.competencesId.remove(command.getCompetenceId());
         jobService.update(j);
+
+        //notification creation
+        Notification notification = new Notification();
+        notification.notificationId = new ObjectId();
+        notification.notificationAbout = "DeleteRelationJobToCompetences";
+        notification.notificationContent = "Було видалено зв'язок";
+        notification.sendingProgramToUse = "email";
+
+        notificationService.insert(notification);
+        notificationService.sending(notification);
 
         return new Result<CompetenceUnrelated>(result);
     }
