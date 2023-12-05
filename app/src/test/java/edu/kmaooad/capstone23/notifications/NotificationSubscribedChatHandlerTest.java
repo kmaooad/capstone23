@@ -41,10 +41,10 @@ public class NotificationSubscribedChatHandlerTest {
 
         SubscribeNotifications command = new SubscribeNotifications();
         command.setUserId(user.id.toString());
-        command.setNotificationStatus("Subscrbed_on_notifications");
+        command.setNotificationStatus("Subscribed_on_notifications");
         command.setSubscriptionMethod("email");
         notificationHandler.handle(command);
-        
+
 
         CreateParticipant participantCommand = new CreateParticipant();
         participantCommand.setChatId(chat.id.toString());

@@ -10,7 +10,7 @@ public class SubscribeNotifications {
     private String userId;
 
     @NotEmpty
-    @Pattern(regexp = "Subscrbed_on_notifications|Unsubscribed_on_notifications")
+    @Pattern(regexp = "Subscribed_on_notifications|Unsubscribed_on_notifications")
     private String notificationStatus;
     @NotEmpty
     @Pattern(regexp = "email|sms|telegram")
