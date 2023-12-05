@@ -2,6 +2,7 @@ package edu.kmaooad.capstone23.students.handlers;
 
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
+import edu.kmaooad.capstone23.common.Mapper;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.students.commands.CreateStudent;
 import edu.kmaooad.capstone23.students.commands.notifications.NotifyStudent;
@@ -35,6 +36,9 @@ public class CreateStudentHandler implements CommandHandler<CreateStudent, Stude
     @Inject
     NotifyStudentHandler notifyStudentHandler;
 
+    @Inject
+    Mapper<Student, NotifyStudent.Create> studentToNotificationMapper;
+
     @Override
     public Result<StudentsCreated> handle(CreateStudent command) {
         if (!command.csvFile.contentType().equals("text/csv"))
@@ -55,14 +59,14 @@ public class CreateStudentHandler implements CommandHandler<CreateStudent, Stude
 
         List<Student> students = studentService.insert(csvStudents);
 
-        List<StudentCreated> studentsCreated = new ArrayList<>();
-        for (Student student : students) {
-            NotifyStudent notifyStudent = new NotifyStudent.Create(student.id, student.email, student.firstName);
-            Result<StudentNotified> studentNotifiedResult = notifyStudentHandler.handle(notifyStudent);
-
-            StudentCreated studentCreated = new StudentCreated(student.id, studentNotifiedResult);
-            studentsCreated.add(studentCreated);
-        }
+        List<StudentCreated> studentsCreated =
+                students.stream()
+                        .map(studentToNotificationMapper::map)
+                        .map((notifyStudent) -> {
+                            Result<StudentNotified> studentNotifiedResult = notifyStudentHandler.handle(notifyStudent);
+                            return new StudentCreated(notifyStudent.getStudentId(), studentNotifiedResult);
+                        })
+                        .toList();
 
         StudentsCreated result = new StudentsCreated(studentsCreated);
         return new Result<>(result);
