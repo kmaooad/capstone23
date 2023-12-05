@@ -33,7 +33,7 @@ public class DeleteExpertHandler implements CommandHandler<DeleteExpert, ExpertD
 
         repository.deleteExpert(expert);
 
-        expertNotificationService.notify(expert.id, NotificationTriggerType.EXPERT_ADDED, NotificationType.sms, "Expert removed: " + expert.name);
+        expertNotificationService.notify(expert.id, NotificationTriggerType.EXPERT_DELETED, NotificationType.sms, "Expert removed: " + expert.name);
 
         return new Result<ExpertDeleted>(new ExpertDeleted(expert.id.toString()));
     }
