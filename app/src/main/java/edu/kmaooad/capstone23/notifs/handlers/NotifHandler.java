@@ -3,7 +3,6 @@ package edu.kmaooad.capstone23.notifs.handlers;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
-import edu.kmaooad.capstone23.members.dal.MembersRepository;
 import edu.kmaooad.capstone23.notifs.commands.NotifCommand;
 import edu.kmaooad.capstone23.notifs.dal.Notif;
 import edu.kmaooad.capstone23.notifs.events.NotifEvent;
