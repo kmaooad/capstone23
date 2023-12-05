@@ -19,7 +19,7 @@ public class CreateNotificationControllerTest {
 
     @Test
     @DisplayName("Create notification: valid input")
-    public void testBasicJobCreation() {
+    public void testBasicNotificationCreation() {
         Map<String, Object> jsonAsMap = new HashMap<>();
 
         jsonAsMap.put("notificationAbout", "DeleteRelationJobToCompetences");
