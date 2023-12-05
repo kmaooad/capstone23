@@ -2,8 +2,10 @@ package edu.kmaooad.capstone23.notifications.services;
 
 import edu.kmaooad.capstone23.notifications.dal.Notification;
 import edu.kmaooad.capstone23.notifications.dal.NotificationRepository;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
+@ApplicationScoped
 public class NotificationServiceImpl implements NotificationService
 {
     @Inject
