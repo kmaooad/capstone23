@@ -11,7 +11,7 @@ public class UserNotificationTrigger {
     private String methodInfo;
 
     @NotEmpty
-    @Pattern(regexp = "JOB_CREATED|JOB_DELETED")
+    @Pattern(regexp = "ORG_CREATED|ORG_DELETED")
     private String type;
 
     @NotEmpty
@@ -54,6 +54,6 @@ public class UserNotificationTrigger {
     public static final String SMS = "SMS";
     public static final String TELEGRAM = "TELEGRAM";
 
-    public static final String JOB_CREATED = "JOB_CREATED";
-    public static final String JOB_DELETED = "JOB_DELETED";
+    public static final String ORG_CREATED = "ORG_CREATED";
+    public static final String ORG_DELETED = "ORG_DELETED";
 }

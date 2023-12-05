@@ -4,13 +4,10 @@ import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.jobs.commands.CreateJob;
 import edu.kmaooad.capstone23.jobs.dal.Job;
-import edu.kmaooad.capstone23.jobs.dal.JobRepository;
 import edu.kmaooad.capstone23.jobs.events.JobCreated;
 import edu.kmaooad.capstone23.jobs.service.JobService;
-import edu.kmaooad.capstone23.orgs.commands.CreateOrg;
-import edu.kmaooad.capstone23.orgs.dal.Org;
-import edu.kmaooad.capstone23.orgs.dal.OrgsRepository;
-import edu.kmaooad.capstone23.orgs.events.OrgCreated;
+import edu.kmaooad.capstone23.notifications.commands.UserNotificationTrigger;
+import edu.kmaooad.capstone23.notifications.services.NotifyService;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 
@@ -19,6 +16,9 @@ public class CreateJobHandler implements CommandHandler<CreateJob, JobCreated> {
 
     @Inject
     private JobService jobService;
+
+    @Inject
+    private NotifyService notifyService;
 
     public Result<JobCreated> handle(CreateJob command) {
 
@@ -32,6 +32,8 @@ public class CreateJobHandler implements CommandHandler<CreateJob, JobCreated> {
         jobService.insert(job);
 
         JobCreated result = new JobCreated(job.id);
+
+        notifyService.notify(UserNotificationTrigger.JOB_CREATED, "Created job: " + job.name);
 
         return new Result<JobCreated>(result);
     }
