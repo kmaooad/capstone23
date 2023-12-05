@@ -1,4 +1,4 @@
-package edu.kmaooad.capstone23.notifications.handlers;
+package edu.kmaooad.capstone23.notifications.commands;
 
 public class NotificationAdded {
 
