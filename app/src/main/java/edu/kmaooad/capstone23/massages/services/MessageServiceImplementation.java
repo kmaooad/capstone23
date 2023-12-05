@@ -8,11 +8,11 @@ import jakarta.inject.Inject;
 public class MessageServiceImplementation implements MessageService {
 
     @Inject
-    private MessagesRepository notificationsRepository;
+    private MessagesRepository messagesRepository;
 
     @Override
-    public Message insert(Message notification) {
-        return notificationsRepository.insert(notification);
+    public Message insert(Message message) {
+        return messagesRepository.insert(message);
     }
 
     @Override
