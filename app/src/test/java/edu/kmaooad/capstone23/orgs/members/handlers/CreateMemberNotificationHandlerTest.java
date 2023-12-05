@@ -4,7 +4,6 @@ import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.members.commands.CreateBasicMember;
 import edu.kmaooad.capstone23.members.events.BasicMemberCreated;
-import edu.kmaooad.capstone23.notifications.commands.SetNotificationType;
 import edu.kmaooad.capstone23.notifications.dal.NotificationType;
 import edu.kmaooad.capstone23.notifications.dal.NotificationTypeRepository;
 import edu.kmaooad.capstone23.orgs.members.TestWithOrgSetUp;
@@ -13,8 +12,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class CreateMemberNotificationHandlerTest extends TestWithOrgSetUp {
 

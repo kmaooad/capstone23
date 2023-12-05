@@ -1,7 +1,6 @@
 package edu.kmaooad.capstone23.notifications.controllers;
 
 import edu.kmaooad.capstone23.common.TypicalController;
-import edu.kmaooad.capstone23.members.events.BasicMemberCreated;
 import edu.kmaooad.capstone23.notifications.commands.SetNotificationType;
 import edu.kmaooad.capstone23.notifications.events.NotificationTypeSet;
 import jakarta.ws.rs.Path;

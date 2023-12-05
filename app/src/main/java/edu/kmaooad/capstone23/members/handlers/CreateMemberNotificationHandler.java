@@ -4,8 +4,8 @@ import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.members.commands.CreateBasicMember;
 import edu.kmaooad.capstone23.members.events.BasicMemberCreated;
+import edu.kmaooad.capstone23.members.services.NotificationService;
 import edu.kmaooad.capstone23.members.services.UserService;
-import edu.kmaooad.capstone23.members.services.impl.NotificationServiceImpl;
 import jakarta.decorator.Decorator;
 import jakarta.decorator.Delegate;
 import jakarta.inject.Inject;
@@ -17,7 +17,7 @@ public class CreateMemberNotificationHandler implements CommandHandler<CreateBas
     @Inject
     CommandHandler<CreateBasicMember, BasicMemberCreated> commandHandlerDecoratee;
     @Inject
-    NotificationServiceImpl notificationService;
+    NotificationService notificationService;
     @Inject
     UserService userService;
 
