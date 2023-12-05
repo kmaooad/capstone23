@@ -4,8 +4,10 @@ import edu.kmaooad.capstone23.notifications.models.NotificationPreference;
 import edu.kmaooad.capstone23.notifications.models.NotificationType;
 import java.util.Set;
 
+import org.bson.types.ObjectId;
+
 public class UpdateNotificationSettings {
-  private String userId;
+  private ObjectId userId;
   private Set<NotificationType> types;
   private Set<NotificationPreference> preferences;
 
@@ -17,11 +19,11 @@ public class UpdateNotificationSettings {
     this.preferences = preferences;
   }
 
-  public String getUserId() {
+  public ObjectId getUserId() {
     return userId;
   }
 
-  public void setUserId(String userId) {
+  public void setUserId(ObjectId userId) {
     this.userId = userId;
   }
 
