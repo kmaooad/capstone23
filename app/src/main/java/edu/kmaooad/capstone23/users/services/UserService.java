@@ -17,4 +17,8 @@ public class UserService {
 
     return user.isPresent();
   }
+
+  public User findUserById(String id) {
+    return userRepository.findById(id).orElse(null);
+  }
 }
