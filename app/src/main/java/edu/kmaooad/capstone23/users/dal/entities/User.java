@@ -11,4 +11,5 @@ public class User {
     public String lastName;
     @BsonProperty("unique_email")
     public String email;
+    public String phoneNumber;
 }

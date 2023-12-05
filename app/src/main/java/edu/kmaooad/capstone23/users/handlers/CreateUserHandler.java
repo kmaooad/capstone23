@@ -33,5 +33,6 @@ public class CreateUserHandler implements CommandHandler<CreateUser, UserCreated
     user.firstName = command.getFirstName();
     user.lastName = command.getLastName();
     user.email = command.getEmailName();
+    user.phoneNumber = command.getPhoneNumber();
   }
 }
