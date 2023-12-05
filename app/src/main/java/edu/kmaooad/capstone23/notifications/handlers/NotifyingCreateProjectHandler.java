@@ -1,15 +1,13 @@
-package edu.kmaooad.capstone23.notifications.decorators;
+package edu.kmaooad.capstone23.notifications.handlers;
 
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.competences.commands.CreateProj;
 import edu.kmaooad.capstone23.competences.events.ProjCreated;
 import edu.kmaooad.capstone23.notifications.Notification;
+import edu.kmaooad.capstone23.notifications.NotificationObserver;
 import edu.kmaooad.capstone23.notifications.NotificationSubject;
 import edu.kmaooad.capstone23.notifications.NotificationType;
-import edu.kmaooad.capstone23.notifications.observers.EmailNotificationSender;
-import edu.kmaooad.capstone23.notifications.observers.SMSNotificationSender;
-import edu.kmaooad.capstone23.notifications.observers.TelegramNotificationSender;
 import jakarta.decorator.Decorator;
 import jakarta.decorator.Delegate;
 import jakarta.inject.Inject;
@@ -22,14 +20,6 @@ public class NotifyingCreateProjectHandler implements CommandHandler<CreateProj,
 
     @Inject
     NotificationSubject notificationSubject;
-
-    @Inject
-    public NotifyingCreateProjectHandler() {
-        // There we can control the way of notification
-        notificationSubject.attach(new TelegramNotificationSender());
-        notificationSubject.attach(new EmailNotificationSender());
-        notificationSubject.attach(new SMSNotificationSender());
-    }
 
     @Override
     public Result<ProjCreated> handle(CreateProj command) {
