@@ -5,7 +5,7 @@ import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.members.commands.DeleteMember;
 import edu.kmaooad.capstone23.members.dal.Member;
-import edu.kmaooad.capstone23.members.dal.MembersRepository;
+import edu.kmaooad.capstone23.members.dal.abstractions.MembersRepository;
 import edu.kmaooad.capstone23.members.events.MemberDeleted;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
@@ -20,10 +20,10 @@ public class DeleteMemberHandler implements CommandHandler<DeleteMember, MemberD
     public Result<MemberDeleted> handle(DeleteMember command) {
         try {
             var objectId = command.getMemberId();
-            Member entity = membersRepository.findById(new ObjectId(objectId));
+            Member entity = membersRepository.findById(objectId);
             var success = true;
             if (entity != null) {
-                membersRepository.delete(entity);
+                membersRepository.delete(entity.id.toString());
             } else {
                 success = false;
             }

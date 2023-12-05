@@ -2,6 +2,7 @@ package edu.kmaooad.capstone23.activities.services;
 
 import edu.kmaooad.capstone23.activities.dal.Course;
 import edu.kmaooad.capstone23.activities.dal.CourseRepository;
+import edu.kmaooad.capstone23.activities.dal.ExtracurricularActivity;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
@@ -22,6 +23,10 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public Optional<Course> findById(String id) {
         return courseRepository.findById(id);
+    }
+
+    public Course find(String course) {
+        return courseRepository.find("name", course).firstResult();
     }
 
     @Override
