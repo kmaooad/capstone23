@@ -5,12 +5,17 @@ import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.competences.commands.DeleteSkillSet;
 import edu.kmaooad.capstone23.competences.dal.SkillSet;
-import edu.kmaooad.capstone23.competences.dal.SkillSetRepository;
 import edu.kmaooad.capstone23.competences.events.SkillSetDeleted;
 import edu.kmaooad.capstone23.competences.services.SkillSetService;
+import edu.kmaooad.capstone23.notifications.models.Event;
+import edu.kmaooad.capstone23.notifications.service.NotificationService;
+import edu.kmaooad.capstone23.users.dal.entities.User;
+import edu.kmaooad.capstone23.users.dal.repositories.UserRepository;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
+
+import java.util.List;
 
 @RequestScoped
 public class DeleteSkillSetHandler implements CommandHandler<DeleteSkillSet, SkillSetDeleted> {
@@ -18,6 +23,12 @@ public class DeleteSkillSetHandler implements CommandHandler<DeleteSkillSet, Ski
 
     @Inject
     private SkillSetService service;
+
+    @Inject
+    private UserRepository userRepository;
+
+    @Inject
+    private NotificationService notificationService;
 
 
     @Override
@@ -30,6 +41,14 @@ public class DeleteSkillSetHandler implements CommandHandler<DeleteSkillSet, Ski
         }
 
         service.delete(skillSet);
+
+
+        List<User> users = userRepository.listAll();
+        for (User user : users) {
+            if (user.notificationEvents.contains(Event.SKILL_SET_DELETED))   {
+                notificationService.sendMessage(user.id.toHexString(), "Skill set deleted " + skillSet.id.toHexString());
+            }
+        }
 
         return new Result<>(new SkillSetDeleted(skillSet));
     }

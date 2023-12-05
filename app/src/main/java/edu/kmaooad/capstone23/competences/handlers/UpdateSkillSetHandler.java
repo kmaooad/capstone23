@@ -5,12 +5,16 @@ import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.competences.commands.UpdateSkillSet;
 import edu.kmaooad.capstone23.competences.dal.SkillSet;
-import edu.kmaooad.capstone23.competences.dal.SkillSetRepository;
 import edu.kmaooad.capstone23.competences.events.SkillSetUpdated;
 import edu.kmaooad.capstone23.competences.services.SkillSetService;
+import edu.kmaooad.capstone23.notifications.models.Event;
+import edu.kmaooad.capstone23.notifications.service.NotificationService;
+import edu.kmaooad.capstone23.users.dal.entities.User;
+import edu.kmaooad.capstone23.users.dal.repositories.UserRepository;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -18,6 +22,12 @@ import java.util.Optional;
 public class UpdateSkillSetHandler implements CommandHandler<UpdateSkillSet, SkillSetUpdated> {
     @Inject
     SkillSetService service;
+
+    @Inject
+    private UserRepository userRepository;
+
+    @Inject
+    private NotificationService notificationService;
 
     public Result<SkillSetUpdated> handle(UpdateSkillSet command) {
         var id = command.getSkillSetId();
@@ -30,6 +40,13 @@ public class UpdateSkillSetHandler implements CommandHandler<UpdateSkillSet, Ski
         skillSetItem.name = command.getSkillSetName();
 
         service.update(skillSetItem);
+
+        List<User> users = userRepository.listAll();
+        for (User user : users) {
+            if (user.notificationEvents.contains(Event.SKILL_SET_UPDATED))   {
+                notificationService.sendMessage(user.id.toHexString(), "Skill set updated " + skillSetItem.id.toHexString());
+            }
+        }
 
         return new Result<>(new SkillSetUpdated(skillSetItem.id.toString(), skillSetItem.name));
     }
