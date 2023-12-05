@@ -53,4 +53,7 @@ public class UserNotificationTrigger {
     public static final String EMAIL = "EMAIL";
     public static final String SMS = "SMS";
     public static final String TELEGRAM = "TELEGRAM";
+
+    public static final String JOB_CREATED = "JOB_CREATED";
+    public static final String JOB_DELETED = "JOB_DELETED";
 }
