@@ -8,9 +8,11 @@ import edu.kmaooad.capstone23.notifs.commands.NotifCommand;
 import edu.kmaooad.capstone23.notifs.dal.Notif;
 import edu.kmaooad.capstone23.notifs.events.NotifEvent;
 import edu.kmaooad.capstone23.notifs.service.NotifService;
+import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
 
+@RequestScoped
 public class NotifHandler implements CommandHandler<NotifCommand, NotifEvent> {
 
     @Inject
