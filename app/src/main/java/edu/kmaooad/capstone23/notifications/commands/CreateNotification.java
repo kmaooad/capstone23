@@ -6,7 +6,6 @@ import jakarta.validation.constraints.Pattern;
 public class CreateNotification {
     @NotEmpty
     private String userId;
-
     @NotEmpty
     @Pattern(regexp = "ADDED|DELETED")
     private String type;
