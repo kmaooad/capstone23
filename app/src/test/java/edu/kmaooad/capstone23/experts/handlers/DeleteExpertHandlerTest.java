@@ -5,7 +5,10 @@ import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.experts.commands.CreateExpert;
 import edu.kmaooad.capstone23.experts.commands.DeleteExpert;
+import edu.kmaooad.capstone23.experts.dal.ExpertNotificationRepository;
 import edu.kmaooad.capstone23.experts.dal.ExpertsRepository;
+import edu.kmaooad.capstone23.experts.dal.NotificationTriggerType;
+import edu.kmaooad.capstone23.experts.dal.NotificationType;
 import edu.kmaooad.capstone23.experts.events.ExpertCreated;
 import edu.kmaooad.capstone23.experts.events.ExpertDeleted;
 import edu.kmaooad.capstone23.orgs.commands.CreateOrg;
@@ -28,6 +31,9 @@ public class DeleteExpertHandlerTest {
     @Inject
     ExpertsRepository expertsRepository;
 
+    @Inject
+    ExpertNotificationRepository repository;
+
     @Test
     public void testSuccessfulHandling() {
         String expertId = createTestExpert();
@@ -41,6 +47,20 @@ public class DeleteExpertHandlerTest {
         Assertions.assertNotNull(result.getValue());
         Assertions.assertEquals(result.getValue().getExpertId(), expertId);
     }
+
+    @Test
+    public void testSuccessfulNotificationOnDelete() {
+        createTestExpert();
+
+        DeleteExpert command = new DeleteExpert();
+        command.setId(expertsRepository.findByName("Arkh Step").id);
+
+        Result<ExpertDeleted> result = deleteHandler.handle(command);
+
+        Assertions.assertTrue(result.isSuccess());
+        Assertions.assertTrue(repository.streamAll().anyMatch(expertNotification -> expertNotification.notificationTriggerType.equals(NotificationTriggerType.EXPERT_DELETED) && expertNotification.notificationType.equals(NotificationType.sms)));
+    }
+
 
     @Test
     public void testInvalidInput() {

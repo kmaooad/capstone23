@@ -3,6 +3,9 @@ package edu.kmaooad.capstone23.experts.handlers;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.experts.commands.CreateExpert;
+import edu.kmaooad.capstone23.experts.dal.ExpertNotificationRepository;
+import edu.kmaooad.capstone23.experts.dal.NotificationTriggerType;
+import edu.kmaooad.capstone23.experts.dal.NotificationType;
 import edu.kmaooad.capstone23.experts.events.ExpertCreated;
 import edu.kmaooad.capstone23.orgs.commands.CreateOrg;
 import edu.kmaooad.capstone23.orgs.dal.OrgsRepository;
@@ -19,6 +22,9 @@ public class CreateExpertHandlerTest {
     CommandHandler<CreateExpert, ExpertCreated> expertHandler;
     @Inject
     CommandHandler<CreateOrg, OrgCreated> orgHandler;
+
+    @Inject
+    ExpertNotificationRepository repository;
 
     @Test
     public void testSuccessfulHandling() {
@@ -39,6 +45,27 @@ public class CreateExpertHandlerTest {
         Assertions.assertTrue(result.isSuccess());
         Assertions.assertNotNull(result.getValue());
         Assertions.assertFalse(result.getValue().getExpertId().isEmpty());
+    }
+
+    @Test
+    public void testSuccessfulNotificationOnCreation() {
+        String orgName = "Org Name";
+
+        CreateOrg orgCommand = new CreateOrg();
+        orgCommand.setOrgName(orgName);
+        orgCommand.industry = "Education";
+        orgCommand.website = "https://www.ukma.edu.ua/eng/";
+        orgHandler.handle(orgCommand);
+
+        CreateExpert command = new CreateExpert();
+        command.setExpertName("Oleg Zagryvyi");
+        command.setOrgName(orgName);
+
+        Result<ExpertCreated> result = expertHandler.handle(command);
+
+        Assertions.assertTrue(result.isSuccess());
+        Assertions.assertNotNull(result.getValue());
+        Assertions.assertTrue(repository.streamAll().anyMatch(expertNotification -> expertNotification.notificationTriggerType.equals(NotificationTriggerType.EXPERT_ADDED)  && expertNotification.notificationType.equals(NotificationType.email)));
     }
 
     @Test
