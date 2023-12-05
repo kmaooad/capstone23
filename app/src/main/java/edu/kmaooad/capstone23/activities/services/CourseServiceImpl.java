@@ -2,8 +2,12 @@ package edu.kmaooad.capstone23.activities.services;
 
 import edu.kmaooad.capstone23.activities.dal.Course;
 import edu.kmaooad.capstone23.activities.dal.CourseRepository;
+import edu.kmaooad.capstone23.activities.dal.ExtracurricularActivity;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+
+
+import java.util.List;
 
 import java.util.Optional;
 
@@ -21,9 +25,47 @@ public class CourseServiceImpl implements CourseService {
         return courseRepository.findById(id);
     }
 
+    public Course find(String course) {
+        return courseRepository.find("name", course).firstResult();
+    }
+
     @Override
     public Course update(Course course) {
         courseRepository.update(course);
         return course;
+    }
+
+    @Override
+    public void delete(Optional<Course> course) {
+        if (course.isEmpty()){
+            return;
+        }
+
+        courseRepository.delete(course.get());
+    }
+
+    @Override
+    public void bulkInsert(List<Course> courses) {
+        courseRepository.bulkInsert(courses);
+    }
+
+    @Override
+    public void bulkDelete(List<Course> courses) {
+        courseRepository.bulkDelete(courses);
+    }
+
+    @Override
+    public void findCoursesCountByIds(List<String> courseIds) {
+        courseRepository.findCoursesCountByIds(courseIds);
+    }
+
+    @Override
+    public void bulkUpdate(List<Course> courses) {
+        courseRepository.bulkUpdate(courses);
+    }
+
+    @Override
+    public List<Course> listAll() {
+        return courseRepository.listAll();
     }
 }

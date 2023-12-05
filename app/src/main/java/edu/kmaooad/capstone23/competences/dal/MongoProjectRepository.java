@@ -4,6 +4,9 @@ import io.quarkus.mongodb.panache.PanacheMongoRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import org.bson.types.ObjectId;
 
+import java.util.List;
+import java.util.Optional;
+
 @ApplicationScoped
 public class MongoProjectRepository implements PanacheMongoRepository<Project>, ProjectsRepository {
     public Project findByName(String name) {
@@ -13,6 +16,11 @@ public class MongoProjectRepository implements PanacheMongoRepository<Project>, 
     public Project insert(Project project) {
         persist(project);
         return project;
+    }
+
+    @Override
+    public Optional<Project> findByIdMaybe(ObjectId id) {
+        return this.findByIdOptional(id);
     }
 
     @Override
@@ -34,5 +42,10 @@ public class MongoProjectRepository implements PanacheMongoRepository<Project>, 
     @Override
     public void deleteProject(Project entity) {
         delete(entity);
+    }
+
+    @Override
+    public List<Project> listAll() {
+        return PanacheMongoRepository.super.listAll();
     }
 }

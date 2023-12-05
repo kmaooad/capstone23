@@ -1,5 +1,6 @@
 package edu.kmaooad.capstone23.jobs.controllers;
 
+
 import edu.kmaooad.capstone23.activities.commands.CreateCourse;
 import edu.kmaooad.capstone23.activities.dal.Course;
 import edu.kmaooad.capstone23.activities.dal.CourseRepository;
@@ -25,6 +26,9 @@ import static io.restassured.RestAssured.given;
 @QuarkusTest
 public class RelateJobToActivitiesControllerTest {
 
+    private static final String CONTENT_TYPE_JSON = "application/json";
+    private static final String RELATE_JOB_TO_ACTIVITIES_ENDPOINT = "/jobs/relate_to_activities";
+
     @Inject
     CommandHandler<RelateJobToActivities, ActivityRelated> handler;
 
@@ -33,10 +37,11 @@ public class RelateJobToActivitiesControllerTest {
 
     @Inject
     CommandHandler<CreateCourse, CourseCreated> CreateActivityHandler;
-    private ObjectId idToUpdate;
 
     @Inject
     CourseRepository courseRepository;
+
+    private ObjectId idToUpdate;
 
     @BeforeEach
     void setUp() {
@@ -44,50 +49,42 @@ public class RelateJobToActivitiesControllerTest {
         course.name = "Initial Course";
         courseRepository.insert(course);
         idToUpdate = course.id;
-
     }
 
     @Test
     @DisplayName("Relate Job To Activities: existed job")
     public void testBasicJobActivityConnectionCreation() {
-
-        CreateJob command = new CreateJob("TeacherUnique", true);
-        Result<JobCreated> result = CreateJobHandler.handle(command);
-
-        Map<String, Object> jsonAsMap = new HashMap<>();
-
-        jsonAsMap.put("jobId", result.getValue().getJobId().toHexString());
-        jsonAsMap.put("activityId", idToUpdate.toString());
-       // jsonAsMap.put("courseName", "Course");
-
-
-        given()
-                .contentType("application/json")
-                .body(jsonAsMap)
-                .when()
-                .post("/jobs/relate_to_activities")
-                .then()
-                .statusCode(200);
+        Result<JobCreated> result = createJob("TeacherUnique", true);
+        relateJobToActivity(result.getValue().getJobId(), idToUpdate, 200);
     }
 
     @Test
     @DisplayName("Relate Job To Activities: notExisted job")
     public void testNotExistedJobActivityConnectionCreation() {
+        ObjectId nonExistentJobId = new ObjectId("aaaaaaaaaaaaaaaaaaaaaaaa");
+        relateJobToActivity(nonExistentJobId, idToUpdate, 400);
+    }
 
-//        CreateJob command = new CreateJob("TeacherUnique", true);
-//        Result<JobCreated> result = CreateJobHandler.handle(command);
+    private Result<JobCreated> createJob(String name, boolean isActive) {
+        CreateJob command = new CreateJob(name, isActive);
+        return CreateJobHandler.handle(command);
+    }
 
+    private void relateJobToActivity(ObjectId jobId, ObjectId activityId, int expectedStatusCode) {
         Map<String, Object> jsonAsMap = new HashMap<>();
-        ObjectId id = new ObjectId("aaaaaaaaaaaaaaaaaaaaaaaa");
-        jsonAsMap.put("jobId", id);
-        jsonAsMap.put("activityId", idToUpdate.toString());
+        jsonAsMap.put("jobId", jobId.toHexString());
+        jsonAsMap.put("activityId", activityId.toHexString());
 
+        performPostRequest(RELATE_JOB_TO_ACTIVITIES_ENDPOINT, jsonAsMap, expectedStatusCode);
+    }
+
+    private void performPostRequest(String endpoint, Map<String, Object> jsonAsMap, int expectedStatusCode) {
         given()
-                .contentType("application/json")
+                .contentType(CONTENT_TYPE_JSON)
                 .body(jsonAsMap)
                 .when()
-                .post("/jobs/relate_to_activities")
+                .post(endpoint)
                 .then()
-                .statusCode(400);
+                .statusCode(expectedStatusCode);
     }
 }

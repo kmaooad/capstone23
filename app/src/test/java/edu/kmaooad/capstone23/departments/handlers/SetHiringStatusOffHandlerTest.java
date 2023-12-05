@@ -10,8 +10,10 @@ import edu.kmaooad.capstone23.departments.commands.SetHiringStatusOff;
 import edu.kmaooad.capstone23.departments.commands.SetHiringStatusOn;
 import edu.kmaooad.capstone23.departments.dal.Department;
 import edu.kmaooad.capstone23.departments.dal.DepartmentsRepository;
+import edu.kmaooad.capstone23.departments.drivers.DepartmentDriver;
 import edu.kmaooad.capstone23.departments.events.HiringStatusSettedOff;
 import edu.kmaooad.capstone23.departments.events.HiringStatusSettedOn;
+import edu.kmaooad.capstone23.departments.services.DepartmentService;
 import edu.kmaooad.capstone23.jobs.dal.Job;
 import edu.kmaooad.capstone23.jobs.dal.JobRepository;
 import io.quarkus.test.junit.QuarkusTest;
@@ -32,7 +34,10 @@ public class SetHiringStatusOffHandlerTest {
     SetHiringStatusOffHandler handler;
 
     @Inject
-    DepartmentsRepository departmentsRepository;
+    DepartmentService departmentService;
+
+    @Inject
+    DepartmentDriver departmentDriver;
 
     @Inject
     CommandHandler<BanEntity, EntityBanned> banHandler;
@@ -47,13 +52,7 @@ public class SetHiringStatusOffHandlerTest {
 
     @BeforeEach
     void setUp() {
-        departmentsRepository.deleteAll();
-        Department department = new Department();
-
-        department.name = "Initial Department";
-        department.description = "Initial Department Description";
-        department.parent = "NaUKMA";
-        department.members = new ArrayList<>();
+        Department department = departmentDriver.createDepartment();
 
 
         Job job = new Job();
@@ -65,7 +64,7 @@ public class SetHiringStatusOffHandlerTest {
         department.jobs = new ArrayList<>();
         department.jobs.add(job.id.toString());
 
-        departmentsRepository.insert(department);
+        departmentService.updateDepartment(department);
 
         departmentId = department.id.toString();
 
@@ -85,7 +84,7 @@ public class SetHiringStatusOffHandlerTest {
         Assertions.assertEquals(result.getErrorCode(), null);
         Assertions.assertTrue(result.isSuccess());
 
-        Department department = departmentsRepository.findById(departmentId);
+        Department department = departmentService.getDepartmentById(departmentId);
 
         Assertions.assertEquals(department.hiringStatus, "Off");
 

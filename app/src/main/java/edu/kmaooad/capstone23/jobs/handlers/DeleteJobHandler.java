@@ -15,13 +15,13 @@ import java.util.Optional;
 
 @RequestScoped
 public class DeleteJobHandler implements CommandHandler<DeleteJob, JobDeleted> {
+
     @Inject
     private JobService jobService;
-
     @Override
     public Result<JobDeleted> handle(DeleteJob commandDel) {
 
-        Optional<Job> job = jobService.findJobById(commandDel.getJobId());
+        Optional<Job> job = jobService.findJobById(commandDel.getJobId().toString());
         if(job.isEmpty())
             return new Result<>(ErrorCode.VALIDATION_FAILED, "This job was previously deleted or never existed");
 
