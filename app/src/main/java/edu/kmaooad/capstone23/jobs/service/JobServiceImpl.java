@@ -12,6 +12,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
 
+import java.util.List;
 import java.util.Optional;
 
 @ApplicationScoped
@@ -32,6 +33,16 @@ public class JobServiceImpl implements JobService{
     @Override
     public Optional<Job> findJobById(String id) {
         return jobRepository.findByIdOptional(new ObjectId(id));
+    }
+
+    @Override
+    public List<Job> listAll() {
+        return jobRepository.listAll();
+    }
+
+    @Override
+    public long count() {
+        return jobRepository.count();
     }
 
     @Override

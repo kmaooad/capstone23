@@ -47,7 +47,7 @@ public class UpdateAccessRuleHandler implements CommandHandler<UpdateAccessRule,
             return new Result<>(ErrorCode.VALIDATION_FAILED, "From entity Id is invalid");
         if(!ObjectId.isValid(command.getToEntityId()))
             return new Result<>(ErrorCode.VALIDATION_FAILED, "To entity Id is invalid");
-        AccessRule accessRule = accessRuleService.findRuleById(command.getId());
+        AccessRule accessRule = accessRuleService.findById(new ObjectId(command.getId()));
 
         if (accessRule == null) {
             return new Result<>(ErrorCode.VALIDATION_FAILED, "Access rule with such Id doesn't exist");
@@ -67,7 +67,7 @@ public class UpdateAccessRuleHandler implements CommandHandler<UpdateAccessRule,
         accessRule.fromEntityId = new ObjectId(command.getFromEntityId());
         accessRule.toEntityId = new ObjectId(command.getToEntityId());
 
-        accessRuleService.updateRule(accessRule);
+        accessRuleService.update(accessRule);
         return new Result<>(new AccessRuleUpdated(accessRule.id.toString(), accessRule.ruleType, accessRule.fromEntityType,
                 accessRule.fromEntityId.toString(), accessRule.toEntityType, accessRule.toEntityId.toString()));
     }
