@@ -14,8 +14,4 @@ public class NotificationEvent {
     this.userId = userId;
     this.message = message;
   }
-
-  public static void foo() {
-    // var boo = new NotificationEvent("foo", new JsonObject());
-  }
 }
