@@ -2,7 +2,7 @@ package edu.kmaooad.capstone23.notifications.models;
 
 public enum NotificationType {
   CHAT_PARTICIPANT_CREATED("CHAT_PARTICIPANT_CREATED"),
-  CHAT_PARTICIPANT_DELETED("CHAT_PARTICIPANT_DELETED");
+  PROFESSOR_ACTIVITY_ASSIGNED("PROFESSOR_ACTIVITY_ASSIGNED");
 
   private final String text;
 
