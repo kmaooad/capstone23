@@ -6,6 +6,8 @@ import edu.kmaooad.capstone23.ban.service.EntityBanService;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
+import edu.kmaooad.capstone23.messages.commands.SelectUserMessagingType;
+import edu.kmaooad.capstone23.messages.services.NotifyEventService;
 import edu.kmaooad.capstone23.orgs.commands.UpdateOrg;
 import edu.kmaooad.capstone23.orgs.dal.Org;
 import edu.kmaooad.capstone23.orgs.dal.OrgsRepository;
@@ -26,6 +28,8 @@ public class UpdateOrgHandler implements CommandHandler<UpdateOrg, OrgUpdated> {
     @Inject
     EntityBanService entityBanService;
 
+    @Inject
+    NotifyEventService notifyEventService;
 
     public Result<OrgUpdated> handle(UpdateOrg command) {
         Optional<Org> existingOrg = this.repository.findByIdOptional(new ObjectId(command.orgId));
@@ -42,6 +46,8 @@ public class UpdateOrgHandler implements CommandHandler<UpdateOrg, OrgUpdated> {
         this.repository.update(updatedOrg);
 
         OrgUpdated result = new OrgUpdated(true);
+
+        notifyEventService.pushEvent(SelectUserMessagingType.UPDATE_ORG_MESSAGE, "Updated org: " + updatedOrg.name);
 
         return new Result<>(result);
     }
