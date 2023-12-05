@@ -9,7 +9,7 @@ import edu.kmaooad.capstone23.notifications.models.NotificationPreference;
 import edu.kmaooad.capstone23.notifications.models.NotificationType;
 
 public interface NotificationSettingsService {
-  NotificationSettings getPreferences(ObjectId userId);
+  NotificationSettings getSettings(ObjectId userId);
 
   void setPreference(ObjectId userId, Set<NotificationPreference> preference, Set<NotificationType> types);
 }

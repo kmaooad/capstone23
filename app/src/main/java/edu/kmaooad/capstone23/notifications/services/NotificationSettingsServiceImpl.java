@@ -17,7 +17,7 @@ public class NotificationSettingsServiceImpl implements NotificationSettingsServ
   private NotificationSettingsRepository notificationSettingsRepository;
 
 	@Override
-	public NotificationSettings getPreferences(ObjectId userId) {
+	public NotificationSettings getSettings(ObjectId userId) {
     NotificationSettings settings = notificationSettingsRepository.findByUserId(userId);
 
     if (settings == null) {
@@ -33,7 +33,7 @@ public class NotificationSettingsServiceImpl implements NotificationSettingsServ
 
 	@Override
 	public void setPreference(ObjectId userId, Set<NotificationPreference> preference, Set<NotificationType> types) {
-    NotificationSettings settings = getPreferences(userId);
+    NotificationSettings settings = getSettings(userId);
 
     settings.types = types;
     settings.preferences = preference;
