@@ -28,7 +28,7 @@ public class UserNotificationHandlerTest {
     UserNotificationsRepository repository;
     
     @Test
-    public void basicTypeTest() {
+    public void UserNotificationBasicHandlerTest() {
         var userId = createUser();
         var request = new UserNotificationTrigger();
 
