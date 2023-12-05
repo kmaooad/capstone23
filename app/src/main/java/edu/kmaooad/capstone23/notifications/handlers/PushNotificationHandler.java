@@ -20,7 +20,7 @@ public class PushNotificationHandler implements CommandHandler<PushNotificationC
     @Override
     public Result<NotificationPushed> handle(PushNotificationCommand command) {
         if(userRepository.findById(command.getUserId()).isEmpty())
-            return new Result<>(ErrorCode.NOT_FOUND, "COULD NOT FIND USER " + command.getUserId());
+            return new Result<>(ErrorCode.ENTITY_NOT_FOUND, "COULD NOT FIND USER " + command.getUserId());
 
         PushNotification notification = new PushNotification();
         notification.notificationEvent = command.getNotificationEvent();
