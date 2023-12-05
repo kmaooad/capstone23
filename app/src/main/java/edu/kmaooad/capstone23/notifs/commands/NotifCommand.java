@@ -10,7 +10,7 @@ public class NotifCommand {
 
     @NotEmpty
     @Pattern(regexp = "Subscribed_to_notifications|Unsubscribed_to_notifications")
-    private String notificationStatus;
+    private String notificationType;
     @NotEmpty
     @Pattern(regexp = "email|sms|telegram")
     private String notificationMethod;
@@ -22,5 +22,20 @@ public class NotifCommand {
     public void setUserId(String userId) {
         this.userId = userId;
     }
-    //TODO: FINISH NOTIF COMMAND (SUBSCRIPTION TO SERVICE)
+    public String getNotificationType() {
+        return notificationType;
+    }
+
+    public void setNotificationType(String type) {
+        this.notificationType = type;
+    }
+
+    public String getNotificationMethod() {
+        return notificationMethod;
+    }
+
+    public void setNotificationMethod(String notificationMethod) {
+        this.notificationMethod = notificationMethod;
+    }
+
 }
