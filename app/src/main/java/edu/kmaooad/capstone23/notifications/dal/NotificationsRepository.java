@@ -35,4 +35,9 @@ public class NotificationsRepository implements PanacheMongoRepository<Notificat
         return find("notificationType", notificationType)
                 .list();
     }
+
+    public boolean isExist(Notification notification) {
+        var persistedNotification = findByUserIdAndTypeOptional(notification);
+        return persistedNotification.isPresent();
+    }
 }
