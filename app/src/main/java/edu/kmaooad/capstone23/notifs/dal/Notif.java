@@ -1,4 +1,4 @@
-package edu.kmaooad.capstone23.notifs;
+package edu.kmaooad.capstone23.notifs.dal;
 
 import io.quarkus.mongodb.panache.common.MongoEntity;
 import org.bson.types.ObjectId;

@@ -1,4 +1,4 @@
-package edu.kmaooad.capstone23.notifs;
+package edu.kmaooad.capstone23.notifs.dal;
 
 import io.quarkus.mongodb.panache.PanacheMongoRepository;
 import io.quarkus.panache.common.Parameters;
