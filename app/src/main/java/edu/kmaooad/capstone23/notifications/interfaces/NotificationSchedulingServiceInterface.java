@@ -1,0 +1,11 @@
+package edu.kmaooad.capstone23.notifications.interfaces;
+
+import java.sql.Date;
+
+import edu.kmaooad.capstone23.mail.service.Notification;
+
+public interface NotificationSchedulingServiceInterface {
+    Notification schedule(Notification notification, Date date);
+
+    Notification findNotificationBy(String userId, String notificationType);
+}
