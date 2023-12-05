@@ -13,6 +13,9 @@ public class CreateExtracurricularActivity {
     private String extracurricularActivityName;
     private Date extracurricularActivityDate;
 
+    @NotBlank
+    private String activityId;
+
     public String getExtracurricularActivityName() {
         return extracurricularActivityName;
     }
@@ -27,5 +30,9 @@ public class CreateExtracurricularActivity {
 
     public void setExtracurricularActivityDate(Date activityDate) {
         this.extracurricularActivityDate = activityDate;
+    }
+
+    public String getActivityId() {
+        return activityId;
     }
 }
