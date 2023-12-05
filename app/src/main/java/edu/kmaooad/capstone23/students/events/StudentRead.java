@@ -4,14 +4,5 @@ import edu.kmaooad.capstone23.students.dal.Student;
 
 import java.util.List;
 
-public class StudentRead {
-    private final List<Student> students;
-
-    public StudentRead(List<Student> students) {
-        this.students = students;
-    }
-
-    public List<Student> getStudents() {
-        return students;
-    }
+public record StudentRead(List<Student> students) {
 }

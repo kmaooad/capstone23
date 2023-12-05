@@ -29,7 +29,7 @@ public class CreateStudentHandlerTest {
         Result<StudentsCreated> result = handler.handle(createStudent);
 
         Assertions.assertTrue(result.isSuccess());
-        Assertions.assertEquals(result.getValue().getStudents().size(), 1);
+        Assertions.assertEquals(result.getValue().students().size(), 1);
     }
 
     @Test
@@ -95,7 +95,7 @@ public class CreateStudentHandlerTest {
         Result<StudentsCreated> result = handler.handle(createStudent);
 
         Assertions.assertTrue(result.isSuccess());
-        Assertions.assertEquals(result.getValue().getStudents().size(), 2);
+        Assertions.assertEquals(result.getValue().students().size(), 2);
     }
 
     @Test
@@ -117,11 +117,11 @@ public class CreateStudentHandlerTest {
         Result<StudentsCreated> result = handler.handle(createStudent);
 
         Assertions.assertTrue(result.isSuccess());
-        List<StudentCreated> studentsCreated = result.getValue().getStudents();
+        List<StudentCreated> studentsCreated = result.getValue().students();
         Assertions.assertEquals(studentsCreated.size(), 1);
         for (StudentCreated studentCreated : studentsCreated) {
             Assertions.assertTrue(studentCreated.isNotified());
-            Assertions.assertNull(studentCreated.getNotificationError());
+            Assertions.assertNull(studentCreated.notificationError());
         }
     }
 }

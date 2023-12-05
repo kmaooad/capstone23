@@ -6,11 +6,12 @@ import edu.kmaooad.capstone23.students.dal.StudentRepository;
 import edu.kmaooad.capstone23.students.events.StudentsFound;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
 
 import static io.restassured.RestAssured.given;
 
@@ -43,7 +44,7 @@ public class FindStudentHandlerTest {
 
         Assertions.assertTrue(result.isSuccess());
         Assertions.assertNotNull(result.getValue());
-        Assertions.assertEquals(3, result.getValue().getStudents().size());
+        Assertions.assertEquals(3, result.getValue().students().size());
     }
 
     @Test
@@ -55,7 +56,7 @@ public class FindStudentHandlerTest {
 
         Assertions.assertTrue(result.isSuccess());
         Assertions.assertNotNull(result.getValue());
-        Assertions.assertEquals(3, result.getValue().getStudents().size());
+        Assertions.assertEquals(3, result.getValue().students().size());
     }
 
     @Test
@@ -67,7 +68,7 @@ public class FindStudentHandlerTest {
 
         Assertions.assertTrue(result.isSuccess());
         Assertions.assertNotNull(result.getValue());
-        Assertions.assertEquals(2, result.getValue().getStudents().size());
+        Assertions.assertEquals(2, result.getValue().students().size());
     }
 
     @Test
@@ -79,7 +80,7 @@ public class FindStudentHandlerTest {
 
         Assertions.assertTrue(result.isSuccess());
         Assertions.assertNotNull(result.getValue());
-        Assertions.assertEquals(1, result.getValue().getStudents().size());
+        Assertions.assertEquals(1, result.getValue().students().size());
     }
 
     @Test
@@ -91,7 +92,7 @@ public class FindStudentHandlerTest {
 
         Assertions.assertTrue(result.isSuccess());
         Assertions.assertNotNull(result.getValue());
-        Assertions.assertEquals(3, result.getValue().getStudents().size());
+        Assertions.assertEquals(3, result.getValue().students().size());
     }
 
     @Test
@@ -103,7 +104,7 @@ public class FindStudentHandlerTest {
 
         Assertions.assertTrue(result.isSuccess());
         Assertions.assertNotNull(result.getValue());
-        Assertions.assertEquals(3, result.getValue().getStudents().size());
+        Assertions.assertEquals(3, result.getValue().students().size());
     }
 
     @Test
@@ -115,7 +116,7 @@ public class FindStudentHandlerTest {
 
         Assertions.assertTrue(result.isSuccess());
         Assertions.assertNotNull(result.getValue());
-        Assertions.assertEquals(2, result.getValue().getStudents().size());
+        Assertions.assertEquals(2, result.getValue().students().size());
     }
 
     @Test
@@ -127,7 +128,7 @@ public class FindStudentHandlerTest {
 
         Assertions.assertTrue(result.isSuccess());
         Assertions.assertNotNull(result.getValue());
-        Assertions.assertEquals(1, result.getValue().getStudents().size());
+        Assertions.assertEquals(1, result.getValue().students().size());
     }
 
     @Test
@@ -141,7 +142,7 @@ public class FindStudentHandlerTest {
 
         Assertions.assertTrue(result.isSuccess());
         Assertions.assertNotNull(result.getValue());
-        Assertions.assertTrue(result.getValue().getStudents().isEmpty());
+        Assertions.assertTrue(result.getValue().students().isEmpty());
     }
 
     @Test
@@ -154,7 +155,7 @@ public class FindStudentHandlerTest {
 
         Assertions.assertTrue(result.isSuccess());
         Assertions.assertNotNull(result.getValue());
-        Assertions.assertEquals(2, result.getValue().getStudents().size());
+        Assertions.assertEquals(2, result.getValue().students().size());
     }
 
 }

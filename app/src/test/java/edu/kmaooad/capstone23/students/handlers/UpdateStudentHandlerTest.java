@@ -58,7 +58,7 @@ public class UpdateStudentHandlerTest {
         File file = new File(path);
         file.delete();
         Assertions.assertTrue(result.isSuccess());
-        Assertions.assertEquals(result.getValue().getStudents().size(), 1);
+        Assertions.assertEquals(result.getValue().students().size(), 1);
     }
 
     @Test
@@ -73,7 +73,7 @@ public class UpdateStudentHandlerTest {
         File file = new File(path);
         file.delete();
         Assertions.assertTrue(result.isSuccess());
-        Assertions.assertEquals(result.getValue().getStudents().size(), 1);
+        Assertions.assertEquals(result.getValue().students().size(), 1);
     }
 
     @Test
@@ -88,7 +88,7 @@ public class UpdateStudentHandlerTest {
         File file = new File(path);
         file.delete();
         Assertions.assertTrue(result.isSuccess());
-        Assertions.assertEquals(result.getValue().getStudents().size(), 1);
+        Assertions.assertEquals(result.getValue().students().size(), 1);
     }
 
     @Test
@@ -103,7 +103,7 @@ public class UpdateStudentHandlerTest {
         File file = new File(path);
         file.delete();
         Assertions.assertTrue(result.isSuccess());
-        Assertions.assertEquals(result.getValue().getStudents().size(), 1);
+        Assertions.assertEquals(result.getValue().students().size(), 1);
     }
 
     @Test
@@ -118,7 +118,7 @@ public class UpdateStudentHandlerTest {
         File file = new File(path);
         file.delete();
         Assertions.assertTrue(result.isSuccess());
-        Assertions.assertEquals(result.getValue().getStudents().size(), 1);
+        Assertions.assertEquals(result.getValue().students().size(), 1);
     }
 
     @Test

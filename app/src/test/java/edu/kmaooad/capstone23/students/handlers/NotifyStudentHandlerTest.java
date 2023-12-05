@@ -26,7 +26,7 @@ public class NotifyStudentHandlerTest {
 
         Assertions.assertTrue(result.isSuccess());
         Assertions.assertNotNull(result.getValue());
-        Assertions.assertEquals(studentId, result.getValue().getStudentId());
+        Assertions.assertEquals(studentId, result.getValue().studentId());
     }
 
     @Test

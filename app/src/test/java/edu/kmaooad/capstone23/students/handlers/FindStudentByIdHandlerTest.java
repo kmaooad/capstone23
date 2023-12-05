@@ -51,9 +51,9 @@ public class FindStudentByIdHandlerTest {
         Result<StudentRead> result = findStudentByIdHandler.handle(readStudent);
         Assertions.assertTrue(result.isSuccess());
         Assertions.assertNotNull(result.getValue());
-        Assertions.assertEquals(1, result.getValue().getStudents().size());
-        Assertions.assertEquals("Ivan", result.getValue().getStudents().get(0).firstName);
-        Assertions.assertEquals("ivan.dobrovolskyi@ukma.edu.ua", result.getValue().getStudents().get(0).email);
+        Assertions.assertEquals(1, result.getValue().students().size());
+        Assertions.assertEquals("Ivan", result.getValue().students().get(0).firstName);
+        Assertions.assertEquals("ivan.dobrovolskyi@ukma.edu.ua", result.getValue().students().get(0).email);
     }
 
     @Test
