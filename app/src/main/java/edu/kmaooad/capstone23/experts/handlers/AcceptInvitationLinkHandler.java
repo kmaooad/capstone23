@@ -8,6 +8,9 @@ import edu.kmaooad.capstone23.experts.dal.Expert;
 import edu.kmaooad.capstone23.experts.dal.ExpertInvitationRepository;
 import edu.kmaooad.capstone23.experts.dal.ExpertsRepository;
 import edu.kmaooad.capstone23.experts.events.ExpertCreated;
+import edu.kmaooad.capstone23.experts.notification.EventDispatcher;
+import edu.kmaooad.capstone23.experts.notification.EventType;
+import edu.kmaooad.capstone23.experts.notification.model.TelegramEvent;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 
@@ -21,6 +24,9 @@ public class AcceptInvitationLinkHandler implements CommandHandler<AcceptInvitat
     @Inject
     ExpertsRepository expertsRepository;
 
+    @Inject
+    EventDispatcher eventDispatcher;
+
     @Override
     public Result<ExpertCreated> handle(AcceptInvitationLink command) {
         var invitationObject = invitationRepository.findById(command.getInvitationId());
@@ -31,6 +37,7 @@ public class AcceptInvitationLinkHandler implements CommandHandler<AcceptInvitat
         expert.name = invitationObject.expertName;
         expert.org = invitationObject.org;
         expertsRepository.insert(expert);
+        eventDispatcher.notify(EventType.TELEGRAM, new TelegramEvent(EventType.TELEGRAM, "telegramId", "User accepted link"));
         return new Result<>(new ExpertCreated(expert.id.toString(), expert.org));
     }
 }
