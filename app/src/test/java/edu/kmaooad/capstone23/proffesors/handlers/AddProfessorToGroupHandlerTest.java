@@ -1,6 +1,7 @@
 package edu.kmaooad.capstone23.proffesors.handlers;
 
 import edu.kmaooad.capstone23.common.CommandHandler;
+import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.group_templates.commands.CreateGroupTemplate;
 import edu.kmaooad.capstone23.group_templates.events.GroupTemplateCreated;
@@ -85,6 +86,59 @@ class AddProfessorToGroupHandlerTest {
 
         Assertions.assertTrue(result.isSuccess());
         Assertions.assertNotNull(result.getValue());
+    }
+
+
+    @Test
+    @DisplayName("Add professor to group: validation test")
+    void validationTest() {
+        CreateProffesor createProffesor = new CreateProffesor();
+        createProffesor.setName("Masha");
+        createProffesor.setEmail("post@gmail.com");
+        createProffesor.setLastName("Shevchenko");
+
+
+        Result<ProffesorCreated> professorCreated = createProfessorHandler.handle(createProffesor);
+
+        Assertions.assertTrue(professorCreated.isSuccess());
+        Assertions.assertNotNull(professorCreated.getValue());
+        Assertions.assertNotNull(professorCreated.getValue().getId());
+
+        CreateGroupTemplate templateCommand = new CreateGroupTemplate();
+        templateCommand.setGroupTemplateName("template");
+        Result<GroupTemplateCreated> resultForTemplate = groupTemplateCreateCommandHandler.handle(templateCommand);
+        CreateGroup groupCommand = new CreateGroup();
+
+        groupCommand.setGroupName("group");
+        groupCommand.setTemplateId(resultForTemplate.getValue().getGroupTemplateId().toString());
+
+        Result<GroupCreated> resultForGroup = groupCreateCommandHandler.handle(groupCommand);
+
+        Assertions.assertTrue(resultForGroup.isSuccess());
+        Assertions.assertNotNull(resultForGroup.getValue());
+        Assertions.assertFalse(resultForGroup.getValue().getGroupId().isEmpty());
+
+
+        Result<ProfessorAddedToGroup> nonExistentProfessor = addProfessorHandler.handle(new AddProfessorToGroup(new ObjectId(), new ObjectId(resultForGroup.getValue().getGroupId())));
+
+        Assertions.assertNotNull(nonExistentProfessor);
+        Assertions.assertFalse(nonExistentProfessor.isSuccess());
+        Assertions.assertEquals(nonExistentProfessor.getErrorCode(), ErrorCode.VALIDATION_FAILED);
+
+        Result<ProfessorAddedToGroup> nonExistentGroup = addProfessorHandler.handle(new AddProfessorToGroup(professorCreated.getValue().getId(), new ObjectId()));
+
+        Assertions.assertNotNull(nonExistentGroup);
+        Assertions.assertFalse(nonExistentGroup.isSuccess());
+        Assertions.assertEquals(nonExistentGroup.getErrorCode(), ErrorCode.VALIDATION_FAILED);
+
+
+        AddProfessorToGroup addProfessorToGroup = new AddProfessorToGroup(professorCreated.getValue().getId(), new ObjectId(resultForGroup.getValue().getGroupId()));
+        Result<ProfessorAddedToGroup> validId = addProfessorHandler.handle(addProfessorToGroup);
+
+        Assertions.assertTrue(validId.isSuccess());
+        Assertions.assertNotNull(validId.getValue());
+        Assertions.assertEquals(validId.getValue().getProfessorId(), professorCreated.getValue().getId());
+        Assertions.assertEquals(validId.getValue().getGroupId(), addProfessorToGroup.getGroupId());
     }
 
 }
