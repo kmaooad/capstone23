@@ -1,6 +1,7 @@
 package edu.kmaooad.capstone23.access_rules.services;
 
 import edu.kmaooad.capstone23.access_rules.dal.AccessRule;
+import edu.kmaooad.capstone23.access_rules.dal.AccessRuleFromEntityType;
 import edu.kmaooad.capstone23.access_rules.dal.AccessRuleRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -9,7 +10,7 @@ import org.bson.types.ObjectId;
 @ApplicationScoped
 public class AccessRuleImpl implements AccessRuleService {
     @Inject
-    private AccessRuleRepository accessRuleRepository;
+    AccessRuleRepository accessRuleRepository;
     @Override
     public AccessRule insert(AccessRule accessRule) {
         return accessRuleRepository.insert(accessRule);
@@ -29,5 +30,10 @@ public class AccessRuleImpl implements AccessRuleService {
     @Override
     public void deleteAccessRule(ObjectId accessRule) {
         accessRuleRepository.deleteRule(accessRule);
+    }
+
+    @Override
+    public void ban(ObjectId entityId, AccessRuleFromEntityType fromEntityType) {
+        this.accessRuleRepository.updateOnBan(entityId, fromEntityType);
     }
 }

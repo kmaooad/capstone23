@@ -2,11 +2,9 @@ package edu.kmaooad.capstone23.access_rules.services;
 
 import edu.kmaooad.capstone23.access_rules.dal.AccessRuleFromEntityType;
 import edu.kmaooad.capstone23.access_rules.events.EntityBanned;
-import edu.kmaooad.capstone23.activities.dal.CourseRepository;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.departments.dal.DepartmentsRepository;
-import edu.kmaooad.capstone23.groups.dal.GroupsRepository;
 import edu.kmaooad.capstone23.members.dal.MembersRepository;
 import edu.kmaooad.capstone23.orgs.dal.OrgsRepository;
 import jakarta.enterprise.context.RequestScoped;
@@ -28,12 +26,6 @@ public class BanService {
     @Inject
     DepartmentsRepository departmentsRepository;
 
-    @Inject
-    CourseRepository courseRepository;
-
-    @Inject
-    GroupsRepository groupsRepository;
-
     public Result<EntityBanned> banEntity(ObjectId entityId, AccessRuleFromEntityType fromEntityType) {
         if (!entityExists(fromEntityType, entityId)) {
             return new Result<>(ErrorCode.VALIDATION_FAILED, "Entity doesn't exist");
@@ -46,15 +38,10 @@ public class BanService {
 
 
     private boolean entityExists(AccessRuleFromEntityType fromType, ObjectId entityId) {
-        switch (fromType) {
-            case Member:
-                return membersRepository.findByIdOptional(entityId).isPresent();
-            case Department:
-                return departmentsRepository.findByIdOptional(entityId).isPresent();
-            case Organisation:
-                return orgsRepository.findByIdOptional(entityId).isPresent();
-            default:
-                return false;
-        }
+        return switch (fromType) {
+            case Member -> membersRepository.findByIdOptional(entityId).isPresent();
+            case Department -> departmentsRepository.findByIdOptional(entityId).isPresent();
+            case Organisation -> orgsRepository.findByIdOptional(entityId).isPresent();
+        };
     }
 }

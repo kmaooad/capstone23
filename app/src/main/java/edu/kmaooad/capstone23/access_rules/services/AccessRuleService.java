@@ -1,11 +1,13 @@
 package edu.kmaooad.capstone23.access_rules.services;
 
 import edu.kmaooad.capstone23.access_rules.dal.AccessRule;
+import edu.kmaooad.capstone23.access_rules.dal.AccessRuleFromEntityType;
 import org.bson.types.ObjectId;
 
 public interface AccessRuleService {
-    public AccessRule insert(AccessRule accessRule);
-    public AccessRule findById(ObjectId id);
-    public AccessRule update(AccessRule accessRule);
-    public void deleteAccessRule(ObjectId accessRule);
+    AccessRule insert(AccessRule accessRule);
+    AccessRule findById(ObjectId id);
+    AccessRule update(AccessRule accessRule);
+    void deleteAccessRule(ObjectId accessRule);
+    void ban(ObjectId entityId, AccessRuleFromEntityType fromEntityType);
 }
