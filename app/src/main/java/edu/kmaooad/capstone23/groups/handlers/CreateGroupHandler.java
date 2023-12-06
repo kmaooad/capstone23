@@ -5,6 +5,7 @@ import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.group_templates.dal.GroupTemplate;
 import edu.kmaooad.capstone23.group_templates.dal.GroupTemplatesRepository;
+import edu.kmaooad.capstone23.group_templates.services.GroupTemplatesService;
 import edu.kmaooad.capstone23.groups.commands.CreateGroup;
 import edu.kmaooad.capstone23.groups.dal.Group;
 import edu.kmaooad.capstone23.groups.dal.GroupsRepository;
@@ -20,7 +21,7 @@ public class CreateGroupHandler implements CommandHandler<CreateGroup, GroupCrea
     @Inject
     private GroupService repository;
     @Inject
-    private GroupTemplatesRepository templatesRepository;
+    private GroupTemplatesService templatesService;
 
     @Override
     public Result<GroupCreated> handle(CreateGroup command) {
@@ -31,7 +32,7 @@ public class CreateGroupHandler implements CommandHandler<CreateGroup, GroupCrea
         String templateId = command.getTemplateId();
         if(!ObjectId.isValid(templateId))
             return new Result<>(ErrorCode.VALIDATION_FAILED, "Template Id is invalid");
-        GroupTemplate template = templatesRepository.findById(new ObjectId(templateId));
+        GroupTemplate template = templatesService.findById(new ObjectId(templateId));
         if(template == null)
             return new Result<>(ErrorCode.VALIDATION_FAILED, "There is no group template with such id");
 
