@@ -23,7 +23,7 @@ public class ExpertServiceTest {
     public void testInvitationLinkCreation() {
         var objectId = new ObjectId();
         String invitationLink = expertService.createInvitationLink(objectId);
-        var expectedLink = HOST + ExpertService.ACCEPT_INVITATION_ENDPOINT + "?id=" + objectId;
+        var expectedLink = HOST + "\"/experts/invitation/accept\"?id=" + objectId;
         Assertions.assertEquals(expectedLink, invitationLink);
     }
 }
