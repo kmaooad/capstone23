@@ -1,5 +1,6 @@
 package edu.kmaooad.capstone23.students.services;
 
+import edu.kmaooad.capstone23.jobs.dal.Job;
 import edu.kmaooad.capstone23.students.commands.FindStudent;
 import edu.kmaooad.capstone23.students.dal.Student;
 import edu.kmaooad.capstone23.students.parser.CSVStudent;
@@ -18,4 +19,6 @@ public interface StudentService {
     Student findById(ObjectId id);
 
     void update(List<Student> studentsToUpdate);
+
+    void delete(Student student);
 }

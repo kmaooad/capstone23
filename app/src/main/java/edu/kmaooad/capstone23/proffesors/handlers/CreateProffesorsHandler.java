@@ -7,6 +7,7 @@ import edu.kmaooad.capstone23.proffesors.commands.CreateProffesor;
 import edu.kmaooad.capstone23.proffesors.dal.Proffesor;
 import edu.kmaooad.capstone23.proffesors.dal.ProffesorsRepository;
 import edu.kmaooad.capstone23.proffesors.events.ProffesorCreated;
+import edu.kmaooad.capstone23.proffesors.services.ProffesorsService;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 
@@ -17,11 +18,11 @@ import java.time.LocalDateTime;
     public class CreateProffesorsHandler implements CommandHandler<CreateProffesor, ProffesorCreated> {
 
         @Inject
-        ProffesorsRepository cvRepository;
+        ProffesorsService proffesorsService;
 
         @Override
         public Result<ProffesorCreated> handle(CreateProffesor command) {
-            Proffesor cv = new Proffesor();
+            Proffesor proffesor = new Proffesor();
 
             if (command.getName() == null) {
                 return new Result<>(ErrorCode.VALIDATION_FAILED, "name is not set");
@@ -36,14 +37,14 @@ import java.time.LocalDateTime;
             }
 
 
-            cv.firstName = command.getName();
-            cv.lastName = command.getLastName();
-            cv.email = command.getEmail();
-            cv.preference = command.getPreference();
+            proffesor.firstName = command.getName();
+            proffesor.lastName = command.getLastName();
+            proffesor.email = command.getEmail();
+            proffesor.preference = command.getPreference();
 
-            cvRepository.insert(cv);
+            proffesorsService.insert(proffesor);
 
-            ProffesorCreated result = new ProffesorCreated(cv.id);
+            ProffesorCreated result = new ProffesorCreated(proffesor.id);
             return new Result<>(result);
         }
 

@@ -6,6 +6,7 @@ import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.students.commands.DeleteStudent;
 import edu.kmaooad.capstone23.students.dal.StudentRepository;
 import edu.kmaooad.capstone23.students.events.StudentDeleted;
+import edu.kmaooad.capstone23.students.services.StudentService;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
@@ -13,15 +14,15 @@ import jakarta.inject.Inject;
 public class DeleteStudentHandler implements CommandHandler<DeleteStudent, StudentDeleted> {
 
     @Inject
-    StudentRepository studentRepository;
+    StudentService studentService;
 
     @Override
     public Result<StudentDeleted> handle(DeleteStudent command) {
-        var optionalStudent = studentRepository.findByIdOptional(command.getObjectId());
+        var optionalStudent = studentService.findById(command.getObjectId().toHexString());
         if (optionalStudent.isEmpty()) {
             return new Result<>(ErrorCode.NOT_FOUND, "Student not found");
         }
-        studentRepository.delete(optionalStudent.get());
+        studentService.delete(optionalStudent.get());
 
         return new Result<>(new StudentDeleted(command.getObjectId()));
     }
