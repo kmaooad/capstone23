@@ -7,6 +7,7 @@ import edu.kmaooad.capstone23.proffesors.commands.AssignActivity;
 import edu.kmaooad.capstone23.proffesors.dal.Proffesor;
 import edu.kmaooad.capstone23.proffesors.dal.ProffesorsRepository;
 import edu.kmaooad.capstone23.proffesors.events.ActivityAssigned;
+import edu.kmaooad.capstone23.proffesors.services.ProffesorsService;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 
@@ -16,18 +17,18 @@ import java.util.Optional;
 public class AssignActivityHandler implements CommandHandler<AssignActivity, ActivityAssigned> {
 
     @Inject
-    ProffesorsRepository proffesorsRepository;
+    ProffesorsService proffesorsService;
 
     @Override
     public Result<ActivityAssigned> handle(AssignActivity command) {
-        Optional<Proffesor> proffesor = proffesorsRepository.findByIdOptional(command.getProfessor());
+        Optional<Proffesor> proffesor = proffesorsService.findByIdOptional(command.getProfessor());
 
         if (proffesor.isEmpty()) {
             return new Result<>(ErrorCode.VALIDATION_FAILED, "Professor does not exist");
         }
 
         proffesor.get().activities.add(command.getActivity());
-        proffesorsRepository.update(proffesor.get());
+        proffesorsService.update(proffesor.get());
 
         ActivityAssigned result = new ActivityAssigned();
         result.setActivityId(command.getActivity());
