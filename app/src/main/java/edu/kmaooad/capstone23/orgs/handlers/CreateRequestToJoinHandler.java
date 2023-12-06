@@ -1,13 +1,12 @@
 package edu.kmaooad.capstone23.orgs.handlers;
 
 import edu.kmaooad.capstone23.ban.commands.IsEntityBannedV2;
-import edu.kmaooad.capstone23.ban.dal.BannedEntityType;
 import edu.kmaooad.capstone23.ban.service.EntityBanService;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.departments.events.RequestCreated;
-import edu.kmaooad.capstone23.orgs.services.OrgService;
+import edu.kmaooad.capstone23.orgs.services.OrgsServiceImpl;
 import edu.kmaooad.capstone23.orgs.commands.RequestToJoinOrg;
 import edu.kmaooad.capstone23.orgs.dal.Org;
 import edu.kmaooad.capstone23.orgs.dal.Request;
@@ -18,7 +17,7 @@ import jakarta.inject.Inject;
 public class CreateRequestToJoinHandler implements CommandHandler<RequestToJoinOrg, RequestCreated> {
 
     @Inject
-    private OrgService orgService;
+    private OrgsServiceImpl orgService;
 
     @Inject
     private EntityBanService banService;
@@ -28,7 +27,7 @@ public class CreateRequestToJoinHandler implements CommandHandler<RequestToJoinO
     public Result<RequestCreated> handle(RequestToJoinOrg command) {
 
        
-        Org org = orgService.getOrgById(command.getOrgId());
+        Org org = orgService.findById(command.getOrgId());
         if (org == null) {
             return new Result<>(ErrorCode.EXCEPTION, "Org not found");
         }
