@@ -3,7 +3,6 @@ package edu.kmaooad.capstone23.competences.commands;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
-import org.bson.types.ObjectId;
 
 import java.util.List;
 
@@ -16,9 +15,9 @@ public class CreateProj {
 
     private String description;
 
-    private List<ObjectId> skills;
+    private List<String> skills;
 
-    private List<ObjectId> skillSets;
+    private List<String> skillSets;
 
     public String getName() {
         return name;
@@ -36,19 +35,19 @@ public class CreateProj {
         this.description = description;
     }
 
-    public List<ObjectId> getSkills() {
+    public List<String> getSkills() {
         return skills;
     }
 
-    public void setSkills(List<ObjectId> skills) {
+    public void setSkills(List<String> skills) {
         this.skills = skills;
     }
 
-    public List<ObjectId> getSkillSets() {
+    public List<String> getSkillSets() {
         return skillSets;
     }
 
-    public void setSkillSets(List<ObjectId> skillSets) {
+    public void setSkillSets(List<String> skillSets) {
         this.skillSets = skillSets;
     }
 }

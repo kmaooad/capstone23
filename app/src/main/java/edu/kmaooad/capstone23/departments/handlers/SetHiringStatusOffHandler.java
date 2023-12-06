@@ -1,5 +1,7 @@
 package edu.kmaooad.capstone23.departments.handlers;
 
+import edu.kmaooad.capstone23.ban.commands.IsEntityBannedV2;
+import edu.kmaooad.capstone23.ban.service.EntityBanService;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
@@ -13,8 +15,6 @@ import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
 
-import java.util.Optional;
-
 
 @RequestScoped
 public class SetHiringStatusOffHandler implements CommandHandler<SetHiringStatusOff, HiringStatusSettedOff> {
@@ -24,6 +24,8 @@ public class SetHiringStatusOffHandler implements CommandHandler<SetHiringStatus
     @Inject
     private JobRepository jobRepository;
 
+    @Inject
+    private EntityBanService banService;
 
     private final String hiringStatusOff = "Off";
 
@@ -35,6 +37,11 @@ public class SetHiringStatusOffHandler implements CommandHandler<SetHiringStatus
 
         if (department == null) {
             return new Result<>(ErrorCode.VALIDATION_FAILED, "Department with such Id doesn't exist");
+        }
+
+        var ban = banService.findForEntity(IsEntityBannedV2.DEPARTMENT_BAN_ENTITY_TYPE, department.id.toString());
+        if (ban.isPresent()) {
+            return new Result<>(ErrorCode.VALIDATION_FAILED, "Department is banned");
         }
 
         department.hiringStatus = hiringStatusOff;
@@ -55,6 +62,6 @@ public class SetHiringStatusOffHandler implements CommandHandler<SetHiringStatus
 
         HiringStatusSettedOff result = new HiringStatusSettedOff(department.id.toString());
 
-        return new Result(result);
+        return new Result<>(result);
     }
 }

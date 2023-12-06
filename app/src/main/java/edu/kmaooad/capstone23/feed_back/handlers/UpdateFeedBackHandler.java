@@ -5,8 +5,8 @@ import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.feed_back.commands.UpdateFeedBack;
 import edu.kmaooad.capstone23.feed_back.dal.FeedBack;
-import edu.kmaooad.capstone23.feed_back.dal.FeedBackRepository;
 import edu.kmaooad.capstone23.feed_back.events.FeedBackUpdated;
+import edu.kmaooad.capstone23.feed_back.services.FeedBackService;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 
@@ -17,11 +17,11 @@ import java.util.Optional;
 @RequestScoped
 public class UpdateFeedBackHandler implements CommandHandler<UpdateFeedBack, FeedBackUpdated> {
     @Inject
-    FeedBackRepository repository;
+    FeedBackService service;
 
     public Result<FeedBackUpdated> handle(UpdateFeedBack command) {
         var id = command.getFeedBackId();
-        Optional<FeedBack> feedBack = repository.findById(id);
+        Optional<FeedBack> feedBack = service.findById(id);
 
         if (feedBack.isEmpty())
             return new Result<>(ErrorCode.VALIDATION_FAILED, String.format("Feedback with id: %s does not exist", id));
@@ -31,7 +31,7 @@ public class UpdateFeedBackHandler implements CommandHandler<UpdateFeedBack, Fee
         feedBackItem.text = command.getText();
         feedBackItem.date = new Date();
 
-        repository.update(feedBackItem);
+        service.update(feedBackItem);
 
         return new Result<>(new FeedBackUpdated(feedBackItem.id.toString(), feedBackItem.topic, feedBackItem.text));
     }
