@@ -88,6 +88,7 @@ class AddProfessorToGroupHandlerTest {
         Assertions.assertNotNull(result.getValue());
     }
 
+
     @Test
     @DisplayName("Add professor to group: validation test")
     void validationTest() {

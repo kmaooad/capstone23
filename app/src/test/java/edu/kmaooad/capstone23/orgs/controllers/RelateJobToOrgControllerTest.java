@@ -4,6 +4,7 @@ import edu.kmaooad.capstone23.jobs.dal.Job;
 import edu.kmaooad.capstone23.jobs.dal.JobRepository;
 import edu.kmaooad.capstone23.orgs.dal.Org;
 import edu.kmaooad.capstone23.orgs.dal.OrgsRepository;
+import edu.kmaooad.capstone23.orgs.drivers.OrgDriver;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,15 +28,15 @@ public class RelateJobToOrgControllerTest {
     @Inject
     JobRepository jobRepository;
 
+    @Inject
+    OrgDriver orgDriver;
+
+
+
     @BeforeEach
     void setUp() {
         jobRepository.deleteAll();
-        orgsRepository.deleteAll();
-        Org org = new Org();
-        org.name = "Initial Org";
-        org.description = "Initial Org Description";
-
-        org.jobs = new ArrayList<>();
+        Org org = orgDriver.createOrg();
 
 
         Job job = new Job();

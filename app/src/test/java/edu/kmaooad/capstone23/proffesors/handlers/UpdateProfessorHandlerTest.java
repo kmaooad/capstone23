@@ -53,6 +53,7 @@ class UpdateProfessorHandlerTest {
         Assertions.assertEquals(updatedResult.getValue().getProfessorId(), createdResult.getValue().getId());
     }
 
+
     @Test
     @DisplayName("Test valid UpdateProfessor object")
     void testValidUpdateProfessor() {
