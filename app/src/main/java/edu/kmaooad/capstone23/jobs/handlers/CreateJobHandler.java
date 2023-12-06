@@ -18,7 +18,7 @@ import jakarta.inject.Inject;
 public class CreateJobHandler implements CommandHandler<CreateJob, JobCreated> {
 
     @Inject
-    private JobService jobService;
+    JobService jobService;
 
     public Result<JobCreated> handle(CreateJob command) {
 
@@ -29,10 +29,8 @@ public class CreateJobHandler implements CommandHandler<CreateJob, JobCreated> {
         job.activitiesId = command.getActivitiesId();
         job.competencesId = command.getCompetencesId();
 
-        jobService.insert(job);
+        JobCreated result = jobService.createJob(job);
 
-        JobCreated result = new JobCreated(job.id);
-
-        return new Result<JobCreated>(result);
+        return new Result<>(result);
     }
 }
