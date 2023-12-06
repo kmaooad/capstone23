@@ -13,6 +13,11 @@ import static io.restassured.RestAssured.given;
 
 @QuarkusTest
 public class UnsetRelationControllerTests {
+
+    private static final String CONTENT_TYPE_JSON = "application/json";
+    private static final String SET_RELATION_ENDPOINT = "/relations/set";
+    private static final String UNSET_RELATION_ENDPOINT = "/relations/unset";
+
     @Test
     @DisplayName("Test Unsetting Relation Endpoint")
     public void testUnsetRelationEndpoint() {
@@ -23,13 +28,7 @@ public class UnsetRelationControllerTests {
         jsonAsMap.put("collectionName1", "courses");
         jsonAsMap.put("collectionName2", "projects");
 
-        given()
-                .contentType("application/json")
-                .body(jsonAsMap)
-                .when()
-                .post("/relations/unset")
-                .then()
-                .statusCode(200);
+        postAndAssert(jsonAsMap, UNSET_RELATION_ENDPOINT, 200);
     }
 
     @Test
@@ -38,27 +37,19 @@ public class UnsetRelationControllerTests {
         Map<String, Object> jsonAsMap = new HashMap<>();
         jsonAsMap.put("id", "5f7e47fc8e1f7112d73c93b0");
 
-        given()
-                .contentType("application/json")
-                .body(jsonAsMap)
-                .when()
-                .post("/relations/unset")
-                .then()
-                .statusCode(400);
+        postAndAssert(jsonAsMap, UNSET_RELATION_ENDPOINT, 400);
     }
 
     private ObjectId createDefaultRelation() {
-        Map<String, Object> jsonAsMap = new HashMap<>();
-        jsonAsMap.put("collectionName1", "courses");
-        jsonAsMap.put("collectionName2", "projects");
-        jsonAsMap.put("objectToConnectId1", "5f7e47fc8e1f7112d73c92a1");
-        jsonAsMap.put("objectToConnectId2", "1a4cd132b123a1aa3bc2d142");
+        Map<String, Object> jsonAsMap = buildRelationMap(
+                "courses", "projects", "5f7e47fc8e1f7112d73c92a1", "1a4cd132b123a1aa3bc2d142"
+        );
 
         String id = given()
-                .contentType("application/json")
+                .contentType(CONTENT_TYPE_JSON)
                 .body(jsonAsMap)
                 .when()
-                .post("/relations/set")
+                .post(SET_RELATION_ENDPOINT)
                 .then()
                 .statusCode(200)
                 .extract()
@@ -66,4 +57,22 @@ public class UnsetRelationControllerTests {
         return new ObjectId(id);
     }
 
+    private Map<String, Object> buildRelationMap(String collectionName1, String collectionName2, String objectId1, String objectId2) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("collectionName1", collectionName1);
+        map.put("collectionName2", collectionName2);
+        map.put("objectToConnectId1", objectId1);
+        map.put("objectToConnectId2", objectId2);
+        return map;
+    }
+
+    private void postAndAssert(Map<String, Object> requestBody, String endpoint, int expectedStatusCode) {
+        given()
+                .contentType(CONTENT_TYPE_JSON)
+                .body(requestBody)
+                .when()
+                .post(endpoint)
+                .then()
+                .statusCode(expectedStatusCode);
+    }
 }

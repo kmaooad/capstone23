@@ -1,12 +1,11 @@
 package edu.kmaooad.capstone23.ban.commands;
 
+import edu.kmaooad.capstone23.ban.dal.BannedEntityType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import org.bson.types.ObjectId;
-
-import edu.kmaooad.capstone23.ban.dal.BannedEntityType;
 
 public class BanEntity {
 
@@ -48,4 +47,6 @@ public class BanEntity {
     public void setEntityId(ObjectId entityId) {
         this.entityId = entityId;
     }
+
+
 }

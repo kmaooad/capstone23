@@ -3,6 +3,7 @@ package edu.kmaooad.capstone23.experts.controllers;
 import edu.kmaooad.capstone23.experts.dal.ExpertsRepository;
 import edu.kmaooad.capstone23.orgs.dal.OrgsRepository;
 import io.quarkus.test.junit.QuarkusTest;
+import io.restassured.response.Response;
 import jakarta.inject.Inject;
 import java.util.HashMap;
 import java.util.Map;
@@ -15,7 +16,11 @@ import static io.restassured.RestAssured.given;
 
 @QuarkusTest
 public class CreateExpertControllerTest {
+
     private static final String ORG_NAME = "Random Org";
+    private static final String BASE_PATH = "/experts/create";
+    private static final String CONTENT_TYPE_JSON = "application/json";
+
     @Inject
     OrgsRepository orgsRepository;
     @Inject
@@ -29,15 +34,7 @@ public class CreateExpertControllerTest {
     @Test
     @DisplayName("Create Expert: Basic")
     public void testBasicExpertCreation() {
-        Map<String, Object> jsonAsMap = new HashMap<>();
-        jsonAsMap.put("expertName", "ArkhypchukStepanenko");
-        jsonAsMap.put("orgName", ORG_NAME);
-
-        given()
-                .contentType("application/json")
-                .body(jsonAsMap)
-                .when()
-                .post("/experts/create")
+        createExpert("ArkhypchukStepanenko", ORG_NAME)
                 .then()
                 .statusCode(200);
     }
@@ -45,15 +42,7 @@ public class CreateExpertControllerTest {
     @Test
     @DisplayName("Create Expert: Name validation")
     public void testExpertCreationWithNameValidation() {
-        Map<String, Object> jsonAsMap = new HashMap<>();
-        jsonAsMap.put("expertName", "ArkhypchukStepanenko ∂ƒ©");
-        jsonAsMap.put("orgName", ORG_NAME);
-
-        given()
-                .contentType("application/json")
-                .body(jsonAsMap)
-                .when()
-                .post("/experts/create")
+        createExpert("ArkhypchukStepanenko ∂ƒ©", ORG_NAME)
                 .then()
                 .statusCode(400);
     }
@@ -65,17 +54,27 @@ public class CreateExpertControllerTest {
     }
 
     private void createTestOrg() {
-        Map<String, Object> jsonAsMap = new HashMap<>();
-        jsonAsMap.put("orgName", ORG_NAME);
-        jsonAsMap.put("website", "foo");
-        jsonAsMap.put("industry", "foo");
+        Map<String, Object> orgData = new HashMap<>();
+        orgData.put("orgName", ORG_NAME);
+        orgData.put("website", "foo");
+        orgData.put("industry", "foo");
 
-        given()
-                .contentType("application/json")
-                .body(jsonAsMap)
+        postRequest(orgData, "/orgs/create");
+    }
+
+    private Response createExpert(String expertName, String organizationName) {
+        Map<String, Object> expertData = new HashMap<>();
+        expertData.put("expertName", expertName);
+        expertData.put("orgName", organizationName);
+
+        return postRequest(expertData, BASE_PATH);
+    }
+
+    private Response postRequest(Map<String, Object> requestData, String path) {
+        return given()
+                .contentType(CONTENT_TYPE_JSON)
+                .body(requestData)
                 .when()
-                .post("/orgs/create")
-                .then()
-                .statusCode(200);
+                .post(path);
     }
 }

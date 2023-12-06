@@ -3,9 +3,9 @@ package edu.kmaooad.capstone23.access_rules.handlers;
 import edu.kmaooad.capstone23.access_rules.commands.UpdateAccessRule;
 import edu.kmaooad.capstone23.access_rules.dal.AccessRule;
 import edu.kmaooad.capstone23.access_rules.dal.AccessRuleFromEntityType;
-import edu.kmaooad.capstone23.access_rules.dal.AccessRuleRepository;
 import edu.kmaooad.capstone23.access_rules.dal.AccessRuleToEntityType;
 import edu.kmaooad.capstone23.access_rules.events.AccessRuleUpdated;
+import edu.kmaooad.capstone23.access_rules.services.AccessRuleService;
 import edu.kmaooad.capstone23.activities.dal.CourseRepository;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
@@ -22,7 +22,7 @@ import org.bson.types.ObjectId;
 public class UpdateAccessRuleHandler implements CommandHandler<UpdateAccessRule, AccessRuleUpdated> {
 
     @Inject
-    private AccessRuleRepository accessRuleRepository;
+    private AccessRuleService accessRuleService;
 
     @Inject
     private OrgsRepository orgsRepository;
@@ -47,7 +47,7 @@ public class UpdateAccessRuleHandler implements CommandHandler<UpdateAccessRule,
             return new Result<>(ErrorCode.VALIDATION_FAILED, "From entity Id is invalid");
         if(!ObjectId.isValid(command.getToEntityId()))
             return new Result<>(ErrorCode.VALIDATION_FAILED, "To entity Id is invalid");
-        AccessRule accessRule = accessRuleRepository.findById(new ObjectId(command.getId()));
+        AccessRule accessRule = accessRuleService.findById(new ObjectId(command.getId()));
 
         if (accessRule == null) {
             return new Result<>(ErrorCode.VALIDATION_FAILED, "Access rule with such Id doesn't exist");
@@ -67,7 +67,7 @@ public class UpdateAccessRuleHandler implements CommandHandler<UpdateAccessRule,
         accessRule.fromEntityId = new ObjectId(command.getFromEntityId());
         accessRule.toEntityId = new ObjectId(command.getToEntityId());
 
-        accessRuleRepository.update(accessRule);
+        accessRuleService.update(accessRule);
         return new Result<>(new AccessRuleUpdated(accessRule.id.toString(), accessRule.ruleType, accessRule.fromEntityType,
                 accessRule.fromEntityId.toString(), accessRule.toEntityType, accessRule.toEntityId.toString()));
     }

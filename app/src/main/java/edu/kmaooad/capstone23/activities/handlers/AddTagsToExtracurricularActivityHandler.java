@@ -2,13 +2,14 @@ package edu.kmaooad.capstone23.activities.handlers;
 
 import edu.kmaooad.capstone23.activities.commands.AddTagsToExtracurricularActivity;
 import edu.kmaooad.capstone23.activities.dal.ExtracurricularActivity;
-import edu.kmaooad.capstone23.activities.dal.ExtracurricularActivityRepository;
 import edu.kmaooad.capstone23.activities.events.TagsAddedToExtracurricularActivity;
+import edu.kmaooad.capstone23.activities.services.ExtracurricularActivityService;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.tag.dal.Tag;
 import edu.kmaooad.capstone23.tag.dal.TagRepository;
+import edu.kmaooad.capstone23.tag.services.TagService;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
@@ -21,14 +22,14 @@ import java.util.stream.Collectors;
 public class AddTagsToExtracurricularActivityHandler implements CommandHandler<AddTagsToExtracurricularActivity, TagsAddedToExtracurricularActivity> {
 
     @Inject
-    ExtracurricularActivityRepository activityRepository;
+    ExtracurricularActivityService activityService;
 
     @Inject
-    TagRepository tagRepository;
+    TagService tagService;
 
     public Result<TagsAddedToExtracurricularActivity> handle(AddTagsToExtracurricularActivity command) {
         String extracurricularActivityName = command.getExtracurricularActivityName();
-        ExtracurricularActivity activity = activityRepository.find("extracurricularActivityName", extracurricularActivityName).firstResult();
+        ExtracurricularActivity activity = activityService.find(extracurricularActivityName);
 
         if (activity == null) {
             return new Result<>(ErrorCode.EXCEPTION, "Extracurricular activity not found");
@@ -40,14 +41,14 @@ public class AddTagsToExtracurricularActivityHandler implements CommandHandler<A
         }
 
         for (String tagId : command.getTagIds()) {
-            Tag tag = tagRepository.findById(new ObjectId(tagId));
+            Tag tag = tagService.findById(new ObjectId(tagId));
             if (tag != null && !tagsToAdd.contains(tag)) {
                 tagsToAdd.add(tag);
             }
         }
 
         activity.tags = tagsToAdd;
-        activityRepository.update(activity);
+        activityService.update(activity);
 
         TagsAddedToExtracurricularActivity result = new TagsAddedToExtracurricularActivity(
                 extracurricularActivityName,

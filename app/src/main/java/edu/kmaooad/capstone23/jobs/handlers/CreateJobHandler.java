@@ -6,7 +6,7 @@ import edu.kmaooad.capstone23.jobs.commands.CreateJob;
 import edu.kmaooad.capstone23.jobs.dal.Job;
 import edu.kmaooad.capstone23.jobs.dal.JobRepository;
 import edu.kmaooad.capstone23.jobs.events.JobCreated;
-import edu.kmaooad.capstone23.jobs.services.JobService;
+import edu.kmaooad.capstone23.jobs.service.JobService;
 import edu.kmaooad.capstone23.orgs.commands.CreateOrg;
 import edu.kmaooad.capstone23.orgs.dal.Org;
 import edu.kmaooad.capstone23.orgs.dal.OrgsRepository;
