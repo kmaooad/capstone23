@@ -24,7 +24,15 @@ public class Proffesor {
     public Set<ObjectId> activities;
     private Set<ObjectId> groups;
 
+    public JobPreference preference;
+
+
+    public String lastName;
+
+    public String email;
+
     public Proffesor() {
+        this.activities = new HashSet<>();
         this.activities = new HashSet<>(1);
         this.groups = new HashSet<>(1);
     }
