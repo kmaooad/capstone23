@@ -4,6 +4,7 @@ import edu.kmaooad.capstone23.competences.dal.Skill;
 import edu.kmaooad.capstone23.competences.dal.SkillsRepository;
 import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -22,11 +23,6 @@ public class SkillServiceImpl implements SkillService{
             throw new IllegalArgumentException("Parent has unknown id");
         skillsRepository.persist(skill);
         return skillsRepository.insert(skill);
-    }
-
-    @Override
-    public Optional<Skill> findByIdOptional(ObjectId id) {
-        return skillsRepository.findByIdOptional(id);
     }
 
     @Override
