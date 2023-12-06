@@ -19,7 +19,7 @@ public class DeleteGroupHandler implements CommandHandler<DeleteGroup, GroupDele
     private GroupService repository;
 
     public Result<GroupDeleted> handle(DeleteGroup command) {
-        if(!ObjectId.isValid(command.getId()))
+        if (!ObjectId.isValid(command.getId()))
             return new Result<>(ErrorCode.VALIDATION_FAILED, "Object Id is invalid");
 
         Group group = repository.findById(command.getId());
