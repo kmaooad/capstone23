@@ -3,6 +3,8 @@ package edu.kmaooad.capstone23.users.mocks;
 import edu.kmaooad.capstone23.common.Mocks;
 import edu.kmaooad.capstone23.users.dal.entities.User;
 
+import java.util.ArrayList;
+
 public class UserMocks extends Mocks {
     public static User validUser() {
         User user = new User();
@@ -10,6 +12,8 @@ public class UserMocks extends Mocks {
         user.firstName = "John";
         user.lastName = "Doe";
         user.email = mockValidEmail();
+        user.phoneNumber = "0123456789";
+        user.notificationTypes = new ArrayList<>();
 
         return user;
     }

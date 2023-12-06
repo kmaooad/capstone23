@@ -1,0 +1,12 @@
+package edu.kmaooad.capstone23.notifications.models;
+
+public enum Event {
+    DEPARTMENT_CREATED,
+    DEPARTMENT_UPDATED,
+    DEPARTMENT_DELETED,
+    ORGANIZATION_CREATED,
+    ORGANIZATION_UPDATED,
+    ORGANIZATION_DELETED,
+    MEMBER_CREATED,
+    USER_CREATED,
+}
