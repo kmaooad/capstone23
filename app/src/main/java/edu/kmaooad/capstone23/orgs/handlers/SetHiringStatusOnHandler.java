@@ -8,6 +8,7 @@ import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.orgs.commands.SetHiringStatusOn;
+import edu.kmaooad.capstone23.orgs.dal.HiringStatus;
 import edu.kmaooad.capstone23.orgs.dal.Org;
 import edu.kmaooad.capstone23.orgs.dal.OrgsRepository;
 import edu.kmaooad.capstone23.orgs.events.HiringStatusSettedOn;
@@ -22,7 +23,7 @@ public class SetHiringStatusOnHandler implements CommandHandler<SetHiringStatusO
     @Inject
     IsBannedHandler isBannedHandler;
 
-    private final String hiringStatusOn = "We are hiring";
+    private final HiringStatus hiringStatusOn = HiringStatus.HIRING;
 
 
     public Result<HiringStatusSettedOn> handle(SetHiringStatusOn command) {

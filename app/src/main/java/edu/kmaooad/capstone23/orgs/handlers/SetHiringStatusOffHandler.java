@@ -6,6 +6,7 @@ import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.jobs.dal.Job;
 import edu.kmaooad.capstone23.jobs.dal.JobRepository;
 import edu.kmaooad.capstone23.orgs.commands.SetHiringStatusOff;
+import edu.kmaooad.capstone23.orgs.dal.HiringStatus;
 import edu.kmaooad.capstone23.orgs.dal.Org;
 import edu.kmaooad.capstone23.orgs.dal.OrgsRepository;
 import edu.kmaooad.capstone23.orgs.events.HiringStatusSettedOff;
@@ -22,7 +23,7 @@ public class SetHiringStatusOffHandler implements CommandHandler<SetHiringStatus
     private JobRepository jobRepository;
 
 
-    private final String hiringStatusOff = "Off";
+    private final HiringStatus hiringStatusOff = HiringStatus.NOT_HIRING;
 
 
     public Result<HiringStatusSettedOff> handle(SetHiringStatusOff command) {

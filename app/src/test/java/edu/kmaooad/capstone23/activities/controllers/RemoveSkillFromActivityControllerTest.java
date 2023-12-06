@@ -3,7 +3,11 @@ package edu.kmaooad.capstone23.activities.controllers;
 
 import edu.kmaooad.capstone23.activities.dal.ExtracurricularActivity;
 import edu.kmaooad.capstone23.activities.dal.ExtracurricularActivityRepository;
-import edu.kmaooad.capstone23.competences.dal.Skill;
+import edu.kmaooad.capstone23.competences.commands.CreateSkill;
+import edu.kmaooad.capstone23.competences.commands.DeleteSkill;
+import edu.kmaooad.capstone23.competences.events.SkillCreated;
+import edu.kmaooad.capstone23.competences.handlers.CreateSkillHandler;
+import edu.kmaooad.capstone23.competences.handlers.DeleteSkillHandler;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
@@ -22,17 +26,29 @@ public class RemoveSkillFromActivityControllerTest {
 
     @Inject
     private ExtracurricularActivityRepository activityRepository;
-  
-    private ExtracurricularActivity activity;
+
+    @Inject
+    CreateSkillHandler addSkillHandler;
+
+    @Inject
+    DeleteSkillHandler deleteSkillHandler;
 
     private ObjectId activityId;
     private ObjectId skillId;
 
     @BeforeEach
     void setUp() {
-        Skill skill = new Skill();
-        skill.name = "Sociable";
-        skillId = skill.id;
+        if (skillId != null) {
+            DeleteSkill deleteSkill = new DeleteSkill();
+            deleteSkill.setId(skillId);
+            deleteSkillHandler.handle(deleteSkill);
+        }
+
+        CreateSkill createSkill = new CreateSkill();
+        createSkill.setSkillName("Sociable");
+        SkillCreated skillCreated = addSkillHandler.handle(createSkill).getValue();
+
+        skillId = skillCreated.getSkill();
 
         ExtracurricularActivity activity = new ExtracurricularActivity();
         activity.extracurricularActivityName = "SoftSkills";
