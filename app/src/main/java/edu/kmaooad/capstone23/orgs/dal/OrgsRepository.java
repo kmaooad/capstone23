@@ -3,10 +3,9 @@ package edu.kmaooad.capstone23.orgs.dal;
 import io.quarkus.mongodb.panache.PanacheMongoRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import org.bson.types.ObjectId;
-
 import java.util.Optional;
-
 import java.util.List;
+
 
 @ApplicationScoped
 public class OrgsRepository implements PanacheMongoRepository<Org> {
@@ -16,11 +15,15 @@ public class OrgsRepository implements PanacheMongoRepository<Org> {
     }
 
     public Org findById(String id) {
-        return find("id", id).firstResult();
+       try {
+              return findById(new ObjectId(id));
+         } catch (IllegalArgumentException e) {
+              return null;
+       }
     }
   
-    public Org findByEmailDomain(String id) {
-        return find("emailDomain", id).firstResult();
+    public Optional<Org> findByEmailDomainOptional(String email) {
+        return find("emailDomain", email).firstResultOptional();
     }
 
     public Optional<Org> findByIdOptional(String id) {

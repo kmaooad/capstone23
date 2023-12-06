@@ -5,7 +5,6 @@ import edu.kmaooad.capstone23.competences.commands.CreateProj;
 import edu.kmaooad.capstone23.competences.events.ProjCreated;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
-import org.bson.types.ObjectId;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -43,11 +42,11 @@ class CreateProjectHandlerTest {
         command.setName("SomeProject");
         command.setDescription("Some description of some project");
         command.setSkills(List.of(
-                new ObjectId("5f7e47fc8e1f7112d73c92a1")
+                "5f7e47fc8e1f7112d73c92a1"
         ));
 
         command.setSkillSets(List.of(
-                new ObjectId("1a4cd132b123a1aa3bc2d142")
+                "1a4cd132b123a1aa3bc2d142"
         ));
 
         return command;

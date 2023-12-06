@@ -5,8 +5,8 @@ import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.departments.commands.CreateDepartment;
 import edu.kmaooad.capstone23.departments.dal.Department;
-import edu.kmaooad.capstone23.departments.dal.DepartmentsRepository;
 import edu.kmaooad.capstone23.departments.events.DepartmentCreated;
+import edu.kmaooad.capstone23.departments.services.DepartmentService;
 import edu.kmaooad.capstone23.orgs.dal.Org;
 import edu.kmaooad.capstone23.orgs.dal.OrgsRepository;
 import jakarta.enterprise.context.RequestScoped;
@@ -16,23 +16,17 @@ import jakarta.inject.Inject;
 public class CreateDepartmentHandler implements CommandHandler<CreateDepartment, DepartmentCreated> {
 
     @Inject
-    private DepartmentsRepository repository;
+    private DepartmentService service;
     @Inject
     private OrgsRepository orgsRepository;
 
     public Result<DepartmentCreated> handle(CreateDepartment command) {
-
-        Department department = new Department();
-        department.name = command.getName();
-        department.description = command.getDescription();
-
         Org parent = orgsRepository.findByName(command.getParent());
         if (parent == null) {
             return new Result<>(ErrorCode.EXCEPTION, "Parent not found");
         }
-        department.parent = parent.name;
 
-        repository.insert(department);
+        Department department = service.createDepartment(command.getName(), command.getDescription(), parent.name);
 
         DepartmentCreated result = new DepartmentCreated(department.id.toString());
 

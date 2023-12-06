@@ -1,11 +1,11 @@
 package edu.kmaooad.capstone23.ban.handlers;
 
+import edu.kmaooad.capstone23.ban.service.EntityBanService;
 import org.bson.types.ObjectId;
 
 import edu.kmaooad.capstone23.ban.commands.BanEntity;
 import edu.kmaooad.capstone23.ban.dal.BannedEntityType;
 import edu.kmaooad.capstone23.ban.dal.EntityBan;
-import edu.kmaooad.capstone23.ban.dal.EntityBanRepository;
 import edu.kmaooad.capstone23.ban.events.EntityBanned;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
@@ -20,7 +20,7 @@ import jakarta.inject.Inject;
 public class BanEntityHandler implements CommandHandler<BanEntity, EntityBanned> {
 
     @Inject
-    EntityBanRepository entityBanRepository;
+    EntityBanService entityBanService;
 
     @Inject
     OrgsRepository orgsRepository;
@@ -39,7 +39,7 @@ public class BanEntityHandler implements CommandHandler<BanEntity, EntityBanned>
             return new Result<>(ErrorCode.VALIDATION_FAILED, "Entity doesn't exist");
         }
 
-        var previousBan = entityBanRepository.findForEntity(entityType, command.getEntityId());
+        var previousBan = entityBanService.findForEntity(entityType.name(), command.getEntityId().toString());
         if (previousBan.isPresent()) {
             return new Result<>(new EntityBanned(previousBan.get().id, entityType));
         }
@@ -48,7 +48,7 @@ public class BanEntityHandler implements CommandHandler<BanEntity, EntityBanned>
         newBan.reason = command.getReason();
         newBan.entityId = command.getEntityId();
         newBan.entityType = entityType;
-        entityBanRepository.insert(newBan);
+        entityBanService.insert(newBan);
         return new Result<>(new EntityBanned(newBan.id, entityType));
     }
 

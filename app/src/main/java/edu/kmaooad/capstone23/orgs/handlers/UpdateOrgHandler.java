@@ -1,5 +1,8 @@
 package edu.kmaooad.capstone23.orgs.handlers;
 
+import edu.kmaooad.capstone23.ban.commands.IsEntityBannedV2;
+import edu.kmaooad.capstone23.ban.dal.BannedEntityType;
+import edu.kmaooad.capstone23.ban.service.EntityBanService;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
@@ -19,13 +22,19 @@ public class UpdateOrgHandler implements CommandHandler<UpdateOrg, OrgUpdated> {
     @Inject
     private OrgsRepository repository;
 
-    // demonstrative commit
+
+    @Inject
+    EntityBanService entityBanService;
+
 
     public Result<OrgUpdated> handle(UpdateOrg command) {
         Optional<Org> existingOrg = this.repository.findByIdOptional(new ObjectId(command.orgId));
 
         if (existingOrg.isEmpty()) {
             return new Result<>(ErrorCode.EXCEPTION, "Org with given id not found");
+        }
+        if (entityBanService.findForEntity(IsEntityBannedV2.ORGANIZATION_BAN_ENTITY_TYPE, existingOrg.get().id.toString()).isPresent()) {
+            return new Result<>(ErrorCode.EXCEPTION, "Org is banned");
         }
 
         Org updatedOrg = this.updateEntity(existingOrg.get(), command);
