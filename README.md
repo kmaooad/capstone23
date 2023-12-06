@@ -98,6 +98,7 @@ Each UoW consists of:
     - Mass create/update courses
   - Manage extracurricular activities
     - Create/update/delete any extra activities (e.g. projects, hackathons, challenges etc.)
+    - Find extracurricular activities by tags
   - Manage courses
     - Manually create/update/delete courses
   - Assign competences to activities
