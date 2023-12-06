@@ -4,7 +4,6 @@ import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.proffesors.commands.AssignActivity;
 import edu.kmaooad.capstone23.proffesors.commands.CreateProffesor;
-import edu.kmaooad.capstone23.proffesors.dal.ProffesorsRepository;
 import edu.kmaooad.capstone23.proffesors.events.ActivityAssigned;
 import edu.kmaooad.capstone23.proffesors.events.ProffesorCreated;
 import io.quarkus.test.junit.QuarkusTest;
@@ -13,8 +12,6 @@ import org.bson.types.ObjectId;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @QuarkusTest
 class AssignActivityHandlerTest {
