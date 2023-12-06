@@ -1,5 +1,7 @@
 package edu.kmaooad.capstone23.departments.handlers;
 
+import edu.kmaooad.capstone23.ban.commands.IsEntityBannedV2;
+import edu.kmaooad.capstone23.ban.service.EntityBanService;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
@@ -15,6 +17,9 @@ public class SetHiringStatusOnHandler implements CommandHandler<SetHiringStatusO
     @Inject
     private DepartmentsRepository departmentsRepository;
 
+    @Inject
+    private EntityBanService banService;
+
     private final String hiringStatusOn = "We are hiring";
 
 
@@ -27,12 +32,17 @@ public class SetHiringStatusOnHandler implements CommandHandler<SetHiringStatusO
             return new Result<>(ErrorCode.VALIDATION_FAILED, "Department with such Id doesn't exist");
         }
 
+        var ban = banService.findForEntity(IsEntityBannedV2.DEPARTMENT_BAN_ENTITY_TYPE, department.id.toString());
+        if (ban.isPresent()) {
+            return new Result<>(ErrorCode.VALIDATION_FAILED, "Department is banned");
+        }
+
         department.hiringStatus = hiringStatusOn;
 
         departmentsRepository.update(department);
 
         HiringStatusSettedOn result = new HiringStatusSettedOn(department.id.toString());
 
-        return new Result(result);
+        return new Result<>(result);
     }
 }

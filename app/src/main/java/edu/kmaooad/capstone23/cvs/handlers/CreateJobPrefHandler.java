@@ -5,7 +5,7 @@ import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.cvs.commands.CreateJobPref;
 import edu.kmaooad.capstone23.cvs.dal.CV;
-import edu.kmaooad.capstone23.cvs.dal.CVRepository;
+import edu.kmaooad.capstone23.cvs.services.CVService;
 import edu.kmaooad.capstone23.cvs.dal.JobPreference;
 import edu.kmaooad.capstone23.cvs.events.JobPrefCreated;
 import jakarta.enterprise.context.RequestScoped;
@@ -15,7 +15,7 @@ import jakarta.inject.Inject;
 public class CreateJobPrefHandler implements CommandHandler<CreateJobPref, JobPrefCreated> {
 
     @Inject
-    CVRepository cvRepository;
+    CVService cvService;
 
     @Override
     public Result<JobPrefCreated> handle(CreateJobPref command) {
@@ -28,13 +28,27 @@ public class CreateJobPrefHandler implements CommandHandler<CreateJobPref, JobPr
         } else if(command.getLocation().length()<1 || command.getLocation().length()>100){
             return new Result<>(ErrorCode.VALIDATION_FAILED, "Invalid size of location");
         }
+
+
+        if (command.getIndustry() == null ) {
+            return new Result<>(ErrorCode.VALIDATION_FAILED, "Industry cannot be null");
+        } else if (command.getIndustry() != null && command.getIndustry().isBlank()) {
+            return new Result<>(ErrorCode.VALIDATION_FAILED, "Industry cannot be blank");
+        } else if(command.getIndustry().length()<1 || command.getIndustry().length()>100){
+            return new Result<>(ErrorCode.VALIDATION_FAILED, "Invalid size of industry");
+        }
+
+        if (command.getCategory() == null ) {
+            return new Result<>(ErrorCode.VALIDATION_FAILED, "Category cannot be null");
+
+        }
         pref.industry = command.getIndustry();
         pref.location = command.getLocation();
         pref.category = command.getCategory();
 
-        CV cv = cvRepository.findById(command.getCvId());
+        CV cv = cvService.findById(command.getCvId());
         cv.preference = pref;
-        cvRepository.update(cv);
+        cvService.update(cv);
 
         JobPrefCreated result = new JobPrefCreated(cv.id);
         return new Result<>(result);

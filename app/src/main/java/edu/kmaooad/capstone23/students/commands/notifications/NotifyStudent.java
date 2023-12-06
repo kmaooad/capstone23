@@ -1,5 +1,6 @@
 package edu.kmaooad.capstone23.students.commands.notifications;
 
+import edu.kmaooad.capstone23.students.dal.Student;
 import jakarta.validation.constraints.Email;
 import org.bson.types.ObjectId;
 
@@ -31,6 +32,18 @@ public abstract class NotifyStudent {
 
         public String getFirstName() {
             return firstName;
+        }
+    }
+
+    public static class Update extends NotifyStudent {
+        public Student getStudent() {
+            return student;
+        }
+
+        private Student student;
+        public Update(Student student) {
+            super(student.id, student.email);
+            this.student = student;
         }
     }
 }
