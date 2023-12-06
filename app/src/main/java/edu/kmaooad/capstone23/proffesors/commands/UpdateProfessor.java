@@ -60,5 +60,4 @@ public class UpdateProfessor {
     public void setProfessorId(ObjectId professorId) {
         this.professorId = professorId;
     }
-
 }

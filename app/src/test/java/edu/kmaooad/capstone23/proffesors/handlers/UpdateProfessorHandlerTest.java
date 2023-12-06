@@ -101,4 +101,5 @@ class UpdateProfessorHandlerTest {
         assertFalse(updateProfessor.getEmail().contains("@"));
     }
 
+
 }

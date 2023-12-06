@@ -46,6 +46,7 @@ class DeleteProfessorHandlerTest {
         Assertions.assertNotNull(professorDeleted.getValue().getProfessorId());
     }
 
+
     @Test
     @DisplayName("Delete professor handler: \"deleted\" field in result")
     void valid() {
