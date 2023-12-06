@@ -9,6 +9,7 @@ import edu.kmaooad.capstone23.cvs.events.CVCreated;
 import edu.kmaooad.capstone23.cvs.services.CVService;
 import edu.kmaooad.capstone23.students.dal.Student;
 import edu.kmaooad.capstone23.students.dal.StudentRepository;
+import edu.kmaooad.capstone23.students.services.StudentService;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
@@ -22,7 +23,7 @@ public class CreateCVHandler implements CommandHandler<CreateCV, CVCreated> {
     CVService cvService;
 
     @Inject
-    StudentRepository studentRepository;
+    StudentService studentService;
 
     @Override
     public Result<CVCreated> handle(CreateCV command) {
@@ -48,7 +49,7 @@ public class CreateCVHandler implements CommandHandler<CreateCV, CVCreated> {
         if (command.getStudentId() != null) {
             if (!ObjectId.isValid(command.getStudentId()))
                 return new Result<>(ErrorCode.VALIDATION_FAILED, "invalid student id");
-            Student st = studentRepository.findById(new ObjectId(command.getStudentId()));
+            Student st = studentService.findById(new ObjectId(command.getStudentId()));
             if (st == null)
                 return new Result<>(ErrorCode.NOT_FOUND, "student with id " + command.getStudentId() + " not found");
 
