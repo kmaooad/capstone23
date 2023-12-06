@@ -16,9 +16,6 @@ import static edu.kmaooad.capstone23.common.ErrorCode.VALIDATION_FAILED;
 
 @RequestScoped
 public class CreateInvitationLinkHandler implements CommandHandler<CreateInvitationLink, InvitationLinkCreated> {
-
-    @Inject
-    ExpertInvitationRepository repository;
     @Inject
     ExpertService expertService;
     @Inject
@@ -38,7 +35,7 @@ public class CreateInvitationLinkHandler implements CommandHandler<CreateInvitat
             return new Result<>(VALIDATION_FAILED, "Wrong organisation name");
         }
 
-        repository.persist(expertInvitation);
+        expertService.persist(expertInvitation);
         var invitationLink = expertService.createInvitationLink(expertInvitation.id);
         mailService.sendInvitationLink(expertInvitation.email, invitationLink);
         return new Result<>(new InvitationLinkCreated(invitationLink));

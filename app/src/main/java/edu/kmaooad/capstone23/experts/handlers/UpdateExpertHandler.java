@@ -7,6 +7,7 @@ import edu.kmaooad.capstone23.experts.commands.UpdateExpert;
 import edu.kmaooad.capstone23.experts.dal.Expert;
 import edu.kmaooad.capstone23.experts.dal.ExpertsRepository;
 import edu.kmaooad.capstone23.experts.events.ExpertUpdated;
+import edu.kmaooad.capstone23.experts.service.ExpertService;
 import edu.kmaooad.capstone23.orgs.dal.OrgsRepository;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
@@ -16,7 +17,7 @@ import org.bson.types.ObjectId;
 public class UpdateExpertHandler implements CommandHandler<UpdateExpert, ExpertUpdated> {
 
     @Inject
-    private ExpertsRepository expertsRepository;
+    ExpertService expertService;
     @Inject
     private OrgsRepository orgsRepository;
 
@@ -27,7 +28,7 @@ public class UpdateExpertHandler implements CommandHandler<UpdateExpert, ExpertU
         expert.name = command.getExpertName();
         expert.org = orgsRepository.findById(new ObjectId(command.getOrgId()));
         try {
-            var updatedExpert = expertsRepository.modify(expert);
+            var updatedExpert = expertService.modifyExpert(expert);
             return new Result<>(new ExpertUpdated(updatedExpert));
         } catch (IllegalArgumentException e) {
             return new Result<>(ErrorCode.VALIDATION_FAILED, e.getMessage());
