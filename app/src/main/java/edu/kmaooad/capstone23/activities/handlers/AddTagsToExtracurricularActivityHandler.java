@@ -8,7 +8,6 @@ import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.tag.dal.Tag;
-import edu.kmaooad.capstone23.tag.dal.TagRepository;
 import edu.kmaooad.capstone23.tag.services.TagService;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
