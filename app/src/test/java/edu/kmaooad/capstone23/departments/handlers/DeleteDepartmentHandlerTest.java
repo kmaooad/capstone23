@@ -51,6 +51,20 @@ public class DeleteDepartmentHandlerTest {
     }
 
     @Test
+    void notificationSentOnDepartmentDeleted() {
+        DeleteDepartment command = new DeleteDepartment();
+        command.setId(departmentId);
+
+        Result<DepartmentDeleted> result = handler.handle(command);
+
+        Assertions.assertTrue(result.isSuccess());
+        Assertions.assertEquals(departmentId, result.getValue().getId());
+
+        Department deletedDepartment = departmentService.getDepartmentById(departmentId);
+        Assertions.assertNull(deletedDepartment);
+    }
+
+    @Test
     @DisplayName("Delete Department: Handle non-existent department")
     void testHandleWithNonExistentId() {
         String nonexistentId = "64fbb243275c1111167b87a3";

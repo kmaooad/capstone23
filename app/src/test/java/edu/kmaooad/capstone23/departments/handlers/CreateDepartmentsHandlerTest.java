@@ -65,6 +65,25 @@ public class CreateDepartmentsHandlerTest {
     }
 
     @Test
+    void notificationSentOnDepartmentCreated() {
+        String parentOrgName = "NaUKMA";
+        String departmentName = "FI";
+
+        CreateDepartment command = new CreateDepartment();
+        command.setName(departmentName);
+        command.setParent(parentOrgName);
+
+        Result<DepartmentCreated> result = handler.handle(command);
+
+        Assertions.assertTrue(result.isSuccess());
+        Assertions.assertNotNull(result.getValue());
+
+        Department createdDepartment = departmentsRepository.findByName(departmentName);
+        Assertions.assertNotNull(createdDepartment);
+        Assertions.assertEquals(departmentName, createdDepartment.name);
+    }
+
+    @Test
     @DisplayName("Create Departments: Basic error handling when parent is set incorrectly")
     void testCreateWithNonExistentParent() {
         String parentOrgName = "Org to Delete";
