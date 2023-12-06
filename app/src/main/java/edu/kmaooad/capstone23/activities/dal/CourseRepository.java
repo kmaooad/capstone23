@@ -43,7 +43,7 @@ public class CourseRepository implements PanacheMongoRepository<Course> {
     public void bulkDelete(List<Course> courses) {
 
         List<ObjectId> objectIds = courses.stream()
-                .map(id -> new ObjectId(id.toString()))
+                .map(course -> (course.id))
                 .collect(Collectors.toList());
 
         delete("id in ?1", objectIds);
