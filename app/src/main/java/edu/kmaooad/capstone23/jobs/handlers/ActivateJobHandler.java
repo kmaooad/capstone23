@@ -8,6 +8,10 @@ import edu.kmaooad.capstone23.jobs.dal.Job;
 import edu.kmaooad.capstone23.jobs.dal.JobRepository;
 import edu.kmaooad.capstone23.jobs.events.JobActivated;
 import edu.kmaooad.capstone23.jobs.service.JobService;
+import edu.kmaooad.capstone23.notifications.dal.EventType;
+import edu.kmaooad.capstone23.notifications.dal.Notification;
+import edu.kmaooad.capstone23.notifications.dal.NotificationMethod;
+import edu.kmaooad.capstone23.notifications.service.NotificationService;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 
@@ -18,6 +22,8 @@ public class ActivateJobHandler implements CommandHandler<ActivateJob, JobActiva
 
     @Inject
     private JobService jobService;
+    @Inject
+    private NotificationService notificationService;
     @Override
     public Result<JobActivated> handle(ActivateJob activateJobCommand) {
 
@@ -29,6 +35,13 @@ public class ActivateJobHandler implements CommandHandler<ActivateJob, JobActiva
         Job j = job.get();
         j.active = true;
         jobService.update(j);
+
+        Notification notification = new Notification();
+        notification.notificationMethod = NotificationMethod.EMAIL;
+        notification.eventType = EventType.ACTIVATE_JOB;
+        notificationService.insert(notification);
+
+        notificationService.sendNotifications(notification,"Job "+ job.get().id + " successfully activated ");
 
         return new Result<>(new JobActivated(activateJobCommand.getJobId()));
     }
