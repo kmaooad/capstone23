@@ -3,14 +3,12 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
-import org.bson.types.ObjectId;
 
 import java.util.List;
 
-public class UpdateProj {
-
+public class UpdateProject {
     @NotNull
-    private ObjectId id;
+    private String id;
 
     @NotBlank
     @Size(min = 3, max = 30)
@@ -19,15 +17,15 @@ public class UpdateProj {
 
     private String description;
 
-    private List<ObjectId> skills;
+    private List<String> skills;
 
-    private List<ObjectId> skillSets;
+    private List<String> skillSets;
 
-    public ObjectId getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(ObjectId id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -47,19 +45,19 @@ public class UpdateProj {
         this.description = description;
     }
 
-    public List<ObjectId> getSkills() {
+    public List<String> getSkills() {
         return skills;
     }
 
-    public void setSkills(List<ObjectId> skills) {
+    public void setSkills(List<String> skills) {
         this.skills = skills;
     }
 
-    public List<ObjectId> getSkillSets() {
+    public List<String> getSkillSets() {
         return skillSets;
     }
 
-    public void setSkillSets(List<ObjectId> skillSets) {
+    public void setSkillSets(List<String> skillSets) {
         this.skillSets = skillSets;
     }
 }

@@ -1,13 +1,11 @@
 package edu.kmaooad.capstone23.activities.handlers;
 
 import edu.kmaooad.capstone23.activities.commands.AddSkillToActivity;
-import edu.kmaooad.capstone23.activities.dal.ExtracurricularActivityRepository;
 import edu.kmaooad.capstone23.activities.events.SkillToActivityAdded;
+import edu.kmaooad.capstone23.activities.services.ExtracurricularActivityService;
 import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
-import edu.kmaooad.capstone23.competences.dal.SkillsRepository;
-import edu.kmaooad.capstone23.competences.events.SkillToSkillSetAdded;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 
@@ -16,17 +14,17 @@ import java.util.ArrayList;
 public class AssignSkillsToActivitiesHandler implements CommandHandler<AddSkillToActivity, SkillToActivityAdded> {
 
     @Inject
-    private ExtracurricularActivityRepository activityRepository;
+    private ExtracurricularActivityService extracurricularActivityService;
 
     @Inject
-    private SkillsRepository skillsRepository;
+    private MongoSkillsRepository skillsRepository;
 
 
     @Override
     public Result<SkillToActivityAdded> handle(AddSkillToActivity command) {
 
         var skill = skillsRepository.findById(command.getSkillId().toString());
-        var activity = activityRepository.findById(command.getActivityId().toString());
+        var activity = extracurricularActivityService.findById(command.getActivityId().toString());
 
         if (skill.isEmpty())
             return new Result<>(ErrorCode.EXCEPTION, "Has not existing skill");
@@ -47,7 +45,7 @@ public class AssignSkillsToActivitiesHandler implements CommandHandler<AddSkillT
             activity.skillIds = new ArrayList<>();
         }
         activity.skillIds.add(command.getSkillId());
-        activityRepository.updateActivity(activity);
+        extracurricularActivityService.update(activity);
 
         SkillToActivityAdded result = new SkillToActivityAdded(activity);
 

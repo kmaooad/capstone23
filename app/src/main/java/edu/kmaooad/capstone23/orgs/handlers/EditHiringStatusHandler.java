@@ -4,48 +4,40 @@ import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.orgs.commands.SetHiringStatus;
-import edu.kmaooad.capstone23.orgs.dal.Job;
-import edu.kmaooad.capstone23.orgs.dal.JobsRepository;
-import edu.kmaooad.capstone23.orgs.dal.Org;
-import edu.kmaooad.capstone23.orgs.dal.OrgsRepository;
+import edu.kmaooad.capstone23.orgs.dal.*;
 import edu.kmaooad.capstone23.orgs.events.HiringStatusChanged;
+import edu.kmaooad.capstone23.orgs.services.OrgService;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
-import org.bson.types.ObjectId;
 
 import java.util.List;
 
 @RequestScoped
 public class EditHiringStatusHandler implements CommandHandler<SetHiringStatus, HiringStatusChanged> {
+
     @Inject
-    private OrgsRepository orgsRepository;
-    @Inject
-    private JobsRepository jobsRepository;
+    private OrgService orgService;
 
     public Result<HiringStatusChanged> handle(SetHiringStatus command) {
-        ObjectId objId = new ObjectId(command.getOrgId());
 
-        Org org = orgsRepository.findById(objId);
+        Org org = orgService.getOrgById(command.getOrgId());
 
         // Check if org is null
         if (org == null) {
             return new Result<>(ErrorCode.ENTITY_NOT_FOUND, "Organization not found");
         }
 
-        org.hiringStatus = command.getHiringStatus();
-        orgsRepository.update(org);
+        org.hiringStatus = command.getHiringStatus().toString();
+        orgService.updateOrg(org);
 
-        List<Job> jobs = jobsRepository.findByOrgId(command.getOrgId());
+        List<Job> jobs = orgService.findJobsByOrgId(command.getOrgId());
 
         for (Job job: jobs) {
             job.isActive = false;
-            jobsRepository.update(job);
+            orgService.updateJob(job);
         }
-
-        HiringStatusChanged result = new HiringStatusChanged(
-                org.hiringStatus,
-                org.id.toString()
-        );
+      
+        HiringStatusChanged result = new HiringStatusChanged(command.getHiringStatus(), org.id.toString());
 
         return new Result<>(result);
     }

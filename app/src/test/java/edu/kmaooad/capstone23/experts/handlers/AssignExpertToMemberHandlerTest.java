@@ -8,6 +8,7 @@ import edu.kmaooad.capstone23.experts.events.ExpertAssigned;
 import edu.kmaooad.capstone23.members.commands.CreateBasicMember;
 import edu.kmaooad.capstone23.members.events.BasicMemberCreated;
 import edu.kmaooad.capstone23.orgs.commands.CreateOrg;
+import edu.kmaooad.capstone23.orgs.drivers.OrgDriver;
 import edu.kmaooad.capstone23.orgs.events.OrgCreated;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
@@ -25,6 +26,9 @@ public class AssignExpertToMemberHandlerTest {
 
     @Inject
     CommandHandler<AssignExpertToMember, ExpertAssigned> assignedCommandHandler;
+
+    @Inject
+    OrgDriver orgDriver;
 
     @Inject
     CommandHandler<CreateBasicMember, BasicMemberCreated> memberCreatedCommandHandler;
@@ -62,6 +66,7 @@ public class AssignExpertToMemberHandlerTest {
 
 
     private ObjectId createTestMember() {
+        orgDriver.createOrg();
         CreateOrg orgCommand = new CreateOrg();
         orgCommand.setOrgName("Super Duper Create Team");
         orgCommand.industry = "Some random industry";
@@ -72,7 +77,7 @@ public class AssignExpertToMemberHandlerTest {
         memberCommand.setLastName("Last");
         memberCommand.setEmail(randomEmail());
         memberCommand.setIsExpert("false");
-        memberCommand.setOrgId(new ObjectId(orgHandler.handle(orgCommand).getValue().getOrgId()));
+        memberCommand.setOrgId(orgHandler.handle(orgCommand).getValue().getOrgId());
 
         return new ObjectId(memberCreatedCommandHandler.handle(memberCommand).getValue().getMemberId());
     }
@@ -87,7 +92,7 @@ public class AssignExpertToMemberHandlerTest {
         memberCommand.setFirstName("First");
         memberCommand.setLastName("Last");
         memberCommand.setEmail(randomEmail());
-        memberCommand.setOrgId(new ObjectId(orgHandler.handle(orgCommand).getValue().getOrgId()));
+        memberCommand.setOrgId(orgHandler.handle(orgCommand).getValue().getOrgId());
         memberCommand.setIsExpert("true");
 
         return new ObjectId(memberCreatedCommandHandler.handle(memberCommand).getValue().getMemberId());

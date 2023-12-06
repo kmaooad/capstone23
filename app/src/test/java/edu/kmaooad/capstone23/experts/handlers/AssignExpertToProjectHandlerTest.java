@@ -4,7 +4,7 @@ import edu.kmaooad.capstone23.common.CommandHandler;
 import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.competences.commands.CreateProj;
-import edu.kmaooad.capstone23.competences.dal.ProjsRepository;
+import edu.kmaooad.capstone23.competences.dal.MongoProjectRepository;
 import edu.kmaooad.capstone23.competences.events.ProjCreated;
 import edu.kmaooad.capstone23.experts.commands.AssignExpertToProject;
 import edu.kmaooad.capstone23.experts.commands.CreateExpert;
@@ -33,7 +33,7 @@ public class AssignExpertToProjectHandlerTest {
     @Inject
     OrgsRepository orgsRepository;
     @Inject
-    ProjsRepository projsRepository;
+    MongoProjectRepository projsRepository;
     @Inject
     ExpertsRepository expertsRepository;
 
@@ -139,11 +139,11 @@ public class AssignExpertToProjectHandlerTest {
         command.setName("SomeProject");
         command.setDescription("Some description of some project");
         command.setSkills(List.of(
-                new ObjectId("5f7e47fc8e1f7112d73c92a1")
+                "5f7e47fc8e1f7112d73c92a1"
         ));
 
         command.setSkillSets(List.of(
-                new ObjectId("1a4cd132b123a1aa3bc2d142")
+                "1a4cd132b123a1aa3bc2d142"
         ));
 
         return new ObjectId(projCreatedCommandHandler.handle(command).getValue().projId());

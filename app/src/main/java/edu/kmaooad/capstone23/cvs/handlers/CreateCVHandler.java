@@ -5,13 +5,12 @@ import edu.kmaooad.capstone23.common.ErrorCode;
 import edu.kmaooad.capstone23.common.Result;
 import edu.kmaooad.capstone23.cvs.commands.CreateCV;
 import edu.kmaooad.capstone23.cvs.dal.CV;
-import edu.kmaooad.capstone23.cvs.dal.CVRepository;
 import edu.kmaooad.capstone23.cvs.events.CVCreated;
+import edu.kmaooad.capstone23.cvs.services.CVService;
 import edu.kmaooad.capstone23.students.dal.Student;
 import edu.kmaooad.capstone23.students.dal.StudentRepository;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
-import jakarta.validation.constraints.NotNull;
 import org.bson.types.ObjectId;
 
 import java.time.LocalDateTime;
@@ -20,7 +19,7 @@ import java.time.LocalDateTime;
 public class CreateCVHandler implements CommandHandler<CreateCV, CVCreated> {
 
     @Inject
-    CVRepository cvRepository;
+    CVService cvService;
 
     @Inject
     StudentRepository studentRepository;
@@ -63,7 +62,7 @@ public class CreateCVHandler implements CommandHandler<CreateCV, CVCreated> {
         cv.autoAddCompetences = command.isAutoAddCompetences();
         cv.studentId = command.getStudentId();
 
-        cvRepository.insert(cv);
+        cvService.create(cv);
 
         CVCreated result = new CVCreated(cv.id);
         return new Result<>(result);
