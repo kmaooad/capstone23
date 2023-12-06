@@ -63,7 +63,7 @@ public class JobServiceImpl implements JobService{
         var competenceObjId = new ObjectId(competenceId);
 
         Optional<Project> project = projectService.findByIdOptional(competenceObjId);
-        Optional<Skill> skill = skillService.findByIdOptional(competenceObjId);
+        Optional<Skill> skill = skillService.findById(competenceObjId);
         Optional<Topic> topic = topicService.findByIdOptional(competenceObjId);
 
         return project.isEmpty() && skill.isEmpty() && topic.isEmpty();
