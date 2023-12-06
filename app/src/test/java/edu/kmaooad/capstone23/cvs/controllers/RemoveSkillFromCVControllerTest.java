@@ -1,7 +1,7 @@
 package edu.kmaooad.capstone23.cvs.controllers;
 
 import edu.kmaooad.capstone23.competences.dal.Skill;
-import edu.kmaooad.capstone23.competences.dal.SkillsRepository;
+import edu.kmaooad.capstone23.competences.dal.MongoSkillsRepository;
 import edu.kmaooad.capstone23.cvs.dal.CV;
 import edu.kmaooad.capstone23.cvs.dal.CVRepository;
 import io.quarkus.test.junit.QuarkusTest;
@@ -19,7 +19,7 @@ class RemoveSkillFromCVControllerTest {
     @Inject
     CVRepository cvRepository;
     @Inject
-    SkillsRepository skillsRepository;
+    MongoSkillsRepository skillsRepository;
 
     Map<String, String> validValues;
     Map<String, String> invalidValues;
@@ -53,11 +53,11 @@ class RemoveSkillFromCVControllerTest {
         validCv1.autoAddCompetences = false;
         validSkill1.name = "C++";
 
-        cvRepository.insert(validCv0);
+        cvRepository.persist(validCv0);
         skillsRepository.insert(validSkill0);
         validValues.put(validCv0.id.toString(), validSkill0.id.toString());
 
-        cvRepository.insert(validCv1);
+        cvRepository.persist(validCv1);
         skillsRepository.insert(validSkill1);
         validValues.put(validCv1.id.toString(), validSkill1.id.toString());
     }

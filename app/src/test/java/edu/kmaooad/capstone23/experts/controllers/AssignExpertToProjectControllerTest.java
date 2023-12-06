@@ -1,13 +1,8 @@
 package edu.kmaooad.capstone23.experts.controllers;
 
-import edu.kmaooad.capstone23.competences.dal.ProjsRepository;
-import edu.kmaooad.capstone23.departments.dal.Department;
-import edu.kmaooad.capstone23.departments.dal.DepartmentsRepository;
+import edu.kmaooad.capstone23.competences.dal.MongoProjectRepository;
 import edu.kmaooad.capstone23.experts.dal.Expert;
 import edu.kmaooad.capstone23.experts.dal.ExpertsRepository;
-import edu.kmaooad.capstone23.members.dal.Member;
-import edu.kmaooad.capstone23.members.dal.MembersRepository;
-import edu.kmaooad.capstone23.orgs.dal.Org;
 import edu.kmaooad.capstone23.orgs.dal.OrgsRepository;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
@@ -22,88 +17,64 @@ import static io.restassured.RestAssured.given;
 public class AssignExpertToProjectControllerTest {
 
     private static final String ORG_NAME = "Random Org";
+    private static final String BASE_PATH = "/experts/assign_expert_to_project";
+    private static final String CONTENT_TYPE = "application/json";
 
     private ObjectId project;
+    private ObjectId expert;
+
     @Inject
-    ProjsRepository projsRepository;
+    MongoProjectRepository projectRepository;
     @Inject
     OrgsRepository orgsRepository;
     @Inject
     ExpertsRepository expertsRepository;
 
-
     @BeforeEach
     public void setUp() {
         createTestOrg();
-
         project = createTestProject();
+        expert = createTestExpert();
     }
 
     @Test
     @DisplayName("Assign Expert to project: Basic")
-    public void testAssignExpertToProject() {
-        Map<String, Object> jsonAsMap = new HashMap<>();
-
-        jsonAsMap.put("expertId", createTestExpert().toString());
-        jsonAsMap.put("projectId", createTestProject().toString());
-
-        given()
-                .contentType("application/json")
-                .body(jsonAsMap)
-                .when()
-                .post("/experts/assign_expert_to_project")
-                .then()
-                .statusCode(200);
+    public void whenAssigningExpertToProject_thenStatus200() {
+        assignExpertToProject(expert.toString(), project.toString(), 200);
     }
 
-   @Test
-   @DisplayName("Invalid ProjectId")
-   public void testInvalidProjectId() {
-        Map<String, Object> jsonAsMap = new HashMap<>();
+    @Test
+    @DisplayName("Invalid ProjectId")
+    public void whenAssigningExpertToProjectWithInvalidProjectId_thenStatus400() {
+        assignExpertToProject(expert.toString(), "Random wrong id", 400);
+    }
 
-        jsonAsMap.put("expertId", createTestExpert().toString());
-        jsonAsMap.put("projectId", "Random wrong id");
-        given()
-                .contentType("application/json")
-                .body(jsonAsMap)
-                .when()
-                .post("/experts/assign_expert_to_project")
-                .then()
-            .statusCode(400);
-     }
-  
     @Test
     @DisplayName("Invalid ExpertId")
-    public void testInvalidExpertId() {
-        Map<String, Object> jsonAsMap = new HashMap<>();
-
-        jsonAsMap.put("expertId", "Invalid expert id");
-        jsonAsMap.put("projectId", createTestProject().toString());
-
-        given()
-                .contentType("application/json")
-                .body(jsonAsMap)
-                .when()
-                .post("/experts/assign_expert_to_project")
-                .then()
-                .statusCode(400);
-   }
+    public void whenAssigningExpertToProjectWithInvalidExpertId_thenStatus400() {
+        assignExpertToProject("Invalid expert id", project.toString(), 400);
+    }
 
     @Test
-    @DisplayName("Assign Expert to project that he/she already have")
-    public void testExpertAssignedToProjAlready() {
-        Map<String, Object> jsonAsMap = new HashMap<>();
+    @DisplayName("Expert already assigned to project")
+    public void whenAssigningAlreadyAssignedExpertToProject_thenStatus400() {
+        ObjectId expertWithProject = createTestExpertWithProject();
+        assignExpertToProject(expertWithProject.toString(), project.toString(), 400);
+    }
 
-        jsonAsMap.put("expertId", createTestExpertWithProject().toString());
-        jsonAsMap.put("projectId", project.toString());
-  
-         given()
-                .contentType("application/json")
+    // Common method to assign expert to project and assert the status code
+    private void assignExpertToProject(String expertId, String projectId, int statusCode) {
+        Map<String, Object> jsonAsMap = new HashMap<>();
+        jsonAsMap.put("expertId", expertId);
+        jsonAsMap.put("projectId", projectId);
+
+        given()
+                .contentType(CONTENT_TYPE)
                 .body(jsonAsMap)
                 .when()
-                .post("/experts/assign_expert_to_project")
+                .post(BASE_PATH)
                 .then()
-                .statusCode(400);
+                .statusCode(statusCode);
     }
   
   
@@ -144,12 +115,12 @@ public class AssignExpertToProjectControllerTest {
 
         return new ObjectId(objectId);
     }
-  
+
       private ObjectId createTestExpertWithProject() {
         Expert expert = new Expert();
         expert.name = "Test Name";
         expert.org = orgsRepository.findByName(ORG_NAME);
-        expert.projects = List.of(projsRepository.findById(project));
+        expert.projects = List.of(projectRepository.findById(project));
         expertsRepository.insert(expert);
 
         return expert.id;

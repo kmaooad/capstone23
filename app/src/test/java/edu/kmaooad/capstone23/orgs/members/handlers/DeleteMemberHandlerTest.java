@@ -24,7 +24,7 @@ public class DeleteMemberHandlerTest extends TestWithOrgSetUp {
         CreateBasicMember command = new CreateBasicMember();
         command.setFirstName("firstName");
         command.setLastName("lastName");
-        command.setOrgId(createdOrgId);
+        command.setOrgId(createdOrgId.toString());
         command.setEmail("email@email.com");
         command.setIsExpert("false");
 
