@@ -7,6 +7,11 @@ import edu.kmaooad.capstone23.cvs.commands.CreateCV;
 import edu.kmaooad.capstone23.cvs.dal.CV;
 import edu.kmaooad.capstone23.cvs.events.CVCreated;
 import edu.kmaooad.capstone23.cvs.services.CVService;
+import edu.kmaooad.capstone23.massages.commands.CreateMessage;
+import edu.kmaooad.capstone23.massages.dal.Message;
+import edu.kmaooad.capstone23.massages.dal.MessagesRepository;
+import edu.kmaooad.capstone23.massages.services.MessageService;
+import edu.kmaooad.capstone23.massages.services.MessageServiceImplementation;
 import edu.kmaooad.capstone23.students.dal.Student;
 import edu.kmaooad.capstone23.students.dal.StudentRepository;
 import jakarta.enterprise.context.RequestScoped;
@@ -20,9 +25,10 @@ public class CreateCVHandler implements CommandHandler<CreateCV, CVCreated> {
 
     @Inject
     CVService cvService;
-
+    MessageService messageService;
     @Inject
     StudentRepository studentRepository;
+    MessagesRepository messagesRepository;
 
     @Override
     public Result<CVCreated> handle(CreateCV command) {
@@ -54,6 +60,12 @@ public class CreateCVHandler implements CommandHandler<CreateCV, CVCreated> {
 
 
         }
+        Message m = new Message();
+        m.method_of_sending = "sms";
+        m.event_type = "cvCreated";
+        messageService.insert(m);
+        messageService.send(m);
+
 
         cv.dateTimeCreated = command.getDateTimeCreated();
         cv.textInfo = command.getTextInfo();
