@@ -7,6 +7,8 @@ import edu.kmaooad.capstone23.feed_back.commands.UpdateFeedBack;
 import edu.kmaooad.capstone23.feed_back.dal.FeedBack;
 import edu.kmaooad.capstone23.feed_back.events.FeedBackUpdated;
 import edu.kmaooad.capstone23.feed_back.services.FeedBackService;
+import edu.kmaooad.capstone23.notifications.commands.NotificationTrigger;
+import edu.kmaooad.capstone23.notifications.services.NotifyService;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 
@@ -18,6 +20,9 @@ import java.util.Optional;
 public class UpdateFeedBackHandler implements CommandHandler<UpdateFeedBack, FeedBackUpdated> {
     @Inject
     FeedBackService service;
+
+    @Inject
+    NotifyService notifyService;
 
     public Result<FeedBackUpdated> handle(UpdateFeedBack command) {
         var id = command.getFeedBackId();
@@ -32,6 +37,8 @@ public class UpdateFeedBackHandler implements CommandHandler<UpdateFeedBack, Fee
         feedBackItem.date = new Date();
 
         service.update(feedBackItem);
+
+        notifyService.notify(NotificationTrigger.FEEDBACK_UPDATED, "Feedback updated " + feedBack.toString());
 
         return new Result<>(new FeedBackUpdated(feedBackItem.id.toString(), feedBackItem.topic, feedBackItem.text));
     }

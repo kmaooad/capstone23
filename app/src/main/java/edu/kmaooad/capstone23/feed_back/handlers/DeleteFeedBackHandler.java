@@ -7,6 +7,8 @@ import edu.kmaooad.capstone23.feed_back.commands.DeleteFeedBack;
 import edu.kmaooad.capstone23.feed_back.dal.FeedBack;
 import edu.kmaooad.capstone23.feed_back.events.FeedBackDeleted;
 import edu.kmaooad.capstone23.feed_back.services.FeedBackService;
+import edu.kmaooad.capstone23.notifications.commands.NotificationTrigger;
+import edu.kmaooad.capstone23.notifications.services.NotifyService;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
@@ -18,6 +20,8 @@ public class DeleteFeedBackHandler implements CommandHandler<DeleteFeedBack, Fee
     @Inject
     private FeedBackService service;
 
+    @Inject
+    private NotifyService notifyService;
 
     @Override
     public Result<FeedBackDeleted> handle(DeleteFeedBack command) {
@@ -29,6 +33,8 @@ public class DeleteFeedBackHandler implements CommandHandler<DeleteFeedBack, Fee
         }
 
         service.delete(feedBack);
+
+        notifyService.notify(NotificationTrigger.FEEDBACK_DELETED, "Feedback deleted " + feedBack.toString());
 
         return new Result<>(new FeedBackDeleted(feedBack));
     }
