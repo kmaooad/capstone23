@@ -14,7 +14,7 @@ public class NotificationMailServiceTest {
 
 
     @Test
-    @DisplayName("Test sendNotification() with null notification")
+    @DisplayName("Test sendNotification() with null notifications")
     public void testSendNotificationWithNullNotification() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
             notificationMailService.sendNotification(null);
